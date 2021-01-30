@@ -1,0 +1,12 @@
+[user]
+	name = Jonathan Barrett
+	email = j.e.barrett@gmail.com
+[color]
+	ui = True
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[init]
+	defaultBranch = main
