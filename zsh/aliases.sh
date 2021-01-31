@@ -12,6 +12,7 @@ alias gd='git diff'
 alias gdc='gd --cached'
 alias gl='git log'
 alias gp='git push'
+alias gpom='gp origin main'
 alias gs='git status'
 
 alias dotfiles='cd ~/.dotfiles'
