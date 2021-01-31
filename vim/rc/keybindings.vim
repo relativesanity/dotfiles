@@ -10,8 +10,6 @@ nnoremap <LEADER>pc :PluginClean<CR>
 
 nnoremap <LEADER>fw :FixWhitespace<CR>
 
-nnoremap <LEADER>pp :Files<CR>
-
 nnoremap <C-p> :Files<CR>
 nnoremap <C-s> :w<CR>
 
