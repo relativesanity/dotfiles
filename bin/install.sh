@@ -1,14 +1,5 @@
 #!/usr/bin/env zsh
 
-# install homebrew
-if [[ "" == "$(command -v brew)" ]]; then
-  echo 'Installing homebrew'
-  /usr/bin/env bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-else
-  echo 'Updating homebrew'
-  brew update
-fi
-
 # install homebrew requirements
 brew bundle -v
 
