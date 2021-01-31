@@ -23,3 +23,7 @@ echo 'linking zshrc'
 if [ -e ~/.zshrc -o -L ~/.zshrc ]; then rm ~/.zshrc; fi
 ln -s ~/.dotfiles/zshrc ~/.zshrc
 
+echo 'linking ssh config'
+if [ ! -d ~/.ssh ]; then mkdir ~/.ssh; fi
+if [ -e ~/.ssh/config -o -L ~/.ssh/config ]; then rm ~/.ssh/config; fi
+ln -s ~/.dotfiles/ssh/config ~/.ssh/config
