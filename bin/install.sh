@@ -5,7 +5,7 @@ brew bundle -v
 
 echo 'linking gitconfig'
 if [ -e ~/.gitconfig -o -L ~/.gitconfig ]; then rm ~/.gitconfig; fi
-ln -s ~/.dotfiles/gitconfig ~/.gitconfig
+ln -s ~/.dotfiles/git/gitconfig ~/.gitconfig
 
 echo 'linking tmux.conf'
 if [ -e ~/.tmux.conf -o -L ~/.tmux.conf ]; then rm ~/.tmux.conf; fi
