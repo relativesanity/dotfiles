@@ -1,4 +1,4 @@
-alias za='$EDITOR ~/.dotfiles/zsh/rc/aliases.sh'
+alias za='$EDITOR ~/.dotfiles/zsh/aliases.sh'
 alias zc='$EDITOR ~/.zshrc'
 alias zr='. ~/.zshrc'
 

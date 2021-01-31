@@ -17,11 +17,11 @@ ln -s ~/.dotfiles/vim/vimrc ~/.vimrc
 
 echo 'linking zprofile'
 if [ -e ~/.zprofile -o -L ~/.zprofile ]; then rm ~/.zprofile; fi
-ln -s ~/.dotfiles/zprofile ~/.zprofile
+ln -s ~/.dotfiles/zsh/zprofile ~/.zprofile
 
 echo 'linking zshrc'
 if [ -e ~/.zshrc -o -L ~/.zshrc ]; then rm ~/.zshrc; fi
-ln -s ~/.dotfiles/zshrc ~/.zshrc
+ln -s ~/.dotfiles/zsh/zshrc ~/.zshrc
 
 echo 'linking ssh config'
 if [ ! -d ~/.ssh ]; then mkdir ~/.ssh; fi
