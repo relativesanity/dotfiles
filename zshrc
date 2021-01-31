@@ -11,7 +11,8 @@ source "/opt/homebrew/opt/zsh-git-prompt/zshrc.sh"
 export PS1='%n@%m %. $(git_super_status)
 %# '
 
-# set up a long history
+# set up command history
+# much taken from https://www.soberkoder.com/better-zsh-history/
 export HISTSIZE=1000000000 # total loaded in session
 export SAVEHIST=1000000000 # total saved
 export HISTFILE=~/.zsh_history # where to store history
