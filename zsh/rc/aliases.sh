@@ -7,9 +7,11 @@ alias be='bundle exec'
 
 alias ga='git add'
 alias gc='git commit'
+alias gcm='gc -m'
 alias gd='git diff'
 alias gdc='gd --cached'
 alias gl='git log'
+alias gp='git push'
 alias gs='git status'
 
 alias config='cd ~/dev/dotfiles'
