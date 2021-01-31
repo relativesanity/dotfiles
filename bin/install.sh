@@ -3,17 +3,14 @@
 # install homebrew
 if [[ "" == "$(command -v brew)" ]]; then
   echo 'Installing homebrew'
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  /usr/bin/env bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 else
   echo 'Updating homebrew'
   brew update
 fi
 
 # install homebrew requirements
-# brew install git
-# brew install tmux
-# brew install neovim
-# brew install the_silver_searcher
+brew bundle -v
 
 echo 'linking gitconfig'
 if [ -e ~/.gitconfig -o -L ~/.gitconfig ]; then rm ~/.gitconfig; fi
