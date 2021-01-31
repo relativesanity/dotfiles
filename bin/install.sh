@@ -13,7 +13,7 @@ ln -s ~/.dotfiles/tmux/tmux.conf ~/.tmux.conf
 
 echo 'linking vimrc'
 if [ -e ~/.vimrc -o -L ~/.vimrc ]; then rm ~/.vimrc; fi
-ln -s ~/.dotfiles/vimrc ~/.vimrc
+ln -s ~/.dotfiles/vim/vimrc ~/.vimrc
 
 echo 'linking zprofile'
 if [ -e ~/.zprofile -o -L ~/.zprofile ]; then rm ~/.zprofile; fi
