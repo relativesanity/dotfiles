@@ -1,6 +1,8 @@
 alias resource='. ~/.zshrc'
 
+alias zr='resource'
 alias za='$EDITOR ~/.zsh/rc/aliases.sh'
+alias zc='$EDITOR ~/.zshrc'
 
 
 alias ll='ls -lh'
