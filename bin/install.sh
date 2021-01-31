@@ -9,7 +9,7 @@ ln -s ~/.dotfiles/gitconfig ~/.gitconfig
 
 echo 'linking tmux.conf'
 if [ -e ~/.tmux.conf -o -L ~/.tmux.conf ]; then rm ~/.tmux.conf; fi
-ln -s ~/.dotfiles/tmux.conf ~/.tmux.conf
+ln -s ~/.dotfiles/tmux/tmux.conf ~/.tmux.conf
 
 echo 'linking vimrc'
 if [ -e ~/.vimrc -o -L ~/.vimrc ]; then rm ~/.vimrc; fi
