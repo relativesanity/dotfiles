@@ -11,7 +11,7 @@ call vundle#begin()
 " allow Vundle to manage Vundle
 Plugin 'VundleVim/Vundle.vim'
 " load plugins
-source ~/.vim/rc/plugins.vim
+source ~/.dotfiles/vim/rc/plugins.vim
 " finish Vundle operations
 call vundle#end()
 " enable filetype detection after running Vundle to allow new types to be picked up
@@ -73,4 +73,4 @@ set hlsearch
 set noswapfile
 
 " load keybindings
-source ~/.vim/rc/keybindings.vim
+source ~/.dotfiles/vim/rc/keybindings.vim

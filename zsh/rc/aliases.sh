@@ -1,4 +1,4 @@
-alias za='$EDITOR ~/.zsh/rc/aliases.sh'
+alias za='$EDITOR ~/.dotfiles/zsh/rc/aliases.sh'
 alias zc='$EDITOR ~/.zshrc'
 alias zr='. ~/.zshrc'
 
@@ -14,7 +14,8 @@ alias gl='git log'
 alias gp='git push'
 alias gs='git status'
 
-alias config='cd ~/dev/dotfiles'
+alias dotfiles='cd ~/.dotfiles'
+alias config=dotfiles
 
 
 

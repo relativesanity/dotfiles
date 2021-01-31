@@ -6,7 +6,7 @@ export EDITOR=nvim
 export VISUAL=nvim
 
 # set command prompt
-source "/opt/homebrew/opt/zsh-git-prompt/zshrc.sh"
+source /opt/homebrew/opt/zsh-git-prompt/zshrc.sh
 # setopt prompt_subst
 export PS1='%n@%m %. $(git_super_status)
 %# '
@@ -29,4 +29,4 @@ source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
 source /opt/homebrew/opt/chruby/share/chruby/auto.sh
 
 # set up some useful aliases
-source ~/.zsh/rc/aliases.sh
+source ~/.dotfiles/zsh/rc/aliases.sh
