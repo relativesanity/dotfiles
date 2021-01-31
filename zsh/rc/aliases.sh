@@ -1,14 +1,16 @@
-alias resource='. ~/.zshrc'
-
-alias zr='resource'
 alias za='$EDITOR ~/.zsh/rc/aliases.sh'
 alias zc='$EDITOR ~/.zshrc'
-
+alias zr='. ~/.zshrc'
 
 alias ll='ls -lh'
 alias be='bundle exec'
-alias gs='git status'
+
+alias ga='git add'
+alias gc='git commit'
+alias gd='git diff'
+alias gdc='gd --cached'
 alias gl='git log'
+alias gs='git status'
 
 alias config='cd ~/dev/dotfiles'
 
