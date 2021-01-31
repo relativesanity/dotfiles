@@ -2,28 +2,40 @@
 bindkey -v
 
 # set editor to vim
-export EDITOR=vim
-export VISUAL=vim
+export EDITOR=nvim
+export VISUAL=nvim
 
 # set command prompt
-# source "/usr/local/opt/zsh-git-prompt/zshrc.sh"
+source "/opt/homebrew/opt/zsh-git-prompt/zshrc.sh"
 # setopt prompt_subst
-# export PS1='%n@%m %. $(git_super_status)
-# %# '
+export PS1='%n@%m %. $(git_super_status)
+%# '
 
+# set up a long history
+export HISTSIZE=1000000000 # total loaded in session
+export SAVEHIST=1000000000 # total saved
+export HISTFILE=~/.zsh_history # where to store history
+setopt INC_APPEND_HISTORY # immediately append history to file
+export HISTTIMEFORMAT="[%F %T] " # sets the time format
+setopt EXTENDED_HISTORY # and allows the time to be recorded
+
+#
+#
+#
+#
 # set history params
 # HISTSIZE=1000
 # SAVEHIST=1000
 # HISTFILE=~/.history
 
 # set up completions in general
-# autoload -U compinit
-# compinit
+autoload -U compinit
+compinit
 
 # set up some useful aliases
+alias resource='. ~/.zshrc'
 # alias ll='ls -lh'
 # alias be='bundle exec'
-# alias resource='. ~/.zshrc'
 # alias gs='git status'
 # alias gl='git log'
 # alias config='cd ~/.conf'
