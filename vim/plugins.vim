@@ -15,3 +15,6 @@ Plugin 'mileszs/ack.vim'
 " tim pope basics
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-surround'
+
+" manage Ruby plugin independently of vim
+Plugin 'vim-ruby/vim-ruby'
