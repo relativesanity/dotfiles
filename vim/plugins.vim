@@ -18,3 +18,6 @@ Plugin 'tpope/vim-surround'
 
 " manage Ruby plugin independently of vim
 Plugin 'vim-ruby/vim-ruby'
+
+" Rails development
+Plugin 'tpope/vim-rails'
