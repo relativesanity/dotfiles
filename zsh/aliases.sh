@@ -27,3 +27,13 @@ alias config=dotfiles
 function start() {
   tmux -2 attach -t ${1-dev} || tmux -2 new -s ${1-dev}
 }
+
+# set up some some jump functions
+function dev() { jump $1 dev }
+function jump() {
+  if [ -z $1 ]; then
+    cd ~/${2}
+  else
+    cd `ls -dt1 ~/${2}/${1}* | head -n1`
+  fi
+}
