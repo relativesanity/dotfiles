@@ -20,6 +20,10 @@ setopt INC_APPEND_HISTORY # immediately append history to file
 export HISTTIMEFORMAT="[%F %T] " # sets the time format
 setopt EXTENDED_HISTORY # and allows the time to be recorded
 
+# use most for paging, to enable colour man pages
+# as per https://www.howtogeek.com/683134/how-to-display-man-pages-in-color-on-linux/
+export PAGER=most
+
 # set up completions in general
 autoload -U compinit
 compinit
