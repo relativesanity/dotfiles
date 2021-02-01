@@ -8,9 +8,6 @@ nnoremap <LEADER>pc :PluginClean<CR>
 
 nnoremap <LEADER>fw :FixWhitespace<CR>
 
-nnoremap <LEADER>ns :new<CR>
-nnoremap <LEADER>nv :vnew<CR>
-
 nnoremap <LEADER>n :NERDTreeToggle<CR>
 
 nnoremap <C-p> :Files<CR>
