@@ -18,6 +18,13 @@ alias gp='git push'
 alias gpom='gp origin main'
 alias gs='git status'
 
+alias dk='docker'
+alias dkc='docker-compose'
+alias dkcu='dkc up'
+alias dkcud='dkcu -d'
+alias dkcb='dkc build'
+alias dkce='dkc exec'
+
 alias dotfiles='cd ~/.dotfiles'
 alias config=dotfiles
 
