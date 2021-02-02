@@ -10,6 +10,10 @@ nnoremap <LEADER>fw :FixWhitespace<CR>
 
 nnoremap <LEADER>n :NERDTreeToggle<CR>
 
+nnoremap <LEADER>fp :Files<CR>
+nnoremap <LEADER>fb :Buffers<CR>
+nnoremap <LEADER>fl :Lines<CR>
+
 nnoremap <C-p> :Files<CR>
 nnoremap <C-s> :w<CR>
 nnoremap <C-c> :q<CR>
