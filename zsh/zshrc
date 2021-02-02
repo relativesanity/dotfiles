@@ -34,3 +34,5 @@ source /opt/homebrew/opt/chruby/share/chruby/auto.sh
 
 # set up some useful aliases
 source ~/.dotfiles/zsh/aliases.sh
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
