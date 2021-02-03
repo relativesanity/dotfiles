@@ -4,6 +4,7 @@ alias zr='. ~/.zshrc'
 
 alias ll='ls -lh'
 alias la='ll -a'
+
 alias be='bundle exec'
 
 alias ga='git add'
