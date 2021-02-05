@@ -14,6 +14,8 @@ nnoremap <LEADER>fp :Files<CR>
 nnoremap <LEADER>fb :Buffers<CR>
 nnoremap <LEADER>fl :Lines<CR>
 
+nnoremap <leader>h :noh<CR>
+
 nnoremap <C-p> :Files<CR>
 nnoremap <C-s> :w<CR>
 nnoremap <C-c> :q<CR>
