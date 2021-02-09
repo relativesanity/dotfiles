@@ -6,7 +6,7 @@ export EDITOR=nvim
 export VISUAL=nvim
 
 # set command prompt
-source /opt/homebrew/opt/zsh-git-prompt/zshrc.sh
+source $(brew --prefix)/opt/zsh-git-prompt/zshrc.sh
 # setopt prompt_subst
 export PS1='%n@%m %. $(git_super_status)
 %# '
@@ -29,8 +29,8 @@ autoload -U compinit
 compinit
 
 # configure chruby to be available and auto-detecting
-source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
-source /opt/homebrew/opt/chruby/share/chruby/auto.sh
+source $(brew --prefix)/opt/chruby/share/chruby/chruby.sh
+source $(brew --prefix)/opt/chruby/share/chruby/auto.sh
 
 # set up some useful aliases
 source ~/.dotfiles/zsh/aliases.sh
