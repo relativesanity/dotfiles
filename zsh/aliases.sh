@@ -22,6 +22,7 @@ alias gln='gl --name-only'
 alias gp='git push'
 alias gpo='gp origin'
 alias gpom='gpo main'
+alias gpu='git pull'
 alias gs='git status'
 
 alias dk='docker'
