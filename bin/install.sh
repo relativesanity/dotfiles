@@ -25,8 +25,6 @@ if [ -e ~/.zprofile -o -L ~/.zprofile ]; then rm ~/.zprofile; fi
 ln -s ~/.dotfiles/zsh/zprofile ~/.zprofile
 if [ -e ~/.zshrc -o -L ~/.zshrc ]; then rm ~/.zshrc; fi
 ln -s ~/.dotfiles/zsh/zshrc ~/.zshrc
-if [ -e ~/.fzf.zsh -o -L ~/.fzf.zsh ]; then rm ~/.fzf.zsh; fi
-ln -s ~/.dotfiles/zsh/fzf.zsh ~/.fzf.zsh
 
 echo '- ssh config'
 if [ ! -d ~/.ssh ]; then mkdir ~/.ssh; fi
