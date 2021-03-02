@@ -22,6 +22,8 @@ filetype plugin indent on
 if !exists('g:syntax_on')
   " enable syntax highlighting
   syntax enable
+  " custom syntax highlighting
+  au BufNewFile,BufRead *.omnifocusjs set filetype=JavaScript
 endif
 " if ag is available on the system…
 if executable('ag')
