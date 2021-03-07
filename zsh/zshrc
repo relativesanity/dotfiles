@@ -32,6 +32,9 @@ source $(brew --prefix)/opt/chruby/share/chruby/auto.sh
 # set up some useful aliases
 source ~/.dotfiles/zsh/aliases.sh
 
+# initialise autojump
+[ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
+
 # configure fzf
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -l'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
