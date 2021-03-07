@@ -5,11 +5,8 @@ bindkey -v
 export EDITOR=nvim
 export VISUAL=nvim
 
-# set command prompt
-source $(brew --prefix)/opt/zsh-git-prompt/zshrc.sh
-# setopt prompt_subst
-export PS1='%n@%m %. $(git_super_status)
-%# '
+# initialise starship prompt
+eval "$(starship init zsh)"
 
 # set up command history
 # much taken from https://www.soberkoder.com/better-zsh-history/
