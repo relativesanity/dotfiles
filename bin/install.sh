@@ -32,7 +32,7 @@ if [ -e ~/.config/fish/config.fish -o -L ~/.config/fish/config.fish ]; then rm ~
 ln -s ~/.dotfiles/fish/config.fish ~/.config/fish/config.fish
 
 echo '- fzf config'
-if [ ! -e ~/.fzf.zsh ]; then `brew --prefix`/opt/fzf/install --all; fi
+`brew --prefix`/opt/fzf/install --all
 
 echo '- ssh config'
 if [ ! -d ~/.ssh ]; then mkdir ~/.ssh; fi
