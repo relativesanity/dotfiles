@@ -10,4 +10,5 @@ brew 'autojump'
 brew 'most'
 brew 'chruby'
 brew 'ruby-install'
+brew 'nvm'
 
