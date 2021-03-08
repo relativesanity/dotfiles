@@ -10,6 +10,7 @@ brew 'starship'
 brew 'autojump'
 brew 'most'
 brew 'chruby'
+brew 'chruby-fish'
 brew 'ruby-install'
 brew 'nvm'
 
