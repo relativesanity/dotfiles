@@ -3,6 +3,7 @@ alias zc='$EDITOR ~/.zshrc'
 alias zr='. ~/.zshrc'
 
 alias ll='ls -lh'
+alias lh=ll
 alias la='ll -a'
 
 alias be='bundle exec'
