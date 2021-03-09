@@ -21,6 +21,10 @@ fzf_key_bindings
 source (brew --prefix)/share/chruby/chruby.fish
 source (brew --prefix)/share/chruby/auto.fish
 
+# sets up autojump
+[ -f (brew --prefix)/share/autojump/autojump.fish ]; and source (brew --prefix)/share/autojump/autojump.fish
+
+# loads aliases
 source ~/.dotfiles/fish/aliases.fish
 
 # Bootstrap a tmux session
