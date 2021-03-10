@@ -11,6 +11,8 @@ Plugin 'junegunn/fzf.vim'
 Plugin 'itchyny/lightline.vim'
 " install ack
 Plugin 'mileszs/ack.vim'
+" syntax for fish
+Plugin 'dag/vim-fish'
 
 " tim pope basics
 Plugin 'tpope/vim-commentary'

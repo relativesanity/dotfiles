@@ -25,7 +25,14 @@ if [ -e ~/.zprofile -o -L ~/.zprofile ]; then rm ~/.zprofile; fi
 ln -s ~/.dotfiles/zsh/zprofile ~/.zprofile
 if [ -e ~/.zshrc -o -L ~/.zshrc ]; then rm ~/.zshrc; fi
 ln -s ~/.dotfiles/zsh/zshrc ~/.zshrc
-if [ ! -e ~/.fzf.zsh ]; then `brew --prefix`/opt/fzf/install --all; fi
+
+echo '- fish config'
+if [ ! -d ~/.config/fish ]; then mkdir -p ~/.config/fish; fi
+if [ -e ~/.config/fish/config.fish -o -L ~/.config/fish/config.fish ]; then rm ~/.config/fish/config.fish; fi
+ln -s ~/.dotfiles/fish/config.fish ~/.config/fish/config.fish
+
+echo '- fzf config'
+`brew --prefix`/opt/fzf/install --all
 
 echo '- ssh config'
 if [ ! -d ~/.ssh ]; then mkdir ~/.ssh; fi
