@@ -1,5 +1,6 @@
 set fish_greeting ''
-eval (eval /opt/homebrew/bin/brew shellenv)
+source ~/.dotfiles/fish/local.fish
+eval (eval $brew_path/bin/brew shellenv)
 
 # initialise starship prompt
 starship init fish | source
