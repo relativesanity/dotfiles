@@ -37,5 +37,8 @@ alias dkcb='dkc build'
 alias dkce='dkc exec'
 alias dkcr='dkc run'
 
+alias omp='cd $omnifocus_plugins_path'
+alias ompe='omp; nvim'
+
 alias dotfiles='cd ~/.dotfiles'
 alias config=dotfiles
