@@ -1,1 +1,2 @@
-set brew_path '/opt/homebrew'
+# set brew_path
+# set omnifocus_plugins_path
