@@ -41,4 +41,4 @@ alias omp='cd $omnifocus_plugins_path'
 alias ompe='omp; nvim'
 
 alias dotfiles='cd ~/.dotfiles'
-alias config=dotfiles
+alias config=echo "USE dotfiles"
