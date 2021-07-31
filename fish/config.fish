@@ -19,6 +19,7 @@ set -gx PAGER most
 fzf_key_bindings
 
 # initialise chruby
+set -x CHRUBY_ROOT (brew --prefix)
 source (brew --prefix)/share/chruby/chruby.fish
 source (brew --prefix)/share/chruby/auto.fish
 
