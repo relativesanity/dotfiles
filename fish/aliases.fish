@@ -4,6 +4,7 @@ alias fsr='. ~/.config/fish/config.fish'
 
 alias ll='ls -lh'
 alias lh=ll
+alias l=ll
 alias la='ll -a'
 
 alias be='bundle exec'
@@ -29,7 +30,7 @@ alias gs='git status'
 alias dk='docker'
 alias dkr='dk run'
 alias dkb='dk build'
-alias dkc='docker-compose'
+alias dkc='docker compose'
 alias dkcd='dkc down'
 alias dkcu='dkc up'
 alias dkcud='dkcu -d'
