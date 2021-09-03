@@ -18,6 +18,7 @@ Plugin 'dag/vim-fish'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-ragtag'
 
 " manage Ruby plugin independently of vim
 Plugin 'vim-ruby/vim-ruby'
