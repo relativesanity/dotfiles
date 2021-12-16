@@ -34,6 +34,10 @@ ln -s ~/.dotfiles/fish/config.fish ~/.config/fish/config.fish
 echo '- fzf config'
 `brew --prefix`/opt/fzf/install --all
 
+echo '- starship config'
+if [ -e ~/.config/starship.toml -o -L ~/.config/starship.toml ]; then rm ~/.config/starship.toml; fi
+ln -s ~/.dotfiles/starship/starship.toml ~/.config/starship.toml
+
 echo '- ssh config'
 if [ ! -d ~/.ssh ]; then mkdir ~/.ssh; fi
 if [ -e ~/.ssh/config -o -L ~/.ssh/config ]; then rm ~/.ssh/config; fi
