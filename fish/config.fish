@@ -1,6 +1,5 @@
 set fish_greeting ''
 source ~/.dotfiles/fish/local.fish
-fish_add_path $brew_path/bin
 eval (eval $brew_path/bin/brew shellenv)
 
 
@@ -19,11 +18,6 @@ set -gx PAGER most
 
 # set FZF commands
 fzf_key_bindings
-
-# initialise chruby
-set -x CHRUBY_ROOT (brew --prefix)
-source (brew --prefix)/share/chruby/chruby.fish
-source (brew --prefix)/share/chruby/auto.fish
 
 # sets up autojump
 [ -f (brew --prefix)/share/autojump/autojump.fish ]; and source (brew --prefix)/share/autojump/autojump.fish
