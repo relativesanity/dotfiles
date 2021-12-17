@@ -10,4 +10,4 @@ brew 'zsh'
 brew 'starship'
 brew 'autojump'
 brew 'most'
-
+brew 'heroku'
