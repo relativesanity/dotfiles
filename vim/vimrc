@@ -39,6 +39,9 @@ set termguicolors
 let ayucolor="mirage"
 colorscheme ayu
 
+" set vim-rspec to use Docker
+let g:rspec_command = "!docker compose exec app bin/rspec {spec}"
+
 " follows indent of previous line when creating a new line
 set autoindent
 " follows language-specific indenting rules when creating a new line

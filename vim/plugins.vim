@@ -24,3 +24,5 @@ Plugin 'vim-ruby/vim-ruby'
 
 " Rails development
 Plugin 'tpope/vim-rails'
+" RSpec testing
+Plugin 'thoughtbot/vim-rspec'
