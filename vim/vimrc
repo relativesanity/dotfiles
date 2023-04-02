@@ -36,7 +36,7 @@ endif
 set termguicolors
 
 " set colour scheme
-let ayucolor="mirage"
+" let ayucolor="mirage"
 colorscheme ayu
 
 " set vim-rspec to use Docker

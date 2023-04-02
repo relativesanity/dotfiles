@@ -26,8 +26,8 @@ autoload -U compinit
 compinit
 
 # configure chruby to be available and auto-detecting
-source $(brew --prefix)/opt/chruby/share/chruby/chruby.sh
-source $(brew --prefix)/opt/chruby/share/chruby/auto.sh
+# source $(brew --prefix)/opt/chruby/share/chruby/chruby.sh
+# source $(brew --prefix)/opt/chruby/share/chruby/auto.sh
 
 # set up some useful aliases
 source ~/.dotfiles/zsh/aliases.sh
