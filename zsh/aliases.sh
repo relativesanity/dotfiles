@@ -4,6 +4,7 @@ alias zr='. ~/.zshrc'
 
 alias ll='ls -lh'
 alias lh=ll
+alias l=ll
 alias la='ll -a'
 
 alias be='bundle exec'
@@ -37,11 +38,8 @@ alias dkcb='dkc build'
 alias dkce='dkc exec'
 alias dkcr='dkc run'
 
-alias omp='cd ~/Library/Containers/com.omnigroup.OmniFocus3/Data/Library/Application\ Support/Plug-Ins'
-alias ompe='omp; nvim'
-
 alias dotfiles='cd ~/.dotfiles'
-alias config=dotfiles
+alias config='echo "USE dotfiles"'
 
 
 
