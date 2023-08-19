@@ -74,6 +74,10 @@ require('lazy').setup({
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
+  -- Tree viewer
+  'nvim-tree/nvim-tree.lua',
+  'nvim-tree/nvim-web-devicons',
+
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
   {
@@ -217,6 +221,10 @@ require('lazy').setup({
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
 
+-- disable netrw
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -- Set highlight on search
 vim.o.hlsearch = false
 
@@ -277,6 +285,11 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = highlight_group,
   pattern = '*',
 })
+
+-- [[ Configure NVIM Tree ]]
+-- see ':help nvim-tree'
+require('nvim-tree').setup()
+vim.keymap.set('n', '<leader>t', ':NvimTreeToggle<CR>')
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
