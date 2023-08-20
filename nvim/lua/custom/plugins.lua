@@ -1,13 +1,14 @@
+-- ensure lazy plugin manager is installed
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    'git', 'clone', '--filter=blob:none', 'https://github.com/folke/lazy.nvim.git', '--branch=stable', -- latest stable release
-    lazypath,
-  })
+  vim.fn.system({ 'git', 'clone', '--filter=blob:none', 'https://github.com/folke/lazy.nvim.git', '--branch=stable', lazypath, })
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- Configure plugins
 local plugins = {
+
+    -- telescope for fuzzy finding
     {
         'nvim-telescope/telescope.nvim',
         dependencies = {
@@ -21,16 +22,43 @@ local plugins = {
             }
         }
     },
-    { 'catppuccin/nvim', name = 'catppuccin', priority = 1000 },
-    { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' },
-    { 'nvim-lualine/lualine.nvim', lazy = false, dependencies = { 'nvim-tree/nvim-web-devicons' }, },
-    { 'lewis6991/gitsigns.nvim' },
+
+    { 'folke/which-key.nvim', opts = {} },
+
+    -- catppuccin for theme
     {
-        'nvim-tree/nvim-tree.lua', lazy = false, dependencies = { 'nvim-tree/nvim-web-devicons' },
+        'catppuccin/nvim',
+        name = 'catppuccin',
+        priority = 1000
+    },
+
+    -- treesitter for syntax highlighting
+    {
+        'nvim-treesitter/nvim-treesitter',
+        run = ':TSUpdate'
+    },
+
+    -- lualine for vim statusline
+    {
+        'nvim-lualine/lualine.nvim',
+        lazy = false,
+        dependencies = { 'nvim-tree/nvim-web-devicons' },
+    },
+
+    -- gitsigns for showing when I've edited a file
+    { 'lewis6991/gitsigns.nvim' },
+
+    -- nvim-tree for browsing files
+    {
+        'nvim-tree/nvim-tree.lua',
+        lazy = false,
+        dependencies = { 'nvim-tree/nvim-web-devicons' },
         config = function()
             require('nvim-tree').setup {}
         end,
     },
+
 }
 
+-- actually load the plugins
 require('lazy').setup(plugins, opts)
