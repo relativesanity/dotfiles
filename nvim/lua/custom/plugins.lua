@@ -11,11 +11,9 @@ local plugins = {
     { 'nvim-telescope/telescope.nvim', dependencies = { 'nvim-lua/plenary.nvim' } },
     { 'catppuccin/nvim', name = 'catppuccin', priority = 1000 },
     { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' },
+    { 'nvim-lualine/lualine.nvim', lazy = false, dependencies = { 'nvim-tree/nvim-web-devicons' }, },
     {
-        'nvim-tree/nvim-tree.lua', version = '*', lazy = false,
-        dependencies = {
-            'nvim-tree/nvim-web-devicons',
-        },
+        'nvim-tree/nvim-tree.lua', lazy = false, dependencies = { 'nvim-tree/nvim-web-devicons' },
         config = function()
             require('nvim-tree').setup {}
         end,
