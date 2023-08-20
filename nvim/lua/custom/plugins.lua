@@ -12,6 +12,7 @@ local plugins = {
     { 'catppuccin/nvim', name = 'catppuccin', priority = 1000 },
     { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' },
     { 'nvim-lualine/lualine.nvim', lazy = false, dependencies = { 'nvim-tree/nvim-web-devicons' }, },
+    { 'lewis6991/gitsigns.nvim' },
     {
         'nvim-tree/nvim-tree.lua', lazy = false, dependencies = { 'nvim-tree/nvim-web-devicons' },
         config = function()
