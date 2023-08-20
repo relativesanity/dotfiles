@@ -3,6 +3,10 @@ vim.opt.number = true
 -- … and relative line numbers for easier jumping
 vim.opt.relativenumber = true
 
+-- you're right Ray; no _human_ would split panes like this
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+
 -- set some sane tab defaults
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
