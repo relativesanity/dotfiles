@@ -8,7 +8,19 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-    { 'nvim-telescope/telescope.nvim', dependencies = { 'nvim-lua/plenary.nvim' } },
+    {
+        'nvim-telescope/telescope.nvim',
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+            {
+                'nvim-telescope/telescope-fzf-native.nvim',
+                build = 'make',
+                cond = function()
+                    return vim.fn.executable 'make' == 1
+                end,
+            }
+        }
+    },
     { 'catppuccin/nvim', name = 'catppuccin', priority = 1000 },
     { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' },
     { 'nvim-lualine/lualine.nvim', lazy = false, dependencies = { 'nvim-tree/nvim-web-devicons' }, },
