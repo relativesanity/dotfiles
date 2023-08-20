@@ -1,7 +1,4 @@
 # https://starship.rs/config/
 
-[ruby]
-disabled = true
-
 [nodejs]
 disabled = true
