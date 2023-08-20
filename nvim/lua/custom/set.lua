@@ -1,5 +1,7 @@
 -- show linenumbers
 vim.opt.number = true
+-- … sign gutters
+vim.opt.signcolumn = 'yes'
 -- … and relative line numbers for easier jumping
 vim.opt.relativenumber = true
 
