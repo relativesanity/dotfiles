@@ -9,11 +9,7 @@ vim.opt.relativenumber = true
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 
--- set some sane tab defaults
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
--- … make sure they get used
+-- smartly use tabs to indent in files
 vim.opt.smartindent = true
 -- … and good god spaces, not tabs
 vim.opt.expandtab = true

@@ -8,6 +8,30 @@ vim.opt.rtp:prepend(lazypath)
 -- Configure plugins
 local plugins = {
 
+    -- things which don't have any config up front
+    'nvim-tree/nvim-web-devicons', -- for use by nvim-tree, gitsigns etc
+    'nvim-tree/nvim-tree.lua', -- tree file browser
+    'nvim-lualine/lualine.nvim', -- statusline
+    'lewis6991/gitsigns.nvim', -- git gutter indicators
+    'lukas-reineke/indent-blankline.nvim', -- show tab guides in blank lines
+    'tpope/vim-sleuth', -- detect tabstop and shiftwidth
+
+    -- show keybinding hints
+    { 'folke/which-key.nvim', opts = {} },
+
+    -- "gc" to comment visual regions/lines
+    { 'numToStr/Comment.nvim', opts = {} },
+
+    -- catppuccin for theme
+    {
+        'catppuccin/nvim', name = 'catppuccin', priority = 1000
+    },
+
+    -- treesitter for syntax highlighting
+    {
+        'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'
+    },
+
     -- telescope for fuzzy finding
     {
         'nvim-telescope/telescope.nvim',
@@ -21,41 +45,6 @@ local plugins = {
                 end,
             }
         }
-    },
-
-    { 'folke/which-key.nvim', opts = {} },
-
-    -- catppuccin for theme
-    {
-        'catppuccin/nvim',
-        name = 'catppuccin',
-        priority = 1000
-    },
-
-    -- treesitter for syntax highlighting
-    {
-        'nvim-treesitter/nvim-treesitter',
-        run = ':TSUpdate'
-    },
-
-    -- lualine for vim statusline
-    {
-        'nvim-lualine/lualine.nvim',
-        lazy = false,
-        dependencies = { 'nvim-tree/nvim-web-devicons' },
-    },
-
-    -- gitsigns for showing when I've edited a file
-    { 'lewis6991/gitsigns.nvim' },
-
-    -- nvim-tree for browsing files
-    {
-        'nvim-tree/nvim-tree.lua',
-        lazy = false,
-        dependencies = { 'nvim-tree/nvim-web-devicons' },
-        config = function()
-            require('nvim-tree').setup {}
-        end,
     },
 
 }
