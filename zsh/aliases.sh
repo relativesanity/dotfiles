@@ -2,10 +2,14 @@ alias za='$EDITOR ~/.dotfiles/zsh/aliases.sh'
 alias zc='$EDITOR ~/.zshrc'
 alias zr='. ~/.zshrc'
 
-alias ll='ls -lh'
-alias lh=ll
-alias l=ll
-alias la='ll -a'
+alias ls='exa'
+alias ll='exa -lh'
+alias l='ll'
+alias la='exa -alh'
+alias tree='exa --tree'
+
+alias cat='bat'
+alias cd='z'
 
 alias be='bundle exec'
 

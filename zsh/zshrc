@@ -34,3 +34,6 @@ source ~/.dotfiles/zsh/aliases.sh
 # configure fzf
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -l'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# set up zoxide
+eval "$(zoxide init zsh)"
