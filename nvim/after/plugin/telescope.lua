@@ -1,6 +1,5 @@
 local builtin = require('telescope.builtin')
 pcall(require('telescope').load_extension, 'fzf')
-vim.keymap.set('n', '<leader>sf', builtin.find_files, {})
-vim.keymap.set('n', '<leader>ss', function()
-	builtin.grep_string({ search = vim.fn.input("Grep > ") });
-end)
+vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch with [G]rep' })
+vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch in [H]elp' })
