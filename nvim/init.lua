@@ -136,11 +136,15 @@ require('lazy').setup({
   },
 
   {
-    -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
+    -- Theme
+    'catppuccin/nvim',
+    lazy = false,
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'onedark'
+      require('catppuccin').setup({
+        flavour = 'mocha'
+      })
+      vim.cmd.colorscheme('catppuccin')
     end,
   },
 
@@ -151,7 +155,7 @@ require('lazy').setup({
     opts = {
       options = {
         icons_enabled = true,
-        theme = 'onedark',
+        theme = 'catppuccin',
         component_separators = '|',
         section_separators = '',
       },
@@ -225,11 +229,16 @@ require('lazy').setup({
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+-- set cursorline and rule
+vim.o.cursorline = true
+vim.o.colorcolumn = '80,100'
+
 -- Set highlight on search
 vim.o.hlsearch = false
 
 -- Make line numbers default
 vim.wo.number = true
+vim.wo.relativenumber = true
 
 -- Enable mouse mode
 vim.o.mouse = 'a'
@@ -390,6 +399,9 @@ require('nvim-treesitter.configs').setup {
     },
   },
 }
+-- workaround dot indentation issue
+-- see here: https://github.com/nvim-treesitter/nvim-treesitter/issues/3363
+vim.cmd('autocmd FileType ruby setlocal indentkeys-=.')
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
@@ -457,8 +469,6 @@ local servers = {
   -- rust_analyzer = {},
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
-
-  ruby_ls = {},
 
   lua_ls = {
     Lua = {
