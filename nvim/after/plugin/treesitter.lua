@@ -11,3 +11,6 @@ require 'nvim-treesitter.configs'.setup {
   },
 }
 
+-- workaround dot indentation issue
+-- see here: https://github.com/nvim-treesitter/nvim-treesitter/issues/3363
+vim.cmd('autocmd FileType ruby setlocal indentkeys-=.')
