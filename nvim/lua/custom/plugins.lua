@@ -16,6 +16,8 @@ local plugins = {
     'lukas-reineke/indent-blankline.nvim', -- show tab guides in blank lines
     'tpope/vim-sleuth', -- detect tabstop and shiftwidth
 
+    { 'windwp/nvim-autopairs', opts = {} },
+
     -- show keybinding hints
     { 'folke/which-key.nvim', opts = {} },
 
