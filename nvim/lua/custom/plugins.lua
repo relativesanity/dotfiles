@@ -14,25 +14,21 @@ local plugins = {
     'nvim-lualine/lualine.nvim', -- statusline
     'lewis6991/gitsigns.nvim', -- git gutter indicators
     'lukas-reineke/indent-blankline.nvim', -- show tab guides in blank lines
-    'tpope/vim-sleuth', -- detect tabstop and shiftwidth
 
+    -- pope is god. wait…
+    'tpope/vim-sleuth', -- detect tabstop and shiftwidth
+    'tpope/vim-commentary', -- enable simple commenting
+    'tpope/vim-ragtag', -- provide awesome tag completions
+    'tpope/vim-surround', -- enable smart surrounds
+
+    -- pair up quotes, braces etc
     { 'windwp/nvim-autopairs', opts = {} },
 
-    -- show keybinding hints
-    { 'folke/which-key.nvim', opts = {} },
-
-    -- "gc" to comment visual regions/lines
-    { 'numToStr/Comment.nvim', opts = {} },
-
     -- catppuccin for theme
-    {
-        'catppuccin/nvim', name = 'catppuccin', priority = 1000
-    },
+    { 'catppuccin/nvim', name = 'catppuccin', priority = 1000 },
 
     -- treesitter for syntax highlighting
-    {
-        'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'
-    },
+    { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' },
 
     -- telescope for fuzzy finding
     {
