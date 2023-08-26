@@ -32,7 +32,7 @@ eval "$(rbenv init - zsh)"
 source ~/.dotfiles/zsh/aliases.sh
 
 # configure fzf
-export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -l'
+export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git'"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # set up zoxide
