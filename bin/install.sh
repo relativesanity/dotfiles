@@ -10,7 +10,7 @@ if [ -e ~/.gitconfig -o -L ~/.gitconfig ]; then rm ~/.gitconfig; fi
 ln -s ~/.dotfiles/git/gitconfig ~/.gitconfig
 
 echo '- tmux config'
-if [ ! -d ~/.tmux/tmux-plugins ]; then
+if [ ! -d ~/.tmux/plugins ]; then
   mkdir -p ~/.tmux/plugins;
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
