@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-# install homebrew requirements
-brew bundle
-
 echo 'Linking'
 
 echo '- git config'
@@ -29,7 +26,8 @@ if [ -e ~/.zshrc -o -L ~/.zshrc ]; then rm ~/.zshrc; fi
 ln -s ~/.dotfiles/zsh/zshrc ~/.zshrc
 
 echo '- fzf config'
-`brew --prefix`/opt/fzf/install --all
+if [ -e ~/.fzf.zsh -o -L ~/.fzf.zsh ]; then rm ~/.fzf.zsh; fi
+ln -s ~/.dotfiles/zsh/fzf.zsh ~/.fzf.zsh
 
 echo '- starship config'
 if [ -e ~/.config/starship.toml -o -L ~/.config/starship.toml ]; then rm ~/.config/starship.toml; fi

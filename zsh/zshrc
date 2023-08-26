@@ -26,7 +26,7 @@ autoload -U compinit
 compinit
 
 # set up rbenv
-eval "$(rbenv init - zsh)"
+eval "$(~/.rbenv/bin/rbenv init - zsh)"
 
 # set up some useful aliases
 source ~/.dotfiles/zsh/aliases.sh

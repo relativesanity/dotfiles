@@ -8,9 +8,6 @@ alias l='ll'
 alias la='exa -alh'
 alias tree='exa --tree'
 
-alias cat='bat'
-alias cd='z'
-
 alias be='bundle exec'
 
 alias ga='git add'
