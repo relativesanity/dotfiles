@@ -4,7 +4,7 @@ alias l='ll'
 alias la='exa -alh'
 alias tree='exa --tree'
 
-alias be='bundle exec'
+alias cat='bat'
 
 alias ga='git add'
 alias gaa='ga .'
