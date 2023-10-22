@@ -25,9 +25,6 @@ export PAGER=most
 autoload -U compinit
 compinit
 
-# set up rbenv
-eval "$(~/.rbenv/bin/rbenv init - zsh)"
-
 # set up some useful aliases
 source ~/.dotfiles/zsh/aliases.sh
 
