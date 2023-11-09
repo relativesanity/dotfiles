@@ -13,9 +13,16 @@ vim.opt.splitright = true
 vim.opt.smartindent = true
 -- … and good god spaces, not tabs
 vim.opt.expandtab = true
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
 
 -- line wraps are for word processors
 vim.opt.wrap = false
+
+-- set long-running undo
+vim.opt.undodir = os.getenv('HOME') .. '/.vim/undodir'
+vim.opt.undofile = true
 
 -- search incrementally while typing
 vim.opt.incsearch = true
