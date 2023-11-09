@@ -31,5 +31,10 @@ vim.opt.colorcolumn = '80,100'
 -- … and highlight the current line while we're at it
 vim.opt.cursorline = true
 
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+
 -- space seems to be popular for leader these days
 vim.g.mapleader = " "
