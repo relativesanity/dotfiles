@@ -22,6 +22,8 @@ local plugins = {
   'tpope/vim-commentary', -- enable simple commenting
   'tpope/vim-ragtag', -- provide awesome tag completions
   'tpope/vim-surround', -- enable smart surrounds
+  'tpope/vim-rails', -- enable rails stuff
+  'github/copilot.vim', -- ai pair programming
 
   -- pair up quotes, braces etc
   { 'windwp/nvim-autopairs', opts = {} },
