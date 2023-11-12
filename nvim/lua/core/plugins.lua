@@ -6,7 +6,12 @@ local plugins = {
   -- filetree
   { 'nvim-tree/nvim-tree.lua', dependencies = { 'nvim-tree/nvim-web-devicons' } },
   -- telescope for file navmgation
-  { 'nvim-telescope/telescope.nvim', dependencies = { 'nvim-lua/plenary.nvim' } },
+  { 'nvim-telescope/telescope.nvim',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+    }
+  },
   -- treesitter for parsing and syntax highlighting
   { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
   -- visualise changes via undo history
