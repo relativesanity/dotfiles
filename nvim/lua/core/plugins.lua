@@ -1,9 +1,13 @@
 local plugins = {
+  -- catpuccin for theme
   { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
-  { 
-    "nvim-lualine/lualine.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" }
-  }
+
+  -- devicons for lualine and nvim-tree
+  { "nvim-tree/nvim-web-devicons" },
+  -- statusline awesomeness
+  { "nvim-lualine/lualine.nvim" },
+  -- filetree
+  { "nvim-tree/nvim-tree.lua" },
 }
 
 local opts = { }
