@@ -19,6 +19,8 @@ local plugins = {
   'mbbill/undotree',
   -- show and manage whitespace
   'johnfrankmorgan/whitespace.nvim',
+  -- automatically add closing pairs
+  'windwp/nvim-autopairs',
 }
 
 
