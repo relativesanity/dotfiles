@@ -16,3 +16,8 @@ vim.opt.expandtab = true -- expand tab to spaces
 vim.opt.smarttab = true -- a tab in an indent inserts shiftwidth spaces
 vim.opt.autoindent = true -- automatically set the indent of a new line
 vim.opt.smartindent = true -- do clever autoindenting
+
+vim.g.loaded_python3_provider = 0 -- remove python provider
+vim.g.loaded_ruby_provider = 0 -- remove ruby provider
+vim.g.loaded_node_provider = 0 -- remove node provider
+vim.g.loaded_perl_provider = 0 -- remove perl provider
