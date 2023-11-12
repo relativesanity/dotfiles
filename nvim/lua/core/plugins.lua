@@ -14,7 +14,8 @@ local plugins = {
     dependencies = { 'nvim-lua/plenary.nvim' }
   },
   -- treesitter for parsing and syntax highlighting
-  { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' }
+  { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
+  { 'mbbill/undotree' },
 }
 
 
