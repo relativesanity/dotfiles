@@ -9,10 +9,7 @@ local plugins = {
   -- filetree
   'nvim-tree/nvim-tree.lua',
   -- telescope for file navmgation
-  {
-    'nvim-telescope/telescope.nvim', tag = '0.1.4',
-    dependencies = { 'nvim-lua/plenary.nvim' }
-  },
+  { 'nvim-telescope/telescope.nvim', dependencies = { 'nvim-lua/plenary.nvim' } },
   -- treesitter for parsing and syntax highlighting
   { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
   -- visualise changes via undo history
