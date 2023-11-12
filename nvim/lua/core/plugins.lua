@@ -8,8 +8,7 @@ local plugins = {
   -- telescope for file navmgation
   { 'nvim-telescope/telescope.nvim',
     dependencies = {
-      'nvim-lua/plenary.nvim',
-      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+      'nvim-lua/plenary.nvim', { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     }
   },
   -- treesitter for parsing and syntax highlighting
