@@ -25,10 +25,12 @@ local plugins = {
 
   -- pope is god. wait…
   'tpope/vim-commentary', -- enable simple commenting
-  'tpope/vim-sleuth', -- detect tabstop and shiftwidth
   'tpope/vim-surround', -- enable smart surrounds
   'tpope/vim-repeat', -- enable repetition for plugin commands
   'tpope/vim-ragtag', -- provide awesome tag completions
+
+  -- use emmet for HTML editing
+  'mattn/emmet-vim',
 
   -- completion
   'hrsh7th/nvim-cmp',         -- enable completions
