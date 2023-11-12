@@ -19,6 +19,10 @@ local plugins = {
   'johnfrankmorgan/whitespace.nvim',
   -- automatically add closing pairs
   'windwp/nvim-autopairs',
+  -- LSP
+  'williamboman/mason.nvim',
+  'williamboman/mason-lspconfig.nvim',
+  'neovim/nvim-lspconfig',
 }
 
 
