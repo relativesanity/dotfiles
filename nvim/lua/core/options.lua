@@ -21,3 +21,5 @@ vim.g.loaded_python3_provider = 0 -- remove python provider
 vim.g.loaded_ruby_provider = 0 -- remove ruby provider
 vim.g.loaded_node_provider = 0 -- remove node provider
 vim.g.loaded_perl_provider = 0 -- remove perl provider
+vim.opt.incsearch = true -- search incrementally while typing
+vim.opt.termguicolors = true -- enable 24-bit colours
