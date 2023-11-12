@@ -20,6 +20,15 @@ local plugins = {
   'johnfrankmorgan/whitespace.nvim',
   -- automatically add closing pairs
   'windwp/nvim-autopairs',
+  -- show git status in gutter
+  'lewis6991/gitsigns.nvim',
+
+  -- pope is god. wait…
+  'tpope/vim-commentary', -- enable simple commenting
+  'tpope/vim-sleuth', -- detect tabstop and shiftwidth
+  'tpope/vim-surround', -- enable smart surrounds
+  'tpope/vim-repeat', -- enable repetition for plugin commands
+  'tpope/vim-ragtag', -- provide awesome tag completions
 
   -- completion
   'hrsh7th/nvim-cmp',         -- enable completions
