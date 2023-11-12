@@ -12,6 +12,7 @@ vim.opt.splitbelow = true -- split below instead of above
 vim.opt.splitright = true -- split to the right instead of the left
 vim.opt.clipboard = 'unnamed' -- yank to the system clipboard
 vim.opt.undofile = true -- store undo history across sessions
+vim.opt.signcolumn = 'yes' -- space for signs
 
 vim.opt.tabstop = 2 -- number of spaces a tab stands for
 vim.opt.shiftwidth = 2 -- number of spaces used for each step of indent
