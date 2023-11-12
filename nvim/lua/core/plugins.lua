@@ -8,6 +8,11 @@ local plugins = {
   { "nvim-lualine/lualine.nvim" },
   -- filetree
   { "nvim-tree/nvim-tree.lua" },
+  -- telescope for file navmgation
+  {
+    'nvim-telescope/telescope.nvim', tag = '0.1.4',
+    dependencies = { 'nvim-lua/plenary.nvim' }
+  },
 }
 
 local opts = { }
