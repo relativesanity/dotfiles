@@ -6,7 +6,8 @@ local plugins = {
   -- filetree
   { 'nvim-tree/nvim-tree.lua', dependencies = { 'nvim-tree/nvim-web-devicons' } },
   -- telescope for file navmgation
-  { 'nvim-telescope/telescope.nvim',
+  {
+    'nvim-telescope/telescope.nvim',
     dependencies = {
       'nvim-lua/plenary.nvim', { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     }
@@ -21,21 +22,21 @@ local plugins = {
   'windwp/nvim-autopairs',
 
   -- completion
-  'hrsh7th/nvim-cmp', -- enable completions
-  'hrsh7th/cmp-buffer', -- buffer completions
-  'hrsh7th/cmp-path', -- path completions
-  'hrsh7th/cmp-cmdline', -- command line completions
+  'hrsh7th/nvim-cmp',         -- enable completions
+  'hrsh7th/cmp-buffer',       -- buffer completions
+  'hrsh7th/cmp-path',         -- path completions
+  'hrsh7th/cmp-cmdline',      -- command line completions
   'saadparwaiz1/cmp_luasnip', -- snippet completions
 
   -- snippets
-  'L3MON4D3/LuaSnip', -- snippet engine
+  'L3MON4D3/LuaSnip',             -- snippet engine
   'rafamadriz/friendly-snippets', -- a bunch of handy snippets
 
   -- LSP config
-  'neovim/nvim-lspconfig',
-  'williamboman/mason.nvim',
-  'williamboman/mason-lspconfig.nvim',
-  'hrsh7th/cmp-nvim-lsp',
+  'neovim/nvim-lspconfig',             -- lsp configurations
+  'williamboman/mason.nvim',           -- manage lsp installation
+  'williamboman/mason-lspconfig.nvim', -- connect mason and lspconfig
+  'hrsh7th/cmp-nvim-lsp',              -- connect lsp with completion
 }
 
 
