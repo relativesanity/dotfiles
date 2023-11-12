@@ -19,14 +19,23 @@ local plugins = {
   'johnfrankmorgan/whitespace.nvim',
   -- automatically add closing pairs
   'windwp/nvim-autopairs',
-  -- LSP and completion
+
+  -- completion
+  'hrsh7th/nvim-cmp', -- enable completions
+  'hrsh7th/cmp-buffer', -- buffer completions
+  'hrsh7th/cmp-path', -- path completions
+  'hrsh7th/cmp-cmdline', -- command line completions
+  'saadparwaiz1/cmp_luasnip', -- snippet completions
+
+  -- snippets
+  'L3MON4D3/LuaSnip', -- snippet engine
+  'rafamadriz/friendly-snippets', -- a bunch of handy snippets
+
+  -- LSP config
+  'neovim/nvim-lspconfig',
   'williamboman/mason.nvim',
   'williamboman/mason-lspconfig.nvim',
-  { 'VonHeikemen/lsp-zero.nvim', branch = 'v3.x' },
-  'neovim/nvim-lspconfig',
   'hrsh7th/cmp-nvim-lsp',
-  'hrsh7th/nvim-cmp',
-  'L3MON4D3/LuaSnip',
 }
 
 
