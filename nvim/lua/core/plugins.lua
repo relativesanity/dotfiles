@@ -1,13 +1,10 @@
 local plugins = {
   -- catpuccin for theme
   { 'catppuccin/nvim', name = 'catppuccin', priority = 1000 },
-
-  -- devicons for lualine and nvim-tree
-  'nvim-tree/nvim-web-devicons',
   -- statusline awesomeness
-  'nvim-lualine/lualine.nvim',
+  { 'nvim-lualine/lualine.nvim', dependencies = { 'nvim-tree/nvim-web-devicons' } },
   -- filetree
-  'nvim-tree/nvim-tree.lua',
+  { 'nvim-tree/nvim-tree.lua', dependencies = { 'nvim-tree/nvim-web-devicons' } },
   -- telescope for file navmgation
   { 'nvim-telescope/telescope.nvim', dependencies = { 'nvim-lua/plenary.nvim' } },
   -- treesitter for parsing and syntax highlighting
