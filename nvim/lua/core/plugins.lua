@@ -3,11 +3,11 @@ local plugins = {
   { 'catppuccin/nvim', name = 'catppuccin', priority = 1000 },
 
   -- devicons for lualine and nvim-tree
-  { 'nvim-tree/nvim-web-devicons' },
+  'nvim-tree/nvim-web-devicons',
   -- statusline awesomeness
-  { 'nvim-lualine/lualine.nvim' },
+  'nvim-lualine/lualine.nvim',
   -- filetree
-  { 'nvim-tree/nvim-tree.lua' },
+  'nvim-tree/nvim-tree.lua',
   -- telescope for file navmgation
   {
     'nvim-telescope/telescope.nvim', tag = '0.1.4',
@@ -15,7 +15,10 @@ local plugins = {
   },
   -- treesitter for parsing and syntax highlighting
   { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
-  { 'mbbill/undotree' },
+  -- visualise changes via undo history
+  'mbbill/undotree',
+  -- show and manage whitespace
+  'johnfrankmorgan/whitespace.nvim',
 }
 
 
