@@ -42,6 +42,7 @@ local plugins = {
   -- snippets
   'L3MON4D3/LuaSnip',             -- snippet engine
   'rafamadriz/friendly-snippets', -- a bunch of handy snippets
+  'github/copilot.vim',           -- let's try copilot
 
   -- LSP config
   'neovim/nvim-lspconfig',             -- lsp configurations
