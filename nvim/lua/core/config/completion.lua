@@ -1,16 +1,24 @@
-local luasnip = require 'luasnip'
-require('luasnip.loaders.from_vscode').lazy_load()
-luasnip.config.setup {}
+local cmp = require('cmp')
+local luasnip = require('luasnip')
 
-local cmp = require 'cmp'
-cmp.setup {
+require('luasnip/loaders/from_vscode').lazy_load()
+
+cmp.setup({
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body)
-    end,
+    end
   },
-  mapping = cmp.mapping.preset.insert {
-    ['<CR>'] = cmp.mapping.confirm { },
+  sources = {
+    { name = 'buffer' },
+    { name = 'luasnip' },
+    { name = 'nvim_lsp' },
+    { name = 'path' },
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<CR>'] = cmp.mapping.confirm({ select = false }),
+    -- enable "Super-Tab" mapping as per
+    -- https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#super-tab-like-mapping
     ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
@@ -29,11 +37,5 @@ cmp.setup {
         fallback()
       end
     end, { 'i', 's' }),
-  },
-  sources = {
-    { name = 'luasnip' },
-    { name = 'buffer' },
-    { name = 'nvim_lsp' },
-  },
-}
-
+  }),
+})
