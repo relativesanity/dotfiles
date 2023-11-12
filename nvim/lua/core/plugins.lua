@@ -13,6 +13,8 @@ local plugins = {
     'nvim-telescope/telescope.nvim', tag = '0.1.4',
     dependencies = { 'nvim-lua/plenary.nvim' }
   },
+  -- treesitter for parsing and syntax highlighting
+  { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" }
 }
 
 local opts = { }
