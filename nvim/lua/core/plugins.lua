@@ -17,7 +17,6 @@ local plugins = {
   { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" }
 }
 
-local opts = { }
 
 
 
@@ -33,6 +32,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- lazy setup with plugins and options defined above
-require("lazy").setup(plugins, opts)
+require("lazy").setup(plugins)
 -- load config for plugins
 require('core.config')
