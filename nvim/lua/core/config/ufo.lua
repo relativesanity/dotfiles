@@ -6,6 +6,7 @@ vim.o.foldenable = true
 -- Using ufo provider requires remapping zR and zM
 vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
 vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
+vim.keymap.set('n', 'zk', require('ufo').peekFoldedLinesUnderCursor)
 require('ufo').setup({
   provider_selector = function(_, _, _)
     return { 'treesitter', 'indent' }
