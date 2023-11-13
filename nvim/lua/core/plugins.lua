@@ -14,6 +14,10 @@ local plugins = {
   },
   -- treesitter for parsing and syntax highlighting
   { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
+  -- treesitter context to pin things to the top of the buffer
+  { 'nvim-treesitter/nvim-treesitter-context' },
+  -- ufo for folding
+  { 'kevinhwang91/nvim-ufo', dependencies = 'kevinhwang91/promise-async' },
   -- visualise changes via undo history
   'mbbill/undotree',
   -- show and manage whitespace
@@ -42,6 +46,7 @@ local plugins = {
   -- snippets
   'L3MON4D3/LuaSnip',             -- snippet engine
   'rafamadriz/friendly-snippets', -- a bunch of handy snippets
+  'github/copilot.vim',           -- let's try copilot
 
   -- LSP config
   'neovim/nvim-lspconfig',             -- lsp configurations

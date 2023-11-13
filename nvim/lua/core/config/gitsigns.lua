@@ -10,7 +10,7 @@ require('gitsigns').setup({
 
     -- Actions
     map('n', '<leader>gb', function() gs.blame_line{full=true} end)
-    map('n', '<leader>tb', gs.toggle_current_line_blame)
-    map('n', '<leader>td', gs.toggle_deleted)
+    map('n', '<leader>gtb', gs.toggle_current_line_blame)
+    map('n', '<leader>gtd', gs.toggle_deleted)
   end
 })
