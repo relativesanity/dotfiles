@@ -15,7 +15,7 @@ local plugins = {
   -- treesitter for parsing and syntax highlighting
   { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
   -- treesitter context to pin things to the top of the buffer
-  { 'nvim-treesitter/nvim-treesitter-context' },
+  'nvim-treesitter/nvim-treesitter-context',
   -- ufo for folding
   { 'kevinhwang91/nvim-ufo', dependencies = 'kevinhwang91/promise-async' },
   -- visualise changes via undo history
