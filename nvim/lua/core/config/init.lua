@@ -8,6 +8,6 @@ require('core.config.undotree')
 require('core.config.whitespace')
 require('core.config.nvim-autopairs')
 require('core.config.gitsigns')
--- require('core.config.completion') -- disabled to play with copilot
+require('core.config.completion')
 require('core.config.lsp')
 require('core.config.ufo')

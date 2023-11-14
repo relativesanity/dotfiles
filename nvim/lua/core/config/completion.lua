@@ -1,5 +1,12 @@
 local cmp = require('cmp')
 local luasnip = require('luasnip')
+local copilot = require('copilot')
+local copilot_cmp = require('copilot_cmp')
+copilot_cmp.setup()
+copilot.setup({
+  suggestion = { enabled = false },
+  panel = { enabled = false },
+})
 
 require('luasnip/loaders/from_vscode').lazy_load()
 
@@ -10,6 +17,7 @@ cmp.setup({
     end
   },
   sources = {
+    { name = 'copilot' },
     { name = 'buffer' },
     { name = 'luasnip' },
     { name = 'nvim_lsp' },
