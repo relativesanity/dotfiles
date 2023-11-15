@@ -17,7 +17,7 @@ cmp.setup({
     end
   },
   sources = {
-    { name = 'copilot' },
+    -- { name = 'copilot' },
     { name = 'buffer' },
     { name = 'luasnip' },
     { name = 'nvim_lsp' },
