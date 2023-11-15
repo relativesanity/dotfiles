@@ -12,5 +12,7 @@ require('gitsigns').setup({
     map('n', '<leader>gb', function() gs.blame_line{full=true} end)
     map('n', '<leader>gtb', gs.toggle_current_line_blame)
     map('n', '<leader>gtd', gs.toggle_deleted)
+    map('n', '<leader>]', gs.next_hunk)
+    map('n', '<leader>[', gs.prev_hunk)
   end
 })

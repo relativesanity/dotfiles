@@ -27,7 +27,7 @@ local plugins = {
   -- show git status in gutter
   'lewis6991/gitsigns.nvim',
   -- show indent guides
-  {'lukas-reineke/indent-blankline.nvim', main = 'ibl' },
+  { 'lukas-reineke/indent-blankline.nvim', main = 'ibl' },
 
   -- pope is god. wait…
   'tpope/vim-commentary', -- enable simple commenting
