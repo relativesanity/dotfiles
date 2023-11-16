@@ -5,6 +5,7 @@ vim.g.loaded_netrwPlugin = 1
 vim.opt.cursorline = true         -- highlight the current line
 vim.opt.autoread = true           -- read the buffer in case it's edited elsewhere
 vim.opt.number = true             -- show line numbers
+vim.opt.relativenumber = true     -- show relative line numbers for easy jumping
 vim.opt.wrap = false              -- don't wrap lines
 vim.opt.colorcolumn = '80,100'    -- show columns at 80 and 100 chars
 vim.opt.scrolloff = 8             -- ensure scrolling moves 8 lines before end of buffer
