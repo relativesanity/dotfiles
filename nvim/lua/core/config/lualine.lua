@@ -1,6 +1,9 @@
-require('lualine').setup {
-  options = {
-    icons_enabled = true,
-    theme = 'auto',
+require('lualine').setup({
+  -- options = { },
+  sections = {
+    lualine_x = { 'filetype' },
+  },
+  extensions = {
+    'nvim-tree', 'mason', 'lazy', 'quickfix'
   }
-}
+})

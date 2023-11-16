@@ -38,6 +38,11 @@ local plugins = {
   -- use emmet for HTML editing
   'mattn/emmet-vim',
 
+  -- use zenmode for distraction free editing
+  'folke/zen-mode.nvim',
+  -- … and twilight for added focus
+  'folke/twilight.nvim',
+
   -- completion
   'hrsh7th/nvim-cmp',         -- enable completions
   'hrsh7th/cmp-buffer',       -- buffer completions
