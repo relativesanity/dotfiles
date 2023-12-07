@@ -2,6 +2,8 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+vim.opt.mouse = ''                -- disable mouse clicking in vim
+
 vim.opt.cursorline = true         -- highlight the current line
 vim.opt.autoread = true           -- read the buffer in case it's edited elsewhere
 vim.opt.number = true             -- show line numbers

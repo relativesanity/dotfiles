@@ -34,6 +34,10 @@ local plugins = {
   'tpope/vim-surround',   -- enable smart surrounds
   'tpope/vim-repeat',     -- enable repetition for plugin commands
   'tpope/vim-ragtag',     -- provide awesome tag completions
+  'tpope/vim-rails',      -- bring loads of Rails goodness to vim
+
+  -- useful plugins for rails development
+  'mogulla3/rspec.nvim', -- run rspec in nvim
 
   -- use emmet for HTML editing
   'mattn/emmet-vim',
@@ -53,7 +57,7 @@ local plugins = {
   -- snippets
   'L3MON4D3/LuaSnip',             -- snippet engine
   'rafamadriz/friendly-snippets', -- a bunch of handy snippets
-  'zbirenbaum/copilot.lua',           -- let's try copilot
+  'zbirenbaum/copilot.lua',       -- let's try copilot
   'zbirenbaum/copilot-cmp',       -- expose copilot as a cmp source
 
   -- LSP config

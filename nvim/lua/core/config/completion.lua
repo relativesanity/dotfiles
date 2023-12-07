@@ -9,6 +9,7 @@ copilot.setup({
 })
 
 require('luasnip/loaders/from_vscode').lazy_load()
+luasnip.filetype_extend('ruby', {'rails'})
 
 cmp.setup({
   snippet = {
@@ -17,7 +18,7 @@ cmp.setup({
     end
   },
   sources = {
-    -- { name = 'copilot' },
+    { name = 'copilot' },
     { name = 'buffer' },
     { name = 'luasnip' },
     { name = 'nvim_lsp' },
