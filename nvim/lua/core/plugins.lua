@@ -1,10 +1,18 @@
 local plugins = {
   -- themes
   { 'catppuccin/nvim', name = 'catppuccin', priority = 1000 },
-  -- statusline awesomeness
-  { 'nvim-lualine/lualine.nvim', dependencies = { 'nvim-tree/nvim-web-devicons' } },
   -- filetree
   { 'nvim-tree/nvim-tree.lua', dependencies = { 'nvim-tree/nvim-web-devicons' } },
+  -- display help for keymaps
+  {
+    'folke/which-key.nvim', event = 'VeryLazy',
+    init = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 200
+    end,
+  },
+  -- statusline awesomeness
+  { 'nvim-lualine/lualine.nvim', dependencies = { 'nvim-tree/nvim-web-devicons' } },
   -- telescope for file navigation
   {
     'nvim-telescope/telescope.nvim',
@@ -33,38 +41,43 @@ local plugins = {
   'tpope/vim-commentary', -- enable simple commenting
   'tpope/vim-surround',   -- enable smart surrounds
   'tpope/vim-repeat',     -- enable repetition for plugin commands
-  'tpope/vim-ragtag',     -- provide awesome tag completions
-  'tpope/vim-rails',      -- bring loads of Rails goodness to vim
+  -- 'tpope/vim-ragtag',     -- provide awesome tag completions
+  -- 'tpope/vim-rails',      -- bring loads of Rails goodness to vim
 
-  -- useful plugins for rails development
-  'mogulla3/rspec.nvim', -- run rspec in nvim
+  -- -- useful plugins for rails development
+  -- 'mogulla3/rspec.nvim', -- run rspec in nvim
 
-  -- use emmet for HTML editing
-  'mattn/emmet-vim',
+  -- -- use emmet for HTML editing
+  -- 'mattn/emmet-vim',
 
-  -- use zenmode for distraction free editing
-  'folke/zen-mode.nvim',
-  -- … and twilight for added focus
-  'folke/twilight.nvim',
+  -- -- use zenmode for distraction free editing
+  -- 'folke/zen-mode.nvim',
+  -- -- … and twilight for added focus
+  -- 'folke/twilight.nvim',
 
-  -- completion
-  'hrsh7th/nvim-cmp',         -- enable completions
-  'hrsh7th/cmp-buffer',       -- buffer completions
-  'hrsh7th/cmp-path',         -- path completions
-  'hrsh7th/cmp-cmdline',      -- command line completions
-  'saadparwaiz1/cmp_luasnip', -- snippet completions
+  -- -- completion
+  -- 'hrsh7th/nvim-cmp',         -- enable completions
+  -- 'hrsh7th/cmp-buffer',       -- buffer completions
+  -- 'hrsh7th/cmp-path',         -- path completions
+  -- 'hrsh7th/cmp-cmdline',      -- command line completions
+  -- 'saadparwaiz1/cmp_luasnip', -- snippet completions
 
-  -- snippets
-  'L3MON4D3/LuaSnip',             -- snippet engine
-  'rafamadriz/friendly-snippets', -- a bunch of handy snippets
-  'zbirenbaum/copilot.lua',       -- let's try copilot
-  'zbirenbaum/copilot-cmp',       -- expose copilot as a cmp source
+  -- -- snippets
+  -- 'L3MON4D3/LuaSnip',             -- snippet engine
+  -- 'rafamadriz/friendly-snippets', -- a bunch of handy snippets
+  -- 'zbirenbaum/copilot.lua',       -- let's try copilot
+  -- 'zbirenbaum/copilot-cmp',       -- expose copilot as a cmp source
 
-  -- LSP config
-  'neovim/nvim-lspconfig',             -- lsp configurations
-  'williamboman/mason.nvim',           -- manage lsp installation
-  'williamboman/mason-lspconfig.nvim', -- connect mason and lspconfig
-  'hrsh7th/cmp-nvim-lsp',              -- connect lsp with completion
+  -- -- LSP config
+  -- 'neovim/nvim-lspconfig',             -- lsp configurations
+  -- 'williamboman/mason.nvim',           -- manage lsp installation
+  -- 'williamboman/mason-lspconfig.nvim', -- connect mason and lspconfig
+  -- 'hrsh7th/cmp-nvim-lsp',              -- connect lsp with completion
+
+
+
+
+
 }
 
 
