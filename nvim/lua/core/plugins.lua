@@ -8,7 +8,7 @@ local plugins = {
     'folke/which-key.nvim', event = 'VeryLazy',
     init = function()
       vim.o.timeout = true
-      vim.o.timeoutlen = 200
+      vim.o.timeoutlen = 400
     end,
   },
   -- statusline awesomeness
@@ -28,8 +28,8 @@ local plugins = {
   { 'kevinhwang91/nvim-ufo', dependencies = 'kevinhwang91/promise-async' },
   -- visualise changes via undo history
   'mbbill/undotree',
-  -- show and manage whitespace
-  'johnfrankmorgan/whitespace.nvim',
+  -- -- show and manage whitespace
+  -- 'johnfrankmorgan/whitespace.nvim',
   -- automatically add closing pairs
   'windwp/nvim-autopairs',
   -- show git status in gutter
@@ -55,28 +55,34 @@ local plugins = {
   -- -- … and twilight for added focus
   -- 'folke/twilight.nvim',
 
-  -- -- completion
-  -- 'hrsh7th/nvim-cmp',         -- enable completions
+  --- Uncomment these if you want to manage LSP servers from neovim
+  {'williamboman/mason.nvim'},
+  {'williamboman/mason-lspconfig.nvim'},
+
+  {'VonHeikemen/lsp-zero.nvim', branch = 'v3.x'},
+  {'neovim/nvim-lspconfig'},
+  {'hrsh7th/cmp-nvim-lsp'},
+  {'hrsh7th/nvim-cmp'},
+  {'L3MON4D3/LuaSnip'},
+
+  -- LSP config
+  'neovim/nvim-lspconfig',             -- lsp configurations
+  'williamboman/mason.nvim',           -- manage lsp installation
+  'williamboman/mason-lspconfig.nvim', -- connect mason and lspconfig
+
+  -- completion
+  'hrsh7th/nvim-cmp',         -- enable completions
+  'hrsh7th/cmp-nvim-lsp',              -- connect lsp with completion
+  'saadparwaiz1/cmp_luasnip', -- snippet completions
   -- 'hrsh7th/cmp-buffer',       -- buffer completions
   -- 'hrsh7th/cmp-path',         -- path completions
   -- 'hrsh7th/cmp-cmdline',      -- command line completions
-  -- 'saadparwaiz1/cmp_luasnip', -- snippet completions
 
-  -- -- snippets
-  -- 'L3MON4D3/LuaSnip',             -- snippet engine
-  -- 'rafamadriz/friendly-snippets', -- a bunch of handy snippets
+  -- snippets
+  'L3MON4D3/LuaSnip',             -- snippet engine
+  'rafamadriz/friendly-snippets', -- a bunch of handy snippets
   -- 'zbirenbaum/copilot.lua',       -- let's try copilot
   -- 'zbirenbaum/copilot-cmp',       -- expose copilot as a cmp source
-
-  -- -- LSP config
-  -- 'neovim/nvim-lspconfig',             -- lsp configurations
-  -- 'williamboman/mason.nvim',           -- manage lsp installation
-  -- 'williamboman/mason-lspconfig.nvim', -- connect mason and lspconfig
-  -- 'hrsh7th/cmp-nvim-lsp',              -- connect lsp with completion
-
-
-
-
 
 }
 

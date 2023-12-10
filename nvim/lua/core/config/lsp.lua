@@ -4,22 +4,20 @@ local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
 vim.api.nvim_create_autocmd('LspAttach', {
   desc = 'LSP actions',
   callback = function (event)
-    local opts = { buffer = event.buf }
+    vim.keymap.set('n', '<leader>lh', vim.lsp.buf.hover, { desc = '(L)sp (h)over', buffer = event.buf })
+    vim.keymap.set('n', '<leader>ld', vim.lsp.buf.definition, { desc = '(L)sp (d)efinition', buffer = event.buf })
+    vim.keymap.set('n', '<leader>lD', vim.lsp.buf.declaration, { desc = '(L)sp (D)eclaration', buffer = event.buf })
+    vim.keymap.set('n', '<leader>li', vim.lsp.buf.implementation, { desc = '(L)sp (i)mplementation', buffer = event.buf })
+    vim.keymap.set('n', '<leader>lt', vim.lsp.buf.type_definition, { desc = '(L)sp (t)ype definition', buffer = event.buf })
+    vim.keymap.set('n', '<leader>lr', vim.lsp.buf.references, { desc = '(L)sp (r)eferences', buffer = event.buf })
+    vim.keymap.set('n', '<leader>ls', vim.lsp.buf.signature_help, { desc = '(L)sp (s)ignature help', buffer = event.buf })
+    vim.keymap.set('n', '<leader>lm', vim.lsp.buf.rename, { desc = '(L)sp rena(m)e', buffer = event.buf })
+    vim.keymap.set({'n', 'x'}, '<leader>lf', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', { desc = '(L)sp (f)ormat', buffer = event.buf })
+    vim.keymap.set('n', '<leader>la', vim.lsp.buf.code_action, { desc = '(L)sp code (a)ction', buffer = event.buf })
 
-    vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
-    vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
-    vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
-    vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
-    vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
-    vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
-    vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
-    vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-    vim.keymap.set({'n', 'x'}, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
-    vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
-
-    vim.keymap.set('n', 'gl', '<cmd>lua vim.diagnostic.open_float()<cr>', opts)
-    vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>', opts)
-    vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>', opts)
+    vim.keymap.set('n', '<leader>lF', vim.diagnostic.open_float, { desc = '(L)sp open (F)loat', buffer = event.buf })
+    vim.keymap.set('n', '<leader>lp', vim.diagnostic.goto_prev, { desc = '(L)sp (p)revious', buffer = event.buf })
+    vim.keymap.set('n', '<leader>ln', vim.diagnostic.goto_next, { desc = '(L)sp (n)ext', buffer = event.buf })
   end
 })
 

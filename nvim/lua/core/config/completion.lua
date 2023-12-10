@@ -1,34 +1,32 @@
 local cmp = require('cmp')
 local luasnip = require('luasnip')
-local copilot = require('copilot')
-local copilot_cmp = require('copilot_cmp')
-copilot_cmp.setup()
-copilot.setup({
-  suggestion = { enabled = false },
-  panel = { enabled = false },
-})
+-- local copilot = require('copilot')
+-- local copilot_cmp = require('copilot_cmp')
+-- copilot_cmp.setup()
+-- copilot.setup({
+--   suggestion = { enabled = false },
+--   panel = { enabled = false },
+-- })
 
 require('luasnip/loaders/from_vscode').lazy_load()
 luasnip.filetype_extend('ruby', {'rails'})
 
 cmp.setup({
+  sources = {
+    { name = 'luasnip' },
+    { name = 'nvim_lsp' },
+    -- { name = 'copilot' },
+    -- { name = 'buffer' },
+    -- { name = 'path' },
+  },
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body)
     end
   },
-  sources = {
-    { name = 'copilot' },
-    { name = 'buffer' },
-    { name = 'luasnip' },
-    { name = 'nvim_lsp' },
-    { name = 'path' },
-  },
   mapping = cmp.mapping.preset.insert({
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.abort(),
     ['<CR>'] = cmp.mapping.confirm({ select = false }),
 
     -- enable "Super-Tab" mapping as per
@@ -53,22 +51,23 @@ cmp.setup({
     end, { 'i', 's' }),
   }),
 })
-cmp.setup.cmdline('/', {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = {
-    { name = 'buffer' }
-  }
-})
-cmp.setup.cmdline(':', {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = cmp.config.sources({
-    { name = 'path' }
-  }, {
-    {
-      name = 'cmdline',
-      option = {
-        ignore_cmds = { 'Man', '!' }
-      }
-    }
-  })
-})
+
+-- cmp.setup.cmdline('/', {
+--   mapping = cmp.mapping.preset.cmdline(),
+--   sources = {
+--     { name = 'buffer' }
+--   }
+-- })
+-- cmp.setup.cmdline(':', {
+--   mapping = cmp.mapping.preset.cmdline(),
+--   sources = cmp.config.sources({
+--     { name = 'path' }
+--   }, {
+--     {
+--       name = 'cmdline',
+--       option = {
+--         ignore_cmds = { 'Man', '!' }
+--       }
+--     }
+--   })
+-- })
