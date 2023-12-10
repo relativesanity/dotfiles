@@ -12,10 +12,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '<leader>lr', vim.lsp.buf.references, { desc = '(L)sp (r)eferences', buffer = event.buf })
     vim.keymap.set('n', '<leader>ls', vim.lsp.buf.signature_help, { desc = '(L)sp (s)ignature help', buffer = event.buf })
     vim.keymap.set('n', '<leader>lm', vim.lsp.buf.rename, { desc = '(L)sp rena(m)e', buffer = event.buf })
-    vim.keymap.set({'n', 'x'}, '<leader>lf', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', { desc = '(L)sp (f)ormat', buffer = event.buf })
+    vim.keymap.set({'n', 'x'}, '<leader>lF', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', { desc = '(L)sp (F)ormat', buffer = event.buf })
     vim.keymap.set('n', '<leader>la', vim.lsp.buf.code_action, { desc = '(L)sp code (a)ction', buffer = event.buf })
 
-    vim.keymap.set('n', '<leader>lF', vim.diagnostic.open_float, { desc = '(L)sp open (F)loat', buffer = event.buf })
+    vim.keymap.set('n', '<leader>lf', vim.diagnostic.open_float, { desc = '(L)sp open (f)loat', buffer = event.buf })
     vim.keymap.set('n', '<leader>lp', vim.diagnostic.goto_prev, { desc = '(L)sp (p)revious', buffer = event.buf })
     vim.keymap.set('n', '<leader>ln', vim.diagnostic.goto_next, { desc = '(L)sp (n)ext', buffer = event.buf })
   end
