@@ -42,14 +42,14 @@ local plugins = {
   { 'tpope/vim-commentary' }, -- enable simple commenting
   { 'tpope/vim-surround' },   -- enable smart surrounds
   { 'tpope/vim-repeat' },     -- enable repetition for plugin commands
-  -- { 'tpope/vim-ragtag' },     -- provide awesome tag completions
+  { 'tpope/vim-ragtag' },     -- provide awesome tag completions
   -- { 'tpope/vim-rails' },      -- bring loads of Rails goodness to vim
 
   -- -- useful plugins for rails development
   -- { 'mogulla3/rspec.nvim' }, -- run rspec in nvim
 
-  -- -- use emmet for HTML editing
-  -- { 'mattn/emmet-vim' },
+  -- use emmet for HTML editing
+  { 'mattn/emmet-vim' },
 
   -- -- use zenmode for distraction free editing
   -- { 'folke/zen-mode.nvim' },
