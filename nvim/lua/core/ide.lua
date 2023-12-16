@@ -29,7 +29,7 @@ end
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
-  ensure_installed = { 'lua_ls', 'solargraph' },
+  ensure_installed = { 'lua_ls', 'solargraph', 'tailwindcss' },
   handlers = { default_setup }
 })
 
