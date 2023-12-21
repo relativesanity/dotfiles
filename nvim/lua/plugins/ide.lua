@@ -1,8 +1,4 @@
 return {
-  -- lsp
-  { 'neovim/nvim-lspconfig' },             -- lsp configurations
-  { 'williamboman/mason.nvim' },           -- manage lsp installation
-  { 'williamboman/mason-lspconfig.nvim' }, -- connect mason and lspconfig
   -- completion
   { 'hrsh7th/nvim-cmp' },                  -- enable completions
   { 'hrsh7th/cmp-nvim-lsp' },              -- connect lsp with completion
