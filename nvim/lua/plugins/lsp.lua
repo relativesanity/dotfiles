@@ -5,7 +5,12 @@ return {
     config = function()
       require('mason').setup({})
       require('mason-lspconfig').setup({
-        ensure_installed = { 'lua_ls', 'solargraph', 'tailwindcss' },
+        ensure_installed = {
+          'lua_ls',
+          'solargraph',
+          'tailwindcss',
+          'html'
+        },
       })
     end
   },
@@ -16,6 +21,9 @@ return {
       lspconfig.lua_ls.setup({})
       lspconfig.solargraph.setup({})
       lspconfig.tailwindcss.setup({})
+      lspconfig.html.setup({
+        filetypes = { 'eruby', 'html' }
+      })
 
       vim.keymap.set('n', '<leader>lh', vim.lsp.buf.hover, { desc = '(L)sp (h)over' })
       vim.keymap.set('n', '<leader>ld', vim.lsp.buf.definition, { desc = '(L)sp (d)efinition' })

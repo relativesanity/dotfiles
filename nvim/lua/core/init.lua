@@ -1,5 +1,4 @@
 require('core.options')
 require('core.keymaps')
 require('core.plugins')
-require('core.ide')
-require('core.completions')
+require('core.ui')
