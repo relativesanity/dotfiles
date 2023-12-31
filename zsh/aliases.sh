@@ -41,6 +41,8 @@ alias dkcr='dkc run'
 alias dotfiles='cd ~/.dotfiles'
 alias config='echo "USE dotfiles"'
 
+alias rr='bin/rails'
+
 # Bootstrap a tmux session
 function start() {
   tmux -2 attach -t ${1-dev} || tmux -2 new -s ${1-dev}
