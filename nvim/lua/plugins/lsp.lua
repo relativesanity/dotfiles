@@ -18,9 +18,11 @@ return {
     'neovim/nvim-lspconfig',
     config = function()
       local lspconfig = require('lspconfig')
-      lspconfig.lua_ls.setup({})
-      lspconfig.solargraph.setup({})
-      lspconfig.tailwindcss.setup({})
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+      lspconfig.lua_ls.setup({capabilities = capabilities})
+      lspconfig.solargraph.setup({capabilities = capabilities})
+      lspconfig.tailwindcss.setup({capabilities = capabilities})
       lspconfig.html.setup({
         filetypes = { 'eruby', 'html' }
       })
