@@ -7,7 +7,6 @@ return {
       require('mason-lspconfig').setup({
         ensure_installed = {
           'lua_ls',
-          'solargraph',
           'tailwindcss',
           'html'
         },
@@ -21,7 +20,6 @@ return {
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
       lspconfig.lua_ls.setup({capabilities = capabilities})
-      lspconfig.solargraph.setup({capabilities = capabilities})
       lspconfig.tailwindcss.setup({capabilities = capabilities})
       lspconfig.html.setup({
         filetypes = { 'eruby', 'html' }
