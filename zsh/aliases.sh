@@ -1,8 +1,8 @@
-alias ls='exa'
-alias ll='exa -lh'
+alias ls='eza'
+alias ll='eza -lh'
 alias l='ll'
-alias la='exa -alh'
-alias tree='exa --tree'
+alias la='eza -alh'
+alias tree='eza --tree'
 
 alias cat='bat'
 alias cd='z'

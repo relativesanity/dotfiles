@@ -6,9 +6,9 @@ return {
       require('mason').setup({})
       require('mason-lspconfig').setup({
         ensure_installed = {
+          'html',
           'lua_ls',
           'tailwindcss',
-          'html'
         },
       })
     end
@@ -19,11 +19,9 @@ return {
       local lspconfig = require('lspconfig')
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-      lspconfig.lua_ls.setup({capabilities = capabilities})
-      lspconfig.tailwindcss.setup({capabilities = capabilities})
-      lspconfig.html.setup({
-        filetypes = { 'eruby', 'html' }
-      })
+      lspconfig.html.setup({ capabilities = capabilities, filetypes = { 'eruby', 'html' } })
+      lspconfig.lua_ls.setup({ capabilities = capabilities })
+      lspconfig.tailwindcss.setup({ capabilities = capabilities })
 
       vim.keymap.set('n', '<leader>lh', vim.lsp.buf.hover, { desc = '(L)sp (h)over' })
       vim.keymap.set('n', '<leader>ld', vim.lsp.buf.definition, { desc = '(L)sp (d)efinition' })
