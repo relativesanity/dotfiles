@@ -1,12 +1,12 @@
 [user]
-	name = Jonathan Barrett
-	email = jonathan@relativesanity.com
+  name = Jonathan Barrett
+  email = jonathan@relativesanity.com
 [color]
-	ui = True
+  ui = True
 [filter "lfs"]
-	required = true
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
+  required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
 [init]
-	defaultBranch = main
+  defaultBranch = main
