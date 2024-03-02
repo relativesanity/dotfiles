@@ -40,6 +40,8 @@ return {
         ['.zshenv'] = 'sh',
         ['zprofile'] = 'sh', -- add this as it's how I store my dotfile
         ['zshrc'] = 'sh',    -- add this as it's how I store my dotfile
+        ['Guardfile'] = 'ruby',
+        ['Gemfile'] = 'ruby',
       },
     }
   end
