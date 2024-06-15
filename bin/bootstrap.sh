@@ -20,4 +20,3 @@ fi
 
 cd $HOME/.dotfiles
 bin/install.sh
-

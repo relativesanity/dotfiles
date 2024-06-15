@@ -10,6 +10,7 @@ brew 'most'
 brew 'zoxide'
 brew 'watch'
 brew 'starship'
+brew 'stow'
 
 tap 'homebrew/cask-fonts'
 cask 'font-jetbrains-mono-nerd-font'
