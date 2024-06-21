@@ -8,7 +8,6 @@ return {
         ensure_installed = {
           'html',
           'lua_ls',
-          'solargraph',
           'tailwindcss',
         },
       })
@@ -22,7 +21,6 @@ return {
 
       lspconfig.html.setup({ capabilities = capabilities, filetypes = { 'eruby', 'html' } })
       lspconfig.lua_ls.setup({ capabilities = capabilities })
-      lspconfig.solargraph.setup({ capabilities = capabilities })
       lspconfig.tailwindcss.setup({ capabilities = capabilities })
 
       vim.keymap.set('n', '<leader>lh', vim.lsp.buf.hover, { desc = '(L)sp (h)over' })
