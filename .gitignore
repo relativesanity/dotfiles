@@ -1,2 +1,4 @@
 Brewfile.lock.json
 fish/local.fish
+ssh/.ssh/id*
+ssh/.ssh/known_hosts*
