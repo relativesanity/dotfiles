@@ -1,5 +1,6 @@
 brew 'git'
 brew 'tmux'
+brew 'tpm'
 brew 'neovim'
 brew 'fzf'
 brew 'eza'
