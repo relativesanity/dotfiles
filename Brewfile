@@ -13,6 +13,7 @@ brew 'watch'
 brew 'starship'
 brew 'stow'
 brew 'tpm'
+brew 's-search'
 
 cask 'font-jetbrains-mono-nerd-font'
 
