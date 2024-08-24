@@ -17,7 +17,8 @@ brew 's-search'
 
 cask 'font-jetbrains-mono-nerd-font'
 
-cask 'iterm2'
+cask 'wezterm'
+brew 'gh'
 brew 'rbenv'
 brew 'ruby-build'
 brew 'postgresql@14'
