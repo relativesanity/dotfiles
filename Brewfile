@@ -18,6 +18,7 @@ brew 's-search'
 cask 'font-jetbrains-mono-nerd-font'
 
 cask 'wezterm'
+cask 'aerospace'
 brew 'gh'
 brew 'rbenv'
 brew 'ruby-build'
