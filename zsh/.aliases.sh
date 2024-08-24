@@ -1,5 +1,5 @@
-alias ls='eza --icons=always'
-alias ll='ls -lh'
+alias ls='eza'
+alias ll='ls -lh --icons=always'
 alias l='ll'
 alias la='ll -a'
 alias tree='ls --tree'
