@@ -8,6 +8,7 @@ return {
         ensure_installed = {
           'html',
           'lua_ls',
+          'ruby_lsp',
           'tailwindcss',
         },
       })
@@ -21,6 +22,7 @@ return {
 
       lspconfig.html.setup({ capabilities = capabilities, filetypes = { 'eruby', 'html' } })
       lspconfig.lua_ls.setup({ capabilities = capabilities })
+      lspconfig.ruby_lsp.setup({ capabilities = capabilities })
       lspconfig.tailwindcss.setup({ capabilities = capabilities })
 
       vim.keymap.set('n', '<leader>lh', vim.lsp.buf.hover, { desc = '(L)sp (h)over' })
