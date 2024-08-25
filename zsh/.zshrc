@@ -42,3 +42,6 @@ export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git'"
 
 # set up zoxide
 eval "$(zoxide init zsh)"
+
+# set up syntax highlighting
+source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
