@@ -10,4 +10,7 @@ config.color_scheme = "Catppuccin Mocha"
 config.window_background_opacity = 0.85
 config.macos_window_background_blur = 100
 
+config.initial_cols = 144
+config.initial_rows = 39
+
 return config
