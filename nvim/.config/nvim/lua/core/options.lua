@@ -25,6 +25,9 @@ vim.opt.smarttab = true           -- a tab in an indent inserts shiftwidth space
 vim.opt.autoindent = true         -- automatically set the indent of a new line
 vim.opt.smartindent = true        -- do clever autoindenting
 
+vim.opt.ignorecase = true         -- search is case insensitive…
+vim.opt.smartcase = true          -- … unless the search contains Upper Case characters
+
 vim.g.loaded_python3_provider = 0 -- remove python provider
 vim.g.loaded_ruby_provider = 0    -- remove ruby provider
 vim.g.loaded_node_provider = 0    -- remove node provider
