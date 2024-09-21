@@ -15,6 +15,7 @@ brew 'stow'
 brew 'tpm'
 brew 's-search'
 brew 'zsh-syntax-highlighting'
+brew 'wget'
 
 cask 'font-jetbrains-mono-nerd-font'
 
