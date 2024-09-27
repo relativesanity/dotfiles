@@ -7,6 +7,8 @@ alias tree='ls --tree'
 alias cat='bat'
 alias cd='z'
 
+alias mkdip='mkdir -p'
+
 alias be='bundle exec'
 
 alias ga='git add'
