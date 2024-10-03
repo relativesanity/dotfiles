@@ -4,6 +4,8 @@ alias l='ll'
 alias la='ll -a'
 alias tree='ls --tree'
 
+alias cl='clear'
+
 alias cat='bat'
 alias cd='z'
 
