@@ -45,3 +45,6 @@ eval "$(zoxide init zsh)"
 
 # set up syntax highlighting
 source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
+# load local env
+[ -f ~/.env.local.sh ] && source ~/.env.local.sh
