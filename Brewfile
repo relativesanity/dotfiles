@@ -18,6 +18,7 @@ brew 'zsh-syntax-highlighting'
 brew 'wget'
 
 cask 'font-jetbrains-mono-nerd-font'
+cask 'font-cascadia-code-nf'
 
 cask 'wezterm'
 brew 'gh'
@@ -28,3 +29,6 @@ brew 'libpq'
 brew 'node'
 brew 'nvm'
 brew 'stylua'
+
+cask 'notion'
+cask 'moom'
