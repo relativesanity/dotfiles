@@ -1,4 +1,6 @@
-stow --restow \
+#!/usr/bin/env bash
+
+stow -d ~/.dotfiles/ --restow \
   fzf \
   git \
   nvim \

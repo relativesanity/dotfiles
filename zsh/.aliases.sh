@@ -45,6 +45,8 @@ alias dkcr='dkc run'
 
 alias dotfiles='cd ~/.dotfiles'
 alias config='echo "USE dotfiles"'
+alias rebrew='brew bundle --file ~/.dotfiles/Brewfile --cleanup --zap'
+alias restow='~/.dotfiles/bin/restow.sh'
 
 alias rr='bin/rails'
 

@@ -13,6 +13,7 @@ return {
         'html',
         'javascript',
         'json',
+        'kdl',
         'lua',
         'lua',
         'luadoc',
