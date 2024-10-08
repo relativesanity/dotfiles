@@ -57,4 +57,4 @@ alias rr='bin/rails'
 #   killall Dock
 alias dockf='defaults write com.apple.dock autohide-delay -float 0; defaults write com.apple.dock autohide-time-modifier -int 0; killall Dock'
 
-alias start='zellij'
+alias start='zellij a Dev'
