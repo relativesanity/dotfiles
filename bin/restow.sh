@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 stow -d ~/.dotfiles/ --restow \
+  aerospace \
   fzf \
   git \
   nvim \

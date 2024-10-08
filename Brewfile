@@ -31,6 +31,7 @@ brew 'rbenv'
 brew 'ruby-build'
 brew 'stylua'
 
+cask 'nikitabobko/tap/aerospace'
 cask 'moom'
 cask 'notion'
 cask 'wezterm'
