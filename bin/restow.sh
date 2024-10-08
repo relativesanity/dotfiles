@@ -8,4 +8,5 @@ stow --restow \
   starship \
   tmux \
   wezterm \
+  zellij \
   zsh \

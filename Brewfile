@@ -16,6 +16,7 @@ brew 'tpm'
 brew 's-search'
 brew 'zsh-syntax-highlighting'
 brew 'wget'
+brew 'zellij'
 
 cask 'font-jetbrains-mono-nerd-font'
 cask 'font-cascadia-code-nf'
