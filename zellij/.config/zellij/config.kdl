@@ -124,8 +124,8 @@ keybinds {
     tmux {
         bind "[" { SwitchToMode "Scroll"; }
         bind "Ctrl b" { Write 2; SwitchToMode "Normal"; }
-        bind "\"" { NewPane "Down"; SwitchToMode "Normal"; }
-        bind "%" { NewPane "Right"; SwitchToMode "Normal"; }
+        bind "-" { NewPane "Down"; SwitchToMode "Normal"; }
+        bind "|" { NewPane "Right"; SwitchToMode "Normal"; }
         bind "z" { ToggleFocusFullscreen; SwitchToMode "Normal"; }
         bind "c" { NewTab; SwitchToMode "Normal"; }
         bind "," { SwitchToMode "RenameTab"; }
@@ -203,7 +203,8 @@ plugins {
 // Options:
 //   - true (default)
 //   - false
-pane_frames true
+//
+// pane_frames true
 
 // Toggle between having Zellij lay out panes according to a predefined set of layouts whenever possible
 // Options:
@@ -237,7 +238,13 @@ theme "catppuccin-mocha"
 
 // The name of the default layout to load on startup
 // Default: "default"
-// default_layout "compact"
+default_layout "compact"
+
+ui {
+  pane_frames {
+    rounded_corners true
+  }
+}
 
 // Choose the mode that zellij uses when starting up.
 // Default: normal
