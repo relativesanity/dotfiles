@@ -57,7 +57,4 @@ alias rr='bin/rails'
 #   killall Dock
 alias dockf='defaults write com.apple.dock autohide-delay -float 0; defaults write com.apple.dock autohide-time-modifier -int 0; killall Dock'
 
-# Bootstrap a tmux session
-function start() {
-  tmux -2 attach -t ${1-dev} || tmux -2 new -s ${1-dev}
-}
+alias start='zellij'
