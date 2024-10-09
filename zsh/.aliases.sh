@@ -45,7 +45,7 @@ alias dkcr='dkc run'
 
 alias dotfiles='cd ~/.dotfiles'
 alias config='echo "USE dotfiles"'
-alias rebrew='brew bundle --file ~/.dotfiles/Brewfile --cleanup --zap'
+alias rebrew='brew update && brew bundle --file ~/.dotfiles/Brewfile --cleanup --zap'
 alias restow='~/.dotfiles/bin/restow.sh'
 
 alias rr='bin/rails'
@@ -56,5 +56,3 @@ alias rr='bin/rails'
 #   defaults write com.apple.dock autohide-time-modifier -float "0.5"
 #   killall Dock
 alias dockf='defaults write com.apple.dock autohide-delay -float 0; defaults write com.apple.dock autohide-time-modifier -int 0; killall Dock'
-
-alias start='zellij a Dev'
