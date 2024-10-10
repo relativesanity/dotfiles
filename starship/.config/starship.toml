@@ -7,6 +7,9 @@ palette = "catppuccin_mocha"
 [directory]
 style = "bold lavender"
 
+[docker_context]
+disabled = true
+
 
 
 
