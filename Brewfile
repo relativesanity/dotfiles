@@ -20,6 +20,7 @@ brew 'wget'
 brew 'zellij'
 brew 'zoxide'
 brew 'zsh-syntax-highlighting'
+brew 'zsh-vi-mode'
 
 cask 'font-cascadia-code-nf'
 cask 'font-jetbrains-mono-nerd-font'
@@ -38,6 +39,7 @@ cask 'docker'
 cask 'moom'
 cask 'notion'
 cask 'raycast'
+cask 'setapp'
 cask 'wezterm'
 
 mas '1Blocker', id: 1365531024
@@ -52,3 +54,4 @@ mas 'Save to Reader', id: 1640236961
 mas 'Session', id: 1521432881
 mas 'StopTheMadness Pro', id: 6471380298
 mas 'Things 3', id: 904280696
+mas 'Tot', id: 1491071483
