@@ -10,6 +10,8 @@ config.window_decorations = "RESIZE"
 config.color_scheme = "Catppuccin Mocha"
 config.window_background_opacity = 0.97
 config.macos_window_background_blur = 100
+config.default_cursor_style = "SteadyUnderline"
+config.cursor_thickness = "2pt"
 
 config.initial_cols = 140
 config.initial_rows = 43

@@ -46,8 +46,5 @@ eval "$(zoxide init zsh)"
 # set up syntax highlighting
 source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
-# set up better vi mode
-source "$(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh"
-
 # load local env
 [ -f ~/.env.local.sh ] && source ~/.env.local.sh

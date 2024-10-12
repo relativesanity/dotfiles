@@ -20,7 +20,6 @@ brew 'wget'
 brew 'zellij'
 brew 'zoxide'
 brew 'zsh-syntax-highlighting'
-brew 'zsh-vi-mode'
 
 cask 'font-cascadia-code-nf'
 cask 'font-jetbrains-mono-nerd-font'
