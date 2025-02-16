@@ -19,4 +19,5 @@ else
 fi
 
 cd $HOME/.dotfiles
+git checkout v1.0
 bin/install.sh
