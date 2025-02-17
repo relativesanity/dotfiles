@@ -1,12 +1,12 @@
-alias ll='ls -lh'
-alias l='ll'
-alias la='ll -a'
-
 if command -v eza >/dev/null 2>&1; then
   alias ls='eza'
-  alias ll='ll --icons=always'
+  alias ll='ls -lh --icons=always'
   alias tree='ls --tree'
+else
+  alias ll='ls -lh'
 fi
+alias l='ll'
+alias la='ll -a'
 
 alias mkdir='mkdir -p'
 
