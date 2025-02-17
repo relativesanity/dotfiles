@@ -9,6 +9,8 @@
 bindkey -v
 
 # set up common environment
+export EDITOR=nvim
+export VISUAL=nvim
 [[ -e $HOME/.env.local.sh ]] && source $HOME/.env.local.sh
 
 
