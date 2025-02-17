@@ -47,6 +47,10 @@ setopt hist_ignore_dups
 setopt hist_find_no_dups
 
 
+# initialise integrations
+command -v starship >/dev/null 2>&1 && eval "$(starship init zsh)"
+
+
 # load common aliases
 source $HOME/.aliases.sh
 
