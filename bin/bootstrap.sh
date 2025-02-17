@@ -35,8 +35,3 @@ if command -v defaults >/dev/null 2>&1; then
   echo "Dotfiles downloaded"
 fi
 echo "Bootstrap complete"
-
-# We are now in the dotfiles directory with git and a package manager
-# available. Run the installation script
-
-./bin/install.sh
