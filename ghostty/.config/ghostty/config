@@ -1,0 +1,23 @@
+theme = catppuccin-mocha
+
+font-size = 15
+font-family = "Caskaydia Code NF"
+
+background-opacity = 0.94
+background-blur-radius = 40
+macos-titlebar-style = tabs
+window-padding-x = 8
+window-padding-y = 8
+window-padding-balance = true
+
+window-height = 42
+window-width = 160
+
+mouse-hide-while-typing = true
+
+keybind = ctrl+cmd+h=goto_split:left
+keybind = ctrl+cmd+j=goto_split:down
+keybind = ctrl+cmd+k=goto_split:up
+keybind = ctrl+cmd+l=goto_split:right
+keybind = ctrl+cmd+;=new_split:right
+keybind = ctrl+cmd+'=new_split:down
