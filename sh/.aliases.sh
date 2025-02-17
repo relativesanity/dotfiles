@@ -1,3 +1,13 @@
+alias ll='ls -lh'
+alias l='ll'
+alias la='ll -a'
+
+if command -v eza >/dev/null 2>&1; then
+  alias ls='eza'
+  alias ll='ll --icons=always'
+  alias tree='ls --tree'
+fi
+
 alias mkdir='mkdir -p'
 
 DOTFILES_PATH="$HOME/.dotfiles/"
