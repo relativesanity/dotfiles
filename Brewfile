@@ -11,6 +11,12 @@ brew 'starship'
 brew 'stow'
 brew 'zoxide'
 
+brew 'rbenv'
+brew 'ruby-build'
+brew 'jq'
+brew 'docker-buildx'
+cask 'docker'
+
 cask 'font-cascadia-code-nf'
 cask 'ghostty'
 

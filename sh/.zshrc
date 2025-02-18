@@ -53,6 +53,7 @@ setopt hist_find_no_dups
 command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh)"
 command -v starship >/dev/null 2>&1 && eval "$(starship init zsh)"
 command -v fzf >/dev/null 2>&1 && eval "$(fzf --zsh)"
+command -v rbenv >/dev/null 2>&1 && eval "$(rbenv init - zsh)"
 
 
 # load common aliases
