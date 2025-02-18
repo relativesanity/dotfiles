@@ -23,6 +23,7 @@ cask 'font-cascadia-code-nf'
 cask 'ghostty'
 
 cask 'backblaze'
+cask 'chatgpt'
 cask 'logi-options+'
 cask 'moom'
 cask 'obsidian'
