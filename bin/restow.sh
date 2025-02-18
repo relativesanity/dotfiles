@@ -27,6 +27,7 @@ mkdir -p "$HOME"/.config/ # a noop if it exists
 mkdir -p "$HOME"/.rbenv/  # a noop if it exists
 
 echo "stowing ghostty" && stow -d "$HOME"/.dotfiles/ --restow ghostty
+echo "stowing gh" && stow -d "$HOME"/.dotfiles/ --restow gh
 echo "stowing git" && stow -d "$HOME"/.dotfiles/ --restow git
 echo "stowing neovim" && stow -d "$HOME"/.dotfiles/ --restow neovim
 echo "stowing rbenv" && stow -d "$HOME"/.dotfiles/ --restow rbenv
