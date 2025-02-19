@@ -40,5 +40,4 @@ mas 'DaisyDisk', id: 411643860
 mas 'Displaperture', id: 1543920362
 mas 'Keynote', id: 409183694
 mas 'Numbers', id: 409203825
-mas 'StopTheMadness Pro', id: 6471380298
 mas 'Things 3', id: 904280696
