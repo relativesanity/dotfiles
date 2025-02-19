@@ -12,6 +12,8 @@ alias mkdir='mkdir -p'
 
 alias tsess='tmux new-session -A -s'
 
+alias msh='mosh --server=/opt/homebrew/bin/mosh-server'
+
 DOTFILES_PATH="$HOME/.dotfiles/"
 alias dotfiles='cd $DOTFILES_PATH'
 alias restow='$HOME/.dotfiles/bin/restow.sh'
