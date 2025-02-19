@@ -1,3 +1,5 @@
+tap 'homebrew/services'
+
 brew 'eza'
 brew 'fastfetch'
 brew 'fd'
