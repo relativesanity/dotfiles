@@ -10,6 +10,8 @@ alias la='ll -a'
 
 alias mkdir='mkdir -p'
 
+alias tsess='tmux new-session -A -s'
+
 DOTFILES_PATH="$HOME/.dotfiles/"
 alias dotfiles='cd $DOTFILES_PATH'
 alias restow='$HOME/.dotfiles/bin/restow.sh'
