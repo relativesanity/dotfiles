@@ -33,3 +33,4 @@ echo "stowing neovim" && stow -d "$HOME"/.dotfiles/ --restow neovim
 echo "stowing rbenv" && stow -d "$HOME"/.dotfiles/ --restow rbenv
 echo "stowing sh" && stow -d "$HOME"/.dotfiles/ --restow sh
 echo "stowing starship" && stow -d "$HOME"/.dotfiles/ --restow starship
+echo "stowing tmux" && stow -d "$HOME"/.dotfiles/ --restow tmux

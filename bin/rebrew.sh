@@ -24,4 +24,14 @@ if command -v defaults >/dev/null 2>&1; then
   brew bundle --file "$HOME"/.dotfiles/Brewfile --cleanup --zap
 fi
 
+# Check if we have tmux available
+if command -v tmux >/dev/null 2>&1; then
+  # and then check if we have tpm installed
+  if [[ ! -d $HOME/.tmux/plugins/tpm ]]; then
+    echo "Installing TMUX plugin manager"
+    mkdir -p $HOME/.tmux/plugins
+    git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+  fi
+fi
+
 echo "Rebrew complete"

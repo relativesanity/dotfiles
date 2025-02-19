@@ -15,6 +15,7 @@ brew 'ollama'
 brew 'ripgrep'
 brew 'starship'
 brew 'stow'
+brew 'tmux'
 brew 'zoxide'
 
 brew 'rbenv'
