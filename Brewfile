@@ -36,6 +36,7 @@ cask 'tailscale'
 
 mas '1Blocker', id: 1365531024
 mas 'Actions For Obsidian', id: 1659667937
+mas 'DaisyDisk', id: 411643860
 mas 'Displaperture', id: 1543920362
 mas 'Keynote', id: 409183694
 mas 'Numbers', id: 409203825
