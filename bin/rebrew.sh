@@ -20,12 +20,12 @@ if command -v defaults >/dev/null 2>&1; then
   echo "Updating homebrew"
   brew update
 
-  echo "Bundling homebrew"
-  brew bundle --file "$HOME"/.dotfiles/Brewfile --cleanup --zap
-
+  echo "Bundling local homebrew"
   if [[ -f "$HOME"/.dotfiles/Brewfile.local ]]; then
-    echo "Bundling local homebrew"
-    brew bundle --file "$HOME"/.dotfiles/Brewfile.local --cleanup --zap
+    # concat the files and pipe to the command to ensure the whole brewfile is considered when cleaning up
+    cat "$HOME"/.dotfiles/Brewfile "$HOME"/.dotfiles/Brewfile.local | brew bundle --file=- --cleanup --zap
+  else
+    brew bundle --file "$HOME"/.dotfiles/Brewfile --cleanup --zap
   fi
 fi
 
