@@ -1,3 +1,4 @@
 Brewfile.lock.json
+Brewfile.local
 ssh/.ssh/id*
 ssh/.ssh/known_hosts*

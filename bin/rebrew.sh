@@ -22,6 +22,11 @@ if command -v defaults >/dev/null 2>&1; then
 
   echo "Bundling homebrew"
   brew bundle --file "$HOME"/.dotfiles/Brewfile --cleanup --zap
+
+  if [[ -f "$HOME"/.dotfiles/Brewfile.local ]]; then
+    echo "Bundling local homebrew"
+    brew bundle --file "$HOME"/.dotfiles/Brewfile.local --cleanup --zap
+  fi
 fi
 
 # Check if we have tmux available
