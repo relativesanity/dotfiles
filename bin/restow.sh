@@ -1,36 +1,127 @@
 #!/usr/bin/env bash
 
-# Check if we're dealing with macOS
-if command -v defaults >/dev/null 2>&1; then
-  # Do we have homebrew installed already?
-  if [[ ! -e /opt/homebrew/bin/brew ]]; then
-    echo "Installing homebrew"
-    /usr/bin/env bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  fi
-  echo "Homebrew installed"
+set -euo pipefail # Exit on error, undefined vars, and pipeline failures
+IFS=$'\n\t'       # Stricter word splitting
 
-  # We now have homebrew installed, so if it's not an available command,
-  # we must configure it for the current session
-  if ! command -v brew >/dev/null 2>&1; then
-    echo "Enabling homebrew"
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-  fi
-  echo "Homebrew enabled"
+# Restow script for managing dotfile symlinks
+# Supports: macOS (via Homebrew), Arch Linux (via yay/pacman)
+#
+# Usage:
+#   ./restow.sh
+#
+# Prerequisites:
+#   - macOS: none (will install homebrew and stow if needed)
+#   - Arch: sudo access required if stow needs installing
+#
+# Security:
+#   - Script should be run from a trusted dotfiles repository
+#   - Verify symlink destinations before running
 
-  if ! command -v stow >/dev/null 2>&1; then
-    echo "Installing stow"
-    brew install stow
+# Configuration
+readonly REQUIRED_DIRS=(
+  "$HOME/.config"
+  "$HOME/.rbenv"
+)
+
+readonly STOW_CONFIGS=(
+  "ghostty"
+  "gh"
+  "git"
+  "neovim"
+  "rbenv"
+  "sh"
+  "starship"
+  "tmux"
+)
+
+# Main restow function to manage dotfile symlinks
+restow() {
+  ensure_stow || return 1
+
+  # Create required directories
+  print_status "Creating required directories"
+  for dir in "${REQUIRED_DIRS[@]}"; do
+    mkdir -p "$dir"
+  done
+
+  # Stow all configurations
+  print_status "Stowing configurations"
+  local dotfiles_dir="$HOME/.dotfiles"
+
+  for config in "${STOW_CONFIGS[@]}"; do
+    echo "stowing $config"
+    stow -d "$dotfiles_dir" --restow "$config" || {
+      print_status "Failed to stow $config"
+      return 1
+    }
+  done
+
+  print_status "All configurations stowed successfully"
+}
+
+# Print platform-specific status message
+print_status() {
+  local status=$1
+  if is_macos; then
+    echo "[macOS] $status"
+  elif is_arch; then
+    echo "[Arch] $status"
+  else
+    echo "[ERROR] $status"
   fi
+}
+
+# Platform detection
+is_macos() {
+  command -v defaults >/dev/null 2>&1
+}
+
+is_arch() {
+  command -v pacman >/dev/null 2>&1
+}
+
+# Ensure stow is available on the system
+ensure_stow() {
+  if is_macos; then
+    # Do we have homebrew installed already?
+    if [[ ! -e /opt/homebrew/bin/brew ]]; then
+      print_status "Installing homebrew"
+      /usr/bin/env bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fi
+    print_status "Homebrew installed"
+
+    # We now have homebrew installed, so if it's not an available command,
+    # we must configure it for the current session
+    if ! command -v brew >/dev/null 2>&1; then
+      print_status "Enabling homebrew"
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+    fi
+    print_status "Homebrew enabled"
+
+    if ! command -v stow >/dev/null 2>&1; then
+      print_status "Installing stow"
+      brew install stow
+    fi
+  elif is_arch; then
+    if ! command -v stow >/dev/null 2>&1; then
+      print_status "Installing stow"
+      if command -v yay >/dev/null 2>&1; then
+        yay -S --noconfirm stow
+      else
+        sudo pacman -S --noconfirm stow
+      fi
+    fi
+  else
+    print_status "Unsupported operating system"
+    return 1
+  fi
+
+  print_status "stow installed"
+  return 0
+}
+
+# Run restow and capture any errors
+if ! restow; then
+  print_status "Restow failed"
+  exit 1
 fi
-
-mkdir -p "$HOME"/.config/ # a noop if it exists
-mkdir -p "$HOME"/.rbenv/  # a noop if it exists
-
-echo "stowing ghostty" && stow -d "$HOME"/.dotfiles/ --restow ghostty
-echo "stowing gh" && stow -d "$HOME"/.dotfiles/ --restow gh
-echo "stowing git" && stow -d "$HOME"/.dotfiles/ --restow git
-echo "stowing neovim" && stow -d "$HOME"/.dotfiles/ --restow neovim
-echo "stowing rbenv" && stow -d "$HOME"/.dotfiles/ --restow rbenv
-echo "stowing sh" && stow -d "$HOME"/.dotfiles/ --restow sh
-echo "stowing starship" && stow -d "$HOME"/.dotfiles/ --restow starship
-echo "stowing tmux" && stow -d "$HOME"/.dotfiles/ --restow tmux
