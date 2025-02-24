@@ -11,6 +11,9 @@ bootstrap() {
   if is_macos; then
     setup_homebrew
     install_git_macos
+  elif is_arch; then
+    install_git_arch
+    setup_yay
   else
     print_status "Unsupported operating system"
     return 1
@@ -29,6 +32,8 @@ print_status() {
   local status=$1
   if is_macos; then
     echo "[macOS] $status"
+  elif is_arch; then
+    echo "[Arch] $status"
   else
     echo "[ERROR] $status"
   fi
@@ -37,6 +42,28 @@ print_status() {
 # Platform detection
 is_macos() {
   command -v defaults >/dev/null 2>&1
+}
+
+is_arch() {
+  command -v pacman >/dev/null 2>&1
+}
+
+# Package manager setup
+setup_yay() {
+  if ! command -v yay >/dev/null 2>&1; then
+    print_status "Installing base-devel"
+    sudo pacman -S --noconfirm base-devel
+
+    print_status "Installing yay"
+    local tmp_dir
+    tmp_dir=$(mktemp -d)
+    git clone https://aur.archlinux.org/yay.git "$tmp_dir"
+    cd "$tmp_dir" || exit
+    makepkg -si --noconfirm
+    cd - || exit
+    rm -rf "$tmp_dir"
+  fi
+  print_status "yay installed"
 }
 
 # Package manager setup
@@ -59,6 +86,14 @@ install_git_macos() {
   if ! command -v git >/dev/null 2>&1; then
     print_status "Installing git"
     brew install git
+  fi
+  print_status "git installed"
+}
+
+install_git_arch() {
+  if ! command -v git >/dev/null 2>&1; then
+    print_status "Installing git"
+    sudo pacman -S --noconfirm git
   fi
   print_status "git installed"
 }
