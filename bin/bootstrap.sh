@@ -49,6 +49,20 @@ is_arch() {
 }
 
 # Package manager setup
+setup_homebrew() {
+  if [[ ! -e /opt/homebrew/bin/brew ]]; then
+    print_status "Installing homebrew"
+    /usr/bin/env bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  fi
+  print_status "Homebrew installed"
+
+  if ! command -v brew >/dev/null 2>&1; then
+    print_status "Enabling homebrew"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  fi
+  print_status "Homebrew enabled"
+}
+
 setup_yay() {
   if ! command -v yay >/dev/null 2>&1; then
     print_status "Installing base-devel"
@@ -64,21 +78,6 @@ setup_yay() {
     rm -rf "$tmp_dir"
   fi
   print_status "yay installed"
-}
-
-# Package manager setup
-setup_homebrew() {
-  if [[ ! -e /opt/homebrew/bin/brew ]]; then
-    print_status "Installing homebrew"
-    /usr/bin/env bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  fi
-  print_status "Homebrew installed"
-
-  if ! command -v brew >/dev/null 2>&1; then
-    print_status "Enabling homebrew"
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-  fi
-  print_status "Homebrew enabled"
 }
 
 # Git installation
