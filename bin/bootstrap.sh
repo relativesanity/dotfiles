@@ -26,6 +26,7 @@ bootstrap() {
   elif is_arch; then
     install_git_arch
     setup_yay
+    setup_zsh_arch
   else
     print_status "Unsupported operating system"
     return 1
@@ -147,6 +148,37 @@ install_git_arch() {
     sudo pacman -S --noconfirm git
   fi
   print_status "git installed"
+}
+
+# Zsh setup for Arch
+setup_zsh_arch() {
+  if ! command -v zsh >/dev/null 2>&1; then
+    print_status "Installing zsh"
+    yay -S --noconfirm zsh
+  fi
+  print_status "zsh installed"
+
+  # Get the path to zsh
+  local zsh_path
+  zsh_path=$(command -v zsh)
+
+  # Check if zsh is already the default shell
+  if [[ "$SHELL" != "$zsh_path" ]]; then
+    print_status "Setting zsh as default shell"
+
+    # Verify zsh is in /etc/shells
+    if ! grep -q "^${zsh_path}$" /etc/shells; then
+      print_status "Adding zsh to /etc/shells"
+      echo "$zsh_path" | sudo tee -a /etc/shells >/dev/null
+    fi
+
+    # Change default shell
+    chsh -s "$zsh_path" "$USER" || {
+      print_status "Failed to set zsh as default shell"
+      return 1
+    }
+  fi
+  print_status "zsh configured as default shell"
 }
 
 # Dotfiles setup
