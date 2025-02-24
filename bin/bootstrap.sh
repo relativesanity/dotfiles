@@ -3,11 +3,23 @@
 set -euo pipefail # Exit on error, undefined vars, and pipeline failures
 IFS=$'\n\t'       # Stricter word splitting
 
-# Bootstrap script for setting up a new macOS system
-# Installs Homebrew, git, and downloads dotfiles repository
+# Bootstrap script for setting up a new system
+# Supports: macOS (via Homebrew), Arch Linux (via yay)
+#
+# Usage:
+#   /usr/bin/env bash -c "$(curl -fsSL https://raw.githubusercontent.com/relativesanity/dotfiles/refs/heads/v2-dev/bin/bootstrap.sh)"
+#
+# Prerequisites:
+#   - macOS: none
+#   - Arch: sudo access required
+#
+# Security:
+#   - Verify this script's contents before running
+#   - Source: https://raw.githubusercontent.com/relativesanity/dotfiles/refs/heads/v2-dev/bin/bootstrap.sh
 
-# Main bootstrap logic
 bootstrap() {
+  check_prerequisites || return 1
+
   if is_macos; then
     setup_homebrew
     install_git_macos
@@ -26,6 +38,43 @@ bootstrap() {
 
   print_status "Bootstrap complete"
 }
+
+# ------------------------------------------------------------------------------------------------------
+
+# Ensure we're not being piped into sh
+if [ -z "${BASH_VERSION:-}" ]; then
+  echo "This script requires bash" >&2
+  exit 1
+fi
+
+# Check for required permissions and connectivity
+check_prerequisites() {
+  if is_arch && ! sudo -v; then
+    print_status "Sudo access required for Arch Linux installation"
+    return 1
+  fi
+
+  if ! curl --silent --head https://github.com >/dev/null; then
+    print_status "No network connectivity"
+    return 1
+  fi
+}
+
+# Cleanup handler
+cleanup() {
+  local exit_code=$?
+  if [ -n "${TMP_DIR:-}" ] && [ -d "$TMP_DIR" ]; then
+    rm -rf "$TMP_DIR"
+  fi
+  exit $exit_code
+}
+
+trap cleanup EXIT
+trap 'trap - EXIT; cleanup' INT TERM
+
+# Create secure temporary directory
+TMP_DIR=$(mktemp -d)
+chmod 700 "$TMP_DIR"
 
 # Print platform-specific status message
 print_status() {
@@ -69,13 +118,16 @@ setup_yay() {
     sudo pacman -S --noconfirm base-devel
 
     print_status "Installing yay"
-    local tmp_dir
-    tmp_dir=$(mktemp -d)
-    git clone https://aur.archlinux.org/yay.git "$tmp_dir"
-    cd "$tmp_dir" || exit
+    local yay_dir="$TMP_DIR/yay"
+    git clone https://aur.archlinux.org/yay.git "$yay_dir"
+    cd "$yay_dir" || exit
+    # Verify PKGBUILD
+    if ! grep -q 'pkgname=yay' PKGBUILD; then
+      print_status "Invalid yay PKGBUILD"
+      return 1
+    fi
     makepkg -si --noconfirm
     cd - || exit
-    rm -rf "$tmp_dir"
   fi
   print_status "yay installed"
 }
@@ -99,20 +151,38 @@ install_git_arch() {
 
 # Dotfiles setup
 setup_dotfiles() {
-  if [[ ! -d $HOME/.dotfiles ]]; then
+  local dotfiles_dir="$HOME/.dotfiles"
+  local dotfiles_repo="https://github.com/relativesanity/dotfiles"
+  local dotfiles_branch="v2-dev"
+
+  if [[ ! -d $dotfiles_dir ]]; then
     print_status "Downloading dotfiles"
-    cd "$HOME" || exit
-    git clone https://github.com/relativesanity/dotfiles "$HOME"/.dotfiles || {
+
+    # Clone with minimal history for speed
+    git clone --depth 1 --branch "$dotfiles_branch" "$dotfiles_repo" "$dotfiles_dir" || {
       print_status "Failed to clone dotfiles repository"
       return 1
     }
-    cd "$HOME"/.dotfiles || exit
-    git checkout v2-dev || {
-      print_status "Failed to checkout v2-dev branch"
+
+    cd "$dotfiles_dir" || exit
+
+    # Verify we're on the expected branch
+    local current_branch
+    current_branch=$(git symbolic-ref --short HEAD)
+    if [[ "$current_branch" != "$dotfiles_branch" ]]; then
+      print_status "Unexpected branch: $current_branch (expected: $dotfiles_branch)"
       return 1
-    }
+    fi
+
+    # Verify remote URL
+    local remote_url
+    remote_url=$(git config --get remote.origin.url)
+    if [[ "$remote_url" != "$dotfiles_repo" ]]; then
+      print_status "Unexpected remote URL: $remote_url"
+      return 1
+    fi
   fi
-  print_status "Dotfiles downloaded"
+  print_status "Dotfiles downloaded and verified"
 }
 
 # Run bootstrap and capture any errors
