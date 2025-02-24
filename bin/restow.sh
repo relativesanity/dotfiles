@@ -103,12 +103,36 @@ ensure_stow() {
       brew install stow
     fi
   elif is_arch; then
-    if ! command -v stow >/dev/null 2>&1; then
-      print_status "Installing stow"
-      if command -v yay >/dev/null 2>&1; then
+    if ! command -v yay >/dev/null 2>&1; then
+      print_status "yay not found. This script prefers using yay on Arch Linux."
+      echo "Options:"
+      echo "  1) Exit (recommended: install yay yourself)"
+      echo "  2) Continue using pacman instead"
+      echo
+      read -r -p "Please choose an option (1-2): " choice
+
+      case $choice in
+      1)
+        print_status "Exiting. Please install yay before running this script again."
+        return 1
+        ;;
+      2)
+        print_status "Continuing with pacman"
+        if ! command -v stow >/dev/null 2>&1; then
+          print_status "Installing stow using pacman"
+          sudo pacman -S --noconfirm stow
+        fi
+        ;;
+      *)
+        print_status "Invalid option"
+        return 1
+        ;;
+      esac
+    else
+      # yay is available, use it
+      if ! command -v stow >/dev/null 2>&1; then
+        print_status "Installing stow using yay"
         yay -S --noconfirm stow
-      else
-        sudo pacman -S --noconfirm stow
       fi
     fi
   else
