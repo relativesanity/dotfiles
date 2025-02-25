@@ -25,6 +25,7 @@ bootstrap() {
     print_failure "Unsupported operating system"
   fi
 
+  setup_zsh || print_failure "Failed to setup zsh"
   setup_dotfiles || print_failure "Failed to setup dotfiles"
   print_status "Bootstrap complete"
 }
@@ -89,6 +90,34 @@ install_git_arch() {
     sudo pacman -S --noconfirm git
   fi
   print_status "git installed"
+}
+
+# ------------------------------------------------------------------------------------------------------
+setup_zsh() {
+  # Check if zsh is already installed
+  if ! command -v zsh >/dev/null 2>&1; then
+    print_status "Installing zsh"
+    if is_macos; then
+      brew install zsh || return 1
+    elif is_arch; then
+      sudo pacman -S --noconfirm zsh || return 1
+    fi
+  fi
+  print_status "zsh installed"
+
+  # Check if zsh is in /etc/shells
+  if ! grep -q "$(command -v zsh)" /etc/shells; then
+    print_status "Adding zsh to /etc/shells"
+    echo "$(command -v zsh)" | sudo tee -a /etc/shells >/dev/null || return 1
+  fi
+
+  # Check if zsh is already the default shell
+  if [[ "$SHELL" != "$(command -v zsh)" ]]; then
+    print_status "Setting zsh as default shell"
+    chsh -s "$(command -v zsh)" || return 1
+  fi
+
+  print_status "zsh configured as default shell"
 }
 
 # ------------------------------------------------------------------------------------------------------
