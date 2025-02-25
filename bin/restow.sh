@@ -44,23 +44,19 @@ readonly STOW_PACKAGES=(
 #
 # ------------------------------------------------------------------------------------------------------
 ensure_stow() {
-  # If stow is already installed, return early
-  if command -v stow >/dev/null 2>&1; then
-    print_status "stow is available"
-    return 0
+  if ! command -v stow >/dev/null 2>&1; then
+    print_status "Installing stow"
+    if is_macos; then
+      ensure_homebrew || print_failure "Failed to ensure Homebrew is available"
+      brew install stow
+    elif is_arch; then
+      ensure_yay || print_failure "Failed to ensure yay is available"
+      yay -S --noconfirm stow
+    else
+      print_failure "Unsupported operating system"
+    fi
   fi
-
-  print_status "Installing stow"
-
-  if is_macos; then
-    ensure_homebrew || print_failure "Failed to ensure Homebrew is available"
-    brew install stow
-  elif is_arch; then
-    ensure_yay || print_failure "Failed to ensure yay is available"
-    yay -S --noconfirm stow
-  else
-    print_failure "Unsupported operating system"
-  fi
+  print_status "stow is available"
 }
 
 # ------------------------------------------------------------------------------------------------------
