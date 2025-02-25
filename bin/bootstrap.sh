@@ -3,8 +3,16 @@
 set -euo pipefail # Exit on error, undefined vars, and pipeline failures
 IFS=$'\n\t'       # Stricter word splitting
 
-# Bootstrap script for setting up a new macOS system
-# Installs Homebrew, git, and downloads dotfiles repository
+# Bootstrap script for new system setup
+# Supports:
+#   - macOS (via Homebrew)
+#   - Arch Linux (via yay)
+#
+# Usage:
+#   ./bootstrap.sh
+#
+# Prerequisites:
+#   - None (script will install required package managers)
 
 # Main bootstrap logic
 bootstrap() {
