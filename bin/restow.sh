@@ -44,25 +44,36 @@ readonly STOW_PACKAGES=(
 #
 # ------------------------------------------------------------------------------------------------------
 ensure_stow() {
-  if ! command -v stow >/dev/null 2>&1; then
-    print_status "Installing stow"
-    if has_homebrew; then
-      ensure_homebrew
-      brew install stow
-    elif has_yay; then
-      yay -S --noconfirm stow
-    else
-      print_failure "No supported package manager found"
-    fi
+  # If stow is already installed, return early
+  if command -v stow >/dev/null 2>&1; then
+    print_status "stow is available"
+    return 0
   fi
-  print_status "stow is available"
+
+  print_status "Installing stow"
+
+  if is_macos; then
+    ensure_homebrew || print_failure "Failed to ensure Homebrew is available"
+    brew install stow
+  elif is_arch; then
+    ensure_yay || print_failure "Failed to ensure yay is available"
+    yay -S --noconfirm stow
+  else
+    print_failure "Unsupported operating system"
+  fi
 }
 
 # ------------------------------------------------------------------------------------------------------
-has_homebrew() {
-  [[ -e /opt/homebrew/bin/brew ]]
+is_macos() {
+  command -v defaults >/dev/null 2>&1
 }
 
+# ------------------------------------------------------------------------------------------------------
+is_arch() {
+  [[ -f /etc/arch-release ]]
+}
+
+# ------------------------------------------------------------------------------------------------------
 ensure_homebrew() {
   if [[ ! -e /opt/homebrew/bin/brew ]]; then
     print_failure "Homebrew installation not found"
@@ -76,8 +87,11 @@ ensure_homebrew() {
   fi
 }
 
-has_yay() {
-  command -v yay >/dev/null 2>&1
+# ------------------------------------------------------------------------------------------------------
+ensure_yay() {
+  if ! command -v yay >/dev/null 2>&1; then
+    print_failure "yay not found"
+  fi
 }
 
 # ------------------------------------------------------------------------------------------------------
