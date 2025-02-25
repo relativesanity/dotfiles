@@ -20,6 +20,12 @@ repack() {
     ensure_homebrew || print_failure "Failed to ensure Homebrew is available"
     update_homebrew || print_failure "Failed to update Homebrew"
     bundle_homebrew || print_failure "Failed to bundle Homebrew packages"
+  elif is_arch; then
+    ensure_yay || print_failure "Failed to ensure yay is available"
+    update_yay || print_failure "Failed to update yay"
+    bundle_yay || print_failure "Failed to install Arch packages"
+  else
+    print_failure "Unsupported operating system"
   fi
 
   setup_tmux_plugins || print_failure "Failed to setup TMUX plugins"
@@ -33,6 +39,11 @@ repack() {
 # ------------------------------------------------------------------------------------------------------
 is_macos() {
   command -v defaults >/dev/null 2>&1
+}
+
+# ------------------------------------------------------------------------------------------------------
+is_arch() {
+  command -v pacman >/dev/null 2>&1
 }
 
 # ------------------------------------------------------------------------------------------------------
@@ -59,12 +70,63 @@ update_homebrew() {
 # ------------------------------------------------------------------------------------------------------
 bundle_homebrew() {
   print_status "Bundling Homebrew packages"
-  if [[ -f "$HOME"/.dotfiles/Brewfile.local ]]; then
+  if [[ -f "${DOTFILES_PATH:-$HOME/.dotfiles}/Brewfile.local" ]]; then
     # concat the files and pipe to the command to ensure the whole brewfile is considered when cleaning up
-    cat "$HOME"/.dotfiles/Brewfile "$HOME"/.dotfiles/Brewfile.local | brew bundle --file=- --cleanup --zap
+    cat "${DOTFILES_PATH:-$HOME/.dotfiles}/Brewfile" "${DOTFILES_PATH:-$HOME/.dotfiles}/Brewfile.local" | brew bundle --file=- --cleanup --zap
   else
-    brew bundle --file "$HOME"/.dotfiles/Brewfile --cleanup --zap
+    brew bundle --file "${DOTFILES_PATH:-$HOME/.dotfiles}/Brewfile" --cleanup --zap
   fi
+}
+
+# ------------------------------------------------------------------------------------------------------
+ensure_yay() {
+  if ! command -v yay >/dev/null 2>&1; then
+    print_failure "yay not found. Please install yay first."
+    return 1
+  fi
+  print_status "yay is available"
+  return 0
+}
+
+# ------------------------------------------------------------------------------------------------------
+update_yay() {
+  print_status "Updating yay database"
+  yay -Sy || return 1
+}
+
+# ------------------------------------------------------------------------------------------------------
+bundle_yay() {
+  print_status "Installing Arch packages"
+  local pkgfile="${DOTFILES_PATH:-$HOME/.dotfiles}/Yayfile"
+  local pkgfile_local="${DOTFILES_PATH:-$HOME/.dotfiles}/Yayfile.local"
+
+  if [[ ! -f "$pkgfile" ]]; then
+    print_failure "Yayfile not found at $pkgfile"
+    return 1
+  fi
+
+  # Install packages from Yayfile
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    # Skip comments and empty lines
+    [[ -z "$line" || "$line" =~ ^[[:space:]]*# ]] && continue
+
+    print_status "Installing $line"
+    yay -S --needed --noconfirm "$line" || print_status "Failed to install $line"
+  done <"$pkgfile"
+
+  # Install packages from Yayfile.local if it exists
+  if [[ -f "$pkgfile_local" ]]; then
+    print_status "Installing local packages"
+    while IFS= read -r line || [[ -n "$line" ]]; do
+      # Skip comments and empty lines
+      [[ -z "$line" || "$line" =~ ^[[:space:]]*# ]] && continue
+
+      print_status "Installing $line"
+      yay -S --needed --noconfirm "$line" || print_status "Failed to install $line"
+    done <"$pkgfile_local"
+  fi
+
+  return 0
 }
 
 # ------------------------------------------------------------------------------------------------------

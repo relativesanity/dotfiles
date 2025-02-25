@@ -1,0 +1,34 @@
+# Core utilities
+eza
+fastfetch
+fd
+fzf
+github-cli
+git
+lazygit
+mosh
+neovim
+ollama
+ripgrep
+starship
+stow
+tmux
+zoxide
+
+# Development tools
+rbenv
+ruby-build
+jq
+docker
+docker-buildx
+
+# Terminal
+ghostty-git
+
+# Fonts
+ttf-cascadia-code-nerd
+
+# Applications
+obsidian
+signal-desktop
+tailscale
