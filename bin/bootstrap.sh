@@ -14,7 +14,6 @@ IFS=$'\n\t'       # Stricter word splitting
 # Prerequisites:
 #   - None (script will install required package managers)
 
-# Main bootstrap logic
 bootstrap() {
   if is_macos; then
     setup_homebrew || print_failure "Failed to setup Homebrew"
@@ -30,24 +29,11 @@ bootstrap() {
   print_status "Bootstrap complete"
 }
 
-# Print platform-specific status message
-print_status() {
-  local status=$1
-  if is_macos; then
-    echo "[macOS] $status"
-  elif is_arch; then
-    echo "[Arch] $status"
-  else
-    echo "[ERROR] $status"
-  fi
-}
-
-print_failure() {
-  print_status "$1"
-  return 1
-}
-
-# Platform detection
+#
+#
+#
+#
+# ------------------------------------------------------------------------------------------------------
 is_macos() {
   command -v defaults >/dev/null 2>&1
 }
@@ -56,7 +42,7 @@ is_arch() {
   command -v pacman >/dev/null 2>&1
 }
 
-# Package manager setup
+# ------------------------------------------------------------------------------------------------------
 setup_homebrew() {
   if [[ ! -e /opt/homebrew/bin/brew ]]; then
     print_status "Installing homebrew"
@@ -88,7 +74,7 @@ setup_yay() {
   print_status "yay installed"
 }
 
-# Git installation
+# ------------------------------------------------------------------------------------------------------
 install_git_macos() {
   if ! command -v git >/dev/null 2>&1; then
     print_status "Installing git"
@@ -105,7 +91,7 @@ install_git_arch() {
   print_status "git installed"
 }
 
-# Dotfiles setup
+# ------------------------------------------------------------------------------------------------------
 setup_dotfiles() {
   if [[ ! -d $HOME/.dotfiles ]]; then
     print_status "Downloading dotfiles"
@@ -121,7 +107,24 @@ setup_dotfiles() {
   print_status "Dotfiles downloaded"
 }
 
-# Run bootstrap and capture any errors
+# ------------------------------------------------------------------------------------------------------
+print_status() {
+  local status=$1
+  if is_macos; then
+    echo "[macOS] $status"
+  elif is_arch; then
+    echo "[Arch] $status"
+  else
+    echo "[ERROR] $status"
+  fi
+}
+
+print_failure() {
+  print_status "$1"
+  return 1
+}
+
+# ------------------------------------------------------------------------------------------------------
 if ! bootstrap; then
   print_status "Bootstrap failed"
   exit 1

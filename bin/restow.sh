@@ -22,17 +22,27 @@ restow() {
   print_status "Stow complete"
 }
 
+#
+#
+#
+#
 # ------------------------------------------------------------------------------------------------------
-
-print_status() {
-  echo "[stow] $1"
+ensure_stow() {
+  if ! command -v stow >/dev/null 2>&1; then
+    print_status "Installing stow"
+    if has_homebrew; then
+      ensure_homebrew
+      brew install stow
+    elif has_yay; then
+      yay -S --noconfirm stow
+    else
+      print_failure "No supported package manager found"
+    fi
+  fi
+  print_status "stow is available"
 }
 
-print_failure() {
-  print_status "$1"
-  return 1
-}
-
+# ------------------------------------------------------------------------------------------------------
 has_homebrew() {
   [[ -e /opt/homebrew/bin/brew ]]
 }
@@ -54,21 +64,7 @@ has_yay() {
   command -v yay >/dev/null 2>&1
 }
 
-ensure_stow() {
-  if ! command -v stow >/dev/null 2>&1; then
-    print_status "Installing stow"
-    if has_homebrew; then
-      ensure_homebrew
-      brew install stow
-    elif has_yay; then
-      yay -S --noconfirm stow
-    else
-      print_failure "No supported package manager found"
-    fi
-  fi
-  print_status "stow is available"
-}
-
+# ------------------------------------------------------------------------------------------------------
 setup_directories() {
   print_status "Creating required directories"
   if ! mkdir -p "$HOME"/.config/; then
@@ -79,6 +75,7 @@ setup_directories() {
   fi
 }
 
+# ------------------------------------------------------------------------------------------------------
 stow_packages() {
   local packages=(
     "ghostty"
@@ -99,7 +96,17 @@ stow_packages() {
   done
 }
 
-# Run restow and capture any errors
+# ------------------------------------------------------------------------------------------------------
+print_status() {
+  echo "[stow] $1"
+}
+
+print_failure() {
+  print_status "$1"
+  return 1
+}
+
+# ------------------------------------------------------------------------------------------------------
 if ! restow; then
   print_status "Stow failed"
   exit 1
