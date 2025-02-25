@@ -17,21 +17,16 @@ IFS=$'\n\t'       # Stricter word splitting
 # Main bootstrap logic
 bootstrap() {
   if is_macos; then
-    setup_homebrew
-    install_git_macos
+    setup_homebrew || print_failure "Failed to setup Homebrew"
+    install_git_macos || print_failure "Failed to install Git on macOS"
   elif is_arch; then
-    install_git_arch
-    setup_yay
+    install_git_arch || print_failure "Failed to install Git on Arch"
+    setup_yay || print_failure "Failed to setup yay"
   else
-    print_status "Unsupported operating system"
-    return 1
+    print_failure "Unsupported operating system"
   fi
 
-  setup_dotfiles || {
-    print_status "Bootstrap failed during dotfiles setup"
-    return 1
-  }
-
+  setup_dotfiles || print_failure "Failed to setup dotfiles"
   print_status "Bootstrap complete"
 }
 
@@ -45,6 +40,11 @@ print_status() {
   else
     echo "[ERROR] $status"
   fi
+}
+
+print_failure() {
+  print_status "$1"
+  return 1
 }
 
 # Platform detection
@@ -111,13 +111,11 @@ setup_dotfiles() {
     print_status "Downloading dotfiles"
     cd "$HOME" || exit
     git clone https://github.com/relativesanity/dotfiles "$HOME"/.dotfiles || {
-      print_status "Failed to clone dotfiles repository"
-      return 1
+      print_failure "Failed to clone dotfiles repository"
     }
     cd "$HOME"/.dotfiles || exit
     git checkout v2-dev || {
-      print_status "Failed to checkout v2-dev branch"
-      return 1
+      print_failure "Failed to checkout v2-dev branch"
     }
   fi
   print_status "Dotfiles downloaded"
