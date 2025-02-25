@@ -22,6 +22,22 @@ restow() {
   print_status "Stow complete"
 }
 
+readonly REQUIRED_DIRECTORIES=(
+  "$HOME/.config"
+  "$HOME/.rbenv"
+)
+
+readonly STOW_PACKAGES=(
+  "ghostty"
+  "gh"
+  "git"
+  "neovim"
+  "rbenv"
+  "sh"
+  "starship"
+  "tmux"
+)
+
 #
 #
 #
@@ -67,28 +83,16 @@ has_yay() {
 # ------------------------------------------------------------------------------------------------------
 setup_directories() {
   print_status "Creating required directories"
-  if ! mkdir -p "$HOME"/.config/; then
-    print_failure "Failed to create .config directory"
-  fi
-  if ! mkdir -p "$HOME"/.rbenv/; then
-    print_failure "Failed to create .rbenv directory"
-  fi
+  for dir in "${REQUIRED_DIRECTORIES[@]}"; do
+    if ! mkdir -p "$dir"; then
+      print_failure "Failed to create directory: $dir"
+    fi
+  done
 }
 
 # ------------------------------------------------------------------------------------------------------
 stow_packages() {
-  local packages=(
-    "ghostty"
-    "gh"
-    "git"
-    "neovim"
-    "rbenv"
-    "sh"
-    "starship"
-    "tmux"
-  )
-
-  for package in "${packages[@]}"; do
+  for package in "${STOW_PACKAGES[@]}"; do
     print_status "stowing $package"
     if ! stow -d "$HOME"/.dotfiles/ --restow "$package"; then
       print_failure "Failed to stow $package"
