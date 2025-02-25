@@ -17,4 +17,4 @@ alias msh='mosh --server=/opt/homebrew/bin/mosh-server'
 DOTFILES_PATH="$HOME/.dotfiles"
 alias dotfiles='cd $DOTFILES_PATH'
 alias restow="$DOTFILES_PATH/bin/restow.sh"
-alias rebrew="$DOTFILES_PATH/bin/rebrew.sh"
+alias repack="$DOTFILES_PATH/bin/repack.sh"

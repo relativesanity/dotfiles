@@ -39,4 +39,4 @@ if command -v tmux >/dev/null 2>&1; then
   fi
 fi
 
-echo "Rebrew complete"
+echo "Repack complete"
