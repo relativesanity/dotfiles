@@ -110,8 +110,10 @@ ensure_yay() {
 setup_directories() {
   print_status "Checking required directories"
   for dir in "${REQUIRED_DIRECTORIES[@]}"; do
-    print_status "Creating $dir"
-    mkdir -p "$dir" || return 1
+    if [[ ! -e $dir ]]; then
+      print_status "Creating $dir"
+      mkdir -p "$dir" || return 1
+    fi
   done
 }
 
