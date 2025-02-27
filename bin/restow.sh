@@ -110,7 +110,14 @@ stow_packages() {
 
 # ------------------------------------------------------------------------------------------------------
 print_status() {
-  echo "[stow] $1"
+  local status=$1
+  if is_macos; then
+    echo "[macOS] $status"
+  elif is_arch; then
+    echo "[Arch] $status"
+  else
+    echo "[ERROR] $status"
+  fi
 }
 
 print_failure() {
