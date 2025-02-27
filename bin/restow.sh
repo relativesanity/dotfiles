@@ -95,9 +95,8 @@ ensure_yay() {
 setup_directories() {
   print_status "Creating required directories"
   for dir in "${REQUIRED_DIRECTORIES[@]}"; do
-    if ! mkdir -p "$dir"; then
-      print_failure "Failed to create directory: $dir"
-    fi
+    print_status "Creating $dir"
+    mkdir -p "$dir" || return 1
   done
 }
 
@@ -105,9 +104,7 @@ setup_directories() {
 stow_packages() {
   for package in "${STOW_PACKAGES[@]}"; do
     print_status "stowing $package"
-    if ! stow -d "$HOME"/.dotfiles/ --restow "$package"; then
-      print_failure "Failed to stow $package"
-    fi
+    stow -d "$HOME"/.dotfiles/ --restow "$package" || return 1
   done
 }
 
