@@ -16,17 +16,17 @@ IFS=$'\n\t'       # Stricter word splitting
 
 bootstrap() {
   if is_macos; then
-    setup_homebrew || print_failure "Failed to setup Homebrew"
-    install_git_macos || print_failure "Failed to install Git on macOS"
+    ensure_homebrew || print_failure "Homebrew could not be set up"
+    ensure_git || print_failure "Git could not be set up"
   elif is_arch; then
-    install_git_arch || print_failure "Failed to install Git on Arch"
-    setup_yay || print_failure "Failed to setup yay"
+    ensure_git || print_failure "Git could not be set up"
+    ensure_yay || print_failure "Yay could not be set up"
   else
     print_failure "Unsupported operating system"
   fi
 
-  setup_zsh || print_failure "Failed to setup zsh"
-  setup_dotfiles || print_failure "Failed to setup dotfiles"
+  ensure_zsh || print_failure "Zsh could not be set up"
+  ensure_dotfiles || print_failure "Dotfiles could not be set up"
   print_status "Bootstrap complete"
 }
 
@@ -44,7 +44,7 @@ is_arch() {
 }
 
 # ------------------------------------------------------------------------------------------------------
-setup_homebrew() {
+ensure_homebrew() {
   if [[ ! -e /opt/homebrew/bin/brew ]]; then
     print_status "Installing homebrew"
     /usr/bin/env bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -58,42 +58,40 @@ setup_homebrew() {
   print_status "Homebrew enabled"
 }
 
-setup_yay() {
+ensure_yay() {
   if ! command -v yay >/dev/null 2>&1; then
     print_status "Installing base-devel"
     sudo pacman -S --noconfirm base-devel
 
     print_status "Installing yay"
     local tmp_dir
-    tmp_dir=$(mktemp -d)
-    git clone https://aur.archlinux.org/yay.git "$tmp_dir"
-    cd "$tmp_dir" || exit
-    makepkg -si --noconfirm
-    cd - || exit
-    rm -rf "$tmp_dir"
+    tmp_dir=$(mktemp -d) &&
+      git clone https://aur.archlinux.org/yay.git "$tmp_dir" &&
+      cd "$tmp_dir" &&
+      makepkg -si --noconfirm &&
+      cd - &&
+      rm -rf "$tmp_dir" || return 1
   fi
-  print_status "yay installed"
+  print_status "Yay installed"
 }
 
 # ------------------------------------------------------------------------------------------------------
-install_git_macos() {
+ensure_git() {
   if ! command -v git >/dev/null 2>&1; then
     print_status "Installing git"
-    brew install git
+    if is_macos; then
+      brew install git || return 1
+    elif is_arch; then
+      sudo pacman -S --noconfirm git || return 1
+    else
+      return 1
+    fi
   fi
-  print_status "git installed"
-}
-
-install_git_arch() {
-  if ! command -v git >/dev/null 2>&1; then
-    print_status "Installing git"
-    sudo pacman -S --noconfirm git
-  fi
-  print_status "git installed"
+  print_status "Git installed"
 }
 
 # ------------------------------------------------------------------------------------------------------
-setup_zsh() {
+ensure_zsh() {
   # Check if zsh is already installed
   if ! command -v zsh >/dev/null 2>&1; then
     print_status "Installing zsh"
@@ -101,9 +99,11 @@ setup_zsh() {
       brew install zsh || return 1
     elif is_arch; then
       sudo pacman -S --noconfirm zsh || return 1
+    else
+      return 1
     fi
   fi
-  print_status "zsh installed"
+  print_status "Zsh installed"
 
   # Check if zsh is in /etc/shells
   if ! grep -q "$(command -v zsh)" /etc/shells; then
@@ -117,21 +117,17 @@ setup_zsh() {
     chsh -s "$(command -v zsh)" || return 1
   fi
 
-  print_status "zsh configured as default shell"
+  print_status "Zsh configured as default shell"
 }
 
 # ------------------------------------------------------------------------------------------------------
-setup_dotfiles() {
+ensure_dotfiles() {
   if [[ ! -d $HOME/.dotfiles ]]; then
     print_status "Downloading dotfiles"
-    cd "$HOME" || exit
-    git clone https://github.com/relativesanity/dotfiles "$HOME"/.dotfiles || {
-      print_failure "Failed to clone dotfiles repository"
-    }
-    cd "$HOME"/.dotfiles || exit
-    git checkout v2-dev || {
-      print_failure "Failed to checkout v2-dev branch"
-    }
+    cd "$HOME" &&
+      git clone https://github.com/relativesanity/dotfiles "$HOME"/.dotfiles &&
+      cd "$HOME"/.dotfiles &&
+      git checkout v2-dev || return 1
   fi
   print_status "Dotfiles downloaded"
 }
