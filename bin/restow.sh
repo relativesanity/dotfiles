@@ -44,6 +44,11 @@ readonly STOW_PACKAGES=(
 #
 # ------------------------------------------------------------------------------------------------------
 ensure_stow() {
+  print_status "Checking stow"
+  if command -v stow >/dev/null 2>&1; then
+    return 0
+  fi
+
   if ! command -v stow >/dev/null 2>&1; then
     print_status "Installing stow"
     if is_macos; then
@@ -61,6 +66,11 @@ ensure_stow() {
 
 # ------------------------------------------------------------------------------------------------------
 ensure_homebrew() {
+  print_status "Checking homebrew"
+  if command -v brew >/dev/null 2>&1; then
+    return 0
+  fi
+
   if [[ ! -e /opt/homebrew/bin/brew ]]; then
     print_status "Installing homebrew"
     /usr/bin/env bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -75,6 +85,11 @@ ensure_homebrew() {
 }
 
 ensure_yay() {
+  print_status "Checking yay"
+  if command -v yay >/dev/null 2>&1; then
+    return 0
+  fi
+
   if ! command -v yay >/dev/null 2>&1; then
     print_status "Installing base-devel"
     sudo pacman -S --noconfirm base-devel
