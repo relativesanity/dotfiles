@@ -79,7 +79,7 @@ ensure_yay() {
 # ------------------------------------------------------------------------------------------------------
 ensure_git() {
   print_status "Checking git"
-  if ! command -v git >/dev/null 2>&1; then
+  if command -v git >/dev/null 2>&1; then
     return 0
   fi
 
@@ -134,7 +134,7 @@ ensure_zsh() {
 # ------------------------------------------------------------------------------------------------------
 ensure_dotfiles() {
   print_status "Checking dotfiles"
-  if [[ ! -d $HOME/.dotfiles ]]; then
+  if [[ -d $HOME/.dotfiles ]]; then
     return 0
   fi
 
