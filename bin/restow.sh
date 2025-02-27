@@ -16,9 +16,9 @@ IFS=$'\n\t'       # Stricter word splitting
 #   - dotfiles repository must be present
 
 restow() {
-  ensure_stow || print_failure "Failed to ensure stow is available"
-  setup_directories || print_failure "Failed to setup directories"
-  stow_packages || print_failure "Failed to stow packages"
+  ensure_stow || print_failure "Stow could not be set up"
+  setup_directories || print_failure "Required directories could not be set up"
+  stow_packages || print_failure "Packages could not be stowed"
   print_status "Stow complete"
 }
 
@@ -43,51 +43,61 @@ readonly STOW_PACKAGES=(
 #
 #
 # ------------------------------------------------------------------------------------------------------
-ensure_stow() {
-  if ! command -v stow >/dev/null 2>&1; then
-    print_status "Installing stow"
-    if is_macos; then
-      ensure_homebrew || print_failure "Failed to ensure Homebrew is available"
-      brew install stow
-    elif is_arch; then
-      ensure_yay || print_failure "Failed to ensure yay is available"
-      yay -S --noconfirm stow
-    else
-      print_failure "Unsupported operating system"
-    fi
-  fi
-  print_status "stow is available"
-}
-
-# ------------------------------------------------------------------------------------------------------
 is_macos() {
   command -v defaults >/dev/null 2>&1
 }
 
-# ------------------------------------------------------------------------------------------------------
 is_arch() {
-  [[ -f /etc/arch-release ]]
+  command -v pacman >/dev/null 2>&1
+}
+
+# ------------------------------------------------------------------------------------------------------
+ensure_stow() {
+  if ! command -v stow >/dev/null 2>&1; then
+    print_status "Installing stow"
+    if is_macos; then
+      ensure_homebrew &&
+        brew install stow || return 1
+    elif is_arch; then
+      ensure_yay &&
+        yay -S --noconfirm stow || return 1
+    else
+      return 1
+    fi
+  fi
+  print_status "Stow intalled"
 }
 
 # ------------------------------------------------------------------------------------------------------
 ensure_homebrew() {
   if [[ ! -e /opt/homebrew/bin/brew ]]; then
-    print_failure "Homebrew installation not found"
+    print_status "Installing homebrew"
+    /usr/bin/env bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   fi
+  print_status "Homebrew installed"
 
   if ! command -v brew >/dev/null 2>&1; then
-    print_status "Configuring Homebrew"
-    if ! eval "$(/opt/homebrew/bin/brew shellenv)"; then
-      print_failure "Failed to configure Homebrew"
-    fi
+    print_status "Enabling homebrew"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
   fi
+  print_status "Homebrew enabled"
 }
 
-# ------------------------------------------------------------------------------------------------------
 ensure_yay() {
   if ! command -v yay >/dev/null 2>&1; then
-    print_failure "yay not found"
+    print_status "Installing base-devel"
+    sudo pacman -S --noconfirm base-devel
+
+    print_status "Installing yay"
+    local tmp_dir
+    tmp_dir=$(mktemp -d) &&
+      git clone https://aur.archlinux.org/yay.git "$tmp_dir" &&
+      cd "$tmp_dir" &&
+      makepkg -si --noconfirm &&
+      cd - &&
+      rm -rf "$tmp_dir" || return 1
   fi
+  print_status "Yay installed"
 }
 
 # ------------------------------------------------------------------------------------------------------
