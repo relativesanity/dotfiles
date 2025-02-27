@@ -36,6 +36,11 @@ bootstrap() {
 #
 # ------------------------------------------------------------------------------------------------------
 ensure_homebrew() {
+  print_status "Checking homebrew"
+  if command -v brew >/dev/null 2>&1; then
+    return 0
+  fi
+
   if [[ ! -e /opt/homebrew/bin/brew ]]; then
     print_status "Installing homebrew"
     /usr/bin/env bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -50,6 +55,11 @@ ensure_homebrew() {
 }
 
 ensure_yay() {
+  print_status "Checking yay"
+  if command -v yay >/dev/null 2>&1; then
+    return 0
+  fi
+
   if ! command -v yay >/dev/null 2>&1; then
     print_status "Installing base-devel"
     sudo pacman -S --noconfirm base-devel
@@ -68,6 +78,11 @@ ensure_yay() {
 
 # ------------------------------------------------------------------------------------------------------
 ensure_git() {
+  print_status "Checking git"
+  if ! command -v git >/dev/null 2>&1; then
+    return 0
+  fi
+
   if ! command -v git >/dev/null 2>&1; then
     print_status "Installing git"
     if is_macos; then
@@ -83,6 +98,11 @@ ensure_git() {
 
 # ------------------------------------------------------------------------------------------------------
 ensure_zsh() {
+  print_status "Checking zsh"
+  if command -v zsh >/dev/null 2>&1 && [[ "$SHELL" == "$(command -v zsh)" ]]; then
+    return 0
+  fi
+
   # Check if zsh is already installed
   if ! command -v zsh >/dev/null 2>&1; then
     print_status "Installing zsh"
@@ -113,6 +133,11 @@ ensure_zsh() {
 
 # ------------------------------------------------------------------------------------------------------
 ensure_dotfiles() {
+  print_status "Checking dotfiles"
+  if [[ ! -d $HOME/.dotfiles ]]; then
+    return 0
+  fi
+
   if [[ ! -d $HOME/.dotfiles ]]; then
     print_status "Downloading dotfiles"
     cd "$HOME" &&
