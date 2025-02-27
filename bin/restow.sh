@@ -108,7 +108,7 @@ ensure_yay() {
 
 # ------------------------------------------------------------------------------------------------------
 setup_directories() {
-  print_status "Creating required directories"
+  print_status "Checking required directories"
   for dir in "${REQUIRED_DIRECTORIES[@]}"; do
     print_status "Creating $dir"
     mkdir -p "$dir" || return 1
@@ -117,8 +117,9 @@ setup_directories() {
 
 # ------------------------------------------------------------------------------------------------------
 stow_packages() {
+  print_status "Stowing packages"
   for package in "${STOW_PACKAGES[@]}"; do
-    print_status "stowing $package"
+    print_status "Stowing $package"
     stow -d "$HOME"/.dotfiles/ --restow "$package" || return 1
   done
 }
