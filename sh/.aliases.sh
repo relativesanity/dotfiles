@@ -10,7 +10,7 @@ alias la='ll -a'
 
 alias mkdir='mkdir -p'
 
-alias tsess='tmux new-session -A -s'
+alias start='tmux new-session -A -s'
 
 alias msh='mosh --server=/opt/homebrew/bin/mosh-server'
 
