@@ -17,18 +17,18 @@ IFS=$'\n\t'       # Stricter word splitting
 
 repack() {
   if is_macos; then
-    ensure_homebrew || print_failure "Failed to ensure Homebrew is available"
-    update_homebrew || print_failure "Failed to update Homebrew"
-    bundle_homebrew || print_failure "Failed to bundle Homebrew packages"
+    ensure_homebrew || print_failure "Homebrew could not be set up"
+    update_homebrew || print_failure "Homebrew could not be updated"
+    bundle_homebrew || print_failure "Homebrew could not be bundled"
   elif is_arch; then
-    ensure_yay || print_failure "Failed to ensure yay is available"
-    update_yay || print_failure "Failed to update yay"
-    bundle_yay || print_failure "Failed to install Arch packages"
+    ensure_yay || print_failure "Yay could not be set up"
+    update_yay || print_failure "Yay could not be updated"
+    bundle_yay || print_failure "Yay could not be bundled"
   else
     print_failure "Unsupported operating system"
   fi
 
-  setup_tmux_plugins || print_failure "Failed to setup TMUX plugins"
+  setup_tmux_plugins || print_failure "Tmux could not be set up"
   print_status "Repack complete"
 }
 
@@ -143,7 +143,14 @@ setup_tmux_plugins() {
 
 # ------------------------------------------------------------------------------------------------------
 print_status() {
-  echo "[repack] $1"
+  local status=$1
+  if is_macos; then
+    echo "[macOS] $status"
+  elif is_arch; then
+    echo "[Arch] $status"
+  else
+    echo "[ERROR] $status"
+  fi
 }
 
 print_failure() {
