@@ -14,6 +14,8 @@ alias start='tmux new-session -A -s'
 
 alias msh='mosh --server=/opt/homebrew/bin/mosh-server'
 
+alias lg='lazygit'
+
 DOTFILES_PATH="$HOME/.dotfiles"
 alias dotfiles='cd $DOTFILES_PATH'
 alias restow="$DOTFILES_PATH/bin/restow.sh"
