@@ -28,6 +28,7 @@ readonly REQUIRED_DIRECTORIES=(
 )
 
 readonly STOW_PACKAGES=(
+  "btop"
   "ghostty"
   "gh"
   "git"
