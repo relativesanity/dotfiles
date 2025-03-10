@@ -1,6 +1,7 @@
 tap 'homebrew/services'
 
 brew 'btop'
+brew 'cmatrix'
 brew 'eza'
 brew 'fastfetch'
 brew 'fd'
@@ -22,6 +23,7 @@ brew 'zoxide'
 
 brew 'rbenv'
 brew 'ruby-build'
+brew 'npm'
 brew 'jq'
 brew 'docker-buildx'
 cask 'docker'
