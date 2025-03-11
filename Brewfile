@@ -29,6 +29,7 @@ brew 'docker-buildx'
 cask 'docker'
 
 cask 'font-cascadia-code-nf'
+cask 'font-jetbrains-mono-nerd-font'
 cask 'ghostty'
 
 cask 'backblaze'

@@ -1,7 +1,7 @@
 theme = catppuccin-mocha
 
-font-size = 15
-font-family = "Caskaydia Code NF"
+font-size = 16
+font-family = "Jetbrains Nerd Font Mono"
 
 background-opacity = 0.94
 background-blur-radius = 40
