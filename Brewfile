@@ -31,7 +31,6 @@ cask 'docker'
 cask 'ghostty'
 
 cask 'backblaze'
-cask 'claude'
 cask 'logi-options+'
 cask 'moom'
 cask 'obsidian'
