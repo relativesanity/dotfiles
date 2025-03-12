@@ -1,3 +1,3 @@
 return {
-  'tpope/vim-ragtag',
+  "tpope/vim-ragtag",
 }

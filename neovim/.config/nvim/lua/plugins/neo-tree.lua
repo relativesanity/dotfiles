@@ -16,7 +16,10 @@ return {
     },
   },
   keys = {
-    { '<leader>t', '<cmd>Neotree toggle source=filesystem reveal=true<cr>',
-      desc = '(T)reeview toggle' },
+    {
+      "<leader>t",
+      "<cmd>Neotree toggle source=filesystem reveal=true<cr>",
+      desc = "(T)reeview toggle",
+    },
   },
 }
