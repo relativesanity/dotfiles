@@ -35,11 +35,7 @@ return {
   {
     "williamboman/mason.nvim",
     config = function()
-      require("mason").setup({
-        ensure_installed = {
-          "stylua",
-        },
-      })
+      require("mason").setup({})
       require("mason-lspconfig").setup({
         ensure_installed = {
           "html",
@@ -52,17 +48,17 @@ return {
     dependencies = { "williamboman/mason-lspconfig.nvim" },
   },
   {
-    "nvimtools/none-ls.nvim",
-    config = function()
-      local null_ls = require("null-ls")
-
-      null_ls.setup({
-        sources = {
-          null_ls.builtins.formatting.stylua,
-          null_ls.builtins.formatting.rubocop,
-          null_ls.builtins.diagnostics.rubocop,
-        },
-      })
-    end,
+    "stevearc/conform.nvim",
+    opts = {
+      formatters_by_ft = {
+        lua = { "stylua" },
+        ruby = { "rubocop" },
+      },
+      format_on_save = {
+        -- These options will be passed to conform.format()
+        timeout_ms = 500,
+        lsp_format = "fallback",
+      },
+    },
   },
 }
