@@ -28,7 +28,6 @@ brew 'jq'
 brew 'docker-buildx'
 cask 'docker'
 
-cask 'font-cascadia-code-nf'
 cask 'ghostty'
 
 cask 'backblaze'

@@ -1,7 +1,6 @@
 theme = catppuccin-mocha
 
-font-size = 15
-font-family = "Caskaydia Code NF"
+font-size = 18
 
 background-opacity = 0.94
 background-blur-radius = 40
