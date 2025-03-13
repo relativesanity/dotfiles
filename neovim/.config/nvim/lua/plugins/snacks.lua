@@ -13,5 +13,9 @@ return {
       }
     },
     indent = { enabled = true },
+    lazygit = { enabled = true },
+  },
+  keys = {
+    { "<leader>gg", function() Snacks.lazygit.open() end, desc = 'Lazy(g)it' }
   }
 }
