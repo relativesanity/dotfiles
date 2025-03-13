@@ -11,6 +11,7 @@ return {
         { section = "header" },
         { section = "startup" },
       }
-    }
+    },
+    indent = { enabled = true },
   }
 }
