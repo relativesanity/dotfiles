@@ -4,7 +4,14 @@ return {
     "nvim-lua/plenary.nvim",
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" }
   },
-  config = true,
+  opts = {
+    extensions = {
+      fzf = {}
+    }
+  },
+  init = function()
+    require("telescope").load_extension("fzf")
+  end,
   keys = {
     { "<leader>ff", "<cmd>Telescope find_files hidden=true<cr>", desc = "Find files" },
     { "<leader>fg", "<cmd>Telescope live_grep hidden=true<cr>",  desc = "Find via grep" },
