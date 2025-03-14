@@ -1,3 +1,4 @@
+require("core.opts")
 -- always set leaders ahead of plugin config
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
