@@ -29,8 +29,8 @@ readonly REQUIRED_DIRECTORIES=(
 
 readonly STOW_PACKAGES=(
   "btop"
-  "ghostty"
   "gh"
+  "ghostty"
   "git"
   "hetzner"
   "neovim"
@@ -121,7 +121,7 @@ setup_directories() {
 
 # ------------------------------------------------------------------------------------------------------
 stow_packages() {
-  print_status "Stowing packages"
+  print_status "Stowing…"
   for package in "${STOW_PACKAGES[@]}"; do
     print_status "Stowing $package"
     stow -d "$HOME"/.dotfiles/ --restow "$package" || return 1

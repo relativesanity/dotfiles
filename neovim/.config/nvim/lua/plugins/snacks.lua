@@ -1,17 +1,21 @@
 return {
   "folke/snacks.nvim",
+  priority = 1000,
+  lazy = false,
   opts = {
-    picker = {
-      sources = {
-        explorer = {
-          hidden = true,
-          ignored = true,
-        },
-        files = {
-          hidden = true,
-          ignored = true,
-        },
+    dashboard = {
+      preset = {
+        header = "Neovim"
       },
+      sections = {
+        { section = "header" },
+        { section = "startup" },
+      }
     },
+    indent = { enabled = true },
+    lazygit = { enabled = true },
   },
+  keys = {
+    { "<leader>gg", function() Snacks.lazygit.open() end, desc = 'Lazy(g)it' }
+  }
 }
