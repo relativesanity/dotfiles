@@ -1,2 +1,2 @@
-require("core.opts")
-require("core.lazy")
+require("core.opts") -- sets sensible editor options
+require("core.lazy") -- bootstraps lazy and installs plugins
