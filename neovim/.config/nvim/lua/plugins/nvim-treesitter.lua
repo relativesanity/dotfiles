@@ -8,6 +8,7 @@ return {
       ensure_installed = {
         "lua",
       },
+      additional_vim_regex_highlighting = true,
       sync_install = false,
       highlight = { enable = true },
       indent = { enable = true },
