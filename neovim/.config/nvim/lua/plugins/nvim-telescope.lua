@@ -4,6 +4,7 @@ return {
     "nvim-lua/plenary.nvim",
     { "nvim-telescope/telescope-fzf-native.nvim",  build = "make" },
     { "nvim-telescope/telescope-file-browser.nvim" },
+    { "nvim-telescope/telescope-ui-select.nvim" },
   },
   opts = {
     defaults = {
@@ -13,12 +14,16 @@ return {
     },
     extensions = {
       fzf = {},
-      file_browser = {}
+      file_browser = {},
+      ["ui-select"] = {
+        require("telescope.themes").get_dropdown {}
+      },
     }
   },
   init = function()
     require("telescope").load_extension("fzf")
     require("telescope").load_extension("file_browser")
+    require("telescope").load_extension("ui-select")
   end,
   keys = {
     { "<leader>ff", "<cmd>Telescope find_files hidden=true<cr>",             desc = "Find files" },
