@@ -8,5 +8,10 @@ vim.keymap.set("n", "<leader>cn", "<cmd>cnext<cr>")
 vim.keymap.set("n", "<leader>cp", "<cmd>cprev<cr>")
 
 -- pop a terminal
-vim.keymap.set("n", "<leader>t", "<cmd>terminal<cr>")
+vim.keymap.set("n", "<leader>t", function()
+  vim.cmd.vnew()
+  vim.cmd.term()
+  vim.cmd.wincmd("J")
+  vim.api.nvim_win_set_height(0, 15)
+end)
 vim.keymap.set("t", "<C-t>", "<C-\\><C-n>")
