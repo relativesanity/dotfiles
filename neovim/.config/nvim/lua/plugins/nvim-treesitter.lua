@@ -2,19 +2,16 @@ return {
   "nvim-treesitter/nvim-treesitter",
   build = ":TSUpdate",
   config = function()
-    require("nvim-treesitter.configs").setup({
+    local configs = require("nvim-treesitter.configs")
+
+    configs.setup({
       ensure_installed = {
         "lua",
-        "ruby",
       },
+      additional_vim_regex_highlighting = true,
       sync_install = false,
       highlight = { enable = true },
       indent = { enable = true },
-    })
-    vim.filetype.add({
-      filename = {
-        ["Brewfile"] = "ruby",
-      },
     })
   end,
 }

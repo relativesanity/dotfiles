@@ -1,64 +1,41 @@
 return {
   {
-    "neovim/nvim-lspconfig",
-    config = function()
-      local lspconfig = require("lspconfig")
-      local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-      lspconfig.html.setup({ capabilities = capabilities, filetypes = { "eruby", "html" } })
-      lspconfig.lua_ls.setup({ capabilities = capabilities })
-      lspconfig.ruby_lsp.setup({ capabilities = capabilities })
-      lspconfig.tailwindcss.setup({ capabilities = capabilities })
-
-      vim.keymap.set("n", "<leader>lh", vim.lsp.buf.hover, { desc = "(L)sp (h)over" })
-      vim.keymap.set("n", "<leader>ld", vim.lsp.buf.definition, { desc = "(L)sp (d)efinition" })
-      vim.keymap.set("n", "<leader>lD", vim.lsp.buf.declaration, { desc = "(L)sp (D)eclaration" })
-      vim.keymap.set("n", "<leader>li", vim.lsp.buf.implementation, { desc = "(L)sp (i)mplementation" })
-      vim.keymap.set("n", "<leader>lt", vim.lsp.buf.type_definition, { desc = "(L)sp (t)ype definition" })
-      vim.keymap.set("n", "<leader>lr", vim.lsp.buf.references, { desc = "(L)sp (r)eferences" })
-      vim.keymap.set("n", "<leader>ls", vim.lsp.buf.signature_help, { desc = "(L)sp (s)ignature help" })
-      vim.keymap.set("n", "<leader>lm", vim.lsp.buf.rename, { desc = "(L)sp rena(m)e" })
-      vim.keymap.set(
-        { "n", "x" },
-        "<leader>lF",
-        "<cmd>lua vim.lsp.buf.format({async = true})<cr>",
-        { desc = "(L)sp (F)ormat" }
-      )
-      vim.keymap.set("n", "<leader>la", vim.lsp.buf.code_action, { desc = "(L)sp code (a)ction" })
-
-      vim.keymap.set("n", "<leader>lf", vim.diagnostic.open_float, { desc = "(L)sp open (f)loat" })
-      vim.keymap.set("n", "<leader>lp", vim.diagnostic.goto_prev, { desc = "(L)sp (p)revious" })
-      vim.keymap.set("n", "<leader>ln", vim.diagnostic.goto_next, { desc = "(L)sp (n)ext" })
-    end,
-    dependencies = { "hrsh7th/cmp-nvim-lsp" },
-  },
-  {
-    "williamboman/mason.nvim",
-    config = function()
-      require("mason").setup({})
-      require("mason-lspconfig").setup({
-        ensure_installed = {
-          "html",
-          "lua_ls",
-          "ruby_lsp",
-          "tailwindcss",
-        },
-      })
-    end,
-    dependencies = { "williamboman/mason-lspconfig.nvim" },
-  },
-  {
-    "stevearc/conform.nvim",
+    "williamboman/mason-lspconfig.nvim",
     opts = {
-      formatters_by_ft = {
-        lua = { "stylua" },
-        ruby = { "rubocop" },
-      },
-      format_on_save = {
-        -- These options will be passed to conform.format()
-        timeout_ms = 500,
-        lsp_format = "fallback",
+      ensure_installed = {
+        "lua_ls",
+        "ruby_lsp",
       },
     },
-  },
+    dependencies = {
+      {
+        "neovim/nvim-lspconfig",
+        config = function()
+          require("lspconfig").lua_ls.setup({})
+          require("lspconfig").ruby_lsp.setup({})
+
+          -- apply lsp formatting on save
+          vim.api.nvim_create_autocmd("LspAttach", {
+            callback = function(args)
+              local client = vim.lsp.get_client_by_id(args.data.client_id)
+              if not client then return end
+
+              if client.supports_method("textDocument/formatting") then
+                vim.api.nvim_create_autocmd("BufWritePre", {
+                  buffer = args.buf,
+                  callback = function()
+                    vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
+                  end
+                })
+              end
+            end
+          })
+        end,
+      },
+      {
+        "williamboman/mason.nvim",
+        opts = {},
+      },
+    }
+  }
 }
