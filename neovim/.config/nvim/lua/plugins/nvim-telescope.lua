@@ -29,7 +29,7 @@ return {
     { "<leader>ff", "<cmd>Telescope find_files hidden=true<cr>",             desc = "Find files" },
     { "<leader>fo", "<cmd>Telescope oldfiles hidden=true only_cwd=true<cr>", desc = "Find recent files" },
     { "<leader>fh", "<cmd>Telescope help_tags<cr>",                          desc = "Find help" },
-    { "<leader>fg", "<cmd>Telescope live_grep hidden=true<cr>",              desc = "Find via grep" },
+    { "<leader>fs", "<cmd>Telescope live_grep hidden=true<cr>",              desc = "Find via grep search" },
     { "<leader>fb", "<cmd>Telescope buffers<cr>",                            desc = "Find open buffers" },
     { "<leader>ft", "<cmd>Telescope builtin<cr>",                            desc = "Find telescope features" },
     { "<leader>fe", "<cmd>Telescope file_browser hidden=true<cr>",           desc = "Find via explorer" },
