@@ -13,3 +13,7 @@ vim.opt.undofile = true           -- store undo history across sessions
 
 vim.opt.splitbelow = true         -- split below instead of above
 vim.opt.splitright = true         -- split right instead of left
+
+vim.opt.incsearch = true          -- search incrementally while typing
+vim.opt.ignorecase = true         -- search is case insensitive
+vim.opt.smartcase = true          -- … unless the search term contains Upper Case
