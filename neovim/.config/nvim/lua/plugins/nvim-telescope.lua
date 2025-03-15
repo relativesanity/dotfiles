@@ -5,6 +5,11 @@ return {
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" }
   },
   opts = {
+    defaults = {
+      file_ignore_patterns = {
+        ".git/",
+      },
+    },
     extensions = {
       fzf = {}
     }
