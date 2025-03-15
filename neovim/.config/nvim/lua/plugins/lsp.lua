@@ -3,7 +3,8 @@ return {
     "williamboman/mason-lspconfig.nvim",
     opts = {
       ensure_installed = {
-        "lua_ls"
+        "lua_ls",
+        "ruby_lsp",
       },
     },
     dependencies = {
@@ -11,6 +12,7 @@ return {
         "neovim/nvim-lspconfig",
         config = function()
           require("lspconfig").lua_ls.setup({})
+          require("lspconfig").ruby_lsp.setup({})
 
           -- apply lsp formatting on save
           vim.api.nvim_create_autocmd("LspAttach", {
