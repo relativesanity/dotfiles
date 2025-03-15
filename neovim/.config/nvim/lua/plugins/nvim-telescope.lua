@@ -2,7 +2,8 @@ return {
   "nvim-telescope/telescope.nvim",
   dependencies = {
     "nvim-lua/plenary.nvim",
-    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" }
+    { "nvim-telescope/telescope-fzf-native.nvim",  build = "make" },
+    { "nvim-telescope/telescope-file-browser.nvim" },
   },
   opts = {
     defaults = {
@@ -11,11 +12,13 @@ return {
       },
     },
     extensions = {
-      fzf = {}
+      fzf = {},
+      file_browser = {}
     }
   },
   init = function()
     require("telescope").load_extension("fzf")
+    require("telescope").load_extension("file_browser")
   end,
   keys = {
     { "<leader>ff", "<cmd>Telescope find_files hidden=true<cr>",             desc = "Find files" },
@@ -24,5 +27,6 @@ return {
     { "<leader>fg", "<cmd>Telescope live_grep hidden=true<cr>",              desc = "Find via grep" },
     { "<leader>fb", "<cmd>Telescope buffers<cr>",                            desc = "Find open buffers" },
     { "<leader>ft", "<cmd>Telescope builtin<cr>",                            desc = "Find telescope features" },
+    { "<leader>fe", "<cmd>Telescope file_browser hidden=true<cr>",           desc = "Find via explorer" },
   }
 }
