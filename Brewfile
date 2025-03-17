@@ -53,4 +53,5 @@ mas 'Displaperture', id: 1543920362
 mas 'Drafts', id: 1435957248
 mas 'Keynote', id: 409183694
 mas 'Numbers', id: 409203825
+mas 'Pandan', id: 1569600264
 mas 'Things 3', id: 904280696
