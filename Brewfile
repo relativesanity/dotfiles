@@ -51,7 +51,9 @@ mas 'DaisyDisk', id: 411643860
 mas 'Day One', id: 1055511498
 mas 'Displaperture', id: 1543920362
 mas 'Drafts', id: 1435957248
+mas 'Googly Eyes', id: 6743048714
 mas 'Keynote', id: 409183694
 mas 'Numbers', id: 409203825
 mas 'Pandan', id: 1569600264
 mas 'Things 3', id: 904280696
+mas 'UnTrap for YouTube', id: 1637438059
