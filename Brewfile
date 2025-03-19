@@ -33,6 +33,7 @@ cask 'ghostty'
 
 cask 'backblaze'
 cask 'claude'
+cask 'google-chrome'
 cask 'logi-options+'
 cask 'moom'
 cask 'notion'
