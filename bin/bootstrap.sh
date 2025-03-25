@@ -6,7 +6,6 @@ IFS=$'\n\t'       # Stricter word splitting
 # Bootstrap script for new system setup
 # Supports:
 #   - macOS (via Homebrew)
-#   - Arch Linux (via yay)
 #
 # Usage:
 #   ./bootstrap.sh
@@ -18,9 +17,6 @@ bootstrap() {
   if is_macos; then
     ensure_homebrew || print_failure "Homebrew could not be set up"
     ensure_git || print_failure "Git could not be set up"
-  elif is_arch; then
-    ensure_git || print_failure "Git could not be set up"
-    ensure_yay || print_failure "Yay could not be set up"
   else
     print_failure "Unsupported operating system"
   fi
@@ -54,28 +50,6 @@ ensure_homebrew() {
   print_status "Homebrew enabled"
 }
 
-ensure_yay() {
-  print_status "Checking yay"
-  if command -v yay >/dev/null 2>&1; then
-    return 0
-  fi
-
-  if ! command -v yay >/dev/null 2>&1; then
-    print_status "Installing base-devel"
-    sudo pacman -S --noconfirm base-devel
-
-    print_status "Installing yay"
-    local tmp_dir
-    tmp_dir=$(mktemp -d) &&
-      git clone https://aur.archlinux.org/yay.git "$tmp_dir" &&
-      cd "$tmp_dir" &&
-      makepkg -si --noconfirm &&
-      cd - &&
-      rm -rf "$tmp_dir" || return 1
-  fi
-  print_status "Yay installed"
-}
-
 # ------------------------------------------------------------------------------------------------------
 ensure_git() {
   print_status "Checking git"
@@ -87,8 +61,6 @@ ensure_git() {
     print_status "Installing git"
     if is_macos; then
       brew install git || return 1
-    elif is_arch; then
-      sudo pacman -S --noconfirm git || return 1
     else
       return 1
     fi
@@ -108,8 +80,6 @@ ensure_zsh() {
     print_status "Installing zsh"
     if is_macos; then
       brew install zsh || return 1
-    elif is_arch; then
-      sudo pacman -S --noconfirm zsh || return 1
     else
       return 1
     fi
@@ -153,8 +123,6 @@ print_status() {
   local status=$1
   if is_macos; then
     echo "[macOS] $status"
-  elif is_arch; then
-    echo "[Arch] $status"
   else
     echo "[ERROR] $status"
   fi
@@ -168,10 +136,6 @@ print_failure() {
 # ------------------------------------------------------------------------------------------------------
 is_macos() {
   command -v defaults >/dev/null 2>&1
-}
-
-is_arch() {
-  command -v pacman >/dev/null 2>&1
 }
 
 # ------------------------------------------------------------------------------------------------------
