@@ -15,6 +15,8 @@ alias start='tmux new-session -A -s'
 alias msh='mosh --server=/opt/homebrew/bin/mosh-server'
 
 alias lg='lazygit'
+alias gs='git status'
+alias gd='git diff'
 
 DOTFILES_PATH="$HOME/.dotfiles"
 alias dotfiles='cd $DOTFILES_PATH'
