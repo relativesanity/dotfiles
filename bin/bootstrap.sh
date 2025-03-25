@@ -113,7 +113,7 @@ ensure_dotfiles() {
     cd "$HOME" &&
       git clone https://github.com/relativesanity/dotfiles "$HOME"/.dotfiles &&
       cd "$HOME"/.dotfiles &&
-      git checkout v2-dev || return 1
+      git checkout main || return 1
   fi
   print_status "Dotfiles downloaded"
 }
