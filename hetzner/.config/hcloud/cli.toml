@@ -1,0 +1,4 @@
+active_context = "sanity"
+
+[[contexts]]
+  name = "sanity"

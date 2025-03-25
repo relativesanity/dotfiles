@@ -1,56 +1,60 @@
-brew 'bat'
+tap 'homebrew/services'
+
 brew 'btop'
+brew 'cmatrix'
 brew 'eza'
+brew 'fastfetch'
 brew 'fd'
 brew 'fzf'
+brew 'gh'
 brew 'git'
+brew 'hcloud'
+brew 'lazygit'
+brew 'llm'
 brew 'mas'
-brew 'most'
+brew 'mosh'
+brew 'm-cli'
 brew 'neovim'
-brew 'neofetch'
+brew 'ollama'
 brew 'ripgrep'
-brew 's-search'
 brew 'starship'
 brew 'stow'
 brew 'tmux'
-brew 'tpm'
-brew 'tpm'
-brew 'watch'
-brew 'wget'
-brew 'zellij'
 brew 'zoxide'
-brew 'zsh-syntax-highlighting'
 
-cask 'font-cascadia-code-nf'
-cask 'font-jetbrains-mono-nerd-font'
-
-brew 'gh'
 brew 'rbenv'
 brew 'ruby-build'
-brew 'stylua'
+brew 'npm'
+brew 'jq'
+brew 'docker-buildx'
+cask 'docker'
 
-tap 'nikitabobko/tap'
-cask 'aerospace'
+cask 'ghostty'
 
 cask 'backblaze'
-cask 'displaperture'
-cask 'docker'
+cask 'claude'
+cask 'google-chrome'
+cask 'logi-options+'
 cask 'moom'
 cask 'notion'
-cask 'raycast'
+cask 'obsidian'
+cask 'omnigraffle'
+cask 'readwise-ibooks'
 cask 'setapp'
-cask 'wezterm'
+cask 'signal'
+cask 'spaceid'
+cask 'superkey'
+cask 'tailscale'
 
 mas '1Blocker', id: 1365531024
+mas 'Actions For Obsidian', id: 1659667937
+mas 'DaisyDisk', id: 411643860
 mas 'Day One', id: 1055511498
-mas 'Endel: Focus, Sleep, Relax', id: 1346247457
-mas 'Goodnotes 6', id: 1444383602
+mas 'Displaperture', id: 1543920362
+mas 'Drafts', id: 1435957248
+mas 'Googly Eyes', id: 6743048714
 mas 'Keynote', id: 409183694
 mas 'Numbers', id: 409203825
-mas 'Pages', id: 409201541
-mas 'Pastebot', id: 1179623856
-mas 'Save to Reader', id: 1640236961
-mas 'Session', id: 1521432881
-mas 'StopTheMadness Pro', id: 6471380298
+mas 'Pandan', id: 1569600264
 mas 'Things 3', id: 904280696
-mas 'Tot', id: 1491071483
+mas 'UnTrap for YouTube', id: 1637438059

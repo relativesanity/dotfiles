@@ -1,5 +1,5 @@
 Brewfile.lock.json
-fish/local.fish
+Brewfile.local
 ssh/.ssh/id*
 ssh/.ssh/known_hosts*
-zsh/.env.local.sh
+neovim/.config/nvim/lazy-lock.json

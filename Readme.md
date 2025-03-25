@@ -1,7 +1,7 @@
 # Dotfiles
 
-To bootstrap:
+To bootstrap to a new computer, run this one-liner:
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/relativesanity/dotfiles/refs/tags/v1.0/bin/bootstrap.sh)
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/relativesanity/dotfiles/refs/heads/main/bin/bootstrap.sh)"
 ```
