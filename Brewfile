@@ -41,6 +41,7 @@ cask 'obsidian'
 cask 'omnigraffle'
 cask 'readwise-ibooks'
 cask 'setapp'
+cask 'steam'
 cask 'signal'
 cask 'spaceid'
 cask 'superkey'
@@ -52,6 +53,7 @@ mas 'DaisyDisk', id: 411643860
 mas 'Day One', id: 1055511498
 mas 'Displaperture', id: 1543920362
 mas 'Drafts', id: 1435957248
+mas 'Gestimer 2', id: 6447125648
 mas 'Googly Eyes', id: 6743048714
 mas 'Keynote', id: 409183694
 mas 'Numbers', id: 409203825
