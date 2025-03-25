@@ -33,7 +33,9 @@ zinit light zsh-users/zsh-syntax-highlighting
 autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-
+# … including case insensitive path-completion
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+zstyle ':completion:*' menu select
 
 # set up history
 export HISTSIZE=1000000000
