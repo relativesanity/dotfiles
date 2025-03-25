@@ -6,13 +6,12 @@ IFS=$'\n\t'       # Stricter word splitting
 # Dotfiles stow script
 # Supports:
 #   - macOS (via Homebrew)
-#   - Arch Linux (via yay)
 #
 # Usage:
 #   ./restow.sh
 #
 # Prerequisites:
-#   - Homebrew or yay must be available
+#   - Homebrew must be available (or will be installed)
 #   - dotfiles repository must be present
 
 restow() {
@@ -56,9 +55,6 @@ ensure_stow() {
     if is_macos; then
       ensure_homebrew &&
         brew install stow || return 1
-    elif is_arch; then
-      ensure_yay &&
-        yay -S --noconfirm stow || return 1
     else
       return 1
     fi
@@ -86,28 +82,6 @@ ensure_homebrew() {
   print_status "Homebrew enabled"
 }
 
-ensure_yay() {
-  print_status "Checking yay"
-  if command -v yay >/dev/null 2>&1; then
-    return 0
-  fi
-
-  if ! command -v yay >/dev/null 2>&1; then
-    print_status "Installing base-devel"
-    sudo pacman -S --noconfirm base-devel
-
-    print_status "Installing yay"
-    local tmp_dir
-    tmp_dir=$(mktemp -d) &&
-      git clone https://aur.archlinux.org/yay.git "$tmp_dir" &&
-      cd "$tmp_dir" &&
-      makepkg -si --noconfirm &&
-      cd - &&
-      rm -rf "$tmp_dir" || return 1
-  fi
-  print_status "Yay installed"
-}
-
 # ------------------------------------------------------------------------------------------------------
 setup_directories() {
   print_status "Checking required directories"
@@ -133,8 +107,6 @@ print_status() {
   local status=$1
   if is_macos; then
     echo "[macOS] $status"
-  elif is_arch; then
-    echo "[Arch] $status"
   else
     echo "[ERROR] $status"
   fi
@@ -148,10 +120,6 @@ print_failure() {
 # ------------------------------------------------------------------------------------------------------
 is_macos() {
   command -v defaults >/dev/null 2>&1
-}
-
-is_arch() {
-  command -v pacman >/dev/null 2>&1
 }
 
 # ------------------------------------------------------------------------------------------------------
