@@ -7,6 +7,9 @@ vim.keymap.set("v", "<leader>x", ":lua")
 vim.keymap.set("n", "<leader>cn", "<cmd>cnext<cr>")
 vim.keymap.set("n", "<leader>cp", "<cmd>cprev<cr>")
 
+-- some lazy helpers
+vim.keymap.set("n", "<leader>ll", "<cmd>Lazy<cr>")
+
 -- pop a terminal
 vim.keymap.set("n", "<leader>t", function()
   vim.cmd.vnew()
