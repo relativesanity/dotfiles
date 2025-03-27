@@ -1,0 +1,27 @@
+brew 'cmatrix'
+brew 'hcloud'
+brew 'llm'
+brew 'mosh'
+brew 'ollama'
+
+brew 'docker-buildx'
+cask 'docker'
+
+cask 'backblaze'
+cask 'claude'
+cask 'notion'
+cask 'omnigraffle'
+cask 'readwise-ibooks'
+cask 'setapp'
+cask 'signal'
+cask 'spaceid'
+cask 'tailscale'
+
+mas '1Blocker', id: 1365531024
+mas 'Actions For Obsidian', id: 1659667937
+mas 'DaisyDisk', id: 411643860
+mas 'Day One', id: 1055511498
+mas 'Drafts', id: 1435957248
+mas 'Googly Eyes', id: 6743048714
+mas 'Pandan', id: 1569600264
+mas 'UnTrap for YouTube', id: 1637438059

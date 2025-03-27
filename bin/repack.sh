@@ -55,12 +55,26 @@ update_homebrew() {
 # ------------------------------------------------------------------------------------------------------
 bundle_homebrew() {
   print_status "Bundling Homebrew packages"
-  if [[ -f "${DOTFILES_PATH:-$HOME/.dotfiles}/Brewfile.local" ]]; then
-    # concat the files and pipe to the command to ensure the whole brewfile is considered when cleaning up
-    cat "${DOTFILES_PATH:-$HOME/.dotfiles}/Brewfile" "${DOTFILES_PATH:-$HOME/.dotfiles}/Brewfile.local" | brew bundle --file=- --cleanup --zap
-  else
-    brew bundle --file "${DOTFILES_PATH:-$HOME/.dotfiles}/Brewfile" --cleanup --zap
+
+  filepath="${DOTFILES_PATH:-$HOME/.dotfiles}"
+  brewfiles=()
+  brewfiles+=("$filepath/Brewfile")
+
+  if [[ -f "$filepath/Brewfile.local" ]]; then
+    brewfiles+=("$filepath/Brewfile.local")
   fi
+
+  current_user=$(whoami)
+  case "$current_user" in
+    "relativesanity")
+      brewfiles+=("Brewfile.home")
+      ;;
+    *)
+      brewfiles+=("Brewfile.work")
+      ;;
+  esac
+
+  cat "${brewfiles[@]}" | brew bundle --file=- --cleanup --zap
 }
 
 # ------------------------------------------------------------------------------------------------------
