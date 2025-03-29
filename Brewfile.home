@@ -9,6 +9,7 @@ cask 'docker'
 
 cask 'backblaze'
 cask 'claude'
+cask 'devonthink'
 cask 'notion'
 cask 'omnigraffle'
 cask 'readwise-ibooks'
@@ -16,6 +17,7 @@ cask 'setapp'
 cask 'signal'
 cask 'spaceid'
 cask 'tailscale'
+cask 'vmware-fusion'
 
 mas '1Blocker', id: 1365531024
 mas 'Actions For Obsidian', id: 1659667937
