@@ -1,3 +1,4 @@
+brew 'chafa'
 brew 'cmatrix'
 brew 'hcloud'
 brew 'llm'
