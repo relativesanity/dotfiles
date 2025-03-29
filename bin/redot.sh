@@ -10,6 +10,7 @@ IFS=$'\n\t'       # Stricter word splitting
 
 redot() {
   cd ${DOTFILES_PATH:-$HOME/.dotfiles} &&
+    echo "Current branch: $(git branch --show-current)" &&
     git pull &&
     ./bin/repack.sh &&
     ./bin/restow.sh
