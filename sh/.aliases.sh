@@ -18,6 +18,8 @@ alias lg='lazygit'
 alias gs='git status'
 alias gd='git diff'
 
+alias gg='z'
+
 DOTFILES_PATH="$HOME/.dotfiles"
 alias dotfiles='cd $DOTFILES_PATH'
 alias restow="$DOTFILES_PATH/bin/restow.sh"
