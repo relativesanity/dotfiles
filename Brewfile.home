@@ -16,7 +16,6 @@ cask 'omnigraffle'
 cask 'parallels'
 cask 'readwise-ibooks'
 cask 'setapp'
-cask 'spaceid'
 cask 'tailscale'
 
 # mas '1Blocker', id: 1365531024
