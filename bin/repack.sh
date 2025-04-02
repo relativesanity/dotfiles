@@ -74,7 +74,14 @@ bundle_homebrew() {
       ;;
   esac
 
-  cat "${brewfiles[@]}" | brew bundle --file=- --cleanup --zap
+  case "$current_user" in
+    "relativesanity")
+      cat "${brewfiles[@]}" | brew bundle --file=- --cleanup --zap
+      ;;
+    *)
+      cat "${brewfiles[@]}" | brew bundle --file=-
+      ;;
+  esac
 }
 
 # ------------------------------------------------------------------------------------------------------

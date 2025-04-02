@@ -31,8 +31,8 @@ cask 'moom'
 cask 'obsidian'
 cask 'superkey'
 
-mas 'Displaperture', id: 1543920362
-mas 'Gestimer 2', id: 6447125648
-mas 'Keynote', id: 409183694
-mas 'Numbers', id: 409203825
-mas 'Things 3', id: 904280696
+# mas 'Displaperture', id: 1543920362
+# mas 'Gestimer 2', id: 6447125648
+# mas 'Keynote', id: 409183694
+# mas 'Numbers', id: 409203825
+# mas 'Things 3', id: 904280696
