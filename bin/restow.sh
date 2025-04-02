@@ -31,6 +31,7 @@ readonly STOW_PACKAGES=(
   "gh"
   "ghostty"
   "git"
+  "hammerspoon"
   "hetzner"
   "neovim"
   "rbenv"
