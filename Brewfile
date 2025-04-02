@@ -25,6 +25,7 @@ brew 'jq'
 cask 'ghostty'
 
 cask 'google-chrome'
+cask 'hammerspoon'
 cask 'keymapp'
 cask 'logi-options+'
 cask 'moom'
