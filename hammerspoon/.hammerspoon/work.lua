@@ -25,3 +25,5 @@ end)
 hs.hotkey.bind({ "ctrl", "alt", "shift" }, "V", function()
 	-- hs.application.launchOrFocus("Claude")
 end)
+
+hs.alert.show("Work config loaded")
