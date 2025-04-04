@@ -15,7 +15,7 @@ hs.hotkey.bind({ "ctrl", "alt", "shift" }, "D", function()
 end)
 
 hs.hotkey.bind({ "ctrl", "alt", "shift" }, "Z", function()
-	-- hs.application.launchOrFocus("Oryx")
+	hs.application.launchOrFocus("zoom.us")
 end)
 
 hs.hotkey.bind({ "ctrl", "alt", "shift" }, "C", function()
