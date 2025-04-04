@@ -14,6 +14,10 @@ hs.hotkey.bind({ "ctrl", "alt", "shift" }, "D", function()
 	hs.application.launchOrFocus("Reader")
 end)
 
+hs.hotkey.bind({ "ctrl", "alt", "shift", "cmd" }, "F", function()
+	hs.application.launchOrFocus("FindMy")
+end)
+
 hs.hotkey.bind({ "ctrl", "alt", "shift" }, "Z", function()
 	hs.application.launchOrFocus("Oryx")
 end)
