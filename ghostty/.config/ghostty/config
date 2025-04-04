@@ -9,8 +9,8 @@ window-padding-x = 8
 window-padding-y = 8
 window-padding-balance = true
 
-window-height = 42
-window-width = 160
+window-height = 34
+window-width = 121
 
 mouse-hide-while-typing = true
 
