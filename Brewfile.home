@@ -17,6 +17,7 @@ cask 'parallels'
 cask 'readwise-ibooks'
 cask 'setapp'
 cask 'tailscale'
+cask 'vlc'
 
 # mas '1Blocker', id: 1365531024
 # mas 'Actions For Obsidian', id: 1659667937
