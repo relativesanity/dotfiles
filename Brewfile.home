@@ -20,11 +20,10 @@ cask 'setapp'
 cask 'tailscale'
 cask 'vlc'
 
-# mas '1Blocker', id: 1365531024
-# mas 'Actions For Obsidian', id: 1659667937
-# mas 'DaisyDisk', id: 411643860
-# mas 'Day One', id: 1055511498
-# mas 'Drafts', id: 1435957248
-# mas 'Googly Eyes', id: 6743048714
-# mas 'Pandan', id: 1569600264
-# mas 'UnTrap for YouTube', id: 1637438059
+mas '1Blocker', id: 1_365_531_024
+mas 'DaisyDisk', id: 411_643_860
+mas 'Day One', id: 1_055_511_498
+mas 'Drafts', id: 1_435_957_248
+mas 'Googly Eyes', id: 6_743_048_714
+mas 'Pandan', id: 1_569_600_264
+mas 'UnTrap for YouTube', id: 1_637_438_059
