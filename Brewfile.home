@@ -4,6 +4,7 @@ brew 'hcloud'
 brew 'llm'
 brew 'mosh'
 brew 'ollama'
+brew 'rust'
 
 brew 'docker-buildx'
 cask 'docker'
