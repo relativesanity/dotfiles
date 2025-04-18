@@ -1,5 +1,15 @@
 hs = hs
 
+local function getCurrentUser()
+	return (os.getenv("USER") or ""):gsub("[\n\r]", "")
+end
+
+if getCurrentUser() == "relativesanity" then
+	require("home")
+else
+	require("work")
+end
+
 hs.hotkey.bind({ "ctrl", "alt", "shift" }, "W", function()
 	hs.osascript.applescript([[
     tell application "Finder"
@@ -46,12 +56,3 @@ hs.hotkey.bind({ "ctrl", "alt", "shift" }, "B", function()
 	hs.application.launchOrFocus("Obsidian")
 end)
 
-local function getCurrentUser()
-	return (os.getenv("USER") or ""):gsub("[\n\r]", "")
-end
-
-if getCurrentUser() == "relativesanity" then
-	require("home")
-else
-	require("work")
-end
