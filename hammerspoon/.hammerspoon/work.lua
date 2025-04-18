@@ -1,3 +1,5 @@
+VAULT_NAME = "emOS"
+
 hs.hotkey.bind({ "ctrl", "alt", "shift" }, "E", function()
 	-- hs.application.launchOrFocus("YouTube")
 end)

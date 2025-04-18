@@ -56,3 +56,7 @@ hs.hotkey.bind({ "ctrl", "alt", "shift" }, "B", function()
 	hs.application.launchOrFocus("Obsidian")
 end)
 
+hs.hotkey.bind({ "ctrl", "alt", "shift", "cmd" }, "B", function()
+	local uri = string.format("obsidian://daily?vault=%s", hs.http.encodeForQuery(VAULT_NAME))
+	hs.urlevent.openURL(uri)
+end)
