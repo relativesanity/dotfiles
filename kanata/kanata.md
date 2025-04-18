@@ -9,7 +9,7 @@ right place
 ```bash
 
 ```bash
-sudo cp src/com.example.kanata.plist /Library/LaunchDaemons/
+sudo cp kanata/com.example.kanata.plist /Library/LaunchDaemons/
 sudo launchctl load /Library/LaunchDaemons/com.example.kanata.plist
 ```
 
