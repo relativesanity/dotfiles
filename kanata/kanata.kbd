@@ -4,7 +4,7 @@
 
 (defsrc
   f1 f2 f3 f4 f5 f6 f7 f8 f9 f10 f11 f12
-  a s d f j k l ;
+  caps a s d f h j k l ;
   fn spc
 )
 (defvar
@@ -15,7 +15,9 @@
 (defalias
   meh (multi lctl lalt lsft)
   fnl (layer-toggle fn)
+  navl (layer-toggle nav)
 
+  caps-mod (tap-hold $tap-time $hold-time esc @navl)
   a-mod (tap-hold $tap-time $hold-time a lctl)
   s-mod (tap-hold $tap-time $hold-time s lalt)
   d-mod (tap-hold $tap-time $hold-time d lmet)
@@ -30,12 +32,18 @@
 
 (deflayer base
   brdn brup _ _ _ _ prev pp next mute vold volu
-  @a-mod @s-mod @d-mod @f-mod @j-mod @k-mod @l-mod @;-mod
+  @caps-mod @a-mod @s-mod @d-mod @f-mod h @j-mod @k-mod @l-mod @;-mod
   @fn-mod @spc-mod
 )
 
 (deflayer fn
   f1 f2 f3 f4 f5 f6 f7 f8 f9 f10 f11 f12
-  _ _ _ _ _ _ _ _
+  _ _ _ _ _ _ _ _ _ _
   fn _
+)
+
+(deflayer nav
+  _ _ _ _ _ _ _ _ _ _ _ _
+  _ _ _ _ _ left down up right _
+  _ _
 )
