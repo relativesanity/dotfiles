@@ -5,7 +5,7 @@
 (defsrc
   f1 f2 f3 f4 f5 f6 f7 f8 f9 f10 f11 f12
   a s d f j k l ;
-  fn
+  fn spc
 )
 (defvar
   tap-time 150
@@ -13,25 +13,29 @@
 )
 
 (defalias
+  meh (multi lctl lalt lsft)
+  fnl (layer-toggle fn)
+
   a-mod (tap-hold $tap-time $hold-time a lctl)
   s-mod (tap-hold $tap-time $hold-time s lalt)
   d-mod (tap-hold $tap-time $hold-time d lmet)
   f-mod (tap-hold $tap-time $hold-time f lsft)
-  j-mod (tap-hold $tap-time $hold-time j lsft)
-  k-mod (tap-hold $tap-time $hold-time k lmet)
-  l-mod (tap-hold $tap-time $hold-time l lalt)
-  ;-mod (tap-hold $tap-time $hold-time ; lctl)
-  fnl (tap-hold $tap-time $hold-time fn (layer-toggle fn))
+  j-mod (tap-hold $tap-time $hold-time j rsft)
+  k-mod (tap-hold $tap-time $hold-time k rmet)
+  l-mod (tap-hold $tap-time $hold-time l ralt)
+  ;-mod (tap-hold $tap-time $hold-time ; rctl)
+  fn-mod (tap-hold $tap-time $hold-time fn @fnl)
+  spc-mod (tap-hold $tap-time $hold-time spc @meh)
 )
 
 (deflayer base
   brdn brup _ _ _ _ prev pp next mute vold volu
   @a-mod @s-mod @d-mod @f-mod @j-mod @k-mod @l-mod @;-mod
-  @fnl
+  @fn-mod @spc-mod
 )
 
 (deflayer fn
   f1 f2 f3 f4 f5 f6 f7 f8 f9 f10 f11 f12
   _ _ _ _ _ _ _ _
-  fn
+  fn _
 )
