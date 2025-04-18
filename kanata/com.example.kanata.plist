@@ -9,7 +9,7 @@
     <array>
         <string>/opt/homebrew/bin/kanata</string>
         <string>-c</string>
-        <string>/Users/relativesanity/.dotfiles/src/kanata.kbd</string>
+        <string>/Users/relativesanity/.dotfiles/kanata/kanata.kbd</string>
     </array>
 
     <key>RunAtLoad</key>
