@@ -36,6 +36,14 @@ hs.hotkey.bind({ "ctrl", "alt", "shift", "cmd" }, "X", function()
 	hs.eventtap.keyStrokes(os.date("%Y-%m-%d - "))
 end)
 
+hs.hotkey.bind({ "ctrl", "alt", "shift" }, "Q", function()
+	hs.eventtap.keyStrokes(os.date("%I:%M%p"))
+end)
+
+hs.hotkey.bind({ "ctrl", "alt", "shift", "cmd" }, "Q", function()
+	hs.eventtap.keyStrokes(os.date("%I:%M%p: "))
+end)
+
 hs.hotkey.bind({ "ctrl", "alt", "shift", "cmd" }, "R", function()
 	hs.reload()
 end)
