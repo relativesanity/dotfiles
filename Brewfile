@@ -24,6 +24,7 @@ brew 'jq'
 
 cask 'ghostty'
 
+cask 'antinote'
 cask 'google-chrome'
 cask 'hammerspoon'
 cask 'keymapp'
