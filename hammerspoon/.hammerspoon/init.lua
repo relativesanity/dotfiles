@@ -37,11 +37,10 @@ hs.hotkey.bind({ "ctrl", "alt", "shift", "cmd" }, "X", function()
 end)
 
 hs.hotkey.bind({ "ctrl", "alt", "shift" }, "Q", function()
-	hs.eventtap.keyStrokes(os.date("%I:%M%p"))
-end)
-
-hs.hotkey.bind({ "ctrl", "alt", "shift", "cmd" }, "Q", function()
-	hs.eventtap.keyStrokes(os.date("%I:%M%p: "))
+	local hour = tonumber(os.date("%I"))
+	local rest = os.date(":%M%p")
+	local timeString = tostring(hour) .. rest
+	hs.eventtap.keyStrokes(string.lower(timeString))
 end)
 
 hs.hotkey.bind({ "ctrl", "alt", "shift", "cmd" }, "R", function()
