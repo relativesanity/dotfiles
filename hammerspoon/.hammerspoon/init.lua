@@ -64,6 +64,9 @@ hs.hotkey.bind({ "ctrl", "alt", "shift" }, "B", function()
 end)
 
 hs.hotkey.bind({ "ctrl", "alt", "shift", "cmd" }, "B", function()
-	local uri = string.format("obsidian://daily?vault=%s", hs.http.encodeForQuery(VAULT_NAME))
+	local uri = string.format(
+		"obsidian://adv-uri?vault=%s&commandid=periodic-notes%%3Aopen-daily-note",
+		hs.http.encodeForQuery(VAULT_NAME)
+	)
 	hs.urlevent.openURL(uri)
 end)
