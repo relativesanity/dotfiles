@@ -1,9 +1,5 @@
 VAULT_NAME = "jbOSv2"
 
-hs.hotkey.bind({ "ctrl", "alt", "shift" }, "E", function()
-	hs.application.launchOrFocus("YouTube")
-end)
-
 hs.hotkey.bind({ "ctrl", "alt", "shift" }, "R", function()
 	hs.application.launchOrFocus("Mail")
 end)
