@@ -38,4 +38,5 @@ mas 'Displaperture', id: 1_543_920_362
 mas 'Gestimer 2', id: 6_447_125_648
 mas 'Keynote', id: 409_183_694
 mas 'Numbers', id: 409_203_825
+mas 'SwitchGlass', id: 1_498_546_559
 mas 'Things 3', id: 904_280_696
