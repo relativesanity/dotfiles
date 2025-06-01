@@ -61,5 +61,8 @@ command -v rbenv >/dev/null 2>&1 && eval "$(rbenv init - zsh)"
 # load common aliases
 source $HOME/.aliases.sh
 
+# load common functions
+source $HOME/.zfunctions.sh
+
 # specific to zsh
 alias resource='source $HOME/.zshrc'
