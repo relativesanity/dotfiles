@@ -8,8 +8,8 @@ hs.hotkey.bind({ "ctrl", "alt", "shift" }, "R", function()
 	-- hs.application.launchOrFocus("Mail")
 end)
 
-hs.hotkey.bind({ "ctrl", "alt", "shift" }, "A", function()
-	hs.application.launchOrFocus("Arc")
+hs.hotkey.bind({ "ctrl", "alt", "shift" }, "S", function()
+	hs.application.launchOrFocus("Google Chrome")
 end)
 
 hs.hotkey.bind({ "ctrl", "alt", "shift" }, "D", function()
