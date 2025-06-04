@@ -65,7 +65,7 @@ source $HOME/.aliases.sh
 source $HOME/.zfunctions.sh
 
 # load local config
-source $HOME/.zshrc.local
+[[ -f $HOMR/.zshrc.local ]] && source $HOME/.zshrc.local
 
 # specific to zsh
 alias resource='source $HOME/.zshrc'
