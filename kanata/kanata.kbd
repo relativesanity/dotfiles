@@ -5,7 +5,7 @@
 (defsrc
   f1 f2 f3 f4 f5 f6 f7 f8 f9 f10 f11 f12
   q w e r t y u i o p
-  caps a s d f h j k l ;
+  caps a s d f g h j k l ;
   fn spc rmet
 )
 (defvar
@@ -24,6 +24,8 @@
   s-mod (tap-hold $tap-time $hold-time s lalt)
   d-mod (tap-hold $tap-time $hold-time d lmet)
   f-mod (tap-hold $tap-time $hold-time f lsft)
+  g-mod (tap-hold $tap-time $hold-time g @meh)
+  h-mod (tap-hold $tap-time $hold-time h @meh)
   j-mod (tap-hold $tap-time $hold-time j rsft)
   k-mod (tap-hold $tap-time $hold-time k rmet)
   l-mod (tap-hold $tap-time $hold-time l ralt)
@@ -35,27 +37,27 @@
 (deflayer base
   brdn brup _ _ _ _ prev pp next mute vold volu
   q w e r t y u i o p
-  @caps-mod @a-mod @s-mod @d-mod @f-mod h @j-mod @k-mod @l-mod @;-mod
+  @caps-mod @a-mod @s-mod @d-mod @f-mod @g-mod @h-mod @j-mod @k-mod @l-mod @;-mod
   @fn-mod @spc-mod @numl
 )
 
 (deflayer fn
   f1 f2 f3 f4 f5 f6 f7 f8 f9 f10 f11 f12
   _ _ _ _ _ _ _ _ _ _
-  _ _ _ _ _ _ _ _ _ _
+  _ _ _ _ _ _ _ _ _ _ _
   fn _ _
 )
 
 (deflayer nav
   _ _ _ _ _ _ _ _ _ _ _ _
   _ _ _ _ _ _ _ _ _ _
-  _ _ _ _ _ left down up right _
+  _ _ _ _ _ _ left down up right _
   _ _ _
 )
 
 (deflayer num
   _ _ _ _ _ _ _ _ _ _ _ _
   1 2 3 4 5 6 7 8 9 0
-  _ _ _ _ _ _ _ _ _ _
+  _ 6 7 8 9 0 _ _ _ _ _
   _ _ _
 )
