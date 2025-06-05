@@ -6,7 +6,6 @@ and then completely set up Karabiner Elements, including granting all permission
 
 Then quit Karabiner Elements, including the menu bar app, and copy the plist to the
 right place
-```bash
 
 ```bash
 sudo cp kanata/com.example.kanata.plist /Library/LaunchDaemons/
