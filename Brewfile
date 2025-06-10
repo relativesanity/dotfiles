@@ -1,5 +1,3 @@
-tap 'homebrew/services'
-
 brew 'btop'
 brew 'eza'
 brew 'fastfetch'
