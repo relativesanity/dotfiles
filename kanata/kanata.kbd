@@ -38,7 +38,7 @@
   brdn brup _ _ _ _ prev pp next mute vold volu
   q w e r t y u i o p
   @caps-mod @a-mod @s-mod @d-mod @f-mod @g-mod @h-mod @j-mod @k-mod @l-mod @;-mod
-  @fn-mod @spc-mod @numl
+  @fn-mod spc @numl
 )
 
 (deflayer fn
