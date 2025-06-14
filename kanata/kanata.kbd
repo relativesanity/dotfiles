@@ -22,23 +22,23 @@
   caps-mod (tap-hold $tap-time $hold-time esc @navl)
   a-mod (tap-hold $tap-time $hold-time a lctl)
   s-mod (tap-hold $tap-time $hold-time s lalt)
-  d-mod (tap-hold $tap-time $hold-time d lmet)
-  f-mod (tap-hold $tap-time $hold-time f lsft)
+  d-mod (tap-hold $tap-time $hold-time d lsft)
+  f-mod (tap-hold $tap-time $hold-time f lmet)
   g-mod (tap-hold $tap-time $hold-time g @meh)
   h-mod (tap-hold $tap-time $hold-time h @meh)
-  j-mod (tap-hold $tap-time $hold-time j rsft)
-  k-mod (tap-hold $tap-time $hold-time k rmet)
+  j-mod (tap-hold $tap-time $hold-time j rmet)
+  k-mod (tap-hold $tap-time $hold-time k rsft)
   l-mod (tap-hold $tap-time $hold-time l ralt)
   ;-mod (tap-hold $tap-time $hold-time ; rctl)
   fn-mod (tap-hold $tap-time $hold-time fn @fnl)
-  spc-mod (tap-hold $tap-time $hold-time spc @meh)
+  spc-mod (tap-hold $tap-time $hold-time spc @navl)
 )
 
 (deflayer base
   brdn brup _ _ _ _ prev pp next mute vold volu
   q w e r t y u i o p
-  @caps-mod @a-mod @s-mod @d-mod @f-mod @g-mod @h-mod @j-mod @k-mod @l-mod @;-mod
-  @fn-mod spc @numl
+  @caps-mod @a-mod @s-mod @d-mod @f-mod g h @j-mod @k-mod @l-mod @;-mod
+  @fn-mod @spc-mod @numl
 )
 
 (deflayer fn
