@@ -69,3 +69,4 @@ source $HOME/.zfunctions.sh
 
 # specific to zsh
 alias resource='source $HOME/.zshrc'
+alias claude="/Users/relativesanity/.claude/local/claude"
