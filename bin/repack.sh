@@ -67,7 +67,7 @@ bundle_homebrew() {
   current_user=$(whoami)
   case "$current_user" in
     "relativesanity")
-      brewfiles+=("Brewfile.home")
+      brewfiles+=("$filepath/Brewfile.home")
       ;;
     *)
       brewfiles+=("Brewfile.work")
