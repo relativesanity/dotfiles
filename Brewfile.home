@@ -19,6 +19,7 @@ cask 'readwise-ibooks'
 cask 'setapp'
 cask 'tailscale'
 cask 'vlc'
+cask 'warp'
 
 mas '1Blocker', id: 1_365_531_024
 mas 'DaisyDisk', id: 411_643_860
