@@ -70,7 +70,7 @@ bundle_homebrew() {
       brewfiles+=("$filepath/Brewfile.home")
       ;;
     *)
-      brewfiles+=("Brewfile.work")
+      brewfiles+=("$filepath/Brewfile.work")
       ;;
   esac
 
