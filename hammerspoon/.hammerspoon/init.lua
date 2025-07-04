@@ -33,10 +33,6 @@ hs.hotkey.bind({ "ctrl", "alt", "shift" }, "X", function()
 end)
 
 hs.hotkey.bind({ "ctrl", "alt", "shift", "cmd" }, "X", function()
-	hs.eventtap.keyStrokes(os.date("%Y-%m-%d - "))
-end)
-
-hs.hotkey.bind({ "ctrl", "alt", "shift" }, "Q", function()
 	local hour = tonumber(os.date("%I"))
 	local rest = os.date(":%M%p")
 	local timeString = tostring(hour) .. rest
@@ -63,10 +59,10 @@ hs.hotkey.bind({ "ctrl", "alt", "shift" }, "B", function()
 	hs.application.launchOrFocus("Obsidian")
 end)
 
-hs.hotkey.bind({ "ctrl", "alt", "shift", "cmd" }, "B", function()
-	local uri = string.format(
-		"obsidian://adv-uri?vault=%s&commandid=periodic-notes%%3Aopen-daily-note",
-		hs.http.encodeForQuery(VAULT_NAME)
-	)
-	hs.urlevent.openURL(uri)
+hs.hotkey.bind({ "ctrl", "alt", "shift" }, "S", function()
+	hs.application.launchOrFocus("Safari")
+end)
+
+hs.hotkey.bind({ "ctrl", "alt", "shift" }, "D", function()
+	hs.application.launchOrFocus("Google Chrome")
 end)
