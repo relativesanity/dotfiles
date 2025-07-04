@@ -12,7 +12,6 @@ cask 'docker-desktop'
 
 cask 'backblaze'
 cask 'claude'
-cask 'eloston-chromium'
 cask 'omnigraffle'
 cask 'reader'
 cask 'readwise-ibooks'
