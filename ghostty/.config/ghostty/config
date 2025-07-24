@@ -20,3 +20,4 @@ keybind = ctrl+cmd+k=goto_split:up
 keybind = ctrl+cmd+l=goto_split:right
 keybind = ctrl+cmd+;=new_split:right
 keybind = ctrl+cmd+'=new_split:down
+keybind = shift+enter=text:\n
