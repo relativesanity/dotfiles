@@ -4,6 +4,7 @@ brew 'cmatrix'
 brew 'hcloud'
 brew 'llm'
 brew 'mosh'
+brew 'netlify-cli'
 brew 'ollama'
 brew 'rust'
 
