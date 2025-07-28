@@ -4,7 +4,24 @@ This is not going to be needed on most keyboards, but for laptops it is
 very handy. Ensure you add kanata and karabiner-elements to your Brewfile.local,
 and then completely set up Karabiner Elements, including granting all permissions.
 
-Then quit Karabiner Elements, including the menu bar app, and copy the plist to the
+## Multiple Keyboard Support
+
+The kanata configuration is set to only apply to the MacBook's built-in keyboard,
+leaving external keyboards unaffected. This prevents conflicts with external
+mechanical keyboards that may have their own layouts or programming.
+
+To see available keyboards on your system:
+```bash
+kanata --list
+```
+
+The configuration uses `macos-dev-names-include` to target only the
+"Apple Internal Keyboard / Trackpad" device. External keyboards like mechanical
+boards will continue to work normally without kanata modifications.
+
+## Installation
+
+Quit Karabiner Elements, including the menu bar app, and copy the plist to the
 right place
 
 ```bash
@@ -15,7 +32,7 @@ sudo launchctl load /Library/LaunchDaemons/com.example.kanata.plist
 Finally, start kanata using the following command:
 
 ```bash
-sudo lanchctl start com.example.kanata
+sudo launchctl start com.example.kanata
 ```
 
 Note that you may need to grant Input Monitoring permissions to Kanata in

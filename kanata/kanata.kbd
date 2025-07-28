@@ -1,5 +1,8 @@
 (defcfg
   process-unmapped-keys yes
+  ;; Only apply to built-in laptop keyboard, exclude external keyboards
+  ;; Use 'kanata --list' to find your specific device names
+  macos-dev-names-include ("Apple Internal Keyboard / Trackpad")
 )
 
 (defsrc
