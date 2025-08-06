@@ -22,6 +22,8 @@ brew 'jq'
 
 cask 'ghostty'
 
+cask 'font-jetbrains-mono-nerd-font'
+
 cask 'alfred'
 cask 'google-chrome'
 cask 'hammerspoon'
