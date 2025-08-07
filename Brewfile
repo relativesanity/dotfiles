@@ -1,4 +1,5 @@
 brew 'btop'
+brew 'cursor-cli'
 brew 'eza'
 brew 'fastfetch'
 brew 'fd'
