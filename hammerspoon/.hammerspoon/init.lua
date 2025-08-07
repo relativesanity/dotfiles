@@ -70,3 +70,7 @@ end)
 hs.hotkey.bind({ "ctrl", "alt", "shift" }, "D", function()
 	hs.application.launchOrFocus("Google Chrome")
 end)
+
+hs.hotkey.bind({ "ctrl", "alt", "shift", "cmd" }, "S", function()
+	hs.eventtap.keyStroke({ "cmd", "shift" }, "4")
+end)
