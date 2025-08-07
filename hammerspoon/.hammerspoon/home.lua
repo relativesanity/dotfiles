@@ -24,4 +24,8 @@ hs.hotkey.bind({ "ctrl", "alt", "shift" }, "V", function()
 	hs.application.launchOrFocus("Claude")
 end)
 
+hs.hotkey.bind({ "ctrl", "alt", "shift" }, "Z", function()
+	hs.application.launchOrFocus("YouTube")
+end)
+
 hs.alert.show("Home config loaded")
