@@ -25,6 +25,7 @@ cask 'ghostty'
 cask 'font-jetbrains-mono-nerd-font'
 
 cask 'alfred'
+cask 'cursor'
 cask 'google-chrome'
 cask 'hammerspoon'
 cask 'keymapp'

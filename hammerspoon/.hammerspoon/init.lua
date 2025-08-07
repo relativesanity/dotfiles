@@ -55,6 +55,10 @@ hs.hotkey.bind({ "ctrl", "alt", "shift" }, "G", function()
 	hs.application.launchOrFocus("Ghostty")
 end)
 
+hs.hotkey.bind({ "ctrl", "alt", "shift", "cmd" }, "G", function()
+	hs.application.launchOrFocus("Cursor")
+end)
+
 hs.hotkey.bind({ "ctrl", "alt", "shift" }, "B", function()
 	hs.application.launchOrFocus("Obsidian")
 end)
