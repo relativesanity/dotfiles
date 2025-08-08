@@ -13,6 +13,7 @@ cask 'docker-desktop'
 
 cask 'backblaze'
 cask 'claude'
+cask 'kindavim'
 cask 'signal'
 cask 'omnigraffle'
 cask 'reader'
