@@ -23,6 +23,8 @@ bootstrap() {
 
   ensure_zsh || print_failure "Zsh could not be set up"
   ensure_dotfiles || print_failure "Dotfiles could not be set up"
+  print_status "Running initial dotfiles setup"
+  "$HOME/.dotfiles/bin/redot.sh" || print_failure "Initial dotfiles setup failed"
   print_status "Bootstrap complete"
 }
 
@@ -57,13 +59,11 @@ ensure_git() {
     return 0
   fi
 
-  if ! command -v git >/dev/null 2>&1; then
-    print_status "Installing git"
-    if is_macos; then
-      brew install git || return 1
-    else
-      return 1
-    fi
+  print_status "Installing git"
+  if is_macos; then
+    brew install git || return 1
+  else
+    return 1
   fi
   print_status "Git installed"
 }
