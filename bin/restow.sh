@@ -15,6 +15,11 @@ IFS=$'\n\t'       # Stricter word splitting
 #   - dotfiles repository must be present
 
 restow() {
+  if ! is_macos; then
+    print_failure "Unsupported operating system"
+    return 1
+  fi
+
   ensure_stow || { print_failure "Stow could not be set up"; return 1; }
   setup_directories || { print_failure "Required directories could not be set up"; return 1; }
   stow_packages || { print_failure "Packages could not be stowed"; return 1; }
@@ -53,12 +58,7 @@ ensure_stow() {
 
   if ! command -v stow >/dev/null 2>&1; then
     print_status "Installing stow"
-    if is_macos; then
-      ensure_homebrew &&
-        brew install stow || return 1
-    else
-      return 1
-    fi
+    ensure_homebrew && brew install stow || return 1
   fi
   print_status "Stow installed"
 }

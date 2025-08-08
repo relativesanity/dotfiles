@@ -14,13 +14,13 @@ IFS=$'\n\t'       # Stricter word splitting
 #   - None (script will install required package managers)
 
 bootstrap() {
-  if is_macos; then
-    ensure_homebrew || print_failure "Homebrew could not be set up"
-    ensure_git || print_failure "Git could not be set up"
-  else
+  if ! is_macos; then
     print_failure "Unsupported operating system"
+    return 1
   fi
 
+  ensure_homebrew || print_failure "Homebrew could not be set up"
+  ensure_git || print_failure "Git could not be set up"
   ensure_zsh || print_failure "Zsh could not be set up"
   ensure_dotfiles || print_failure "Dotfiles could not be set up"
   print_status "Running initial dotfiles setup"
@@ -60,11 +60,7 @@ ensure_git() {
   fi
 
   print_status "Installing git"
-  if is_macos; then
-    brew install git || return 1
-  else
-    return 1
-  fi
+  brew install git || return 1
   print_status "Git installed"
 }
 
@@ -78,11 +74,7 @@ ensure_zsh() {
   # Check if zsh is already installed
   if ! command -v zsh >/dev/null 2>&1; then
     print_status "Installing zsh"
-    if is_macos; then
-      brew install zsh || return 1
-    else
-      return 1
-    fi
+    brew install zsh || return 1
   fi
   print_status "Zsh installed"
 

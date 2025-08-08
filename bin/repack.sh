@@ -15,14 +15,14 @@ IFS=$'\n\t'       # Stricter word splitting
 #   - dotfiles repository must be present
 
 repack() {
-  if is_macos; then
-    ensure_homebrew || print_failure "Homebrew could not be set up"
-    update_homebrew || print_failure "Homebrew could not be updated"
-    bundle_homebrew || print_failure "Homebrew could not be bundled"
-  else
+  if ! is_macos; then
     print_failure "Unsupported operating system"
+    return 1
   fi
 
+  ensure_homebrew || print_failure "Homebrew could not be set up"
+  update_homebrew || print_failure "Homebrew could not be updated"
+  bundle_homebrew || print_failure "Homebrew could not be bundled"
   setup_tmux_plugins || print_failure "Tmux could not be set up"
   print_status "Repack complete"
 }
