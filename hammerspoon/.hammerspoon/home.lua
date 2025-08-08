@@ -20,6 +20,10 @@ hs.hotkey.bind({ "ctrl", "alt", "shift" }, "C", function()
 	hs.application.launchOrFocus("Messages")
 end)
 
+hs.hotkey.bind({ "ctrl", "alt", "shift", "cmd" }, "C", function()
+	hs.application.launchOrFocus("Signal")
+end)
+
 hs.hotkey.bind({ "ctrl", "alt", "shift" }, "V", function()
 	hs.application.launchOrFocus("Claude")
 end)
