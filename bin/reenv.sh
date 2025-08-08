@@ -8,9 +8,9 @@ IFS=$'\n\t'       # Stricter word splitting
 # Checks to see if a global ruby version is specified, and then tries to
 # install it. Requires rbenv to be installed.
 
-redot() {
-  [[ -e $HOME/.rbenv/version ]] &&
-    rbenv install -s $(cat $HOME/.rbenv/version)
+reenv() {
+  [[ -e "$HOME/.rbenv/version" ]] && \
+    rbenv install -s "$(cat "$HOME/.rbenv/version")"
 }
 
-redot
+reenv

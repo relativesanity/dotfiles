@@ -9,11 +9,12 @@ IFS=$'\n\t'       # Stricter word splitting
 # error handling and exiting to them
 
 redot() {
-  cd ${DOTFILES_PATH:-$HOME/.dotfiles} &&
+  cd "${DOTFILES_PATH:-$HOME/.dotfiles}" &&
     echo "Current branch: $(git branch --show-current)" &&
     git pull &&
     ./bin/repack.sh &&
-    ./bin/restow.sh
+    ./bin/restow.sh &&
+    ./bin/reenv.sh
 }
 
 redot
