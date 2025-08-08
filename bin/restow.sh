@@ -15,9 +15,9 @@ IFS=$'\n\t'       # Stricter word splitting
 #   - dotfiles repository must be present
 
 restow() {
-  ensure_stow || print_failure "Stow could not be set up"
-  setup_directories || print_failure "Required directories could not be set up"
-  stow_packages || print_failure "Packages could not be stowed"
+  ensure_stow || { print_failure "Stow could not be set up"; return 1; }
+  setup_directories || { print_failure "Required directories could not be set up"; return 1; }
+  stow_packages || { print_failure "Packages could not be stowed"; return 1; }
   print_status "Stow complete"
 }
 
@@ -60,7 +60,7 @@ ensure_stow() {
       return 1
     fi
   fi
-  print_status "Stow intalled"
+  print_status "Stow installed"
 }
 
 # ------------------------------------------------------------------------------------------------------
@@ -99,7 +99,7 @@ stow_packages() {
   print_status "Stowing…"
   for package in "${STOW_PACKAGES[@]}"; do
     print_status "Stowing $package"
-    stow -d "$HOME"/.dotfiles/ --restow "$package" || return 1
+    stow -d "$HOME/.dotfiles" -t "$HOME" --restow "$package" || return 1
   done
 }
 
