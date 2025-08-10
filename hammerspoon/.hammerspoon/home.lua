@@ -1,34 +1,34 @@
 VAULT_NAME = "jbOSv2"
 
-hs.hotkey.bind({ "ctrl", "alt", "shift" }, "Q", function()
+hs.hotkey.bind(meh, "Q", function()
 	hs.application.launchOrFocus("Day One")
 end)
 
-hs.hotkey.bind({ "ctrl", "alt", "shift" }, "E", function()
+hs.hotkey.bind(meh, "E", function()
 	hs.application.launchOrFocus("Mail")
 end)
 
-hs.hotkey.bind({ "ctrl", "alt", "shift" }, "R", function()
+hs.hotkey.bind(meh, "R", function()
 	hs.application.launchOrFocus("Reader")
 end)
 
-hs.hotkey.bind({ "ctrl", "alt", "shift", "cmd" }, "F", function()
+hs.hotkey.bind(hyper, "F", function()
 	hs.application.launchOrFocus("FindMy")
 end)
 
-hs.hotkey.bind({ "ctrl", "alt", "shift" }, "C", function()
+hs.hotkey.bind(meh, "C", function()
 	hs.application.launchOrFocus("Messages")
 end)
 
-hs.hotkey.bind({ "ctrl", "alt", "shift", "cmd" }, "C", function()
+hs.hotkey.bind(hyper, "C", function()
 	hs.application.launchOrFocus("Signal")
 end)
 
-hs.hotkey.bind({ "ctrl", "alt", "shift" }, "V", function()
+hs.hotkey.bind(meh, "V", function()
 	hs.application.launchOrFocus("Claude")
 end)
 
-hs.hotkey.bind({ "ctrl", "alt", "shift" }, "Z", function()
+hs.hotkey.bind(meh, "Z", function()
 	hs.application.launchOrFocus("YouTube")
 end)
 
