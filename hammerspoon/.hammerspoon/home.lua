@@ -32,4 +32,8 @@ hs.hotkey.bind(meh, "Z", function()
 	hs.application.launchOrFocus("YouTube")
 end)
 
+hs.hotkey.bind(hyper, "Q", function()
+	hs.application.launchOrFocus("Music")
+end)
+
 hs.alert.show("Home config loaded")
