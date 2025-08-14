@@ -84,6 +84,27 @@ The shell setup uses Zsh with:
 
 All shell scripts use `set -euo pipefail` for strict error handling and will exit on any command failure, undefined variables, or pipeline errors.
 
+## Git Commit Process (MANDATORY)
+
+When making any changes that require commits:
+
+1. **ALWAYS run `git log --oneline -10` first** to analyze recent commit message patterns
+2. **NEVER suggest commit messages** without analyzing the repository's style
+3. **Use the exact format observed in recent commits** (typically lowercase, present tense: "adds X to Y")
+4. **Follow the complete commit workflow:**
+   - Run `git status` and `git diff` to understand changes
+   - Stage relevant files with `git add`
+   - Commit with analyzed message format
+   - Verify with `git status`
+5. **ONLY commit when explicitly asked** - never assume the user wants changes committed
+
+## Commit Message Format
+- Analyze recent commits with `git log --oneline -10` 
+- Match the observed pattern (e.g., "adds slack to base Brewfile")
+- Use lowercase, present tense
+- Be concise and descriptive
+- Focus on what was added/changed, not why
+
 ## Conventions
 
 - Keep edits small and focused
