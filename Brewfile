@@ -32,6 +32,7 @@ cask 'keymapp'
 cask 'logi-options+'
 cask 'moom'
 cask 'obsidian'
+cask 'slack'
 cask 'superkey'
 
 mas 'Displaperture', id: 1_543_920_362
