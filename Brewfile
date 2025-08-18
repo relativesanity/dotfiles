@@ -1,7 +1,6 @@
 # Core development tools
 brew 'bat'
 brew 'btop'
-brew 'chafa'
 brew 'cmatrix'
 brew 'docker-buildx'
 brew 'eza'
@@ -34,7 +33,6 @@ brew 'zoxide'
 cask 'alfred'
 cask 'backblaze'
 cask 'claude'
-cask 'cursor'
 cask 'docker-desktop'
 cask 'font-jetbrains-mono-nerd-font'
 cask 'ghostty'
@@ -55,6 +53,7 @@ cask 'superkey'
 cask 'tailscale-app'
 cask 'vlc'
 cask 'warp'
+cask 'zoom'
 
 # Mac App Store apps
 mas '1Blocker', id: 1_365_531_024
@@ -72,3 +71,4 @@ mas 'Pandan', id: 1_569_600_264
 mas 'Things 3', id: 904_280_696
 mas 'Triode', id: 1_450_027_401
 mas 'Xcode', id: 497_799_835
+
