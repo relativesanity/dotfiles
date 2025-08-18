@@ -65,23 +65,11 @@ bundle_homebrew() {
   fi
 
   current_user=$(whoami)
-  case "$current_user" in
-    "relativesanity")
-      brewfiles+=("$filepath/Brewfile.home")
-      ;;
-    *)
-      brewfiles+=("$filepath/Brewfile.work")
-      ;;
-  esac
+  if [[ "$current_user" == "relativesanity" ]]; then
+    brewfiles+=("$filepath/Brewfile.home")
+  fi
 
-  case "$current_user" in
-    "relativesanity")
-      cat "${brewfiles[@]}" | brew bundle --file=- --cleanup --zap
-      ;;
-    *)
-      cat "${brewfiles[@]}" | brew bundle --file=-
-      ;;
-  esac
+  cat "${brewfiles[@]}" | brew bundle --file=- --cleanup --zap
 }
 
 # ------------------------------------------------------------------------------------------------------
