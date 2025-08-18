@@ -36,4 +36,12 @@ hs.hotkey.bind(hyper, "Q", function()
 	hs.application.launchOrFocus("Music")
 end)
 
+hs.hotkey.bind(hyper, "Z", function()
+	hs.application.launchOrFocus("zoom.us")
+end)
+
+hs.hotkey.bind(hyper, "V", function()
+	hs.application.launchOrFocus("Slack")
+end)
+
 hs.alert.show("Home config loaded")
