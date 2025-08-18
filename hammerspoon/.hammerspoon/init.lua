@@ -4,15 +4,7 @@ hs = hs
 meh = { "ctrl", "alt", "shift" }
 hyper = { "ctrl", "alt", "shift", "cmd" }
 
-local function getCurrentUser()
-	return (os.getenv("USER") or ""):gsub("[\n\r]", "")
-end
-
-if getCurrentUser() == "relativesanity" then
-	require("home")
-else
-	require("work")
-end
+require("home")
 
 hs.hotkey.bind(meh, "W", function()
 	hs.osascript.applescript([[
