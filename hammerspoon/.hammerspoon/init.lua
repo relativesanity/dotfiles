@@ -4,8 +4,6 @@ hs = hs
 meh = { "ctrl", "alt", "shift" }
 hyper = { "ctrl", "alt", "shift", "cmd" }
 
-VAULT_NAME = "jbOSv2"
-
 -- Primary app launchers (meh + key)
 hs.hotkey.bind(meh, "B", function()
 	hs.application.launchOrFocus("Obsidian")
