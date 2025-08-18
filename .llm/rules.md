@@ -27,11 +27,9 @@ This is a personal dotfiles repository that manages macOS system configuration a
 - `./bin/reenv.sh` - Installs Ruby versions specified in rbenv configuration
 
 ### Package Management
-The repository uses multiple Brewfiles for different environments:
-- `Brewfile` - Core packages for all systems
-- `Brewfile.home` - Additional packages for personal systems (when user is "relativesanity")
-- `Brewfile.work` - Additional packages for work systems
-- `Brewfile.local` - User-specific packages (gitignored)
+The repository uses Brewfiles for package management:
+- `Brewfile` - All packages for the system, organized by category
+- `Brewfile.local` - Optional user-specific packages (gitignored)
 
 ### Aliases
 Key aliases are defined in `sh/.aliases.sh`:
@@ -55,10 +53,8 @@ Configuration files are organized into stow packages (directories that get symli
 - `btop/` - System monitor configuration
 - `kanata/` - Keyboard remapping configuration
 
-### Environment-Specific Logic
-The `repack.sh` script uses the current username to determine which Brewfile to use:
-- User "relativesanity" gets Brewfile.home with cleanup/zap options
-- Other users get Brewfile.work without cleanup
+### Package Installation
+The `repack.sh` script installs packages from Brewfile and optional Brewfile.local using `brew bundle` with cleanup and zap options to remove unused packages.
 
 ### Shell Configuration
 The shell setup uses Zsh with:
