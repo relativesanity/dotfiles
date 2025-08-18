@@ -64,11 +64,6 @@ bundle_homebrew() {
     brewfiles+=("$filepath/Brewfile.local")
   fi
 
-  current_user=$(whoami)
-  if [[ "$current_user" == "relativesanity" ]]; then
-    brewfiles+=("$filepath/Brewfile.home")
-  fi
-
   cat "${brewfiles[@]}" | brew bundle --file=- --cleanup --zap
 }
 
