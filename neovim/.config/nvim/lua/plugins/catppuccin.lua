@@ -6,6 +6,7 @@ return {
     require("catppuccin").setup({
       transparent_background = true,
       fzf = true,
+      dashboard = true,
     })
     vim.cmd.colorscheme "catppuccin"
   end,
