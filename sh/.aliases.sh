@@ -10,7 +10,8 @@ alias la='ll -a'
 
 alias mkdir='mkdir -p'
 
-alias start='tmux new-session -A -s'
+TMUX_DEFAULT_SESSION_NAME="jbOS"
+start() { tmux new-session -A -s "${1:-$TMUX_DEFAULT_SESSION_NAME}"; }
 
 alias msh='mosh --server=/opt/homebrew/bin/mosh-server'
 
