@@ -12,10 +12,4 @@ window-height = 40
 
 mouse-hide-while-typing = true
 
-keybind = ctrl+cmd+h=goto_split:left
-keybind = ctrl+cmd+j=goto_split:down
-keybind = ctrl+cmd+k=goto_split:up
-keybind = ctrl+cmd+l=goto_split:right
-keybind = ctrl+cmd+;=new_split:right
-keybind = ctrl+cmd+'=new_split:down
 keybind = shift+enter=text:\n
