@@ -32,6 +32,7 @@ readonly REQUIRED_DIRECTORIES=(
 )
 
 readonly STOW_PACKAGES=(
+  "aerospace"
   "btop"
   "gh"
   "ghostty"

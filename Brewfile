@@ -30,6 +30,7 @@ brew 'tmux'
 brew 'zoxide'
 
 # Applications
+cask 'nikitabobko/tap/aerospace'
 cask 'alfred'
 cask 'backblaze'
 cask 'claude'
