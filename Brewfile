@@ -55,19 +55,18 @@ cask 'warp'
 cask 'zoom'
 
 # Mac App Store apps
-mas '1Blocker', id: 1_365_531_024
-mas 'DaisyDisk', id: 411_643_860
-mas 'Day One', id: 1_055_511_498
-mas 'Displaperture', id: 1_543_920_362
-mas 'Drafts', id: 1_435_957_248
-mas 'Framous: Screenshot Frames', id: 6_636_520_519
-mas 'Gestimer 2', id: 6_447_125_648
-mas 'Googly Eyes', id: 6_743_048_714
-mas 'Keynote', id: 409_183_694
-mas 'Numbers', id: 409_203_825
-mas 'Pages', id: 409_201_541
-mas 'Pandan', id: 1_569_600_264
-mas 'Things 3', id: 904_280_696
-mas 'Triode', id: 1_450_027_401
-mas 'Xcode', id: 497_799_835
-
+mas '1Blocker', id: 1365531024
+mas 'DaisyDisk', id: 411643860
+mas 'Day One', id: 1055511498
+mas 'Displaperture', id: 1543920362
+mas 'Drafts', id: 1435957248
+mas 'Framous: Screenshot Frames', id: 6636520519
+mas 'Gestimer 2', id: 6447125648
+mas 'Googly Eyes', id: 6743048714
+mas 'Keynote', id: 409183694
+mas 'Numbers', id: 409203825
+mas 'Pages', id: 409201541
+mas 'Pandan', id: 1569600264
+mas 'Things 3', id: 904280696
+mas 'Triode', id: 1450027401
+mas 'Xcode', id: 497799835
