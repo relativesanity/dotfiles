@@ -13,7 +13,7 @@ hs.hotkey.bind(hyper, "V", function()
 	hs.eventtap.keyStroke({ "cmd", "shift" }, "4")
 end)
 
-hs.hotkey.bind(meh, "W", function()
+hs.hotkey.bind(meh, "B", function()
 	hs.osascript.applescript([[
     tell application "Finder"
         open (path to home folder as text) & ".local:share:wallpaper:"
@@ -22,7 +22,7 @@ hs.hotkey.bind(meh, "W", function()
 	hs.application.launchOrFocus("Finder")
 end)
 
-hs.hotkey.bind(hyper, "W", function()
+hs.hotkey.bind(hyper, "B", function()
 	hs.osascript.applescript([[
     tell application "Finder"
         set theFile to selection as alias
