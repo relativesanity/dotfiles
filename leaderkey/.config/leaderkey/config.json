@@ -3,82 +3,13 @@
     {
       "actions" : [
         {
-          "key" : "d",
-          "label" : "Obsidian",
-          "type" : "application",
-          "value" : "/Applications/Obsidian.app"
-        },
-        {
-          "key" : "f",
-          "label" : "Things3",
-          "type" : "application",
-          "value" : "/Applications/Things3.app"
-        },
-        {
-          "key" : "s",
-          "label" : "Day One",
-          "type" : "application",
-          "value" : "/Applications/Day One.app"
-        },
-        {
-          "key" : "a",
-          "label" : "Mail",
-          "type" : "application",
-          "value" : "/System/Applications/Mail.app"
-        }
-      ],
-      "key" : "f",
-      "label" : "Admin",
-      "type" : "group"
-    },
-    {
-      "actions" : [
-        {
-          "key" : "d",
-          "label" : "Google Chrome",
-          "type" : "application",
-          "value" : "/Applications/Google Chrome.app"
-        },
-        {
-          "key" : "s",
-          "label" : "Safari",
-          "type" : "application",
-          "value" : "/Applications/Safari.app"
-        }
-      ],
-      "key" : "s",
-      "label" : "Browse",
-      "type" : "group"
-    },
-    {
-      "actions" : [
-        {
-          "key" : "a",
-          "label" : "Finder",
-          "type" : "application",
-          "value" : "/System/Library/CoreServices/Finder.app"
-        },
-        {
-          "key" : "s",
-          "label" : "FindMy",
-          "type" : "application",
-          "value" : "/System/Applications/FindMy.app"
-        }
-      ],
-      "key" : "a",
-      "label" : "System",
-      "type" : "group"
-    },
-    {
-      "actions" : [
-        {
           "key" : "g",
           "label" : "Ghostty",
           "type" : "application",
           "value" : "/Applications/Ghostty.app"
         },
         {
-          "key" : "d",
+          "key" : "f",
           "label" : "Claude",
           "type" : "application",
           "value" : "/Applications/Claude.app"
@@ -91,38 +22,38 @@
     {
       "actions" : [
         {
-          "key" : "c",
-          "label" : "Messages",
+          "key" : "g",
+          "label" : "Obsidian",
           "type" : "application",
-          "value" : "/System/Applications/Messages.app"
+          "value" : "/Applications/Obsidian.app"
         },
         {
-          "key" : "x",
-          "label" : "Signal",
+          "key" : "f",
+          "label" : "Things3",
           "type" : "application",
-          "value" : "/Applications/Signal.app"
+          "value" : "/Applications/Things3.app"
         },
         {
-          "key" : "v",
-          "label" : "Slack",
+          "key" : "d",
+          "label" : "Day One",
           "type" : "application",
-          "value" : "/Applications/Slack.app"
+          "value" : "/Applications/Day One.app"
         },
         {
-          "key" : "z",
-          "label" : "Zoom",
+          "key" : "s",
+          "label" : "Mail",
           "type" : "application",
-          "value" : "/Applications/zoom.us.app"
+          "value" : "/System/Applications/Mail.app"
         }
       ],
-      "key" : "c",
-      "label" : "Comms",
+      "key" : "f",
+      "label" : "Admin",
       "type" : "group"
     },
     {
       "actions" : [
         {
-          "key" : "d",
+          "key" : "g",
           "label" : "Reader",
           "type" : "application",
           "value" : "/Applications/Reader.app"
@@ -134,7 +65,7 @@
           "value" : "/Users/relativesanity/Applications/YouTube.app"
         },
         {
-          "key" : "a",
+          "key" : "d",
           "label" : "Nebula",
           "type" : "application",
           "value" : "/Users/relativesanity/Applications/Nebula.app"
@@ -148,6 +79,75 @@
       ],
       "key" : "d",
       "label" : "Learn",
+      "type" : "group"
+    },
+    {
+      "actions" : [
+        {
+          "key" : "g",
+          "label" : "Google Chrome",
+          "type" : "application",
+          "value" : "/Applications/Google Chrome.app"
+        },
+        {
+          "key" : "f",
+          "label" : "Safari",
+          "type" : "application",
+          "value" : "/Applications/Safari.app"
+        }
+      ],
+      "key" : "s",
+      "label" : "Browse",
+      "type" : "group"
+    },
+    {
+      "actions" : [
+        {
+          "key" : "g",
+          "label" : "Finder",
+          "type" : "application",
+          "value" : "/System/Library/CoreServices/Finder.app"
+        },
+        {
+          "key" : "f",
+          "label" : "FindMy",
+          "type" : "application",
+          "value" : "/System/Applications/FindMy.app"
+        }
+      ],
+      "key" : "a",
+      "label" : "System",
+      "type" : "group"
+    },
+    {
+      "actions" : [
+        {
+          "key" : "g",
+          "label" : "Messages",
+          "type" : "application",
+          "value" : "/System/Applications/Messages.app"
+        },
+        {
+          "key" : "f",
+          "label" : "Signal",
+          "type" : "application",
+          "value" : "/Applications/Signal.app"
+        },
+        {
+          "key" : "d",
+          "label" : "Slack",
+          "type" : "application",
+          "value" : "/Applications/Slack.app"
+        },
+        {
+          "key" : "s",
+          "label" : "Zoom",
+          "type" : "application",
+          "value" : "/Applications/zoom.us.app"
+        }
+      ],
+      "key" : "c",
+      "label" : "Comms",
       "type" : "group"
     }
   ],
