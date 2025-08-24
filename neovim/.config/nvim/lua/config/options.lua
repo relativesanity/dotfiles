@@ -7,3 +7,6 @@ vim.filetype.add({
     Brewfile = "ruby",
   },
 })
+
+-- LazyVim auto format
+vim.g.autoformat = false
