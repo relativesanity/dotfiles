@@ -39,6 +39,7 @@ readonly STOW_PACKAGES=(
   "git"
   "hammerspoon"
   "hetzner"
+  "leaderkey"
   "neovim"
   "rbenv"
   "sh"
