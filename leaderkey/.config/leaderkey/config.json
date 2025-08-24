@@ -1,0 +1,155 @@
+{
+  "actions" : [
+    {
+      "actions" : [
+        {
+          "key" : "b",
+          "label" : "Obsidian",
+          "type" : "command",
+          "value" : "open -a 'Obsidian'"
+        },
+        {
+          "key" : "t",
+          "label" : "Things3",
+          "type" : "command",
+          "value" : "open -a 'Things3'"
+        },
+        {
+          "key" : "q",
+          "label" : "Day One",
+          "type" : "command",
+          "value" : "open -a 'Day One'"
+        },
+        {
+          "key" : "g",
+          "label" : "Cursor",
+          "type" : "command",
+          "value" : "open -a 'Cursor'"
+        },
+        {
+          "key" : "e",
+          "label" : "Mail",
+          "type" : "command",
+          "value" : "open -a 'Mail'"
+        }
+      ],
+      "key" : "a",
+      "label" : "Admin",
+      "type" : "group"
+    },
+    {
+      "actions" : [
+        {
+          "key" : "d",
+          "label" : "Google Chrome",
+          "type" : "command",
+          "value" : "open -a 'Google Chrome'"
+        },
+        {
+          "key" : "s",
+          "label" : "Safari",
+          "type" : "command",
+          "value" : "open -a 'Safari'"
+        }
+      ],
+      "key" : "s",
+      "label" : "Browse",
+      "type" : "group"
+    },
+    {
+      "actions" : [
+        {
+          "key" : "z",
+          "label" : "YouTube",
+          "type" : "command",
+          "value" : "open -a 'YouTube'"
+        },
+        {
+          "key" : "r",
+          "label" : "Reader",
+          "type" : "command",
+          "value" : "open -a 'Reader'"
+        },
+        {
+          "key" : "q",
+          "label" : "Music",
+          "type" : "command",
+          "value" : "open -a 'Music'"
+        }
+      ],
+      "key" : "d",
+      "label" : "Learn",
+      "type" : "group"
+    },
+    {
+      "actions" : [
+        {
+          "key" : "f",
+          "label" : "Finder",
+          "type" : "command",
+          "value" : "open -a 'Finder'"
+        },
+        {
+          "key" : "x",
+          "label" : "FindMy",
+          "type" : "command",
+          "value" : "open -a 'FindMy'"
+        }
+      ],
+      "key" : "f",
+      "label" : "System",
+      "type" : "group"
+    },
+    {
+      "actions" : [
+        {
+          "key" : "g",
+          "label" : "Ghostty",
+          "type" : "command",
+          "value" : "open -a 'Ghostty'"
+        },
+        {
+          "key" : "v",
+          "label" : "Claude",
+          "type" : "command",
+          "value" : "open -a 'Claude'"
+        }
+      ],
+      "key" : "g",
+      "label" : "Dev",
+      "type" : "group"
+    },
+    {
+      "actions" : [
+        {
+          "key" : "c",
+          "label" : "Messages",
+          "type" : "command",
+          "value" : "open -a 'Messages'"
+        },
+        {
+          "key" : "s",
+          "label" : "Signal",
+          "type" : "command",
+          "value" : "open -a 'Signal'"
+        },
+        {
+          "key" : "v",
+          "label" : "Slack",
+          "type" : "command",
+          "value" : "open -a 'Slack'"
+        },
+        {
+          "key" : "z",
+          "label" : "Zoom",
+          "type" : "command",
+          "value" : "open -a 'zoom.us'"
+        }
+      ],
+      "key" : "c",
+      "label" : "Comms",
+      "type" : "group"
+    }
+  ],
+  "type" : "group"
+}
