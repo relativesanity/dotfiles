@@ -3,37 +3,31 @@
     {
       "actions" : [
         {
-          "key" : "b",
+          "key" : "d",
           "label" : "Obsidian",
-          "type" : "command",
-          "value" : "open -a 'Obsidian'"
+          "type" : "application",
+          "value" : "/Applications/Obsidian.app"
         },
         {
-          "key" : "t",
+          "key" : "f",
           "label" : "Things3",
-          "type" : "command",
-          "value" : "open -a 'Things3'"
+          "type" : "application",
+          "value" : "/Applications/Things3.app"
         },
         {
-          "key" : "q",
+          "key" : "s",
           "label" : "Day One",
-          "type" : "command",
-          "value" : "open -a 'Day One'"
+          "type" : "application",
+          "value" : "/Applications/Day One.app"
         },
         {
-          "key" : "g",
-          "label" : "Cursor",
-          "type" : "command",
-          "value" : "open -a 'Cursor'"
-        },
-        {
-          "key" : "e",
+          "key" : "a",
           "label" : "Mail",
-          "type" : "command",
-          "value" : "open -a 'Mail'"
+          "type" : "application",
+          "value" : "/Applications/Mail.app"
         }
       ],
-      "key" : "a",
+      "key" : "f",
       "label" : "Admin",
       "type" : "group"
     },
@@ -42,14 +36,14 @@
         {
           "key" : "d",
           "label" : "Google Chrome",
-          "type" : "command",
-          "value" : "open -a 'Google Chrome'"
+          "type" : "application",
+          "value" : "/Applications/Google Chrome.app"
         },
         {
           "key" : "s",
           "label" : "Safari",
-          "type" : "command",
-          "value" : "open -a 'Safari'"
+          "type" : "application",
+          "value" : "/Applications/Safari.app"
         }
       ],
       "key" : "s",
@@ -59,22 +53,22 @@
     {
       "actions" : [
         {
-          "key" : "z",
+          "key" : "f",
           "label" : "YouTube",
-          "type" : "command",
-          "value" : "open -a 'YouTube'"
+          "type" : "application",
+          "value" : "/Applications/YouTube.app"
         },
         {
-          "key" : "r",
+          "key" : "d",
           "label" : "Reader",
-          "type" : "command",
-          "value" : "open -a 'Reader'"
+          "type" : "application",
+          "value" : "/Applications/Reader.app"
         },
         {
-          "key" : "q",
+          "key" : "s",
           "label" : "Music",
-          "type" : "command",
-          "value" : "open -a 'Music'"
+          "type" : "application",
+          "value" : "/Applications/Music.app"
         }
       ],
       "key" : "d",
@@ -84,19 +78,19 @@
     {
       "actions" : [
         {
-          "key" : "f",
+          "key" : "a",
           "label" : "Finder",
-          "type" : "command",
-          "value" : "open -a 'Finder'"
+          "type" : "application",
+          "value" : "/System/Library/CoreServices/Finder.app"
         },
         {
-          "key" : "x",
+          "key" : "s",
           "label" : "FindMy",
-          "type" : "command",
-          "value" : "open -a 'FindMy'"
+          "type" : "application",
+          "value" : "/Applications/FindMy.app"
         }
       ],
-      "key" : "f",
+      "key" : "a",
       "label" : "System",
       "type" : "group"
     },
@@ -105,14 +99,14 @@
         {
           "key" : "g",
           "label" : "Ghostty",
-          "type" : "command",
-          "value" : "open -a 'Ghostty'"
+          "type" : "application",
+          "value" : "/Applications/Ghostty.app"
         },
         {
-          "key" : "v",
+          "key" : "d",
           "label" : "Claude",
-          "type" : "command",
-          "value" : "open -a 'Claude'"
+          "type" : "application",
+          "value" : "/Applications/Claude.app"
         }
       ],
       "key" : "g",
@@ -124,26 +118,26 @@
         {
           "key" : "c",
           "label" : "Messages",
-          "type" : "command",
-          "value" : "open -a 'Messages'"
+          "type" : "application",
+          "value" : "/Applications/Messages.app"
         },
         {
-          "key" : "s",
+          "key" : "x",
           "label" : "Signal",
-          "type" : "command",
-          "value" : "open -a 'Signal'"
+          "type" : "application",
+          "value" : "/Applications/Signal.app"
         },
         {
           "key" : "v",
           "label" : "Slack",
-          "type" : "command",
-          "value" : "open -a 'Slack'"
+          "type" : "application",
+          "value" : "/Applications/Slack.app"
         },
         {
           "key" : "z",
           "label" : "Zoom",
-          "type" : "command",
-          "value" : "open -a 'zoom.us'"
+          "type" : "application",
+          "value" : "/Applications/zoom.us.app"
         }
       ],
       "key" : "c",
