@@ -54,9 +54,9 @@
       "actions" : [
         {
           "key" : "g",
-          "label" : "Reader",
+          "label" : "Nebula",
           "type" : "application",
-          "value" : "/Applications/Reader.app"
+          "value" : "/Users/relativesanity/Applications/Nebula.app"
         },
         {
           "key" : "f",
@@ -66,9 +66,9 @@
         },
         {
           "key" : "d",
-          "label" : "Nebula",
+          "label" : "Reader",
           "type" : "application",
-          "value" : "/Users/relativesanity/Applications/Nebula.app"
+          "value" : "/Applications/Reader.app"
         },
         {
           "key" : "s",
@@ -84,13 +84,13 @@
     {
       "actions" : [
         {
-          "key" : "g",
+          "key" : "d",
           "label" : "Google Chrome",
           "type" : "application",
           "value" : "/Applications/Google Chrome.app"
         },
         {
-          "key" : "f",
+          "key" : "s",
           "label" : "Safari",
           "type" : "application",
           "value" : "/Applications/Safari.app"
@@ -103,17 +103,17 @@
     {
       "actions" : [
         {
-          "key" : "g",
-          "label" : "Finder",
-          "type" : "application",
-          "value" : "/System/Library/CoreServices/Finder.app"
-        },
-        {
           "key" : "f",
           "label" : "FindMy",
           "type" : "application",
           "value" : "/System/Applications/FindMy.app"
-        }
+        },
+        {
+          "key" : "a",
+          "label" : "Finder",
+          "type" : "application",
+          "value" : "/System/Library/CoreServices/Finder.app"
+        },
       ],
       "key" : "a",
       "label" : "System",
@@ -122,25 +122,25 @@
     {
       "actions" : [
         {
-          "key" : "g",
-          "label" : "Messages",
-          "type" : "application",
-          "value" : "/System/Applications/Messages.app"
-        },
-        {
-          "key" : "f",
-          "label" : "Signal",
-          "type" : "application",
-          "value" : "/Applications/Signal.app"
-        },
-        {
-          "key" : "d",
+          "key" : "b",
           "label" : "Slack",
           "type" : "application",
           "value" : "/Applications/Slack.app"
         },
         {
-          "key" : "s",
+          "key" : "v",
+          "label" : "Signal",
+          "type" : "application",
+          "value" : "/Applications/Signal.app"
+        },
+        {
+          "key" : "c",
+          "label" : "Messages",
+          "type" : "application",
+          "value" : "/System/Applications/Messages.app"
+        },
+        {
+          "key" : "x",
           "label" : "Zoom",
           "type" : "application",
           "value" : "/Applications/zoom.us.app"
