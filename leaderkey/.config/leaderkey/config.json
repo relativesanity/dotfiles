@@ -24,7 +24,7 @@
           "key" : "a",
           "label" : "Mail",
           "type" : "application",
-          "value" : "/Applications/Mail.app"
+          "value" : "/System/Applications/Mail.app"
         }
       ],
       "key" : "f",
@@ -62,7 +62,7 @@
           "key" : "s",
           "label" : "FindMy",
           "type" : "application",
-          "value" : "/Applications/FindMy.app"
+          "value" : "/System/Applications/FindMy.app"
         }
       ],
       "key" : "a",
