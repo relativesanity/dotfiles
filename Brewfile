@@ -29,8 +29,11 @@ brew 'stow'
 brew 'tmux'
 brew 'zoxide'
 
+# Taps
+tap 'nikitabobko/tap'
+
 # Applications
-cask 'nikitabobko/tap/aerospace'
+cask 'aerospace'
 cask 'alfred'
 cask 'backblaze'
 cask 'claude'
