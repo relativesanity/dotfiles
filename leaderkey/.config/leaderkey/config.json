@@ -44,8 +44,7 @@
           "label" : "Mail",
           "type" : "application",
           "value" : "/System/Applications/Mail.app"
-        }
-,
+        },
         {
           "key" : "a",
           "label" : "Calendar",
