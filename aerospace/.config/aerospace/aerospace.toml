@@ -91,18 +91,19 @@ automatically-unhide-macos-hidden-apps = false
     # See: https://nikitabobko.github.io/AeroSpace/commands#layout
     ctrl-alt-shift-slash = 'layout tiles horizontal vertical'
     ctrl-alt-shift-comma = 'layout accordion horizontal vertical'
+    ctrl-alt-shift-i = 'layout floating tiling'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#focus
-    ctrl-alt-shift-h = 'focus left'
-    ctrl-alt-shift-j = 'focus down'
-    ctrl-alt-shift-k = 'focus up'
-    ctrl-alt-shift-l = 'focus right'
+    alt-h = 'focus left'
+    alt-j = 'focus down'
+    alt-k = 'focus up'
+    alt-l = 'focus right'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move
-    ctrl-alt-shift-cmd-h = 'move left'
-    ctrl-alt-shift-cmd-j = 'move down'
-    ctrl-alt-shift-cmd-k = 'move up'
-    ctrl-alt-shift-cmd-l = 'move right'
+    ctrl-alt-shift-h = 'move left'
+    ctrl-alt-shift-j = 'move down'
+    ctrl-alt-shift-k = 'move up'
+    ctrl-alt-shift-l = 'move right'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#resize
     ctrl-alt-shift-minus = 'resize smart -48'
@@ -126,7 +127,7 @@ automatically-unhide-macos-hidden-apps = false
     ctrl-alt-shift-cmd-tab = 'move-workspace-to-monitor --wrap-around next'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#mode
-    ctrl-alt-shift-cmd-semicolon = 'mode service'
+    ctrl-alt-shift-semicolon = 'mode service'
 
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -134,17 +135,11 @@ automatically-unhide-macos-hidden-apps = false
     esc = 'mode main'
     r = ['reload-config', 'mode main']
     x = ['flatten-workspace-tree', 'mode main'] # reset layout
-    f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
-    backspace = ['close-all-windows-but-current', 'mode main']
 
     # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
     #s = ['layout sticky tiling', 'mode main']
 
-    ctrl-alt-shift-cmd-h = ['join-with left', 'mode main']
-    ctrl-alt-shift-cmd-j = ['join-with down', 'mode main']
-    ctrl-alt-shift-cmd-k = ['join-with up', 'mode main']
-    ctrl-alt-shift-cmd-l = ['join-with right', 'mode main']
-
-    down = 'volume down'
-    up = 'volume up'
-    shift-down = ['volume set 0', 'mode main']
+    ctrl-alt-shift-h = ['join-with left', 'mode main']
+    ctrl-alt-shift-j = ['join-with down', 'mode main']
+    ctrl-alt-shift-k = ['join-with up', 'mode main']
+    ctrl-alt-shift-l = ['join-with right', 'mode main']
