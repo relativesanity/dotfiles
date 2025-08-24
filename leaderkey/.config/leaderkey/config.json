@@ -53,31 +53,6 @@
     {
       "actions" : [
         {
-          "key" : "f",
-          "label" : "YouTube",
-          "type" : "application",
-          "value" : "/Applications/YouTube.app"
-        },
-        {
-          "key" : "d",
-          "label" : "Reader",
-          "type" : "application",
-          "value" : "/Applications/Reader.app"
-        },
-        {
-          "key" : "s",
-          "label" : "Music",
-          "type" : "application",
-          "value" : "/Applications/Music.app"
-        }
-      ],
-      "key" : "d",
-      "label" : "Learn",
-      "type" : "group"
-    },
-    {
-      "actions" : [
-        {
           "key" : "a",
           "label" : "Finder",
           "type" : "application",
@@ -119,7 +94,7 @@
           "key" : "c",
           "label" : "Messages",
           "type" : "application",
-          "value" : "/Applications/Messages.app"
+          "value" : "/System/Applications/Messages.app"
         },
         {
           "key" : "x",
@@ -142,6 +117,37 @@
       ],
       "key" : "c",
       "label" : "Comms",
+      "type" : "group"
+    },
+    {
+      "actions" : [
+        {
+          "key" : "d",
+          "label" : "Reader",
+          "type" : "application",
+          "value" : "/Applications/Reader.app"
+        },
+        {
+          "key" : "f",
+          "label" : "YouTube",
+          "type" : "application",
+          "value" : "/Users/relativesanity/Applications/YouTube.app"
+        },
+        {
+          "key" : "a",
+          "label" : "Nebula",
+          "type" : "application",
+          "value" : "/Users/relativesanity/Applications/Nebula.app"
+        },
+        {
+          "key" : "s",
+          "label" : "Music",
+          "type" : "application",
+          "value" : "/System/Applications/Music.app"
+        }
+      ],
+      "key" : "d",
+      "label" : "Learn",
       "type" : "group"
     }
   ],
