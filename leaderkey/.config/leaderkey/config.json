@@ -45,6 +45,13 @@
           "type" : "application",
           "value" : "/System/Applications/Mail.app"
         }
+,
+        {
+          "key" : "a",
+          "label" : "Calendar",
+          "type" : "application",
+          "value" : "/System/Applications/Calendar.app"
+        }
       ],
       "key" : "f",
       "label" : "Admin",
