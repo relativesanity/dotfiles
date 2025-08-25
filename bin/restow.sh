@@ -34,6 +34,7 @@ readonly REQUIRED_DIRECTORIES=(
 readonly STOW_PACKAGES=(
   "aerospace"
   "btop"
+  "claude"
   "gh"
   "ghostty"
   "git"
