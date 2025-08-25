@@ -119,7 +119,7 @@
           "label" : "Finder",
           "type" : "application",
           "value" : "/System/Library/CoreServices/Finder.app"
-        },
+        }
       ],
       "key" : "a",
       "label" : "System",
