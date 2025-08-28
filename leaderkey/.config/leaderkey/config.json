@@ -119,6 +119,12 @@
           "label" : "Finder",
           "type" : "application",
           "value" : "/System/Library/CoreServices/Finder.app"
+        },
+        {
+          "key" : "s",
+          "label" : "Settings",
+          "type" : "application",
+          "value" : "/System/Applications/System Settings.app"
         }
       ],
       "key" : "a",
