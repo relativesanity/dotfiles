@@ -100,6 +100,25 @@
           "label" : "Safari",
           "type" : "application",
           "value" : "/Applications/Safari.app"
+        },
+        {
+          "actions" : [
+            {
+              "key" : "d",
+              "label" : "Bluesky",
+              "type" : "application",
+              "value" : "/Users/relativesanity/Applications/Bluesky.app"
+            },
+            {
+              "key" : "s",
+              "label" : "LinkedIn",
+              "type" : "application",
+              "value" : "/Users/relativesanity/Applications/LinkedIn.app"
+            }
+          ],
+          "key" : "a",
+          "label" : "Social",
+          "type" : "group"
         }
       ],
       "key" : "s",
