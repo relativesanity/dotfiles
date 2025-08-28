@@ -15,6 +15,7 @@ start() { tmux new-session -A -s "${1:-$TMUX_DEFAULT_SESSION_NAME}"; }
 
 alias msh='mosh --server=/opt/homebrew/bin/mosh-server'
 
+alias ld='lazydocker'
 alias lg='lazygit'
 alias gs='git status'
 alias gd='git diff'
