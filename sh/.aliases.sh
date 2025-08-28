@@ -26,3 +26,5 @@ alias restow="$DOTFILES_PATH/bin/restow.sh"
 alias repack="$DOTFILES_PATH/bin/repack.sh"
 alias redot="$DOTFILES_PATH/bin/redot.sh"
 alias reenv="$DOTFILES_PATH/bin/reenv.sh"
+
+alias restart="osascript -e 'tell app \"System Events\" to restart'"
