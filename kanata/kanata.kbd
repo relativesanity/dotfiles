@@ -35,14 +35,14 @@
   l-mod (tap-hold $tap-time $hold-time l ralt)
   ;-mod (tap-hold $tap-time $hold-time ; rctl)
   fn-mod (tap-hold $tap-time $hold-time fn @fnl)
-  spc-mod (tap-hold $tap-time $hold-time spc @numl)
+  spc-mod (tap-hold $tap-time $hold-time spc @meh)
 )
 
 (deflayer base
   brdn brup _ _ _ _ prev pp next mute vold volu
   q w e r t y u i o p
   @caps-mod @a-mod @s-mod @d-mod @f-mod g h @j-mod @k-mod @l-mod @;-mod
-  @fn-mod @hyper @spc-mod @meh
+  @fn-mod @hyper @spc-mod @numl
 )
 
 (deflayer fn
