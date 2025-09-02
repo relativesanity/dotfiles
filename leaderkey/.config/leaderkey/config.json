@@ -13,6 +13,12 @@
           "label" : "Claude",
           "type" : "application",
           "value" : "/Applications/Claude.app"
+        },
+        {
+          "key" : "d",
+          "label" : "Numbers",
+          "type" : "application",
+          "value" : "/Applications/Numbers.app"
         }
       ],
       "key" : "g",
