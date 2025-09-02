@@ -96,8 +96,7 @@ automatically-unhide-macos-hidden-apps = false
     # See: https://nikitabobko.github.io/AeroSpace/commands#layout
     # ctrl-alt-shift-slash = 'layout tiles horizontal vertical'
     # ctrl-alt-shift-comma = 'layout accordion horizontal vertical'
-    ctrl-alt-shift-leftSquareBracket = 'layout accordion'
-    ctrl-alt-shift-rightSquareBracket = 'layout tiles'
+    ctrl-alt-shift-leftSquareBracket = 'layout accordion tiles'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#focus
     ctrl-alt-shift-h = 'focus left'
