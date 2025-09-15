@@ -458,6 +458,10 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sf', function()
         builtin.find_files {
           hidden = true,
+          file_ignore_patterns = {
+            '^.git/',
+            '^node_modules/',
+          },
         }
       end, { desc = '[S]earch [F]iles' })
 
