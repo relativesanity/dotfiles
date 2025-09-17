@@ -168,7 +168,7 @@ automatically-unhide-macos-hidden-apps = false
     # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
     #s = ['layout sticky tiling', 'mode main']
 
-    h = ['join-with left', 'mode main']
-    j = ['join-with down', 'mode main']
-    k = ['join-with up', 'mode main']
-    l = ['join-with right', 'mode main']
+    h = ['join-with left', 'layout accordion', 'mode main']
+    j = ['join-with left', 'mode main']
+    k = ['join-with right', 'mode main']
+    l = ['join-with right', 'layout accordion', 'mode main']
