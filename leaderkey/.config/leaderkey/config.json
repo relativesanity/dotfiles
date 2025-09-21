@@ -35,9 +35,9 @@
       "actions" : [
         {
           "key" : "g",
-          "label" : "Obsidian",
+          "label" : "Bear",
           "type" : "application",
-          "value" : "/Applications/Obsidian.app"
+          "value" : "/Applications/Bear.app"
         },
         {
           "key" : "f",
