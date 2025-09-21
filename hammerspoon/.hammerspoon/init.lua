@@ -13,6 +13,12 @@ hs.hotkey.bind(hyper, "C", function()
 	hs.eventtap.keyStroke({ "cmd", "shift" }, "4")
 end)
 
-hs.hotkey.bind(hyper, "X", function()
+hs.hotkey.bind(meh, "X", function()
 	hs.eventtap.keyStrokes(os.date("%Y-%m-%d"))
+end)
+
+hs.hotkey.bind(hyper, "X", function()
+	local weekNumber = os.date("%V")
+	local year = os.date("%Y")
+	hs.eventtap.keyStrokes(string.format("%s-%02d", year, tonumber(weekNumber)))
 end)
