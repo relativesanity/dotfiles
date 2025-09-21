@@ -64,6 +64,7 @@ cask 'zoom'
 
 # Mac App Store apps
 mas '1Blocker', id: 1365531024
+mas 'Bear: Markdown Notes', id: 1091189122
 mas 'DaisyDisk', id: 411643860
 mas 'Day One', id: 1055511498
 mas 'Displaperture', id: 1543920362
