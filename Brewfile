@@ -29,9 +29,11 @@ brew 'starship'
 brew 'stow'
 brew 'tmux'
 brew 'zoxide'
+brew 'felixkratz/formulae/borders'
 
 # Taps
 tap 'nikitabobko/tap'
+tap 'FelixKratz/formulae'
 
 # Applications
 cask 'aerospace'

@@ -33,6 +33,7 @@ readonly REQUIRED_DIRECTORIES=(
 
 readonly STOW_PACKAGES=(
   "aerospace"
+  "borders"
   "btop"
   "claude"
   "gh"
