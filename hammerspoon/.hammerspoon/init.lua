@@ -22,3 +22,9 @@ hs.hotkey.bind(hyper, "X", function()
 	local year = os.date("%Y")
 	hs.eventtap.keyStrokes(string.format("%s-%02d", year, tonumber(weekNumber)))
 end)
+
+-- Dark/Light mode toggle
+hs.hotkey.bind(hyper, "Z", function()
+	-- Toggle macOS appearance
+	hs.osascript.applescript('tell app "System Events" to tell appearance preferences to set dark mode to not dark mode')
+end)
