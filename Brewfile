@@ -1,3 +1,7 @@
+# Taps
+tap 'nikitabobko/tap'
+tap 'FelixKratz/formulae'
+
 # Core development tools
 brew 'bat'
 brew 'btop'
@@ -30,10 +34,6 @@ brew 'stow'
 brew 'tmux'
 brew 'zoxide'
 brew 'felixkratz/formulae/borders'
-
-# Taps
-tap 'nikitabobko/tap'
-tap 'FelixKratz/formulae'
 
 # Applications
 cask 'aerospace'
