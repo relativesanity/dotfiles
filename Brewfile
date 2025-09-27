@@ -37,7 +37,6 @@ brew 'felixkratz/formulae/borders'
 
 # Applications
 cask 'aerospace'
-cask 'alfred'
 cask 'backblaze'
 cask 'claude'
 cask 'docker-desktop'
@@ -46,7 +45,6 @@ cask 'ghostty'
 cask 'google-chrome'
 cask 'hammerspoon'
 cask 'keymapp'
-cask 'kindavim'
 cask 'leader-key'
 cask 'logi-options+'
 cask 'moom'
@@ -60,8 +58,6 @@ cask 'slack'
 cask 'superkey'
 cask 'tailscale-app'
 cask 'thingsmacsandboxhelper'
-cask 'vlc'
-cask 'warp'
 cask 'zoom'
 
 # Mac App Store apps
@@ -70,14 +66,8 @@ mas 'Bear: Markdown Notes', id: 1091189122
 mas 'DaisyDisk', id: 411643860
 mas 'Day One', id: 1055511498
 mas 'Displaperture', id: 1543920362
-mas 'Drafts', id: 1435957248
-mas 'Framous: Screenshot Frames', id: 6636520519
-mas 'Gestimer 2', id: 6447125648
-mas 'Googly Eyes', id: 6743048714
 mas 'Keynote', id: 409183694
 mas 'Numbers', id: 409203825
 mas 'Pages', id: 409201541
-mas 'Pandan', id: 1569600264
 mas 'Things 3', id: 904280696
-mas 'Triode', id: 1450027401
 mas 'Xcode', id: 497799835
