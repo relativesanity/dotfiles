@@ -70,4 +70,5 @@ mas 'Keynote', id: 409183694
 mas 'Numbers', id: 409203825
 mas 'Pages', id: 409201541
 mas 'Things 3', id: 904280696
+mas 'Triode', id: 1450027401
 mas 'Xcode', id: 497799835
