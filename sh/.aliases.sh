@@ -22,11 +22,11 @@ alias gd='git diff'
 
 DOTFILES_PATH="$HOME/.dotfiles"
 alias dotfiles='cd $DOTFILES_PATH'
-alias restow="$DOTFILES_PATH/bin/restow.sh"
-alias repack="$DOTFILES_PATH/bin/repack.sh"
-alias redot="$DOTFILES_PATH/bin/redot.sh"
-alias reenv="$DOTFILES_PATH/bin/reenv.sh"
+alias restow='$DOTFILES_PATH/bin/restow.sh'
+alias repack='$DOTFILES_PATH/bin/repack.sh'
+alias redot='$DOTFILES_PATH/bin/redot.sh'
+alias reenv='$DOTFILES_PATH/bin/reenv.sh'
 
 alias restart="osascript -e 'tell app \"loginwindow\" to «event aevtrrst»'"
 
-alias ao-project="$HOME/.agent-os/setup/project.sh"
+alias ao-project='$HOME/.agent-os/setup/project.sh'
