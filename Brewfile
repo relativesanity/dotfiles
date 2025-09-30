@@ -69,6 +69,7 @@ mas 'Displaperture', id: 1543920362
 mas 'Keynote', id: 409183694
 mas 'Numbers', id: 409203825
 mas 'Pages', id: 409201541
+mas 'Snippety - Snippets Manager', id: 1530751461
 mas 'Things 3', id: 904280696
 mas 'Triode', id: 1450027401
 mas 'Xcode', id: 497799835
