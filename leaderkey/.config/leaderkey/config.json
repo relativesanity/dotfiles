@@ -22,9 +22,9 @@
         },
         {
           "key" : "s",
-          "label" : "Session",
+          "label" : "Freeform",
           "type" : "application",
-          "value" : "/Applications/Setapp/Session.app"
+          "value" : "/System/Applications/Freeform.app"
         }
       ],
       "key" : "g",
