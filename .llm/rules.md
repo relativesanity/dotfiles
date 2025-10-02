@@ -125,6 +125,48 @@ When making any changes that require commits:
 - Test changes with appropriate scripts (restow, repack, etc.)
 - Maintain macOS compatibility for all configurations
 
+### Shell Script Documentation
+
+All shell scripts in `bin/` must follow this consistent documentation format:
+
+```bash
+#!/usr/bin/env bash
+
+set -euo pipefail # Exit on error, undefined vars, and pipeline failures
+IFS=$'\n\t'       # Stricter word splitting
+
+# [Script name/purpose] - brief one-line description
+# [Optional second line for additional context]
+# Supports:
+#   - [Platform/tool requirements]
+#
+# Usage:
+#   ./script-name.sh [arguments]
+#
+# Prerequisites:
+#   - [Required dependencies and their installation method]
+```
+
+**Example:**
+```bash
+# macOS UI customization script
+# Configures Dock and window animations
+# Supports:
+#   - macOS (via m-cli)
+#
+# Usage:
+#   ./m.sh
+#
+# Prerequisites:
+#   - m-cli must be installed (via Homebrew)
+```
+
+**Rules:**
+- Brief, concise language - use short phrases not full sentences
+- Always include: title, "Supports:", "Usage:", "Prerequisites:" sections
+- No extra "Note:" sections or verbose explanations
+- Match the format in bootstrap.sh, restow.sh, repack.sh, and m.sh
+
 ## How tools should use this file
 
 - Cursor: reads `.cursorrules` which points here
