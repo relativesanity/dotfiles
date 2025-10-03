@@ -170,20 +170,29 @@ All scripts use proper error handling (`set -euo pipefail`) and clear status mes
 
 ## Implementation Strategy
 
-### Phase 1: Quick Wins (Current)
-- Complete documentation cleanup ✅
-- Priority 1 items (1-5 above)
-- Low risk, immediate value
+### Phase 1: Quick Wins ✅ COMPLETED
+- [x] Clean up tmux.conf (removed comments, documented transparent background)
+- [x] Simplify starship.toml (added documentation, kept necessary nerd-font config)
+- [x] Auto-install tmux plugins (added to repack.sh)
+- [x] Document m.sh purpose (standardized header format)
+- [x] Standardize all bin/*.sh documentation headers
+- [x] Add shell script documentation standards to .llm/rules.md
+- [x] Post-bootstrap checklist - SKIPPED (impractical for terminal output)
 
-### Phase 2: Polish & Optimize
-- Priority 2 items (6-10 above)
-- Improve existing functionality
-- Better user experience
+### Phase 2: Polish & Optimize ✅ COMPLETED
+- [x] Refactor Brewfile organization (alphabetical sorting, simple sections)
+- [x] Aerospace config review (documented meh/hyper keybindings)
+- [x] Add validation to scripts - SKIPPED (current error handling sufficient)
+- [x] Bootstrap improvements - SKIPPED (keep simple and scriptable)
+- [x] Create .env.local.sh template - SKIPPED (added to README instead)
+- [x] Expand README with post-bootstrap documentation
 
-### Phase 3: Advanced Features
-- Priority 3 items (11-15 above)
-- New capabilities
-- Automation of complex tasks
+### Phase 3: Advanced Features 🔄 DEFERRED
+- [ ] TUI for dotfiles management (item 11)
+- [ ] Semi-automated Kanata setup - SKIPPED (requires sudo, infrequent operation)
+- [ ] Auth credential helpers (item 13)
+- [ ] Package audit tool (item 14)
+- [ ] Dotfiles health check (item 15)
 
 ## Progress Tracking
 
@@ -193,9 +202,11 @@ All scripts use proper error handling (`set -euo pipefail`) and clear status mes
 - [x] Manual intervention point identification
 - [x] Script quality assessment
 - [x] Configuration file audit
+- [x] Phase 1: Quick Wins
+- [x] Phase 2: Polish & Optimize
 
 ### In Progress
-- [ ] None
+- [ ] Phase 3: Advanced Features (deferred for future work)
 
 ### Blocked
 - [ ] None
@@ -212,9 +223,26 @@ When picking up this refactoring:
 6. **Maintain bootstrap capability** - Any changes MUST keep `bootstrap.sh` working
 7. **Update this file** - As work progresses, check off completed items and add notes
 
-## Open Questions
+## Decisions Made
 
-1. Should `bin/m.sh` be integrated into bootstrap or remain manual?
-2. Is starship.toml providing value with all those symbols, or using defaults better?
-3. Should Brewfile be split further (base, terminal, dev, apps)?
-4. What's the right balance between automation and letting users make choices?
+1. **bin/m.sh remains manual** - Dock customization is user preference, not required
+2. **starship.toml keeps nerd-font symbols** - Required for icon display, not optional
+3. **Brewfile uses simple alphabetical organization** - Taps, Brews, Casks, Mac App Store
+4. **Prefer simplicity over automation** - No code is bug-free, keep bootstrap scriptable
+5. **Documentation over templates** - README covers optional configs (.env.local.sh, etc.)
+6. **Skip validation additions** - Existing error handling (set -euo pipefail) is sufficient
+
+## Implementation Notes
+
+### What Worked Well
+- Standardized documentation format across all bin scripts
+- Alphabetical Brewfile organization removes categorization decisions
+- Comprehensive README provides clear post-bootstrap guidance
+- Phase 1 and 2 improvements were practical and low-risk
+
+### What Was Skipped and Why
+- **Post-bootstrap checklist file**: Markdown doesn't render in terminal, scrolls away
+- **Script validation**: Existing error handling sufficient, no Intel support needed
+- **Interactive bootstrap**: Breaks automation, Brewfile.local handles machine-specific needs
+- **Kanata automation**: Requires sudo, infrequent enough to stay manual
+- **Phase 3 advanced features**: Deferred as nice-to-have, not essential
