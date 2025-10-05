@@ -167,6 +167,15 @@ IFS=$'\n\t'       # Stricter word splitting
 - No extra "Note:" sections or verbose explanations
 - Match the format in bootstrap.sh, restow.sh, repack.sh, and m.sh
 
+## Planning Documents
+
+Planning documents are stored in `.llm/planning/` using sequential numbering:
+- `001-initial-refactor.md` - First major refactoring effort (completed 2025-10-05)
+- Future planning docs follow the pattern: `NNN-descriptive-name.md`
+- The descriptive name should match the git branch name used for implementation
+
+See `.llm/planning/README.md` for an index of all planning documents.
+
 ## How tools should use this file
 
 - Cursor: reads `.cursorrules` which points here

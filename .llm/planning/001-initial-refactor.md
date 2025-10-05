@@ -1,8 +1,8 @@
 # Dotfiles Refactoring Plan
 
-**Status:** Planning phase
-**Last updated:** 2025-10-01
-**Branch:** `claude-refactor`
+**Status:** Completed (Phases 1-2), Phase 3 deferred
+**Last updated:** 2025-10-05
+**Branch:** Merged to main from `claude-refactor`
 
 ## Goals
 
