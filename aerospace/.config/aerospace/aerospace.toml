@@ -1,5 +1,18 @@
-# You can use it to add commands that run after AeroSpace startup.
-# Available commands : https://nikitabobko.github.io/AeroSpace/commands
+# AeroSpace Tiling Window Manager Configuration
+# https://nikitabobko.github.io/AeroSpace/
+#
+# Custom Keybindings:
+#   meh (ctrl-alt-shift):
+#     Focus:     h/j/k/l - vim-style directional focus
+#     Move:      y/u/i/o - vim-style directional move
+#     Resize:    m/n - shrink/grow window
+#     Layout:    [ - toggle accordion/tiles, p - toggle floating/tiling
+#     Service:   ; - enter service mode (reload, reset layout, join windows)
+#
+#   hyper (ctrl-alt-shift-cmd):
+#     Workspace: a/s/d/f/g - switch to workspace 1-5
+#     Move+Go:   q/w/e/r/t - move window to workspace 1-5 and follow
+
 after-startup-command = [
     'exec-and-forget borders'
 ]

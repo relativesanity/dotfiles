@@ -25,11 +25,12 @@ This is a personal dotfiles repository that manages macOS system configuration a
 - `./bin/restow.sh` - Uses GNU Stow to symlink configuration files from the repository to home directory
 - `./bin/repack.sh` - Updates Homebrew packages using Brewfiles and sets up tmux plugins
 - `./bin/reenv.sh` - Installs Ruby versions specified in rbenv configuration
+- `./bin/m.sh` - macOS dock and window animation customization script (uses `m` CLI tool)
 
 ### Package Management
 The repository uses Brewfiles for package management:
-- `Brewfile` - All packages for the system, organized by category
-- `Brewfile.local` - Optional user-specific packages (gitignored)
+- `Brewfile` - Core packages shared across all environments
+- `Brewfile.local` - Optional machine-specific packages (gitignored)
 
 ### Aliases
 Key aliases are defined in `sh/.aliases.sh`:
@@ -43,15 +44,29 @@ Key aliases are defined in `sh/.aliases.sh`:
 
 ### Stow Package Organization
 Configuration files are organized into stow packages (directories that get symlinked):
-- `sh/` - Zsh configuration (.zlogin, .zshenv, .aliases.sh)
-- `git/` - Git configuration
-- `neovim/` - Neovim configuration
-- `tmux/` - Tmux configuration
-- `hammerspoon/` - Hammerspoon window manager config
-- `starship/` - Shell prompt configuration
-- `ghostty/` - Terminal emulator settings
-- `btop/` - System monitor configuration
-- `kanata/` - Keyboard remapping configuration
+- `aerospace/` - AeroSpace tiling window manager configuration for macOS
+- `borders/` - JankyBorders configuration for window borders
+- `btop/` - System resource monitor configuration with Catppuccin theme
+- `claude/` - Claude desktop application settings
+- `gh/` - GitHub CLI configuration and authentication
+- `ghostty/` - Terminal emulator configuration with Catppuccin theme and transparency
+- `git/` - Git configuration including user info, aliases, and LFS setup
+- `hammerspoon/` - macOS automation tool with hotkeys for reload, screenshots, and date insertion
+- `hetzner/` - Hetzner Cloud CLI configuration and contexts
+- `leaderkey/` - App launcher keyboard shortcuts organized by categories
+- `neovim/` - Neovim editor configuration with LazyVim
+- `rbenv/` - Ruby version manager configuration (currently set to 3.4.6)
+- `sh/` - Shell configuration including zshrc, aliases, functions, and environment variables
+- `starship/` - Shell prompt configuration with custom symbols for various tools
+- `tmux/` - Terminal multiplexer configuration with custom prefix key (C-f) and vi mode
+
+### Kanata (Keyboard Remapping)
+The `kanata/` directory contains keyboard remapping configuration but is **NOT stowed** automatically. It requires manual setup:
+- Home row mods configuration for MacBook's internal keyboard only
+- Uses LaunchDaemon for system-level keyboard interception
+- Requires Karabiner Elements to be installed and configured first
+- Must grant Input Monitoring permissions manually
+- See `kanata/kanata.md` for detailed installation instructions
 
 ### Package Installation
 The `repack.sh` script installs packages from Brewfile and optional Brewfile.local using `brew bundle` with cleanup and zap options to remove unused packages.
@@ -109,6 +124,57 @@ When making any changes that require commits:
 - Preserve existing file structure and stow package organization
 - Test changes with appropriate scripts (restow, repack, etc.)
 - Maintain macOS compatibility for all configurations
+
+### Shell Script Documentation
+
+All shell scripts in `bin/` must follow this consistent documentation format:
+
+```bash
+#!/usr/bin/env bash
+
+set -euo pipefail # Exit on error, undefined vars, and pipeline failures
+IFS=$'\n\t'       # Stricter word splitting
+
+# [Script name/purpose] - brief one-line description
+# [Optional second line for additional context]
+# Supports:
+#   - [Platform/tool requirements]
+#
+# Usage:
+#   ./script-name.sh [arguments]
+#
+# Prerequisites:
+#   - [Required dependencies and their installation method]
+```
+
+**Example:**
+```bash
+# macOS UI customization script
+# Configures Dock and window animations
+# Supports:
+#   - macOS (via m-cli)
+#
+# Usage:
+#   ./m.sh
+#
+# Prerequisites:
+#   - m-cli must be installed (via Homebrew)
+```
+
+**Rules:**
+- Brief, concise language - use short phrases not full sentences
+- Always include: title, "Supports:", "Usage:", "Prerequisites:" sections
+- No extra "Note:" sections or verbose explanations
+- Match the format in bootstrap.sh, restow.sh, repack.sh, and m.sh
+
+## Planning Documents
+
+Planning documents are stored in `.llm/planning/` using sequential numbering:
+- `001-initial-refactor.md` - First major refactoring effort (completed 2025-10-05)
+- Future planning docs follow the pattern: `NNN-descriptive-name.md`
+- The descriptive name should match the git branch name used for implementation
+
+See `.llm/planning/README.md` for an index of all planning documents.
 
 ## How tools should use this file
 

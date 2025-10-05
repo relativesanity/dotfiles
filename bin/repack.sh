@@ -75,6 +75,12 @@ setup_tmux_plugins() {
       mkdir -p $HOME/.tmux/plugins
       git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
     fi
+
+    # Auto-install tmux plugins if TPM is available
+    if [[ -f $HOME/.tmux/plugins/tpm/bin/install_plugins ]]; then
+      print_status "Installing TMUX plugins"
+      $HOME/.tmux/plugins/tpm/bin/install_plugins
+    fi
   fi
   print_status "TMUX plugins are set up"
 }

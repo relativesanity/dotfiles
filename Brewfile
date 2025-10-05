@@ -1,8 +1,8 @@
 # Taps
+tap 'felixkratz/formulae'
 tap 'nikitabobko/tap'
-tap 'FelixKratz/formulae'
 
-# Core development tools
+# Brews
 brew 'bat'
 brew 'btop'
 brew 'cmatrix'
@@ -10,6 +10,7 @@ brew 'docker-buildx'
 brew 'eza'
 brew 'fastfetch'
 brew 'fd'
+brew 'felixkratz/formulae/borders'
 brew 'fzf'
 brew 'gh'
 brew 'git'
@@ -18,8 +19,8 @@ brew 'jq'
 brew 'lazydocker'
 brew 'lazygit'
 brew 'llm'
-brew 'mas'
 brew 'm-cli'
+brew 'mas'
 brew 'mosh'
 brew 'neovim'
 brew 'netlify-cli'
@@ -33,9 +34,8 @@ brew 'starship'
 brew 'stow'
 brew 'tmux'
 brew 'zoxide'
-brew 'felixkratz/formulae/borders'
 
-# Applications
+# Casks
 cask 'aerospace'
 cask 'alfred'
 cask 'backblaze'
@@ -61,7 +61,7 @@ cask 'tailscale-app'
 cask 'thingsmacsandboxhelper'
 cask 'zoom'
 
-# Mac App Store apps
+# Mac App Store
 mas '1Blocker', id: 1365531024
 mas 'Bear: Markdown Notes', id: 1091189122
 mas 'DaisyDisk', id: 411643860

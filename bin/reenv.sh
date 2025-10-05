@@ -3,10 +3,15 @@
 set -euo pipefail # Exit on error, undefined vars, and pipeline failures
 IFS=$'\n\t'       # Stricter word splitting
 
-# rbenv updater
+# Ruby version installer
+# Supports:
+#   - macOS (via rbenv)
 #
-# Checks to see if a global ruby version is specified, and then tries to
-# install it. Requires rbenv to be installed.
+# Usage:
+#   ./reenv.sh
+#
+# Prerequisites:
+#   - rbenv must be installed
 
 reenv() {
   [[ -e "$HOME/.rbenv/version" ]] && \
