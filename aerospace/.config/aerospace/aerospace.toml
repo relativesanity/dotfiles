@@ -129,8 +129,8 @@ automatically-unhide-macos-hidden-apps = false
     ctrl-alt-shift-p = 'layout floating tiling'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#resize
-    ctrl-alt-shift-m = 'resize smart -48'
-    ctrl-alt-shift-n = 'resize smart +48'
+    ctrl-alt-shift-minus = 'resize smart -48'
+    ctrl-alt-shift-equal = 'resize smart +48'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
     ctrl-alt-shift-cmd-a = 'workspace 1'
