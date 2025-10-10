@@ -2,10 +2,9 @@ theme = Catppuccin Mocha
 
 font-size = 18
 
-background-opacity = 0.94
+background-opacity = 0.84
 background-blur-radius = 40
 macos-titlebar-style = hidden
-macos-icon = paper
 window-padding-x = 16
 window-padding-y = 16
 window-padding-balance = true
