@@ -14,7 +14,13 @@
 #     Move+Go:   q/w/e/r/t - move window to workspace 1-5 and follow
 
 after-startup-command = [
-    'exec-and-forget borders'
+    'exec-and-forget borders',
+    'exec-and-forget sketchybar'
+]
+
+# Notify Sketchybar about workspace changes
+exec-on-workspace-change = ['/bin/bash', '-c',
+    'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
 ]
 
 # Start AeroSpace at login
@@ -72,7 +78,7 @@ automatically-unhide-macos-hidden-apps = false
     inner.vertical =   36
     outer.left =       36
     outer.bottom =     36
-    outer.top =        36
+    outer.top =        [{ monitor."Built-in Retina Display" = 44 }, 80]
     outer.right =      36
 
 # 'main' binding mode declaration
