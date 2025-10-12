@@ -14,7 +14,6 @@
 #     Move+Go:   q/w/e/r/t - move window to workspace 1-5 and follow
 
 after-startup-command = [
-    'exec-and-forget borders',
     'exec-and-forget sketchybar'
 ]
 
