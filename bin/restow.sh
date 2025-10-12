@@ -45,6 +45,7 @@ readonly STOW_PACKAGES=(
   "neovim"
   "rbenv"
   "sh"
+  "sketchybar"
   "starship"
   "tmux"
 )
