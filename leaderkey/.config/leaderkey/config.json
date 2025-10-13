@@ -25,6 +25,12 @@
           "label" : "Freeform",
           "type" : "application",
           "value" : "/System/Applications/Freeform.app"
+        },
+        {
+          "key" : "a",
+          "label" : "Music",
+          "type" : "application",
+          "value" : "/System/Applications/Music.app"
         }
       ],
       "key" : "g",
@@ -87,12 +93,6 @@
           "label" : "Reader",
           "type" : "application",
           "value" : "/Applications/Reader.app"
-        },
-        {
-          "key" : "s",
-          "label" : "Music",
-          "type" : "application",
-          "value" : "/System/Applications/Music.app"
         }
       ],
       "key" : "d",
