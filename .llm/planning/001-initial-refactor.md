@@ -17,7 +17,7 @@
 ### Documentation Status ✅
 - [x] Removed duplicate CLAUDE.local.md
 - [x] Updated .llm/rules.md to match actual codebase
-- [x] Fixed README.md case sensitivity
+- [x] Fixed Readme.md case sensitivity
 - [x] Added kanata special handling documentation
 - [x] Verified all package lists match restow.sh
 
@@ -184,8 +184,8 @@ All scripts use proper error handling (`set -euo pipefail`) and clear status mes
 - [x] Aerospace config review (documented meh/hyper keybindings)
 - [x] Add validation to scripts - SKIPPED (current error handling sufficient)
 - [x] Bootstrap improvements - SKIPPED (keep simple and scriptable)
-- [x] Create .env.local.sh template - SKIPPED (added to README instead)
-- [x] Expand README with post-bootstrap documentation
+- [x] Create .env.local.sh template - SKIPPED (added to Readme.md instead)
+- [x] Expand Readme.md with post-bootstrap documentation
 
 ### Phase 3: Advanced Features 🔄 DEFERRED
 - [ ] TUI for dotfiles management (item 11)
@@ -229,7 +229,7 @@ When picking up this refactoring:
 2. **starship.toml keeps nerd-font symbols** - Required for icon display, not optional
 3. **Brewfile uses simple alphabetical organization** - Taps, Brews, Casks, Mac App Store
 4. **Prefer simplicity over automation** - No code is bug-free, keep bootstrap scriptable
-5. **Documentation over templates** - README covers optional configs (.env.local.sh, etc.)
+5. **Documentation over templates** - Readme.md covers optional configs (.env.local.sh, etc.)
 6. **Skip validation additions** - Existing error handling (set -euo pipefail) is sufficient
 
 ## Implementation Notes
@@ -237,7 +237,7 @@ When picking up this refactoring:
 ### What Worked Well
 - Standardized documentation format across all bin scripts
 - Alphabetical Brewfile organization removes categorization decisions
-- Comprehensive README provides clear post-bootstrap guidance
+- Comprehensive Readme.md provides clear post-bootstrap guidance
 - Phase 1 and 2 improvements were practical and low-risk
 
 ### What Was Skipped and Why

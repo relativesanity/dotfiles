@@ -11,7 +11,7 @@ None currently active.
 - **001-initial-refactor.md** (2025-10-05)
   - Status: Completed (Phases 1-2), Phase 3 deferred
   - Standardized script documentation, cleaned configs, simplified Brewfile
-  - Added comprehensive README with post-bootstrap steps
+  - Added comprehensive Readme.md with post-bootstrap steps
 
 ## Naming Convention
 
