@@ -23,7 +23,6 @@ repack() {
   ensure_homebrew || print_failure "Homebrew could not be set up"
   update_homebrew || print_failure "Homebrew could not be updated"
   bundle_homebrew || print_failure "Homebrew could not be bundled"
-  setup_tmux_plugins || print_failure "Tmux could not be set up"
   print_status "Repack complete"
 }
 
@@ -65,24 +64,6 @@ bundle_homebrew() {
   fi
 
   cat "${brewfiles[@]}" | brew bundle --file=- --cleanup --zap
-}
-
-# ------------------------------------------------------------------------------------------------------
-setup_tmux_plugins() {
-  if command -v tmux >/dev/null 2>&1; then
-    if [[ ! -d $HOME/.tmux/plugins/tpm ]]; then
-      print_status "Installing TMUX plugin manager"
-      mkdir -p $HOME/.tmux/plugins
-      git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
-    fi
-
-    # Auto-install tmux plugins if TPM is available
-    if [[ -f $HOME/.tmux/plugins/tpm/bin/install_plugins ]]; then
-      print_status "Installing TMUX plugins"
-      $HOME/.tmux/plugins/tpm/bin/install_plugins
-    fi
-  fi
-  print_status "TMUX plugins are set up"
 }
 
 # ------------------------------------------------------------------------------------------------------
