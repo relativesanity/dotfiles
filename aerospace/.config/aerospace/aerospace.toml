@@ -12,6 +12,7 @@
 #   hyper (ctrl-alt-shift-cmd):
 #     Workspace: a/s/d/f/g - switch to workspace 1-5
 #     Move+Go:   q/w/e/r/t - move window to workspace 1-5 and follow
+#     Fullscreen: p - toggle fullscreen
 
 after-startup-command = [
     'exec-and-forget sketchybar'
@@ -150,6 +151,9 @@ automatically-unhide-macos-hidden-apps = false
     ctrl-alt-shift-cmd-e = ['move-node-to-workspace 3', 'workspace 3']
     ctrl-alt-shift-cmd-r = ['move-node-to-workspace 4', 'workspace 4']
     ctrl-alt-shift-cmd-t = ['move-node-to-workspace 5', 'workspace 5']
+
+    # See: https://nikitabobko.github.io/AeroSpace/commands#fullscreen
+    ctrl-alt-shift-cmd-p = 'fullscreen'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
     # ctrl-alt-shift-tab = 'workspace-back-and-forth'
