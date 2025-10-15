@@ -159,11 +159,23 @@ automatically-unhide-macos-hidden-apps = false
 
 # Window rules
 [[on-window-detected]]
-    if.app-id = 'com.apple.MobileSMS'
+    if.app-id = 'com.anthropic.claude-desktop'
     run = 'layout floating'
 
 [[on-window-detected]]
-    if.app-id = 'org.whispersystems.signal-desktop'
+    if.app-id = 'com.apple.calculator'
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-id = 'com.apple.finder'
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-id = 'com.apple.mail'
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-id = 'com.apple.MobileSMS'
     run = 'layout floating'
 
 [[on-window-detected]]
@@ -175,7 +187,7 @@ automatically-unhide-macos-hidden-apps = false
     run = 'layout floating'
 
 [[on-window-detected]]
-    if.app-id = 'com.anthropic.claude-desktop'
+    if.app-id = 'org.whispersystems.signal-desktop'
     run = 'layout floating'
 
 # 'service' binding mode declaration.
