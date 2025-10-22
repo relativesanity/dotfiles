@@ -1,5 +1,5 @@
 sketchybar --bar height=38 \
-                 color=0xb0181825 \
+                 color=0x66181825 \
                  blur_radius=40 \
                  padding_left=38 \
                  border_width=1 \
