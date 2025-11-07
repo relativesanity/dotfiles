@@ -63,14 +63,15 @@ cask 'thingsmacsandboxhelper'
 cask 'zoom'
 
 # Mac App Store
-mas '1Blocker', id: 1365531024
-mas 'Bear: Markdown Notes', id: 1091189122
-mas 'DaisyDisk', id: 411643860
-mas 'Day One', id: 1055511498
-mas 'Displaperture', id: 1543920362
-mas 'Keynote', id: 409183694
-mas 'Numbers', id: 409203825
-mas 'Pages', id: 409201541
-mas 'Things 3', id: 904280696
-mas 'Triode', id: 1450027401
-mas 'Xcode', id: 497799835
+# Commenting out for now till https://github.com/mas-cli/mas/issues/1029 is fixed
+# mas '1Blocker', id: 1365531024
+# mas 'Bear: Markdown Notes', id: 1091189122
+# mas 'DaisyDisk', id: 411643860
+# mas 'Day One', id: 1055511498
+# mas 'Displaperture', id: 1543920362
+# mas 'Keynote', id: 409183694
+# mas 'Numbers', id: 409203825
+# mas 'Pages', id: 409201541
+# mas 'Things 3', id: 904280696
+# mas 'Triode', id: 1450027401
+# mas 'Xcode', id: 497799835
