@@ -8,6 +8,7 @@ sketchybar --bar height=38 \
                  y_offset=-2
 
 sketchybar --add event aerospace_workspace_change
+sketchybar --add event window_focus
 
 for sid in $(aerospace list-workspaces --all); do
     sketchybar --add item space.$sid left \
@@ -21,5 +22,16 @@ for sid in $(aerospace list-workspaces --all); do
         script="$CONFIG_DIR/plugins/aerospace.sh $sid"
 done
 
+# Add window title item on the right
+sketchybar --add item window_title right \
+    --subscribe window_title window_focus aerospace_workspace_change \
+    --set window_title \
+    label.color=0xffcdd6f4 \
+    label.padding_right=20 \
+    label.font="JetBrainsMono Nerd Font:Regular:16.0" \
+    script="$CONFIG_DIR/plugins/window_title.sh"
+
 # Trigger initial workspace highlight
 sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$(aerospace list-workspaces --focused)
+# Trigger initial window title update
+sketchybar --trigger window_focus
