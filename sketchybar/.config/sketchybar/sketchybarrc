@@ -28,7 +28,7 @@ sketchybar --add item window_title right \
     --set window_title \
     label.color=0xffcdd6f4 \
     label.padding_right=20 \
-    label.font="JetBrainsMono Nerd Font:Regular:16.0" \
+    label.font="JetBrainsMono Nerd Font:Bold:16.0" \
     script="$CONFIG_DIR/plugins/window_title.sh"
 
 # Trigger initial workspace highlight
