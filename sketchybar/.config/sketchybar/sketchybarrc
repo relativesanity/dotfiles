@@ -2,6 +2,7 @@ sketchybar --bar height=38 \
                  color=0x66181825 \
                  blur_radius=40 \
                  padding_left=38 \
+                 padding_right=38 \
                  border_width=1 \
                  border_color=0xff6c7086 \
                  margin=-2 \
@@ -27,23 +28,33 @@ sketchybar --add item battery right \
     --set battery \
     update_freq=30 \
     icon.color=0xffcdd6f4 \
-    icon.padding_right=8 \
+    icon.padding_left=16 \
     icon.font="JetBrainsMono Nerd Font:Regular:16.0" \
     label.color=0xffcdd6f4 \
-    label.padding_right=20 \
+    label.padding_left=8 \
     label.font="JetBrainsMono Nerd Font:Regular:16.0" \
     script="$CONFIG_DIR/plugins/battery.sh"
+
+# Add wifi indicator on the right
+sketchybar --add item wifi right \
+    --set wifi \
+    update_freq=10 \
+    icon.color=0xffcdd6f4 \
+    icon.padding_left=16 \
+    icon.font="JetBrainsMono Nerd Font:Regular:16.0" \
+    label.color=0xffcdd6f4 \
+    label.font="JetBrainsMono Nerd Font:Regular:16.0" \
+    script="$CONFIG_DIR/plugins/wifi.sh"
 
 # Add window title item on the right
 sketchybar --add item window_title right \
     --subscribe window_title window_focus aerospace_workspace_change \
     --set window_title \
     label.color=0xffcdd6f4 \
-    label.padding_right=20 \
     label.font="JetBrainsMono Nerd Font:Bold:16.0" \
     script="$CONFIG_DIR/plugins/window_title.sh"
 
-# Trigger initial workspace highlight
+# Trigger initial updates
 sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$(aerospace list-workspaces --focused)
-# Trigger initial window title update
 sketchybar --trigger window_focus
+sketchybar --update
