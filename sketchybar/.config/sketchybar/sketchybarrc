@@ -40,9 +40,11 @@ sketchybar --add item wifi right \
     --set wifi \
     update_freq=10 \
     icon.color=0xffcdd6f4 \
-    icon.padding_left=16 \
+    icon.padding_left=20 \
     icon.font="JetBrainsMono Nerd Font:Regular:16.0" \
     label.color=0xffcdd6f4 \
+    label.padding_left=4 \
+    label.padding_right=8 \
     label.font="JetBrainsMono Nerd Font:Regular:16.0" \
     script="$CONFIG_DIR/plugins/wifi.sh"
 

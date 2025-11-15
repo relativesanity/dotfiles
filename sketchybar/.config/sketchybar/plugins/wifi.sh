@@ -7,9 +7,9 @@ SIGNAL=$(echo "$WIFI_INFO" | awk '/Signal \/ Noise:/ {print $4}' | head -1)
 
 # Determine icon based on signal strength
 # RSSI typically ranges from -30 (excellent) to -90 (poor)
-# Never show SSID label, just the icon
+# Display signal strength as dBm value
 if [ -n "$SIGNAL" ] && [ "$SIGNAL" -lt 0 ]; then
-    # Connected - show signal strength icon
+    # Connected - show signal strength icon and value
     if [ "$SIGNAL" -ge -50 ]; then
         ICON="󰤨"  # excellent signal
     elif [ "$SIGNAL" -ge -60 ]; then
@@ -21,11 +21,11 @@ if [ -n "$SIGNAL" ] && [ "$SIGNAL" -lt 0 ]; then
     else
         ICON="󰤯"  # very weak signal
     fi
-    LABEL=""
+    LABEL="${SIGNAL}dBm"
 else
     # Disconnected
     ICON="󰤮"  # wifi off
-    LABEL=""
+    LABEL="Off"
 fi
 
 sketchybar --set $NAME icon="$ICON" label="$LABEL"
