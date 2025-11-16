@@ -1,3 +1,12 @@
+#!/usr/bin/env bash
+
+# Set defaults to reduce repetition
+sketchybar --default \
+    icon.font="JetBrainsMono Nerd Font:Regular:16.0" \
+    icon.color=0xffcdd6f4 \
+    label.font="JetBrainsMono Nerd Font:Regular:16.0" \
+    label.color=0xffcdd6f4
+
 sketchybar --bar height=38 \
                  color=0x66181825 \
                  blur_radius=40 \
@@ -11,6 +20,7 @@ sketchybar --bar height=38 \
 sketchybar --add event aerospace_workspace_change
 sketchybar --add event window_focus
 
+# Left side items
 for sid in $(aerospace list-workspaces --all); do
     sketchybar --add item space.$sid left \
         --subscribe space.$sid aerospace_workspace_change \
@@ -23,40 +33,29 @@ for sid in $(aerospace list-workspaces --all); do
         script="$CONFIG_DIR/plugins/aerospace.sh $sid"
 done
 
-# Add battery indicator on the right
-sketchybar --add item battery right \
-    --set battery \
-    update_freq=30 \
-    icon.color=0xffcdd6f4 \
-    icon.padding_left=16 \
-    icon.font="JetBrainsMono Nerd Font:Regular:16.0" \
-    label.color=0xffcdd6f4 \
-    label.padding_left=8 \
-    label.font="JetBrainsMono Nerd Font:Regular:16.0" \
-    script="$CONFIG_DIR/plugins/battery.sh"
-
-# Add wifi indicator on the right
-sketchybar --add item wifi right \
-    --set wifi \
-    update_freq=10 \
-    icon.color=0xffcdd6f4 \
-    icon.padding_left=20 \
-    icon.font="JetBrainsMono Nerd Font:Regular:16.0" \
-    label.color=0xffcdd6f4 \
-    label.padding_left=4 \
-    label.padding_right=8 \
-    label.font="JetBrainsMono Nerd Font:Regular:16.0" \
-    script="$CONFIG_DIR/plugins/wifi.sh"
-
-# Add window title item on the left
 sketchybar --add item window_title left \
     --subscribe window_title window_focus aerospace_workspace_change \
     --set window_title \
-    label.color=0xffcdd6f4 \
     label.font="JetBrainsMono Nerd Font:Bold:16.0" \
     script="$CONFIG_DIR/plugins/window_title.sh"
 
+# Right side items
+sketchybar --add item battery right \
+    --set battery \
+    update_freq=30 \
+    icon.padding_left=16 \
+    label.padding_left=8 \
+    script="$CONFIG_DIR/plugins/battery.sh"
+
+sketchybar --add item wifi right \
+    --set wifi \
+    update_freq=10 \
+    icon.padding_left=20 \
+    label.padding_left=4 \
+    label.padding_right=8 \
+    script="$CONFIG_DIR/plugins/wifi.sh"
+
 # Trigger initial updates
-sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$(aerospace list-workspaces --focused)
-sketchybar --trigger window_focus
 sketchybar --update
+sketchybar --trigger window_focus
+sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$(aerospace list-workspaces --focused)
