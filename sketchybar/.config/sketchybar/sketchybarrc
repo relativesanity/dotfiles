@@ -48,8 +48,8 @@ sketchybar --add item wifi right \
     label.font="JetBrainsMono Nerd Font:Regular:16.0" \
     script="$CONFIG_DIR/plugins/wifi.sh"
 
-# Add window title item on the right
-sketchybar --add item window_title right \
+# Add window title item on the left
+sketchybar --add item window_title left \
     --subscribe window_title window_focus aerospace_workspace_change \
     --set window_title \
     label.color=0xffcdd6f4 \
