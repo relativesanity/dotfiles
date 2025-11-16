@@ -2,7 +2,7 @@
 #
 # Theme manager for sketchybar
 # Detects system appearance (dark/light mode) and applies appropriate color scheme
-# Automatically switches between Catppuccin Mocha (dark) and inverted colors (light)
+# Uses Catppuccin color names for easy flavor swapping
 #
 # Usage:
 #   theme.sh         - Check cache and update only if theme changed
@@ -14,18 +14,16 @@ CACHE_FILE="/tmp/sketchybar_theme_cache"
 # Detect if dark mode is enabled
 if defaults read -g AppleInterfaceStyle &> /dev/null; then
     CURRENT_THEME="dark"
-    # Dark mode - Catppuccin Mocha
-    TEXT_COLOR=0xffcdd6f4
-    BAR_COLOR=0x66181825
-    BORDER_COLOR=0xff6c7086
-    WORKSPACE_COLOR=0xffcdd6f4
+    TEXT_COLOR=0xffcdd6f4      # Catppuccin Text
+    BAR_COLOR=0x66181825       # Catppuccin Mantle
+    BORDER_COLOR=0xff6c7086    # Catppuccin Overlay0
+    WORKSPACE_COLOR=0xffcdd6f4 # Catppuccin Text
 else
     CURRENT_THEME="light"
-    # Light mode - Inverted Mocha colors
-    TEXT_COLOR=0xff32290b
-    BAR_COLOR=0x66e7e7da
-    BORDER_COLOR=0xff938f79
-    WORKSPACE_COLOR=0xff32290b
+    TEXT_COLOR=0xff11111b      # Catppuccin Crust
+    BAR_COLOR=0x66cdd6f4       # Catppuccin Text
+    BORDER_COLOR=0xff6c7086    # Catppuccin Overlay0
+    WORKSPACE_COLOR=0xff11111b # Catppuccin Crust
 fi
 
 # Check if theme has changed (unless force flag is passed)
