@@ -8,6 +8,10 @@
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
 
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-  pattern = "Brewfile.*",
-  command = "set filetype=ruby",
+  pattern = "Brewfile*",
+  callback = function()
+    vim.bo.filetype = "ruby"
+    -- Disable LSP diagnostics for Brewfiles (DSL methods like brew, cask, tap are not recognized)
+    vim.diagnostic.disable(0)
+  end,
 })
