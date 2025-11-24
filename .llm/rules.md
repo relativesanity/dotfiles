@@ -103,12 +103,17 @@ When making any changes that require commits:
 1. **ALWAYS run `git log --oneline -10` first** to analyze recent commit message patterns
 2. **NEVER suggest commit messages** without analyzing the repository's style
 3. **Use the exact format observed in recent commits** (typically lowercase, present tense: "adds X to Y")
-4. **Follow the complete commit workflow:**
+4. **Check if documentation needs updating** before committing:
+   - Review `.llm/rules.md` for accuracy (versions, package lists, descriptions)
+   - Check `Readme.md` if user-facing processes changed
+   - If updates are needed, propose the changes and wait for user approval
+   - Update any affected documentation files only after approval before proceeding with commit
+5. **Follow the complete commit workflow:**
    - Run `git status` and `git diff` to understand changes
    - Stage relevant files with `git add`
    - Commit with analyzed message format
    - Verify with `git status`
-5. **ONLY commit when explicitly asked** - never assume the user wants changes committed
+6. **ONLY commit when explicitly asked** - never assume the user wants changes committed
 
 ## Commit Message Format
 - Analyze recent commits with `git log --oneline -10` 
