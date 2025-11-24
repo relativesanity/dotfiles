@@ -55,7 +55,7 @@ Configuration files are organized into stow packages (directories that get symli
 - `hetzner/` - Hetzner Cloud CLI configuration and contexts
 - `leaderkey/` - App launcher keyboard shortcuts organized by categories
 - `neovim/` - Neovim editor configuration with LazyVim
-- `rbenv/` - Ruby version manager configuration (currently set to 3.4.6)
+- `rbenv/` - Ruby version manager configuration (currently set to 3.4.7)
 - `sh/` - Shell configuration including zshrc, aliases, functions, and environment variables
 - `sketchybar/` - macOS menu bar replacement with Catppuccin theme and AeroSpace workspace integration
 - `starship/` - Shell prompt configuration with custom symbols for various tools
