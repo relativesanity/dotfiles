@@ -41,9 +41,9 @@
       "actions" : [
         {
           "key" : "g",
-          "label" : "Bear",
+          "label" : "iA Writer",
           "type" : "application",
-          "value" : "/Applications/Bear.app"
+          "value" : "/Applications/iA Writer.app"
         },
         {
           "key" : "f",
