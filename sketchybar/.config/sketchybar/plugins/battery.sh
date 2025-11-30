@@ -13,13 +13,10 @@ fi
 # Show battery indicator when below 100%
 sketchybar --set $NAME drawing=on
 
-# Catppuccin colors
-BLUE=0xff89b4fa  # Catppuccin Blue (for AC power)
-
 # Determine icon and color based on battery level
 if [ -n "$CHARGING" ]; then
     ICON="󰂄"  # charging icon
-    COLOR="$BLUE"
+    COLOR="$SKETCHYBAR_CHARGING_COLOR"
 elif [ "$PERCENTAGE" -ge 90 ]; then
     ICON="󰁹"  # full battery
     COLOR=""

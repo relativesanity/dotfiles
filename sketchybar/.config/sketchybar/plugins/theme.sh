@@ -18,12 +18,14 @@ if defaults read -g AppleInterfaceStyle &> /dev/null; then
     BAR_COLOR=0x66181825       # Catppuccin Mantle
     BORDER_COLOR=0xff6c7086    # Catppuccin Overlay0
     WORKSPACE_COLOR=0xffcdd6f4 # Catppuccin Text
+    CHARGING_COLOR=0xff89b4fa  # Catppuccin Mocha Blue
 else
     CURRENT_THEME="light"
     TEXT_COLOR=0xff11111b      # Catppuccin Crust
     BAR_COLOR=0x66cdd6f4       # Catppuccin Text
     BORDER_COLOR=0xff6c7086    # Catppuccin Overlay0
     WORKSPACE_COLOR=0xff11111b # Catppuccin Crust
+    CHARGING_COLOR=0xff1e66f5  # Catppuccin Latte Blue
 fi
 
 # Check if theme has changed (unless force flag is passed)
@@ -42,6 +44,9 @@ fi
 
 # Update cache
 echo "$CURRENT_THEME" > "$CACHE_FILE"
+
+# Export colors where plugins need to make runtime decisions about color usage
+export SKETCHYBAR_CHARGING_COLOR="$CHARGING_COLOR"
 
 # Apply color scheme
 sketchybar --bar color="$BAR_COLOR" border_color="$BORDER_COLOR"
