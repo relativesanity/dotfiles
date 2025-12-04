@@ -207,6 +207,10 @@ automatically-unhide-macos-hidden-apps = false
     if.app-id = 'org.whispersystems.signal-desktop'
     run = 'layout floating'
 
+[[on-window-detected]]
+    if.app-id = 'com.apple.Safari.WebApp.ABA59A85-ADF9-4799-98A6-078299274FDE'
+    run = 'layout floating'
+
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 [mode.service.binding]
