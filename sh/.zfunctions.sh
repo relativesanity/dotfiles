@@ -2,13 +2,17 @@ col() {
   awk "{print \$${1:-1}}"
 }
 
+repull() {
+  local dotfiles="${DOTFILES_PATH:-$HOME/.dotfiles}"
+  echo "Current branch: $(git -C "$dotfiles" branch --show-current)" &&
+    git -C "$dotfiles" pull
+}
+
 redot() {
-  cd "${DOTFILES_PATH:-$HOME/.dotfiles}" &&
-    echo "Current branch: $(git branch --show-current)" &&
-    git pull &&
-    ./bin/repack.sh &&
-    ./bin/restow.sh &&
-    ./bin/reenv.sh
+  repull &&
+    repack &&
+    restow &&
+    reenv
 }
 
 restow() {
