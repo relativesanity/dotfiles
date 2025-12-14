@@ -222,6 +222,21 @@ automatically-unhide-macos-hidden-apps = false
     if.app-id = 'com.culturedcode.ThingsMac'
     run = 'layout floating'
 
+# Safari SSB: Bluesky
+[[on-window-detected]]
+    if.app-id = 'com.apple.Safari.WebApp.4EF52CD3-780D-4265-8E9B-5EB7650B3196'
+    run = 'layout floating'
+
+# Safari SSB: fast.com
+[[on-window-detected]]
+    if.app-id = 'com.apple.Safari.WebApp.3D36C4CC-1ED4-4945-BB26-8A5373748889'
+    run = 'layout floating'
+
+# Safari SSB: LinkedIn
+[[on-window-detected]]
+    if.app-id = 'com.apple.Safari.WebApp.A140371B-6529-45EF-8F73-A9942E094D74'
+    run = 'layout floating'
+
 # Safari SSB: Readwise
 [[on-window-detected]]
     if.app-id = 'com.apple.Safari.WebApp.ABA59A85-ADF9-4799-98A6-078299274FDE'
