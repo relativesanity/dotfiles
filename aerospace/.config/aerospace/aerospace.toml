@@ -167,6 +167,11 @@ automatically-unhide-macos-hidden-apps = false
 
 
 # Window rules
+# To find app-id (bundle identifier):
+# - Regular apps: mdls -name kMDItemCFBundleIdentifier /Applications/AppName.app
+# - Safari SSBs: /usr/libexec/PlistBuddy -c "Print CFBundleIdentifier" ~/Applications/AppName.app/Contents/Info.plist
+#   (Safari SSBs use format: com.apple.Safari.WebApp.{UUID})
+
 # Calculator
 [[on-window-detected]]
     if.app-id = 'com.apple.calculator'
@@ -217,6 +222,7 @@ automatically-unhide-macos-hidden-apps = false
     if.app-id = 'com.culturedcode.ThingsMac'
     run = 'layout floating'
 
+# Safari SSB: Readwise
 [[on-window-detected]]
     if.app-id = 'com.apple.Safari.WebApp.ABA59A85-ADF9-4799-98A6-078299274FDE'
     run = 'layout floating'
