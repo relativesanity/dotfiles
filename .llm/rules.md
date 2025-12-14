@@ -116,11 +116,30 @@ When making any changes that require commits:
 6. **ONLY commit when explicitly asked** - never assume the user wants changes committed
 
 ## Commit Message Format
-- Analyze recent commits with `git log --oneline -10` 
+- Analyze recent commits with `git log --oneline -10`
 - Match the observed pattern (e.g., "adds slack to base Brewfile")
 - Use lowercase, present tense
 - Be concise and descriptive
 - Focus on what was added/changed, not why
+
+## Commit Organization Philosophy
+
+Commits should follow the Kent Beck philosophy: "Make the change easy, then make the easy change" (where making it easy may itself be hard).
+
+**Principles:**
+1. **Logical narrative progression** - Commits should tell a story in the order they'd naturally happen
+2. **Atomic, focused commits** - Each commit does one clear thing
+3. **Build incrementally** - Each commit builds on the previous state, rather than grouping by "type of change"
+4. **Foundation before features** - Organizational improvements and documentation come before adding new functionality that uses those patterns
+5. **Be intentional upfront** - Avoid rewriting history (no amend, no interactive rebase on pushed commits). If changes were made in the wrong order, check out the most recent commit and rebuild the agreed changes in a logical way, committing as you go
+
+**Example:**
+Instead of grouping "all documentation changes" together, structure commits as:
+1. Improve existing code/config organization
+2. Document the pattern discovered
+3. Apply that pattern to new additions
+
+This makes git history more valuable for understanding not just *what* changed, but *why* in that order.
 
 ## Conventions
 
