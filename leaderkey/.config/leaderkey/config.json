@@ -53,9 +53,9 @@
         },
         {
           "key" : "d",
-          "label" : "Day One",
+          "label" : "Obsidian",
           "type" : "application",
-          "value" : "/Applications/Day One.app"
+          "value" : "/Applications/Obsidian.app"
         },
         {
           "key" : "s",
