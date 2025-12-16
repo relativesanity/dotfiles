@@ -76,6 +76,7 @@ mas 'iA Writer', id: 775737590
 mas 'Keynote', id: 409183694
 mas 'Numbers', id: 409203825
 mas 'Pages', id: 409201541
+mas 'Save to Reader', id: 1640236961
 mas 'Soulver 3', id: 1508732804
 mas 'Things 3', id: 904280696
 mas 'Triode', id: 1450027401
