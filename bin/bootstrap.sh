@@ -9,6 +9,7 @@ IFS=$'\n\t'       # Stricter word splitting
 #
 # Usage:
 #   ./bootstrap.sh
+#   DOTFILES_BRANCH=branch-name ./bootstrap.sh
 #
 # Prerequisites:
 #   - None (script will install required package managers)
@@ -100,12 +101,14 @@ ensure_dotfiles() {
     return 0
   fi
 
+  local branch="${DOTFILES_BRANCH:-main}"
+
   if [[ ! -d $HOME/.dotfiles ]]; then
     print_status "Downloading dotfiles"
     cd "$HOME" &&
       git clone https://github.com/relativesanity/dotfiles "$HOME"/.dotfiles &&
       cd "$HOME"/.dotfiles &&
-      git checkout main || return 1
+      git checkout "$branch" || return 1
   fi
   print_status "Dotfiles downloaded"
 }
