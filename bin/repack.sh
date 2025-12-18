@@ -31,6 +31,15 @@ repack() {
 #
 #
 # ------------------------------------------------------------------------------------------------------
+detect_environment() {
+  if [[ "$(whoami)" == "relativesanity" ]]; then
+    echo "home"
+  else
+    echo "work"
+  fi
+}
+
+# ------------------------------------------------------------------------------------------------------
 ensure_homebrew() {
   if [[ ! -e /opt/homebrew/bin/brew ]]; then
     print_failure "Homebrew installation not found"
@@ -53,11 +62,14 @@ update_homebrew() {
 
 # ------------------------------------------------------------------------------------------------------
 bundle_homebrew() {
-  print_status "Bundling Homebrew packages"
-
   filepath="${DOTFILES_PATH:-$HOME/.dotfiles}"
+  environment=$(detect_environment)
+
+  print_status "Bundling Homebrew packages for environment: $environment"
+
   brewfiles=()
   brewfiles+=("$filepath/Brewfile")
+  brewfiles+=("$filepath/Brewfile.$environment")
 
   if [[ -f "$filepath/Brewfile.local" ]]; then
     brewfiles+=("$filepath/Brewfile.local")
