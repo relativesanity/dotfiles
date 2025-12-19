@@ -14,10 +14,24 @@ IFS=$'\n\t'       # Stricter word splitting
 #   - dotfiles repository must be present
 
 redot() {
-  cd "${DOTFILES_PATH:-$HOME/.dotfiles}" &&
-    echo "Current branch: $(git branch --show-current)" &&
-    git pull &&
-    ./bin/repack.sh &&
+  cd "${DOTFILES_PATH:-$HOME/.dotfiles}"
+
+  local current_branch
+  current_branch="$(git branch --show-current)"
+  echo "Current branch: $current_branch"
+
+  # Check if current branch has upstream tracking
+  if git rev-parse --abbrev-ref @{upstream} >/dev/null 2>&1; then
+    echo "Pulling from upstream..."
+    git pull || {
+      echo "Error: Failed to pull from upstream"
+      return 1
+    }
+  else
+    echo "No upstream configured, skipping pull"
+  fi
+
+  ./bin/repack.sh &&
     ./bin/restow.sh &&
     ./bin/reenv.sh
 }

@@ -18,19 +18,26 @@ This is a personal dotfiles repository that manages macOS system configuration a
 ## Key Scripts and Commands
 
 ### Bootstrap Commands
-- `./bin/bootstrap.sh` - One-time setup script for new systems. Installs Homebrew, Git, Zsh, downloads dotfiles, and runs initial setup
-- `./bin/redot.sh` - Main sync script that pulls updates and runs all configuration steps in order
+- `./bin/bootstrap.sh` - One-time setup script for new systems. Installs Homebrew, Git, Zsh, downloads dotfiles, and runs initial setup. Supports `DOTFILES_BRANCH` environment variable for testing branches.
+- `./bin/redot.sh` - Main sync script that pulls updates (if branch has upstream) and runs all configuration steps in order
 
 ### Configuration Management
 - `./bin/restow.sh` - Uses GNU Stow to symlink configuration files from the repository to home directory
-- `./bin/repack.sh` - Updates Homebrew packages using Brewfiles and sets up tmux plugins
-- `./bin/reenv.sh` - Installs Ruby versions specified in rbenv configuration
+- `./bin/repack.sh` - Updates Homebrew packages using environment-aware Brewfiles (detects home vs work)
+- `./bin/reenv.sh` - Installs Ruby versions specified in rbenv configuration (skips gracefully if rbenv not installed)
 - `./bin/m.sh` - macOS dock and window animation customization script (uses `m` CLI tool)
 
 ### Package Management
-The repository uses Brewfiles for package management:
-- `Brewfile` - Core packages shared across all environments
+The repository uses environment-aware Brewfiles for package management:
+- `Brewfile` - Core packages required for dotfiles functionality (git, stow, gh, neovim, starship, zoxide, fzf, tmux, ghostty)
+- `Brewfile.home` - Personal packages installed on home machines (username: relativesanity)
+- `Brewfile.work` - Work-specific packages installed on work machines (other usernames)
 - `Brewfile.local` - Optional machine-specific packages (gitignored)
+
+Environment detection is automatic based on `whoami`. The `repack.sh` script loads:
+1. `Brewfile` (always)
+2. `Brewfile.home` OR `Brewfile.work` (based on username)
+3. `Brewfile.local` (if exists)
 
 ### Aliases
 Key aliases are defined in `sh/.aliases.sh`:
