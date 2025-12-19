@@ -27,6 +27,7 @@ restow() {
 }
 
 readonly REQUIRED_DIRECTORIES=(
+  "$HOME/.claude"
   "$HOME/.config"
   "$HOME/.rbenv"
 )
