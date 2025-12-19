@@ -8,4 +8,7 @@ brew 'git'
 brew 'neovim'
 brew 'starship'
 brew 'stow'
+brew 'tmux'
 brew 'zoxide'
+
+cask 'ghostty'

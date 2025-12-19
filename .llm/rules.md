@@ -29,7 +29,7 @@ This is a personal dotfiles repository that manages macOS system configuration a
 
 ### Package Management
 The repository uses environment-aware Brewfiles for package management:
-- `Brewfile` - Core packages required for dotfiles functionality (git, stow, gh, neovim, starship, zoxide, fzf)
+- `Brewfile` - Core packages required for dotfiles functionality (git, stow, gh, neovim, starship, zoxide, fzf, tmux, ghostty)
 - `Brewfile.home` - Personal packages installed on home machines (username: relativesanity)
 - `Brewfile.work` - Work-specific packages installed on work machines (other usernames)
 - `Brewfile.local` - Optional machine-specific packages (gitignored)

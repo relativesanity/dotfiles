@@ -56,7 +56,7 @@ The dotfiles automatically detect your environment based on username:
 - **Work** (other usernames): Installs core packages only
 
 Package files:
-- `Brewfile` - Core packages (git, stow, gh, neovim, starship, zoxide, fzf)
+- `Brewfile` - Core packages (git, stow, gh, neovim, starship, zoxide, fzf, tmux, ghostty)
 - `Brewfile.home` - Personal packages (full setup)
 - `Brewfile.work` - Work-specific packages (add as needed)
 - `Brewfile.local` - Machine-specific overrides (gitignored)
