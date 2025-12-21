@@ -26,7 +26,7 @@ reenv() {
     return 0
   fi
 
-  print_status "Installing Ruby version: $(cat "$HOME/.rbenv/version")"
+  print_status "Checking Ruby version: $(cat "$HOME/.rbenv/version")"
   rbenv install -s "$(cat "$HOME/.rbenv/version")"
   print_status "Ruby setup complete"
 }
