@@ -3,6 +3,9 @@
 set -euo pipefail # Exit on error, undefined vars, and pipeline failures
 IFS=$'\n\t'       # Stricter word splitting
 
+# Trap Ctrl-C (SIGINT) and exit gracefully
+trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
+
 # Ruby version installer
 # Supports:
 #   - macOS (via rbenv)
