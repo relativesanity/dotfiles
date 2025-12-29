@@ -40,6 +40,37 @@ System Preferences > Security & Privacy > Privacy > Input Monitoring. This is do
 hitting the `+` button and navigating to the path for kanata,
 likely /opt/homebrew/bin/kanata.
 
+## Troubleshooting
+
+### IOKit Permission Errors
+
+**Symptom**: Kanata fails to start with errors in the logs similar to:
+```
+IOHIDDeviceOpen error: (iokit/common) not permitted Apple Internal Keyboard / Trackpad
+```
+
+**Cause**: This typically occurs after Homebrew updates the kanata binary. macOS
+revokes previously granted Input Monitoring permissions when the binary changes.
+
+**Solution**:
+1. Open System Settings > Privacy & Security > Input Monitoring (or System Preferences > Security & Privacy > Privacy > Input Monitoring on older macOS)
+2. Find the kanata entry in the list - it may show an error or warning icon
+3. Remove the existing kanata entry by selecting it and clicking the `-` button
+4. Click the `+` button to re-add kanata
+5. Navigate to `/opt/homebrew/bin/kanata` and select it
+6. Restart the kanata service:
+   ```bash
+   sudo launchctl stop com.example.kanata
+   sudo launchctl start com.example.kanata
+   ```
+7. Verify kanata is running by checking the logs:
+   ```bash
+   tail -f /Library/Logs/Kanata/kanata.out.log
+   tail -f /Library/Logs/Kanata/kanata.err.log
+   ```
+
+**Note**: You'll need to repeat this process each time Homebrew updates the kanata binary.
+
 ## Resources
 
 - https://github.com/jtroo/kanata/issues/1264#issuecomment-2763085239
