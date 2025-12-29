@@ -105,29 +105,29 @@ All shell scripts use `set -euo pipefail` for strict error handling and will exi
 
 ## Git Commit Process (MANDATORY)
 
-When making any changes that require commits:
+When the user asks to "commit" or "add and commit", you MUST follow this exact workflow:
 
-1. **ALWAYS run `git log --oneline -10` first** to analyze recent commit message patterns
-2. **NEVER suggest commit messages** without analyzing the repository's style
-3. **Use the exact format observed in recent commits** (typically lowercase, present tense: "adds X to Y")
-4. **Check if documentation needs updating** before committing:
+1. **ALWAYS run `git log --format='%s' -5` FIRST** to analyze recent commit message patterns
+2. **Determine the commit message format** from the log output (typically lowercase, present tense like "adds X to Y")
+3. **Stage and commit in a SINGLE command** using the analyzed format:
+   ```bash
+   git add <files> && git commit -m "message matching repo style" && git status
+   ```
+4. **NEVER ask the user about commit message format** - the git log tells you the exact style to use
+5. **NEVER suggest or propose commit messages** - just analyze and use the repository's style immediately
+6. **Check if documentation needs updating** before committing:
    - Review `.llm/rules.md` for accuracy (versions, package lists, descriptions)
    - Check `Readme.md` if user-facing processes changed
    - If updates are needed, propose the changes and wait for user approval
    - Update any affected documentation files only after approval before proceeding with commit
-5. **Follow the complete commit workflow:**
-   - Run `git status` and `git diff` to understand changes
-   - Stage relevant files with `git add`
-   - Commit with analyzed message format
-   - Verify with `git status`
-6. **ONLY commit when explicitly asked** - never assume the user wants changes committed
+7. **ONLY commit when explicitly asked** - never assume the user wants changes committed
 
 ## Commit Message Format
-- Analyze recent commits with `git log --oneline -10`
-- Match the observed pattern (e.g., "adds slack to base Brewfile")
-- Use lowercase, present tense
-- Be concise and descriptive
+- ALWAYS check `git log --format='%s' -5` before every commit
+- Match the EXACT pattern observed (e.g., "adds slack to base Brewfile", "fixes typo in readme")
+- Common patterns: lowercase, present tense, concise
 - Focus on what was added/changed, not why
+- Never deviate from the repository's established style
 
 ## Commit Organization Philosophy
 
