@@ -18,6 +18,8 @@ trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 #   - dotfiles repository must be present
 
 repack() {
+  echo -e "\033[1;36m== repack ==\033[0m"
+
   if ! is_macos; then
     print_failure "Unsupported operating system"
     return 1
@@ -83,16 +85,11 @@ bundle_homebrew() {
 
 # ------------------------------------------------------------------------------------------------------
 print_status() {
-  local status=$1
-  if is_macos; then
-    echo "[macOS] $status"
-  else
-    echo "[ERROR] $status"
-  fi
+  echo "$1"
 }
 
 print_failure() {
-  print_status "$1"
+  echo -e "\033[0;31m$1\033[0m"
   return 1
 }
 

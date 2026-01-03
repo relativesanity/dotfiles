@@ -15,6 +15,8 @@ IFS=$'\n\t'       # Stricter word splitting
 #   - None (script will install required package managers)
 
 bootstrap() {
+  echo -e "\033[1;36m== bootstrap ==\033[0m"
+
   if ! is_macos; then
     print_failure "Unsupported operating system"
     return 1
@@ -115,16 +117,11 @@ ensure_dotfiles() {
 
 # ------------------------------------------------------------------------------------------------------
 print_status() {
-  local status=$1
-  if is_macos; then
-    echo "[macOS] $status"
-  else
-    echo "[ERROR] $status"
-  fi
+  echo "$1"
 }
 
 print_failure() {
-  print_status "$1"
+  echo -e "\033[0;31m$1\033[0m"
   return 1
 }
 

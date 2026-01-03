@@ -34,9 +34,11 @@ redot() {
     echo "No upstream configured, skipping pull"
   fi
 
-  ./bin/repack.sh &&
-    ./bin/restow.sh &&
-    ./bin/reenv.sh
+  ./bin/repack.sh
+  echo
+  ./bin/restow.sh
+  echo
+  ./bin/reenv.sh
 }
 
 redot

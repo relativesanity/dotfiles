@@ -17,6 +17,8 @@ trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 #   - rbenv must be installed (optional - skips if not present)
 
 reenv() {
+  echo -e "\033[1;36m== reenv ==\033[0m"
+
   # Check if rbenv is installed
   if ! command -v rbenv >/dev/null 2>&1; then
     print_status "rbenv not installed, skipping Ruby setup"
@@ -35,7 +37,7 @@ reenv() {
 }
 
 print_status() {
-  echo "[reenv] $1"
+  echo "$1"
 }
 
 reenv
