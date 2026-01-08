@@ -37,6 +37,7 @@ swap() {
 }
 
 alias msh='mosh --server=/opt/homebrew/bin/mosh-server'
+alias mx='cmatrix -ab -u3'
 
 alias ld='lazydocker'
 alias lg='lazygit'
