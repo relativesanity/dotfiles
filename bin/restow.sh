@@ -111,7 +111,7 @@ stow_packages() {
   print_status "Stowing…"
   for package in "${STOW_PACKAGES[@]}"; do
     print_status "Stowing $package"
-    stow -d "$HOME/.dotfiles" -t "$HOME" --restow "$package" || return 1
+    stow -d "$HOME/.dotfiles" -t "$HOME" --restow "$package"
   done
 }
 
