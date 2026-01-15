@@ -8,6 +8,7 @@ brew 'lazygit'
 brew 'mas'
 
 cask 'claude-code'
+cask 'leader-key'
 
 mas 'Displaperture', id: 1543920362
 mas 'Things 3', id: 904280696
