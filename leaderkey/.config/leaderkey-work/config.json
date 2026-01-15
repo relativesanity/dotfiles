@@ -1,6 +1,11 @@
 {
   "actions" : [
     {
+      "key" : "g",
+      "type" : "application",
+      "value" : "/Applications/Things3.app"
+    },
+    {
       "key" : "f",
       "type" : "application",
       "value" : "/Applications/Notion.app"
