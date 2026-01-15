@@ -1,0 +1,25 @@
+{
+  "actions" : [
+    {
+      "key" : "f",
+      "type" : "application",
+      "value" : "/Applications/Notion.app"
+    },
+    {
+      "key" : "d",
+      "type" : "application",
+      "value" : "/Applications/Slack.app"
+    },
+    {
+      "key" : "s",
+      "type" : "application",
+      "value" : "/Applications/Google Chrome.app"
+    },
+    {
+      "key" : "a",
+      "type" : "application",
+      "value" : "/Applications/Ghostty.app"
+    }
+  ],
+  "type" : "group"
+}
