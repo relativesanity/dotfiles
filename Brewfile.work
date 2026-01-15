@@ -2,9 +2,10 @@
 # Add packages needed for work machine here
 # Core dependencies are in the main Brewfile
 brew 'asdf'
-brew 'mas'
 brew 'awscli'
 brew 'lazygit'
+brew 'mas'
+
 cask 'claude-code'
 
 mas 'Displaperture', id: 1543920362
