@@ -3,6 +3,7 @@
 # Core dependencies are in the main Brewfile
 brew 'asdf'
 brew 'awscli'
+brew 'gpg'
 brew 'lazygit'
 brew 'mas'
 
