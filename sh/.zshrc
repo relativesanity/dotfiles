@@ -55,7 +55,6 @@ setopt hist_find_no_dups
 command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init --cmd gg zsh)"
 command -v starship >/dev/null 2>&1 && eval "$(starship init zsh)"
 command -v fzf >/dev/null 2>&1 && eval "$(fzf --zsh)"
-command -v rbenv >/dev/null 2>&1 && eval "$(rbenv init - zsh)"
 command -v asdf >/dev/null 2>&1 && source /opt/homebrew/opt/asdf/libexec/asdf.sh
 
 

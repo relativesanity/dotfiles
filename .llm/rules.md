@@ -24,7 +24,7 @@ This is a personal dotfiles repository that manages macOS system configuration a
 ### Configuration Management
 - `./bin/restow.sh` - Uses GNU Stow to symlink configuration files from the repository to home directory
 - `./bin/repack.sh` - Updates Homebrew packages using environment-aware Brewfiles (detects home vs work)
-- `./bin/reenv.sh` - Installs Ruby versions specified in rbenv configuration (skips gracefully if rbenv not installed)
+- `./bin/reenv.sh` - Installs asdf plugins and versions from .tool-versions (skips gracefully if asdf not installed)
 - `./bin/m.sh` - macOS dock and window animation customization script (uses `m` CLI tool)
 
 ### Package Management
@@ -62,7 +62,7 @@ Configuration files are organized into stow packages (directories that get symli
 - `hetzner/` - Hetzner Cloud CLI configuration and contexts
 - `leaderkey/` - App launcher keyboard shortcuts organized by categories
 - `neovim/` - Neovim editor configuration with LazyVim
-- `rbenv/` - Ruby version manager configuration (currently set to 3.4.7)
+- `asdf/` - asdf version manager configuration (.tool-versions for Ruby 4.0.1)
 - `sh/` - Shell configuration including zshrc, aliases, functions, and environment variables
 - `sketchybar/` - macOS menu bar replacement with Catppuccin theme and AeroSpace workspace integration
 - `starship/` - Shell prompt configuration with custom symbols for various tools
@@ -83,7 +83,7 @@ The `repack.sh` script installs packages from Brewfile and optional Brewfile.loc
 The shell setup uses Zsh with:
 - Zinit plugin manager for zsh-users plugins (autosuggestions, completions, syntax highlighting)
 - Vim keybindings (`bindkey -v`)
-- Integration with zoxide, starship, fzf, and rbenv
+- Integration with zoxide, starship, fzf, and asdf
 - Extensive history configuration for persistence across sessions
 
 ## Development Workflow
