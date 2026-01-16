@@ -6,7 +6,8 @@ IFS=$'\n\t'       # Stricter word splitting
 # Trap Ctrl-C (SIGINT) and exit gracefully
 trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 
-# Ruby version installer
+# asdf version installer
+# Installs plugins and versions from .tool-versions
 # Supports:
 #   - macOS (via asdf)
 #
@@ -21,34 +22,36 @@ reenv() {
 
   # Check if asdf is installed
   if ! command -v asdf >/dev/null 2>&1; then
-    print_status "asdf not installed, skipping Ruby setup"
+    print_status "asdf not installed, skipping"
     return 0
   fi
 
   # Check if .tool-versions file exists
   if [[ ! -e "$HOME/.tool-versions" ]]; then
-    print_status "No .tool-versions configured, skipping Ruby setup"
+    print_status "No .tool-versions configured, skipping"
     return 0
   fi
 
-  # Extract Ruby version from .tool-versions
-  local ruby_version
-  ruby_version=$(grep '^ruby ' "$HOME/.tool-versions" | awk '{print $2}' || true)
+  # Get list of installed plugins
+  local installed_plugins
+  installed_plugins=$(asdf plugin list 2>/dev/null || true)
 
-  if [[ -z "$ruby_version" ]]; then
-    print_status "No Ruby version in .tool-versions, skipping Ruby setup"
-    return 0
-  fi
+  # Parse .tool-versions and install each plugin and version
+  while IFS=' ' read -r plugin version; do
+    # Skip empty lines and comments
+    [[ -z "$plugin" || "$plugin" =~ ^# ]] && continue
 
-  # Ensure ruby plugin is installed
-  if ! asdf plugin list | grep -q '^ruby$'; then
-    print_status "Adding asdf ruby plugin"
-    asdf plugin add ruby
-  fi
+    # Install plugin if not already installed
+    if ! echo "$installed_plugins" | grep -q "^${plugin}$"; then
+      print_status "Adding asdf plugin: $plugin"
+      asdf plugin add "$plugin"
+    fi
 
-  print_status "Checking Ruby version: $ruby_version"
-  asdf install ruby "$ruby_version"
-  print_status "Ruby setup complete"
+    print_status "Installing $plugin $version"
+    asdf install "$plugin" "$version"
+  done < "$HOME/.tool-versions"
+
+  print_status "asdf setup complete"
 }
 
 print_status() {

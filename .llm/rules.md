@@ -24,7 +24,7 @@ This is a personal dotfiles repository that manages macOS system configuration a
 ### Configuration Management
 - `./bin/restow.sh` - Uses GNU Stow to symlink configuration files from the repository to home directory
 - `./bin/repack.sh` - Updates Homebrew packages using environment-aware Brewfiles (detects home vs work)
-- `./bin/reenv.sh` - Installs Ruby versions specified in asdf .tool-versions (skips gracefully if asdf not installed)
+- `./bin/reenv.sh` - Installs asdf plugins and versions from .tool-versions (skips gracefully if asdf not installed)
 - `./bin/m.sh` - macOS dock and window animation customization script (uses `m` CLI tool)
 
 ### Package Management
