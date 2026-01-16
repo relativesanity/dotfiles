@@ -34,12 +34,12 @@ restow() {
 readonly REQUIRED_DIRECTORIES=(
   "$HOME/.claude"
   "$HOME/.config"
-  "$HOME/.rbenv"
   "$HOME/.config/gh"
 )
 
 readonly STOW_PACKAGES=(
   "aerospace"
+  "asdf"
   "borders"
   "btop"
   "claude"
@@ -50,7 +50,6 @@ readonly STOW_PACKAGES=(
   "hetzner"
   "leaderkey"
   "neovim"
-  "rbenv"
   "sh"
   "sketchybar"
   "starship"
