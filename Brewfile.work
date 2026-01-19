@@ -9,6 +9,7 @@ brew 'libyaml'
 brew 'mas'
 
 cask 'claude-code'
+cask 'granola'
 cask 'leader-key'
 cask 'zed'
 
