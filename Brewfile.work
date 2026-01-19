@@ -5,6 +5,7 @@ brew 'asdf'
 brew 'awscli'
 brew 'gpg'
 brew 'lazygit'
+brew 'libyaml'
 brew 'mas'
 
 cask 'claude-code'
