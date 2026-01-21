@@ -38,7 +38,7 @@ brew 'tmux'
 brew 'zoxide'
 
 # Casks
-cask 'aerospace'
+cask 'nikitabobko/tap/aerospace'
 cask 'alfred'
 cask 'backblaze'
 cask 'balenaetcher'
