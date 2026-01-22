@@ -1,6 +1,7 @@
 # Taps
 tap 'felixkratz/formulae'
 tap 'nikitabobko/tap'
+tap 'finestructure/hummingbird'
 
 # Brews
 brew 'bat'
@@ -49,7 +50,7 @@ cask 'font-ia-writer-quattro'
 cask 'font-jetbrains-mono-nerd-font'
 cask 'ghostty'
 cask 'google-chrome'
-cask 'hummingbird'
+cask 'finestructure/hummingbird/hummingbird'
 cask 'leader-key'
 cask 'logi-options+'
 cask 'obsidian'
