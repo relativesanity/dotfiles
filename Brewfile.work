@@ -1,8 +1,12 @@
 # Work-specific packages
 # Add packages needed for work machine here
 # Core dependencies are in the main Brewfile
+tap 'felixkratz/formulae'
+tap 'nikitabobko/tap'
+
 brew 'asdf'
 brew 'awscli'
+brew 'felixkratz/formulae/borders'
 brew 'gpg'
 brew 'lazygit'
 brew 'libyaml'
@@ -11,6 +15,7 @@ brew 'mas'
 cask 'claude-code'
 cask 'granola'
 cask 'leader-key'
+cask 'nikitabobko/tap/aerospace'
 
 mas 'Displaperture', id: 1543920362
 mas 'Things 3', id: 904280696

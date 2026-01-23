@@ -137,7 +137,7 @@ automatically-unhide-macos-hidden-apps = false
     ctrl-alt-shift-u = 'move down'
     ctrl-alt-shift-i = 'move up'
     ctrl-alt-shift-o = 'move right'
-    ctrl-alt-shift-p = 'layout floating tiling'
+    ctrl-alt-shift-p = 'fullscreen'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#resize
     ctrl-alt-shift-minus = 'resize smart -48'
@@ -158,7 +158,7 @@ automatically-unhide-macos-hidden-apps = false
     ctrl-alt-shift-cmd-t = ['move-node-to-workspace 5', 'workspace 5']
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#fullscreen
-    ctrl-alt-shift-cmd-p = 'fullscreen'
+    ctrl-alt-shift-cmd-p = 'layout floating tiling'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
     # ctrl-alt-shift-tab = 'workspace-back-and-forth'
