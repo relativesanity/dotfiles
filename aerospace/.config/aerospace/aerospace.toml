@@ -14,19 +14,19 @@
 #     Move+Go:   q/w/e/r/t - move window to workspace 1-5 and follow
 #     Fullscreen: p - toggle fullscreen
 
-after-startup-command = [
-    'exec-and-forget sketchybar'
-]
-
-# Notify Sketchybar about workspace changes
-exec-on-workspace-change = ['/bin/bash', '-c',
-    'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
-]
-
-# Notify Sketchybar about window focus changes
-on-focus-changed = [
-    'exec-and-forget sketchybar --trigger window_focus'
-]
+# after-startup-command = [
+#     'exec-and-forget sketchybar'
+# ]
+#
+# # Notify Sketchybar about workspace changes
+# exec-on-workspace-change = ['/bin/bash', '-c',
+#     'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
+# ]
+#
+# # Notify Sketchybar about window focus changes
+# on-focus-changed = [
+#     'exec-and-forget sketchybar --trigger window_focus'
+# ]
 
 # Start AeroSpace at login
 start-at-login = true
