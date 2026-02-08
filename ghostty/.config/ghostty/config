@@ -14,5 +14,3 @@ window-height = 40
 
 mouse-hide-while-typing = true
 keybind = shift+enter=text:\x1b\r
-
-command = /opt/homebrew/bin/tmux new-session -A -s jbOS
