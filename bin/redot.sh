@@ -11,12 +11,20 @@ trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 #   - macOS (via Homebrew)
 #
 # Usage:
-#   ./redot.sh
+#   ./redot.sh [--update-only]
+#
+# Options:
+#   --update-only  Run brew bundle without --cleanup and --zap
 #
 # Prerequisites:
 #   - dotfiles repository must be present
 
 redot() {
+  local update_only=false
+  for arg in "$@"; do
+    [[ "$arg" == "--update-only" ]] && update_only=true
+  done
+
   cd "${DOTFILES_PATH:-$HOME/.dotfiles}"
 
   local current_branch
@@ -34,11 +42,15 @@ redot() {
     echo "No upstream configured, skipping pull"
   fi
 
-  ./bin/repack.sh
+  if [[ "$update_only" == "true" ]]; then
+    ./bin/repack.sh --update-only
+  else
+    ./bin/repack.sh
+  fi
   echo
   ./bin/restow.sh
   echo
   ./bin/reenv.sh
 }
 
-redot
+redot "$@"

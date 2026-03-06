@@ -10,7 +10,7 @@ repull() {
 
 redot() {
   repull &&
-    repack &&
+    repack "$@" &&
     restow &&
     reenv
 }
@@ -20,7 +20,7 @@ restow() {
 }
 
 repack() {
-  "${DOTFILES_PATH:-$HOME/.dotfiles}/bin/repack.sh"
+  "${DOTFILES_PATH:-$HOME/.dotfiles}/bin/repack.sh" "$@"
 }
 
 reenv() {

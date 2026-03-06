@@ -11,13 +11,21 @@ trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 #   - macOS (via Homebrew)
 #
 # Usage:
-#   ./repack.sh
+#   ./repack.sh [--update-only]
+#
+# Options:
+#   --update-only  Run brew bundle without --cleanup and --zap
 #
 # Prerequisites:
 #   - Homebrew must be already installed for macOS
 #   - dotfiles repository must be present
 
 repack() {
+  local update_only=false
+  for arg in "$@"; do
+    [[ "$arg" == "--update-only" ]] && update_only=true
+  done
+
   echo -e "\033[1;36m== repack ==\033[0m"
 
   if ! is_macos; then
@@ -27,7 +35,7 @@ repack() {
 
   ensure_homebrew || print_failure "Homebrew could not be set up"
   update_homebrew || print_failure "Homebrew could not be updated"
-  bundle_homebrew || print_failure "Homebrew could not be bundled"
+  bundle_homebrew "$update_only" || print_failure "Homebrew could not be bundled"
   print_status "Repack complete"
 }
 
@@ -67,6 +75,7 @@ update_homebrew() {
 
 # ------------------------------------------------------------------------------------------------------
 bundle_homebrew() {
+  local update_only="${1:-false}"
   filepath="${DOTFILES_PATH:-$HOME/.dotfiles}"
   environment=$(detect_environment)
 
@@ -80,7 +89,11 @@ bundle_homebrew() {
     brewfiles+=("$filepath/Brewfile.local")
   fi
 
-  cat "${brewfiles[@]}" | brew bundle --file=- --cleanup --zap
+  if [[ "$update_only" == "true" ]]; then
+    cat "${brewfiles[@]}" | brew bundle --file=-
+  else
+    cat "${brewfiles[@]}" | brew bundle --file=- --cleanup --zap
+  fi
 }
 
 # ------------------------------------------------------------------------------------------------------
@@ -99,7 +112,7 @@ is_macos() {
 }
 
 # ------------------------------------------------------------------------------------------------------
-if ! repack; then
+if ! repack "$@"; then
   print_status "Repack failed"
   exit 1
 fi
