@@ -55,3 +55,25 @@ asdf-load() {
     asdf install "$plugin" "$version"
   done < "$versions_file"
 }
+
+git-ssh() {
+  local url
+  url=$(git remote get-url origin 2>/dev/null) || { echo "No remote 'origin' found"; return 1; }
+
+  if [[ "$url" != *github.com* ]]; then
+    echo "Remote is not GitHub: $url"
+    return 1
+  fi
+
+  if [[ "$url" == git@* ]]; then
+    echo "Already using SSH: $url"
+    return 0
+  fi
+
+  local new_url
+  new_url=$(echo "$url" | sed 's|https://github.com/|git@github.com:|')
+
+  git remote set-url origin "$new_url"
+  echo "Updated origin:"
+  echo "  $url → $new_url"
+}
