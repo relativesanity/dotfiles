@@ -56,6 +56,19 @@ asdf-load() {
   done < "$versions_file"
 }
 
+drag-toggle() {
+  local current
+  current=$(defaults read -g NSWindowShouldDragOnGesture 2>/dev/null || echo "false")
+
+  if [[ "$current" == "1" || "$current" == "true" ]]; then
+    defaults write -g NSWindowShouldDragOnGesture -bool false
+    echo "Window drag on gesture: disabled"
+  else
+    defaults write -g NSWindowShouldDragOnGesture -bool true
+    echo "Window drag on gesture: enabled (ctrl+cmd drag)"
+  fi
+}
+
 git-ssh() {
   local url
   url=$(git remote get-url origin 2>/dev/null) || { echo "No remote 'origin' found"; return 1; }
