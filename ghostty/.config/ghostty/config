@@ -9,8 +9,8 @@ window-padding-x = 16
 window-padding-y = 16
 window-padding-balance = true
 
-window-width = 143
-window-height = 40
+window-width = 110
+window-height = 30
 
 mouse-hide-while-typing = true
 keybind = shift+enter=text:\x1b\r
