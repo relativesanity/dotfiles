@@ -58,6 +58,7 @@ cask 'orbstack'
 cask 'reader'
 cask 'readwise-ibooks'
 cask 'signal'
+cask 'superwhisper'
 cask 'slack'
 cask 'tailscale-app'
 cask 'thingsmacsandboxhelper'
@@ -68,7 +69,6 @@ mas 'Bear: Markdown Notes', id: 1091189122
 mas 'DaisyDisk', id: 411643860
 mas 'Day One', id: 1055511498
 mas 'Displaperture', id: 1543920362
-mas 'HazeOver • Distraction Dimmer™', id: 430798174
 mas 'iA Writer', id: 775737590
 mas 'Keynote: Design Presentations', id: 361285480
 mas 'Numbers: Make Spreadsheets', id: 361304891
