@@ -69,6 +69,19 @@ drag-toggle() {
   fi
 }
 
+menu-icons-toggle() {
+  local current
+  current=$(defaults read -g NSMenuEnableActionImages 2>/dev/null || echo "true")
+
+  if [[ "$current" == "1" || "$current" == "true" ]]; then
+    defaults write -g NSMenuEnableActionImages -bool false
+    echo "Menu icons: disabled"
+  else
+    defaults write -g NSMenuEnableActionImages -bool true
+    echo "Menu icons: enabled"
+  fi
+}
+
 git-ssh() {
   local url
   url=$(git remote get-url origin 2>/dev/null) || { echo "No remote 'origin' found"; return 1; }
