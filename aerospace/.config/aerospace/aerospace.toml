@@ -38,7 +38,7 @@ enable-normalization-opposite-orientation-for-nested-containers = true
 # See: https://nikitabobko.github.io/AeroSpace/guide#layouts
 # The 'accordion-padding' specifies the size of accordion padding
 # You can set 0 to disable the padding feature
-accordion-padding = 36
+accordion-padding = 28
 
 # Possible values: tiles|accordion
 default-root-container-layout = 'tiles'
@@ -79,12 +79,12 @@ automatically-unhide-macos-hidden-apps = false
 #                 See:
 #                 https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
-    inner.horizontal = 36
-    inner.vertical =   36
-    outer.left =       36
-    outer.bottom =     36
-    outer.top =        36
-    outer.right =      36
+    inner.horizontal = 28
+    inner.vertical =   28
+    outer.left =       28
+    outer.bottom =     28
+    outer.top =        28
+    outer.right =      28
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
