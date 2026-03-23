@@ -17,6 +17,7 @@ cask 'granola'
 cask 'leader-key'
 cask 'nikitabobko/tap/aerospace'
 cask 'obsidian'
+cask 'superkey'
 
 mas 'Displaperture', id: 1543920362
 mas 'Things 3', id: 904280696
