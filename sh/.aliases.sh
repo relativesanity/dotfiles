@@ -50,3 +50,5 @@ alias dotfiles='cd $DOTFILES_PATH'
 alias restart="osascript -e 'tell app \"loginwindow\" to «event aevtrrst»'"
 
 alias ao-project='$HOME/.agent-os/setup/project.sh'
+
+alias reclaude='claude --resume'
