@@ -34,7 +34,6 @@ restow() {
 readonly REQUIRED_DIRECTORIES=(
   "$HOME/.claude"
   "$HOME/.config"
-  "$HOME/.config/gh"
 )
 
 readonly STOW_PACKAGES=(
@@ -43,7 +42,6 @@ readonly STOW_PACKAGES=(
   "borders"
   "btop"
   "claude"
-  "gh"
   "ghostty"
   "git"
   "hammerspoon"
