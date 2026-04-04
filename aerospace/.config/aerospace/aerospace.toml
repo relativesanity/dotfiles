@@ -174,79 +174,12 @@ automatically-unhide-macos-hidden-apps = false
 # - Safari SSBs: /usr/libexec/PlistBuddy -c "Print CFBundleIdentifier" ~/Applications/AppName.app/Contents/Info.plist
 #   (Safari SSBs use format: com.apple.Safari.WebApp.{UUID})
 
-# Calculator
+# Float everything by default. To opt specific apps into tiling, add rules like:
+#   [[on-window-detected]]
+#       if.app-id = 'com.example.SomeApp'
+#       run = 'layout tiling'
+# Toggle the current window manually with ctrl-alt-shift-cmd-p
 [[on-window-detected]]
-    if.app-id = 'com.apple.calculator'
-    run = 'layout floating'
-
-# Calendar
-[[on-window-detected]]
-    if.app-id = 'com.apple.iCal'
-    run = 'layout floating'
-
-# Claude
-[[on-window-detected]]
-    if.app-id = 'com.anthropic.claude-desktop'
-    run = 'layout floating'
-
-# Finder
-[[on-window-detected]]
-    if.app-id = 'com.apple.finder'
-    run = 'layout floating'
-
-# Mail
-[[on-window-detected]]
-    if.app-id = 'com.apple.mail'
-    run = 'layout floating'
-
-# Messages
-[[on-window-detected]]
-    if.app-id = 'com.apple.MobileSMS'
-    run = 'layout floating'
-
-# Moom
-[[on-window-detected]]
-    if.app-id = 'com.manytricks.Moom'
-    run = 'layout floating'
-
-# Music
-[[on-window-detected]]
-    if.app-id = 'com.apple.Music'
-    run = 'layout floating'
-
-# Signal
-[[on-window-detected]]
-    if.app-id = 'org.whispersystems.signal-desktop'
-    run = 'layout floating'
-
-# Things
-[[on-window-detected]]
-    if.app-id = 'com.culturedcode.ThingsMac'
-    run = 'layout floating'
-
-# Safari SSB: Bluesky
-[[on-window-detected]]
-    if.app-id = 'com.apple.Safari.WebApp.4EF52CD3-780D-4265-8E9B-5EB7650B3196'
-    run = 'layout floating'
-
-# Safari SSB: fast.com
-[[on-window-detected]]
-    if.app-id = 'com.apple.Safari.WebApp.3D36C4CC-1ED4-4945-BB26-8A5373748889'
-    run = 'layout floating'
-
-# Safari SSB: LinkedIn
-[[on-window-detected]]
-    if.app-id = 'com.apple.Safari.WebApp.A140371B-6529-45EF-8F73-A9942E094D74'
-    run = 'layout floating'
-
-# Safari SSB: Readwise
-[[on-window-detected]]
-    if.app-id = 'com.apple.Safari.WebApp.ABA59A85-ADF9-4799-98A6-078299274FDE'
-    run = 'layout floating'
-
-# Zoom
-[[on-window-detected]]
-    if.app-id = 'us.zoom.xos'
     run = 'layout floating'
 
 # 'service' binding mode declaration.
