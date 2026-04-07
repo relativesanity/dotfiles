@@ -94,6 +94,8 @@ bundle_homebrew() {
   else
     cat "${brewfiles[@]}" | brew bundle --file=- --cleanup --zap
   fi
+
+  brew cleanup
 }
 
 # ------------------------------------------------------------------------------------------------------
