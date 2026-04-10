@@ -5,7 +5,8 @@ options=(
     width=2.0
     hidpi=on
     order=above
-    active_color=0xff15bdec
+    # active_color=0xff15bdec
+    active_color=0xff9399b2
     inactive_color=0x00000000
     blacklist="Photomator"
 )
