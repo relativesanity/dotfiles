@@ -1,4 +1,5 @@
 {
   "includeCoAuthoredBy": false,
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "autoUpdatesChannel": "stable"
 }
