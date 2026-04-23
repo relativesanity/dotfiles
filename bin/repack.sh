@@ -95,6 +95,7 @@ bundle_homebrew() {
     cat "${brewfiles[@]}" | brew bundle --file=- --cleanup --zap
   fi
 
+  print_status "Running cleanup"
   brew cleanup
 }
 
