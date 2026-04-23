@@ -12,6 +12,7 @@ brew 'lazygit'
 brew 'libyaml'
 brew 'mas'
 
+cask 'claude'
 cask 'claude-code'
 cask 'granola'
 cask 'leader-key'
