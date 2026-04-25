@@ -1,5 +1,8 @@
 {
   "includeCoAuthoredBy": false,
+  "autoUpdatesChannel": "stable",
   "voiceEnabled": true,
-  "autoUpdatesChannel": "stable"
+  "enabledPlugins": {
+    "ruby-lsp@claude-plugins-official": true
+  }
 }
