@@ -36,6 +36,7 @@ repack() {
   ensure_homebrew || print_failure "Homebrew could not be set up"
   update_homebrew || print_failure "Homebrew could not be updated"
   bundle_homebrew "$update_only" || print_failure "Homebrew could not be bundled"
+  cleanup_homebrew || print_failure "Homebrew could not be cleaned up"
   print_status "Repack complete"
 }
 
@@ -71,6 +72,7 @@ ensure_homebrew() {
 update_homebrew() {
   print_status "Updating Homebrew"
   brew update
+  brew upgrade
 }
 
 # ------------------------------------------------------------------------------------------------------
@@ -94,7 +96,9 @@ bundle_homebrew() {
   else
     cat "${brewfiles[@]}" | brew bundle --file=- --cleanup --zap
   fi
+}
 
+cleanup_homebrew() {
   print_status "Running cleanup"
   brew cleanup
 }
