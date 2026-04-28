@@ -71,7 +71,7 @@ ensure_homebrew() {
 # ------------------------------------------------------------------------------------------------------
 update_homebrew() {
   print_status "Updating Homebrew"
-  brew update
+  brew update --auto-update
   brew upgrade
 }
 
