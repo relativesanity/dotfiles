@@ -47,6 +47,8 @@ reenv() {
       asdf plugin add "$plugin"
     fi
 
+    print_status "Updating $plugin versions"
+    asdf plugin update "$plugin"
     print_status "Installing $plugin $version"
     asdf install "$plugin" "$version"
   done < "$HOME/.tool-versions"
