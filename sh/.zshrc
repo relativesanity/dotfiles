@@ -55,8 +55,12 @@ setopt hist_find_no_dups
 command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init --cmd gg zsh)"
 command -v starship >/dev/null 2>&1 && eval "$(starship init zsh)"
 command -v fzf >/dev/null 2>&1 && eval "$(fzf --zsh)"
-command -v asdf >/dev/null 2>&1 && source /opt/homebrew/opt/asdf/libexec/asdf.sh
-
+# command -v asdf >/dev/null 2>&1 && source /opt/homebrew/opt/asdf/libexec/asdf.sh
+if command -v asdf >/dev/null 2>&1;
+then
+  export ASDF_DATA_DIR="$HOME/.asdf"
+  export PATH="$ASDF_DATA_DIR/shims:$PATH"
+fi
 
 # load common aliases
 source $HOME/.aliases.sh

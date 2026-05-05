@@ -40,6 +40,7 @@ brew 'zoxide'
 # Casks
 cask 'nikitabobko/tap/aerospace'
 cask 'backblaze'
+cask 'bbedit'
 cask 'claude'
 cask 'claude-code'
 cask 'devonthink'
