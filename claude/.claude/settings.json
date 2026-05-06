@@ -1,8 +1,9 @@
 {
   "includeCoAuthoredBy": false,
-  "autoUpdatesChannel": "stable",
-  "voiceEnabled": true,
   "permissions": {
     "defaultMode": "auto"
-  }
+  },
+  "autoUpdatesChannel": "stable",
+  "voiceEnabled": true,
+  "skipAutoPermissionPrompt": true
 }
