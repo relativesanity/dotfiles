@@ -4,6 +4,7 @@
     "defaultMode": "auto"
   },
   "autoUpdatesChannel": "stable",
+  "skipAutoPermissionPrompt": true,
   "voiceEnabled": true,
-  "skipAutoPermissionPrompt": true
+  "model": "opus[1m]"
 }
