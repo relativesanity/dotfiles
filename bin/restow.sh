@@ -108,13 +108,19 @@ stow_packages() {
   print_status "Stowing…"
   for package in "${STOW_PACKAGES[@]}"; do
     print_status "Stowing $package"
-    stow -d "$HOME/.dotfiles" -t "$HOME" --restow "$package"
+    if ! stow -d "$HOME/.dotfiles" -t "$HOME" --restow "$package" 2>&1; then
+      print_warning "$package has local overrides — skipping conflicting files (expected on machine-specific configs)"
+    fi
   done
 }
 
 # ------------------------------------------------------------------------------------------------------
 print_status() {
   echo "$1"
+}
+
+print_warning() {
+  echo -e "\033[0;33m$1\033[0m"
 }
 
 print_failure() {
