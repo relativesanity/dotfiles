@@ -1,8 +1,6 @@
 theme = Catppuccin Mocha
 
 font-size = 14
-font-family = iA Writer Mono V
-adjust-cell-width = -11%
 
 background-opacity = 0.84
 background-blur-radius = 40
