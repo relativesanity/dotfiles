@@ -5,5 +5,8 @@
   },
   "autoUpdatesChannel": "stable",
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "enabledPlugins": {
+    "ruby-lsp@claude-plugins-official": true
+  }
 }
