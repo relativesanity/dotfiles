@@ -11,30 +11,39 @@ alias la='ll -a'
 alias mkdir='mkdir -p'
 
 TMUX_DEFAULT_SESSION_NAME="jbOS"
-start() { tmux new-session -A -s "${1:-$TMUX_DEFAULT_SESSION_NAME}"; }
 switch() {
-  local session="${1:-$TMUX_DEFAULT_SESSION_NAME}"
+  local session
+  if [[ -n "$1" ]]; then
+    session="$1"
+  else
+    local sessions
+    sessions=$(tmux list-sessions -F '#S' 2>/dev/null)
+    if [[ -z "$sessions" ]]; then
+      session="$TMUX_DEFAULT_SESSION_NAME"
+    else
+      local fzf_out fzf_exit query selection
+      fzf_out=$(echo "$sessions" | fzf --height=~10 --layout=reverse --border --prompt="session: " --print-query)
+      fzf_exit=$?
+      [[ $fzf_exit -eq 130 ]] && return 0
+      query=$(echo "$fzf_out" | sed -n '1p')
+      selection=$(echo "$fzf_out" | sed -n '2p')
+      if [[ -n "$selection" ]]; then
+        session="$selection"
+      elif [[ -n "$query" ]]; then
+        session="$query"
+      else
+        return 0
+      fi
+    fi
+  fi
   tmux new-session -d -s "$session" 2>/dev/null || true
-  tmux switch-client -t "$session"
-}
-swap() {
-  local current_session=$(tmux display-message -p '#S')
-  local target_session="${1:-$TMUX_DEFAULT_SESSION_NAME}"
-
-  if [[ "$current_session" == "$target_session" ]]; then
-    echo "Error: Cannot swap to the same session you're killing."
-    return 1
-  fi
-
-  echo -n "Kill session $current_session and swap to $target_session? "
-  read -k 1 response
-  echo
-  if [[ "$response" =~ ^[Yy]$ ]]; then
-    tmux new-session -d -s "$target_session" 2>/dev/null || true
-    tmux switch-client -t "$target_session"
-    tmux kill-session -t "$current_session"
+  if [[ -n "$TMUX" ]]; then
+    tmux switch-client -t "$session"
+  else
+    tmux attach-session -t "$session"
   fi
 }
+alias start=switch
 
 alias msh='mosh --server=/opt/homebrew/bin/mosh-server'
 alias mx='cmatrix -ab -u3'
