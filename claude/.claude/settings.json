@@ -7,7 +7,8 @@
     "ruby-lsp@claude-plugins-official": true
   },
   "autoUpdatesChannel": "stable",
+  "tui": "fullscreen",
+  "theme": "auto",
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true,
-  "tui": "fullscreen"
+  "voiceEnabled": true
 }
