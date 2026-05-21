@@ -13,7 +13,7 @@ brew 'libyaml'
 brew 'mas'
 
 cask 'claude'
-cask 'claude-code'
+cask 'claude-code@latest'
 cask 'cursor'
 cask 'granola'
 cask 'leader-key'
