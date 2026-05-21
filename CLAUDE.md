@@ -10,13 +10,7 @@ Non-obvious facts:
 
 ## Commits
 
-1. Run `git log --format='%s' -5` first — match the exact style (lowercase present tense, e.g. "adds X to Y")
-2. Never ask about commit message format — the log tells you
-3. Never amend — always create new commits
-4. Before committing, check if `CLAUDE.md` or `Readme.md` needs updating; propose and wait for approval first
-5. Only commit when explicitly asked
-
-Order commits as a logical narrative (foundation before features), not grouped by type of change.
+Use `/commit`. Only commit when explicitly asked. Order commits as a logical narrative (foundation before features), not grouped by type of change.
 
 ## Shell Scripts (`bin/`)
 
