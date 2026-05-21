@@ -3,10 +3,11 @@
   "permissions": {
     "defaultMode": "auto"
   },
+  "enabledPlugins": {
+    "ruby-lsp@claude-plugins-official": true
+  },
   "autoUpdatesChannel": "stable",
   "skipAutoPermissionPrompt": true,
   "voiceEnabled": true,
-  "enabledPlugins": {
-    "ruby-lsp@claude-plugins-official": true
-  }
+  "tui": "fullscreen"
 }
