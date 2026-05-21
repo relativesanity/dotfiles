@@ -36,6 +36,7 @@
     {
       "context": "Autocomplete",
       "bindings": {
+        "enter": "autocomplete:accept",
         "tab": "autocomplete:accept",
         "escape": "autocomplete:dismiss",
         "up": "autocomplete:previous",
