@@ -101,13 +101,11 @@ ensure_dotfiles() {
 
   local branch="${DOTFILES_BRANCH:-main}"
 
-  if [[ ! -d $HOME/.dotfiles ]]; then
-    print_status "Downloading dotfiles"
-    cd "$HOME" &&
-      git clone https://github.com/relativesanity/dotfiles "$HOME"/.dotfiles &&
-      cd "$HOME"/.dotfiles &&
-      git checkout "$branch" || return 1
-  fi
+  print_status "Downloading dotfiles"
+  cd "$HOME" &&
+    git clone https://github.com/relativesanity/dotfiles "$HOME"/.dotfiles &&
+    cd "$HOME"/.dotfiles &&
+    git checkout "$branch" || return 1
   print_status "Dotfiles downloaded"
 }
 

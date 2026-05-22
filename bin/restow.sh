@@ -61,10 +61,8 @@ ensure_stow() {
     return 0
   fi
 
-  if ! command -v stow >/dev/null 2>&1; then
-    print_status "Installing stow"
-    ensure_homebrew && brew install stow || return 1
-  fi
+  print_status "Installing stow"
+  ensure_homebrew && brew install stow || return 1
   print_status "Stow installed"
 }
 
