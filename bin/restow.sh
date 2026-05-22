@@ -36,11 +36,12 @@ readonly REQUIRED_DIRECTORIES=(
   "$HOME/.config"
 )
 
-mapfile -t STOW_PACKAGES < <(
-  find "$HOME/.dotfiles" -maxdepth 1 -mindepth 1 -type d \
-    ! -name '.*' ! -name 'bin' ! -name 'kanata' \
-    -exec basename {} \; | sort
-)
+STOW_PACKAGES=()
+while IFS= read -r pkg; do
+  STOW_PACKAGES+=("$pkg")
+done < <(find "$HOME/.dotfiles" -maxdepth 1 -mindepth 1 -type d \
+  ! -name '.*' ! -name 'bin' ! -name 'kanata' \
+  -exec basename {} \; | sort)
 
 # ------------------------------------------------------------------------------------------------------
 ensure_stow() {
