@@ -6,5 +6,8 @@
 # Add ~/.local/bin to PATH, avoiding duplicates
 [[ ":$PATH:" != *":$HOME/.local/bin:"* ]] && export PATH="$HOME/.local/bin:$PATH"
 
-# Local overrides (machine-specific PATH additions, tool integrations, etc.)
+# OrbStack (re-added by installer on each new machine)
+[[ -f ~/.orbstack/shell/init.zsh ]] && source ~/.orbstack/shell/init.zsh
+
+# Local overrides (machine-specific PATH additions, etc.)
 [[ -f $HOME/.zprofile.local ]] && source $HOME/.zprofile.local
