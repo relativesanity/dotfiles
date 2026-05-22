@@ -31,10 +31,6 @@ bootstrap() {
   print_status "Bootstrap complete"
 }
 
-#
-#
-#
-#
 # ------------------------------------------------------------------------------------------------------
 ensure_homebrew() {
   print_status "Checking homebrew"
