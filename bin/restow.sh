@@ -36,22 +36,10 @@ readonly REQUIRED_DIRECTORIES=(
   "$HOME/.config"
 )
 
-readonly STOW_PACKAGES=(
-  "aerospace"
-  "asdf"
-  "borders"
-  "btop"
-  "claude"
-  "ghostty"
-  "git"
-  "hammerspoon"
-  "hetzner"
-  "leaderkey"
-  "neovim"
-  "sh"
-  "sketchybar"
-  "starship"
-  "tmux"
+mapfile -t STOW_PACKAGES < <(
+  find "$HOME/.dotfiles" -maxdepth 1 -mindepth 1 -type d \
+    ! -name '.*' ! -name 'bin' ! -name 'kanata' \
+    -exec basename {} \; | sort
 )
 
 # ------------------------------------------------------------------------------------------------------
