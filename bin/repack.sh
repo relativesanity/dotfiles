@@ -40,10 +40,6 @@ repack() {
   print_status "Repack complete"
 }
 
-#
-#
-#
-#
 # ------------------------------------------------------------------------------------------------------
 detect_environment() {
   if [[ "$(whoami)" == "relativesanity" ]]; then

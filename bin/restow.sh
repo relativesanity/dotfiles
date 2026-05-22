@@ -36,28 +36,12 @@ readonly REQUIRED_DIRECTORIES=(
   "$HOME/.config"
 )
 
-readonly STOW_PACKAGES=(
-  "aerospace"
-  "asdf"
-  "borders"
-  "btop"
-  "claude"
-  "ghostty"
-  "git"
-  "hammerspoon"
-  "hetzner"
-  "leaderkey"
-  "neovim"
-  "sh"
-  "sketchybar"
-  "starship"
-  "tmux"
+mapfile -t STOW_PACKAGES < <(
+  find "$HOME/.dotfiles" -maxdepth 1 -mindepth 1 -type d \
+    ! -name '.*' ! -name 'bin' ! -name 'kanata' \
+    -exec basename {} \; | sort
 )
 
-#
-#
-#
-#
 # ------------------------------------------------------------------------------------------------------
 ensure_stow() {
   print_status "Checking stow"
@@ -65,10 +49,8 @@ ensure_stow() {
     return 0
   fi
 
-  if ! command -v stow >/dev/null 2>&1; then
-    print_status "Installing stow"
-    ensure_homebrew && brew install stow || return 1
-  fi
+  print_status "Installing stow"
+  ensure_homebrew && brew install stow || return 1
   print_status "Stow installed"
 }
 
