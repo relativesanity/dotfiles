@@ -1,7 +1,3 @@
-col() {
-  awk "{print \$${1:-1}}"
-}
-
 repull() {
   local dotfiles="${DOTFILES_PATH:-$HOME/.dotfiles}"
   echo "Current branch: $(git -C "$dotfiles" branch --show-current)" &&
