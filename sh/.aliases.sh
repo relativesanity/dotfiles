@@ -49,6 +49,8 @@ alias msh='mosh --server=/opt/homebrew/bin/mosh-server'
 alias mx='cmatrix -ab -u3'
 
 alias ld='lazydocker'
+alias crom='docker run -d --rm --name=crom --security-opt seccomp=unconfined --security-opt no-new-privileges --dns=1.1.1.1 --memory=2g --pids-limit=512 -e PUID=1000 -e PGID=1000 -e TZ=Europe/London -p 9000:3000 -p 9001:3001 --shm-size=1gb lscr.io/linuxserver/chromium:latest'
+alias krom='docker kill crom'
 alias lg='lazygit'
 alias gs='git status'
 alias gd='git diff'
