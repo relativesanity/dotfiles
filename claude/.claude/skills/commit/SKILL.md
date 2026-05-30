@@ -1,4 +1,5 @@
 ---
+name: commit
 description: Stage and commit changes following the repository's established commit style
 ---
 
