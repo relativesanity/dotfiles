@@ -3,9 +3,7 @@
   "permissions": {
     "defaultMode": "auto"
   },
-  "enabledPlugins": {
-    "ruby-lsp@claude-plugins-official": true
-  },
+  "enabledPlugins": {},
   "autoUpdatesChannel": "stable",
   "tui": "fullscreen",
   "theme": "auto",
