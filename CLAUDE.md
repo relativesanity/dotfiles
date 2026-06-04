@@ -7,6 +7,7 @@ Personal macOS dotfiles managed with GNU Stow. All scripts require macOS and use
 Non-obvious facts:
 - `kanata/` is NOT stowed — requires manual setup (see `kanata/kanata.md`)
 - Brewfile loading is environment-aware: always `Brewfile`, then `Brewfile.home` or `Brewfile.work` based on `whoami`, then `Brewfile.local` if present
+- `homebrew/.homebrew/trust.json` is stow-managed: Homebrew's tap-trust file (`~/.homebrew/trust.json`) is a symlink into this repo. Running `brew trust …` writes through it — `git add` the change afterward. Only trust taps that appear in a Brewfile.
 
 ## Commits
 
