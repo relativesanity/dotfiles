@@ -14,7 +14,7 @@ trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 #   ./redot.sh [--update-only]
 #
 # Options:
-#   --update-only  Run brew bundle without --cleanup and --zap
+#   --update-only  Run brew bundle without --zap and --force-cleanup
 #
 # Prerequisites:
 #   - dotfiles repository must be present

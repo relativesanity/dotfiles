@@ -14,7 +14,7 @@ trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 #   ./repack.sh [--update-only]
 #
 # Options:
-#   --update-only  Run brew bundle without --cleanup and --zap
+#   --update-only  Run brew bundle without --zap and --force-cleanup
 #
 # Prerequisites:
 #   - Homebrew must be already installed for macOS
@@ -90,7 +90,7 @@ bundle_homebrew() {
   if [[ "$update_only" == "true" ]]; then
     cat "${brewfiles[@]}" | brew bundle --file=-
   else
-    cat "${brewfiles[@]}" | brew bundle --file=- --cleanup --zap
+    cat "${brewfiles[@]}" | brew bundle --file=- --zap --force-cleanup
   fi
 }
 
