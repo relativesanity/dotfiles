@@ -14,5 +14,3 @@ brew 'tmux'
 brew 'zoxide'
 
 cask 'ghostty'
-
-mas 'Hand Mirror', id: 1502839586
