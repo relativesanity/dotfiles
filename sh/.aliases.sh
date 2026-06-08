@@ -58,6 +58,13 @@ alias gd='git diff'
 DOTFILES_PATH="$HOME/.dotfiles"
 alias dotfiles='cd $DOTFILES_PATH'
 
+ICLOUD_PATH="$HOME/Library/Mobile Documents/com~apple~CloudDocs"
+alias icloud='cd "$ICLOUD_PATH"'
+
+OBSIDIAN_PATH="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents"
+alias obmd='cd "$OBSIDIAN_PATH"'
+alias jbos='cd "$OBSIDIAN_PATH/jbOS"'
+
 alias restart="osascript -e 'tell app \"loginwindow\" to «event aevtrrst»'"
 
 alias ao-project='$HOME/.agent-os/setup/project.sh'
