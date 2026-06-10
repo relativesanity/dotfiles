@@ -49,6 +49,15 @@ reenv() {
 
     print_status "Updating $plugin versions"
     asdf plugin update "$plugin"
+
+    # 'system' is a pseudo-version meaning "defer to the OS install"; the
+    # plugin must still exist so project .tool-versions pins resolve, but
+    # there is nothing to install for it.
+    if [[ "$version" == "system" ]]; then
+      print_status "Using system $plugin, skipping install"
+      continue
+    fi
+
     print_status "Installing $plugin $version"
     asdf install "$plugin" "$version"
   done < "$HOME/.tool-versions"

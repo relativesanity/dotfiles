@@ -47,6 +47,13 @@ asdf-load() {
       asdf plugin add "$plugin"
     fi
 
+    # 'system' is a pseudo-version meaning "defer to the OS install"; there
+    # is nothing to install for it.
+    if [[ "$version" == "system" ]]; then
+      echo "Using system $plugin, skipping install"
+      continue
+    fi
+
     echo "Installing $plugin $version"
     asdf install "$plugin" "$version"
   done < "$versions_file"
