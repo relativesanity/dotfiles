@@ -13,7 +13,7 @@ brew 'lazygit'
 brew 'mas'
 brew 'mosh'
 brew 'netlify-cli'
-brew 'npm'
+brew 'node'
 
 # Casks
 cask 'nikitabobko/tap/aerospace'
