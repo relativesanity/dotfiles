@@ -1,5 +1,6 @@
 Brewfile.lock.json
 Brewfile.local
+Brewfile.cache
 homebrew/.homebrew/trust.json.lock
 ssh/.ssh/id*
 ssh/.ssh/known_hosts*
