@@ -11,10 +11,12 @@ trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 #   - macOS (via Homebrew)
 #
 # Usage:
-#   ./repack.sh [--update-only]
+#   ./repack.sh [--update-only] [--skip-cache]
 #
 # Options:
 #   --update-only  Run brew bundle without --zap and --force-cleanup
+#   --skip-cache   Skip refreshing Brewfile.cache; honour the existing cache but
+#                  zap anything not in the Brewfiles or that cache
 #
 # Prerequisites:
 #   - Homebrew must be already installed for macOS
@@ -22,8 +24,10 @@ trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 
 repack() {
   local update_only=false
+  local skip_cache=false
   for arg in "$@"; do
     [[ "$arg" == "--update-only" ]] && update_only=true
+    [[ "$arg" == "--skip-cache" ]] && skip_cache=true
   done
 
   echo -e "\033[1;36m== repack ==\033[0m"
@@ -35,7 +39,11 @@ repack() {
 
   ensure_homebrew || print_failure "Homebrew could not be set up"
   update_homebrew || print_failure "Homebrew could not be updated"
-  cache_untracked || print_failure "Untracked apps could not be cached"
+  if [[ "$skip_cache" == "true" ]]; then
+    print_status "Skipping cache refresh; honouring existing Brewfile.cache"
+  else
+    cache_untracked || print_failure "Untracked apps could not be cached"
+  fi
   bundle_homebrew "$update_only" || print_failure "Homebrew could not be bundled"
   cleanup_homebrew || print_failure "Homebrew could not be cleaned up"
   print_status "Repack complete"

@@ -11,18 +11,22 @@ trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 #   - macOS (via Homebrew)
 #
 # Usage:
-#   ./redot.sh [--update-only]
+#   ./redot.sh [--update-only] [--skip-cache]
 #
 # Options:
 #   --update-only  Run brew bundle without --zap and --force-cleanup
+#   --skip-cache   Skip refreshing Brewfile.cache; honour the existing cache but
+#                  zap anything not in the Brewfiles or that cache
 #
 # Prerequisites:
 #   - dotfiles repository must be present
 
 redot() {
   local update_only=false
+  local skip_cache=false
   for arg in "$@"; do
     [[ "$arg" == "--update-only" ]] && update_only=true
+    [[ "$arg" == "--skip-cache" ]] && skip_cache=true
   done
 
   cd "${DOTFILES_PATH:-$HOME/.dotfiles}"
@@ -42,11 +46,10 @@ redot() {
     echo "No upstream configured, skipping pull"
   fi
 
-  if [[ "$update_only" == "true" ]]; then
-    ./bin/repack.sh --update-only
-  else
-    ./bin/repack.sh
-  fi
+  local repack_args=()
+  [[ "$update_only" == "true" ]] && repack_args+=(--update-only)
+  [[ "$skip_cache" == "true" ]] && repack_args+=(--skip-cache)
+  ./bin/repack.sh ${repack_args[@]+"${repack_args[@]}"}
   echo
   ./bin/restow.sh
   echo
