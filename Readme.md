@@ -89,9 +89,8 @@ repack
 
 **System Permissions**
 Grant permissions when prompted:
-- Accessibility (for Hammerspoon, AeroSpace)
+- Accessibility (for AeroSpace)
 - Input Monitoring (for Kanata, if installed)
-- Screen Recording (for Hammerspoon screenshots)
 
 ### Kanata Setup (Laptops Only)
 
