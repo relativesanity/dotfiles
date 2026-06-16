@@ -54,10 +54,13 @@ reenv() {
   local installed_plugins
   installed_plugins=$(asdf plugin list 2>/dev/null || true)
 
+  local total=0 installed_now=0 already=0
+
   # Parse .tool-versions and install each plugin and version
   while IFS=' ' read -r plugin version; do
     # Skip empty lines and comments
     [[ -z "$plugin" || "$plugin" =~ ^# ]] && continue
+    total=$((total + 1))
 
     # Install plugin if not already installed
     if ! echo "$installed_plugins" | grep -q "^${plugin}$"; then
@@ -73,7 +76,15 @@ reenv() {
     # there is nothing to install for it.
     if [[ "$version" == "system" ]]; then
       print_status "Using system $plugin, skipping install"
+      already=$((already + 1))
       continue
+    fi
+
+    # Was this version already present before we install?
+    if asdf where "$plugin" "$version" >/dev/null 2>&1; then
+      already=$((already + 1))
+    else
+      installed_now=$((installed_now + 1))
     fi
 
     print_status "Installing $plugin $version"
@@ -81,6 +92,12 @@ reenv() {
   done < "$HOME/.tool-versions"
 
   print_status "asdf setup complete"
+
+  echo
+  ui_box "reenv summary" "" \
+    "Runtimes: ${total} configured" \
+    "Installed this run: ${installed_now}" \
+    "Already present:    ${already}"
 }
 
 # ------------------------------------------------------------------------------------------------------

@@ -58,6 +58,12 @@ restow() {
     return 1
   }
   print_status "Stow complete"
+
+  echo
+  ui_box "restow summary" "" \
+    "Packages: $((STOW_LINKED + STOW_SKIPPED)) total" \
+    "Linked:   ${STOW_LINKED}" \
+    "Skipped:  ${STOW_SKIPPED} (local overrides)"
 }
 
 readonly REQUIRED_DIRECTORIES=(
@@ -147,9 +153,14 @@ setup_directories() {
 stow_packages() {
   print_status "Stowing…"
   local package
+  STOW_LINKED=0
+  STOW_SKIPPED=0
   while IFS= read -r package; do
     print_status "Stowing $package"
-    if ! stow -d "${DOTFILES_PATH:-$HOME/.dotfiles}" -t "$HOME" --restow "$package" 2>&1; then
+    if stow -d "${DOTFILES_PATH:-$HOME/.dotfiles}" -t "$HOME" --restow "$package" 2>&1; then
+      STOW_LINKED=$((STOW_LINKED + 1))
+    else
+      STOW_SKIPPED=$((STOW_SKIPPED + 1))
       print_warning "$package has local overrides — skipping conflicting files (expected on machine-specific configs)"
     fi
   done < <(stow_packages_list)

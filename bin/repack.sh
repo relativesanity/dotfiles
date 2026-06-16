@@ -82,6 +82,13 @@ repack() {
     fi
   fi
 
+  # Snapshot installed packages + cache before changes, so the summary can show
+  # what this run actually installed, removed and (un)cached.
+  local before_formulae before_casks before_cache
+  before_formulae="$(brew list --formula -1 2>/dev/null | sort || true)"
+  before_casks="$(brew list --cask -1 2>/dev/null | sort || true)"
+  before_cache="$(read_cache_entries)"
+
   update_homebrew || print_failure "Homebrew could not be updated"
   if [[ "$skip_cache" == "true" ]]; then
     if [[ -s "${DOTFILES_PATH:-$HOME/.dotfiles}/Brewfile.cache" ]]; then
@@ -95,6 +102,8 @@ repack() {
   bundle_homebrew "$update_only" || print_failure "Homebrew could not be bundled"
   cleanup_homebrew || print_failure "Homebrew could not be cleaned up"
   print_status "Repack complete"
+
+  summarize_repack "$before_formulae" "$before_casks" "$before_cache"
 }
 
 # ------------------------------------------------------------------------------------------------------
@@ -193,6 +202,13 @@ write_cache() {
     echo "# Promote keepers into Brewfile.home/.work; the rest reappear here each run."
     printf '%s\n' "$@"
   } >"$cache"
+}
+
+# ------------------------------------------------------------------------------------------------------
+# Echo the cache's real entries (no comments/blanks), one per line.
+read_cache_entries() {
+  local cache="${DOTFILES_PATH:-$HOME/.dotfiles}/Brewfile.cache"
+  [[ -f "$cache" ]] && grep -vE '^[[:space:]]*(#|$)' "$cache" || true
 }
 
 # ------------------------------------------------------------------------------------------------------
@@ -344,6 +360,62 @@ bundle_homebrew() {
 cleanup_homebrew() {
   print_status "Running cleanup"
   brew cleanup
+}
+
+# ------------------------------------------------------------------------------------------------------
+# Count non-empty lines in a string.
+count_lines() {
+  [[ -z "$1" ]] && {
+    echo 0
+    return 0
+  }
+  grep -c . <<<"$1"
+}
+
+# Lines present in $2 but not $1 (both newline-sorted). Used for added/removed diffs.
+lines_added() { comm -13 <(printf '%s\n' "$1") <(printf '%s\n' "$2"); }
+
+# ------------------------------------------------------------------------------------------------------
+# Post-run summary: package counts, what changed this run, and the cached
+# (shielded) apps with markers for any added or pruned during the run.
+summarize_repack() {
+  local before_formulae="$1" before_casks="$2" before_cache="$3"
+  local after_formulae after_casks after_cache
+  after_formulae="$(brew list --formula -1 2>/dev/null | sort || true)"
+  after_casks="$(brew list --cask -1 2>/dev/null | sort || true)"
+  after_cache="$(read_cache_entries)"
+
+  local added_f added_c removed_f removed_c entry lines=()
+  added_f="$(count_lines "$(lines_added "$before_formulae" "$after_formulae")")"
+  removed_f="$(count_lines "$(lines_added "$after_formulae" "$before_formulae")")"
+  added_c="$(count_lines "$(lines_added "$before_casks" "$after_casks")")"
+  removed_c="$(count_lines "$(lines_added "$after_casks" "$before_casks")")"
+
+  lines+=("Formulae: $(count_lines "$after_formulae") installed  (+${added_f} / -${removed_f} this run)")
+  lines+=("Casks:    $(count_lines "$after_casks") installed  (+${added_c} / -${removed_c} this run)")
+
+  if [[ -n "$after_cache" ]]; then
+    lines+=("Cached (shielded): $(count_lines "$after_cache")")
+    while IFS= read -r entry; do
+      [[ -z "$entry" ]] && continue
+      if grep -qxF "$entry" <<<"$before_cache"; then
+        lines+=("  $entry")
+      else
+        lines+=("  $entry  (added this run)")
+      fi
+    done <<<"$after_cache"
+  else
+    lines+=("Cached (shielded): none")
+  fi
+
+  # Apps that were cached before but are gone now were pruned this run.
+  while IFS= read -r entry; do
+    [[ -z "$entry" ]] && continue
+    lines+=("  $entry  (pruned this run)")
+  done <<<"$(lines_added "$after_cache" "$before_cache")"
+
+  echo
+  ui_box "repack summary" "" "${lines[@]}"
 }
 
 # ------------------------------------------------------------------------------------------------------
