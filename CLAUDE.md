@@ -14,6 +14,30 @@ Non-obvious facts:
 
 Use `/commit`. Only commit when explicitly asked. Order commits as a logical narrative (foundation before features), not grouped by type of change.
 
+## Architecture (`bin/`)
+
+`bin/dot.sh` is the front door: no args opens a menu, `dot <sub>` dispatches. The
+engines (`repack.sh`, `restow.sh`, `reenv.sh`) hold the real logic; `redot.sh` is a
+thin shim for `dot sync`. The zsh functions in `sh/.zfunctions.sh` map
+`redot/repack/restow/reenv` onto `dot` subcommands, so flags still flow through
+(`repack --clear-cache` → `dot pack --clear-cache`).
+
+Two sourced libraries (no top-level side effects):
+- `bin/lib/status.sh` — shared data: `detect_environment`, `intent_brewfiles`,
+  `compute_untracked`, `stow_packages_list`, and the one-line `status_*` summaries.
+  This is the single home for the brew intent/cache logic — don't redefine it in an
+  engine.
+- `bin/lib/ui.sh` — the ONLY file that knows about `gum`. Every wrapper
+  (`ui_menu`/`ui_confirm`/`ui_spin`/`ui_box`/`ui_header`/`print_*`) falls back to
+  plain text when `gum` is absent or output isn't a TTY, and the interactive ones
+  take a safe default (decline / no selection) rather than hang. This fallback
+  contract is what keeps the piped `curl | bash` bootstrap and non-interactive runs
+  working — preserve it.
+
+`--plan` convention: each engine accepts `--plan` to print a read-only dry-run
+summary and exit without side effects. `dot` renders that before asking to apply.
+Keep `--plan` paths strictly side-effect-free (no cache writes, no symlinks).
+
 ## Shell Scripts (`bin/`)
 
 All scripts must use this header:
