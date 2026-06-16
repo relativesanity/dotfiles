@@ -1,14 +1,5 @@
-repull() {
-  local dotfiles="${DOTFILES_PATH:-$HOME/.dotfiles}"
-  echo "Current branch: $(git -C "$dotfiles" branch --show-current)" &&
-    git -C "$dotfiles" pull
-}
-
 redot() {
-  repull &&
-    repack "$@" &&
-    restow &&
-    reenv
+  "${DOTFILES_PATH:-$HOME/.dotfiles}/bin/redot.sh" "$@"
 }
 
 restow() {
