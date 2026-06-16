@@ -174,7 +174,12 @@ dot_doctor() {
   lines+=("$(_doctor_tool gum)")
   lines+=("$(_doctor_tool mas)")
 
-  if [[ -L "$HOME/.homebrew/trust.json" ]]; then
+  # Managed if the path resolves into the repo — covers both an unfolded
+  # file-level symlink and a tree-folded ~/.homebrew directory symlink (where
+  # trust.json is a real file inside the folded link, so a bare -L on it lies).
+  local trust="$HOME/.homebrew/trust.json"
+  local repo_trust="$DOT_DIR/homebrew/.homebrew/trust.json"
+  if [[ -e "$trust" ]] && [[ "$(realpath "$trust" 2>/dev/null)" == "$(realpath "$repo_trust" 2>/dev/null)" ]]; then
     lines+=("✓ trust.json     symlinked → repo")
   else
     lines+=("⚠ trust.json     not symlinked")

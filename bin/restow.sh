@@ -66,9 +66,25 @@ restow() {
     "Skipped:  ${STOW_SKIPPED} (local overrides)"
 }
 
+# Pre-created before stowing so each app's main config dir is a real directory
+# rather than a single folded symlink into the repo. Stow still folds anything
+# nested below them (e.g. nvim/lua, btop/themes, .claude/skills), which is what
+# we want; keeping the top dir real stops tools' own scratch/state files (locks,
+# machine-specific overrides like git's config.local, lazy-lock.json) from
+# leaking into the repo. Add an entry when a new package introduces an app dir.
 readonly REQUIRED_DIRECTORIES=(
   "$HOME/.claude"
   "$HOME/.config"
+  "$HOME/.config/aerospace"
+  "$HOME/.config/borders"
+  "$HOME/.config/btop"
+  "$HOME/.config/ghostty"
+  "$HOME/.config/git"
+  "$HOME/.config/hcloud"
+  "$HOME/.config/nvim"
+  "$HOME/.config/sketchybar"
+  "$HOME/.config/tmux"
+  "$HOME/.homebrew"
 )
 
 # ------------------------------------------------------------------------------------------------------
