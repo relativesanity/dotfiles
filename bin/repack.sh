@@ -11,9 +11,11 @@ trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 #   - macOS (via Homebrew)
 #
 # Usage:
-#   ./repack.sh [--update-only] [--skip-cache] [--clear-cache]
+#   ./repack.sh [--plan] [--update-only] [--skip-cache] [--clear-cache]
 #
 # Options:
+#   --plan         Print a read-only summary of what would change, then exit
+#                  without touching anything
 #   --update-only  Run brew bundle without --zap and --force-cleanup
 #   --skip-cache   Skip refreshing Brewfile.cache; honour the existing cache but
 #                  zap anything not in the Brewfiles or that cache
@@ -24,15 +26,28 @@ trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 #   - Homebrew must be already installed for macOS
 #   - dotfiles repository must be present
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=lib/status.sh
+source "$SCRIPT_DIR/lib/status.sh"
+# shellcheck source=lib/ui.sh
+source "$SCRIPT_DIR/lib/ui.sh"
+
 repack() {
   local update_only=false
   local skip_cache=false
   local clear_cache=false
+  local plan=false
   for arg in "$@"; do
+    [[ "$arg" == "--plan" ]] && plan=true
     [[ "$arg" == "--update-only" ]] && update_only=true
     [[ "$arg" == "--skip-cache" ]] && skip_cache=true
     [[ "$arg" == "--clear-cache" ]] && clear_cache=true
   done
+
+  if [[ "$plan" == "true" ]]; then
+    plan_repack
+    return 0
+  fi
 
   echo -e "\033[1;36m== repack ==\033[0m"
 
@@ -69,12 +84,62 @@ repack() {
 }
 
 # ------------------------------------------------------------------------------------------------------
-detect_environment() {
-  if [[ "$(whoami)" == "relativesanity" ]]; then
-    echo "home"
+# Echo the Brewfiles a real bundle would load (intent + cache), in order.
+bundle_brewfiles() {
+  local filepath line
+  filepath="${DOTFILES_PATH:-$HOME/.dotfiles}"
+  intent_brewfiles
+  [[ -s "$filepath/Brewfile.cache" ]] && echo "$filepath/Brewfile.cache"
+}
+
+# ------------------------------------------------------------------------------------------------------
+# Read-only preview: what a default repack would install, upgrade, shield and
+# remove. No side effects — every probe runs against the existing system state.
+plan_repack() {
+  local line names outdated missing removable shielded
+  local brewfiles=()
+  while IFS= read -r line; do brewfiles+=("$line"); done < <(bundle_brewfiles)
+
+  names="$(for line in "${brewfiles[@]}"; do basename "$line"; done | paste -sd ',' - | sed 's/,/, /g')"
+
+  echo "Plan — repack (dry run, nothing applied)"
+  echo
+  echo "Environment: $(detect_environment)"
+  echo "Brewfiles:   $names"
+  echo
+
+  outdated="$(brew outdated --quiet 2>/dev/null || true)"
+  echo "Would upgrade (outdated):"
+  _plan_section "$outdated"
+
+  missing="$(cat "${brewfiles[@]}" | brew bundle check --verbose --file=- 2>&1 | grep -E '^→|not installed' || true)"
+  echo "Missing / would install:"
+  _plan_section "$missing" "(all satisfied)"
+
+  # On a default apply, untracked apps are cached (shielded) before the zap, so
+  # they are NOT removed. Reflect that here.
+  shielded="$(compute_untracked 2>/dev/null || true)"
+  echo "Shielded (cached, NOT removed):"
+  _plan_section "$shielded"
+
+  # Simulate the post-cache state: cleanup against intent + the apps that would
+  # be shielded, then drop brew's download-cache cleanup noise so only app/tap
+  # removals remain.
+  removable="$(cat "${brewfiles[@]}" <(printf '%s\n' "$shielded") | brew bundle cleanup --file=- 2>/dev/null \
+    | grep -vE '^Run \`brew|brew cleanup|Caches/Homebrew' || true)"
+  echo "Would remove on --zap (uncached drift):"
+  _plan_section "$removable"
+}
+
+# Print an indented block, or a placeholder when empty.
+_plan_section() {
+  local body="$1" empty="${2:-(none)}"
+  if [[ -n "$body" ]]; then
+    printf '%s\n' "$body" | sed 's/^/  /'
   else
-    echo "work"
+    printf '  %s\n' "$empty"
   fi
+  echo
 }
 
 # ------------------------------------------------------------------------------------------------------
@@ -97,50 +162,6 @@ update_homebrew() {
   print_status "Updating Homebrew"
   brew update --auto-update
   brew upgrade
-}
-
-# ------------------------------------------------------------------------------------------------------
-# Echo the tracked (intended) Brewfiles, in load order, one per line.
-# Deliberately excludes Brewfile.cache so the cache is always recomputed
-# against intent and shrinks as entries are promoted into a real Brewfile.
-intent_brewfiles() {
-  local filepath environment
-  filepath="${DOTFILES_PATH:-$HOME/.dotfiles}"
-  environment=$(detect_environment)
-
-  echo "$filepath/Brewfile"
-  echo "$filepath/Brewfile.$environment"
-  [[ -f "$filepath/Brewfile.local" ]] && echo "$filepath/Brewfile.local"
-}
-
-# ------------------------------------------------------------------------------------------------------
-# Echo untracked mas apps and casks — installed but not declared in any tracked
-# Brewfile — as Brewfile entries, one per line. No side effects.
-compute_untracked() {
-  local line id name declared
-  local intent=()
-  while IFS= read -r line; do intent+=("$line"); done < <(intent_brewfiles)
-
-  # Casks: defer matching to brew (handles tap prefixes, versions, metacharacters).
-  # Piping the Brewfile via stdin makes stdin a non-tty, suppressing the cleanup
-  # prompt; `|| true` absorbs the exit-1-on-drift. Parse only the casks section;
-  # tokens never contain spaces, so whitespace-splitting the columns is safe.
-  cat "${intent[@]}" | brew bundle cleanup --casks --file=- 2>/dev/null | awk '
-    /^Would uninstall casks:/ { grab = 1; next }
-    /^Would / || /^Run `brew/ { grab = 0 }
-    grab { for (i = 1; i <= NF; i++) print "cask \"" $i "\"" }
-  ' || true
-
-  # mas: pure integer-id comparison, computed locally (no normalization needed).
-  # `mas list` prints "<id>  <name>  (<version>)"; take the id, drop the trailing
-  # version, and join the middle fields back into the name.
-  if command -v mas >/dev/null 2>&1; then
-    declared=$(grep -rhoE 'id: [0-9]+' "${intent[@]}" | grep -oE '[0-9]+' | sort -u)
-    while IFS=$'\t' read -r id name; do
-      grep -qxF "$id" <<<"$declared" && continue
-      echo "mas \"$name\", id: $id"
-    done < <(mas list | awk '{ id=$1; n=$2; for (i=3; i<NF; i++) n=n" "$i; print id "\t" n }')
-  fi
 }
 
 # ------------------------------------------------------------------------------------------------------
@@ -225,17 +246,11 @@ clear_cache_prompt() {
 # ------------------------------------------------------------------------------------------------------
 bundle_homebrew() {
   local update_only="${1:-false}"
-  filepath="${DOTFILES_PATH:-$HOME/.dotfiles}"
-  environment=$(detect_environment)
-
-  print_status "Bundling Homebrew packages for environment: $environment"
-
+  local line
   brewfiles=()
-  while IFS= read -r line; do brewfiles+=("$line"); done < <(intent_brewfiles)
+  while IFS= read -r line; do brewfiles+=("$line"); done < <(bundle_brewfiles)
 
-  if [[ -s "$filepath/Brewfile.cache" ]]; then
-    brewfiles+=("$filepath/Brewfile.cache")
-  fi
+  print_status "Bundling Homebrew packages for environment: $(detect_environment)"
 
   if [[ "$update_only" == "true" ]]; then
     cat "${brewfiles[@]}" | brew bundle --file=-
@@ -247,21 +262,6 @@ bundle_homebrew() {
 cleanup_homebrew() {
   print_status "Running cleanup"
   brew cleanup
-}
-
-# ------------------------------------------------------------------------------------------------------
-print_status() {
-  echo "$1"
-}
-
-print_failure() {
-  echo -e "\033[0;31m$1\033[0m"
-  return 1
-}
-
-# ------------------------------------------------------------------------------------------------------
-is_macos() {
-  [[ "$(uname)" == "Darwin" ]]
 }
 
 # ------------------------------------------------------------------------------------------------------
