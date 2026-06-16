@@ -119,6 +119,7 @@ dot_pack() {
   choice="$(ui_menu "Apply changes?" \
     "Apply this plan" \
     "Refresh only (no removals)" \
+    "Review cached apps" \
     "Prune drift (zap uncached)" \
     "Clear cache & prune" \
     "Back")" || return 0
@@ -126,6 +127,7 @@ dot_pack() {
   case "$choice" in
     "Apply this plan") "$DOT_DIR/bin/repack.sh" ;;
     "Refresh only"*) "$DOT_DIR/bin/repack.sh" --update-only ;;
+    "Review cached apps") "$DOT_DIR/bin/repack.sh" --select-cache ;;
     "Prune drift"*) "$DOT_DIR/bin/repack.sh" --skip-cache ;;
     "Clear cache & prune") "$DOT_DIR/bin/repack.sh" --clear-cache ;;
     *) return 0 ;;
@@ -230,6 +232,7 @@ Flags after pack/sync pass through to repack:
   --update-only   bundle without removing anything
   --skip-cache    zap apps not in the Brewfiles or the cache
   --clear-cache   delete the cache and zap every untracked app
+  --select-cache  pick which untracked apps to prune; keep the rest cached
 EOF
 }
 

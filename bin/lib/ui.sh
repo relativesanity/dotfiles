@@ -84,6 +84,42 @@ ui_menu() {
 }
 
 # ------------------------------------------------------------------------------------------------------
+# Multi-select: ui_choose_multi "header" -- item1 item2 …  — echoes the chosen
+# items, one per line. Nothing is pre-selected, so submitting an empty selection
+# (the safe default) chooses nothing. Returns non-zero only when there is no way
+# to prompt (no TTY); an empty selection is a successful "chose nothing".
+ui_choose_multi() {
+  local header="$1"
+  shift
+  [[ "${1:-}" == "--" ]] && shift
+
+  if _ui_can_prompt; then
+    gum choose --no-limit --header "$header" "$@"
+    return
+  fi
+
+  # Numbered fallback when there is a TTY but no gum. Prompts go to stderr so
+  # stdout carries only the chosen items.
+  if [[ -t 0 ]]; then
+    local item i=1 line n
+    printf '%s\n' "$header" >&2
+    for item in "$@"; do
+      printf '  %d) %s\n' "$i" "$item" >&2
+      i=$((i + 1))
+    done
+    read -r -p "Numbers to select (space-separated, blank = none): " line
+    local nums=()
+    IFS=' ' read -ra nums <<<"$line"
+    for n in ${nums[@]+"${nums[@]}"}; do
+      [[ "$n" =~ ^[0-9]+$ ]] && ((n >= 1 && n <= $#)) && printf '%s\n' "${!n}"
+    done
+    return 0
+  fi
+
+  return 1
+}
+
+# ------------------------------------------------------------------------------------------------------
 # Yes/no. Returns 0 for yes, 1 for no. Declines in non-interactive contexts.
 ui_confirm() {
   local msg="$1"
