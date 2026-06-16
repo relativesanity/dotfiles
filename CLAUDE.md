@@ -21,8 +21,11 @@ All scripts must use this header:
 ```bash
 #!/usr/bin/env bash
 
-set -euo pipefail
-IFS=$'\n\t'
+set -euo pipefail # Exit on error, undefined vars, and pipeline failures
+IFS=$'\n\t'       # Stricter word splitting
+
+# Trap Ctrl-C (SIGINT) and exit gracefully
+trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 
 # [Brief title] - one-line description
 # Supports:
