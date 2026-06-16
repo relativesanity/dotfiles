@@ -67,7 +67,7 @@ The dotfiles automatically detect your environment based on username:
 - **Work** (other usernames): Installs core packages only
 
 Package files:
-- `Brewfile` - Core packages (git, stow, gh, neovim, starship, zoxide, fzf, tmux, ghostty)
+- `Brewfile` - Core packages required for deployment and a working terminal (stow, git, gh, neovim, tmux, asdf, fzf, ripgrep, bat, zoxide, starship, ghostty) — see `Brewfile` for the full list
 - `Brewfile.home` - Personal packages (full setup)
 - `Brewfile.work` - Work-specific packages (add as needed)
 - `Brewfile.local` - Machine-specific overrides (gitignored)
@@ -82,10 +82,9 @@ repack
 
 ### macOS Customization
 
-**Dock and Window Animations**
-```bash
-~/.dotfiles/bin/m.sh
-```
+Helper shell functions (defined in `sh/.zfunctions.sh`) toggle a couple of macOS defaults:
+- `drag-toggle` — enable/disable ctrl+cmd window dragging (`NSWindowShouldDragOnGesture`)
+- `menu-icons-toggle` — show/hide menu bar action icons (`NSMenuEnableActionImages`)
 
 **System Permissions**
 Grant permissions when prompted:
