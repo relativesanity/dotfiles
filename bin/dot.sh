@@ -59,21 +59,22 @@ dot_menu() {
     "🔧 asdf   $asdf"
   echo
 
+  # Labels lead with the subcommand verb (what `dot <verb>` runs) plus a gloss.
   local choice
   choice="$(ui_menu "What would you like to do?" \
-    "Sync everything" \
-    "Packages" \
-    "Symlinks" \
-    "Runtimes" \
-    "Doctor" \
+    "Sync      pull & apply everything" \
+    "Pack      brew packages" \
+    "Stow      config symlinks" \
+    "Env       asdf runtimes" \
+    "Doctor    environment health check" \
     "Quit")" || return 0
 
   case "$choice" in
-    "Sync everything") dot_sync ;;
-    "Packages") dot_pack ;;
-    "Symlinks") dot_stow ;;
-    "Runtimes") dot_env ;;
-    "Doctor") dot_doctor ;;
+    Sync*) dot_sync ;;
+    Pack*) dot_pack ;;
+    Stow*) dot_stow ;;
+    Env*) dot_env ;;
+    Doctor*) dot_doctor ;;
     *) return 0 ;;
   esac
 }
@@ -111,7 +112,7 @@ dot_pack() {
     exec "$DOT_DIR/bin/repack.sh" "$@"
   fi
 
-  ui_header "Packages" "$(detect_environment)"
+  ui_header "Pack" "$(detect_environment)"
   "$DOT_DIR/bin/repack.sh" --plan
   echo
 
@@ -140,7 +141,7 @@ dot_stow() {
     exec "$DOT_DIR/bin/restow.sh" "$@"
   fi
 
-  ui_header "Symlinks"
+  ui_header "Stow"
   "$DOT_DIR/bin/restow.sh" --plan
   echo
   if ui_confirm "Restow all packages now?"; then
@@ -154,7 +155,7 @@ dot_env() {
     exec "$DOT_DIR/bin/reenv.sh" "$@"
   fi
 
-  ui_header "Runtimes"
+  ui_header "Env"
   "$DOT_DIR/bin/reenv.sh" --plan
   echo
   if ui_confirm "Install asdf versions now?"; then
