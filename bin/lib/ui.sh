@@ -21,7 +21,6 @@ _ui_can_prompt() { command -v gum >/dev/null 2>&1 && [[ -t 0 ]]; }
 # ------------------------------------------------------------------------------------------------------
 # Plain status lines (kept for parity with the existing scripts' output).
 print_status() { echo "$1"; }
-print_success() { echo -e "\033[0;32m$1\033[0m"; }
 print_warning() { echo -e "\033[0;33m$1\033[0m"; }
 print_failure() {
   echo -e "\033[0;31m$1\033[0m"
@@ -133,26 +132,6 @@ ui_confirm() {
     local reply
     read -r -p "$msg [y/N] " reply
     [[ "$reply" =~ ^[Yy]([Ee][Ss])?$ ]]
-    return
-  fi
-
-  return 1
-}
-
-# ------------------------------------------------------------------------------------------------------
-# Free-text input. ui_prompt "placeholder" — echoes what the user typed.
-ui_prompt() {
-  local placeholder="$1"
-
-  if _ui_can_prompt; then
-    gum input --placeholder "$placeholder"
-    return
-  fi
-
-  if [[ -t 0 ]]; then
-    local reply
-    read -r -p "$placeholder " reply
-    printf '%s\n' "$reply"
     return
   fi
 

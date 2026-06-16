@@ -109,7 +109,7 @@ repack() {
 # ------------------------------------------------------------------------------------------------------
 # Echo the Brewfiles a real bundle would load (intent + cache), in order.
 bundle_brewfiles() {
-  local filepath line
+  local filepath
   filepath="${DOTFILES_PATH:-$HOME/.dotfiles}"
   intent_brewfiles
   [[ -s "$filepath/Brewfile.cache" ]] && echo "$filepath/Brewfile.cache"
@@ -345,7 +345,7 @@ clear_cache_prompt() {
 bundle_homebrew() {
   local update_only="${1:-false}"
   local line
-  brewfiles=()
+  local brewfiles=()
   while IFS= read -r line; do brewfiles+=("$line"); done < <(bundle_brewfiles)
 
   print_status "Bundling Homebrew packages for environment: $(detect_environment)"
