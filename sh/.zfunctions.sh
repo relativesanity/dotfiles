@@ -1,17 +1,23 @@
+# The dotfiles front door. `dot` opens the menu; the re* commands map to its
+# subcommands so existing muscle memory (and flags like --clear-cache) keep working.
+dot() {
+  "${DOTFILES_PATH:-$HOME/.dotfiles}/bin/dot.sh" "$@"
+}
+
 redot() {
-  "${DOTFILES_PATH:-$HOME/.dotfiles}/bin/redot.sh" "$@"
+  "${DOTFILES_PATH:-$HOME/.dotfiles}/bin/dot.sh" sync "$@"
 }
 
 restow() {
-  "${DOTFILES_PATH:-$HOME/.dotfiles}/bin/restow.sh"
+  "${DOTFILES_PATH:-$HOME/.dotfiles}/bin/dot.sh" stow "$@"
 }
 
 repack() {
-  "${DOTFILES_PATH:-$HOME/.dotfiles}/bin/repack.sh" "$@"
+  "${DOTFILES_PATH:-$HOME/.dotfiles}/bin/dot.sh" pack "$@"
 }
 
 reenv() {
-  "${DOTFILES_PATH:-$HOME/.dotfiles}/bin/reenv.sh"
+  "${DOTFILES_PATH:-$HOME/.dotfiles}/bin/dot.sh" env "$@"
 }
 
 asdf-load() {

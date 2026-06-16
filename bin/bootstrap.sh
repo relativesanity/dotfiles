@@ -29,11 +29,13 @@ bootstrap() {
   ensure_homebrew || print_failure "Homebrew could not be set up"
   ensure_git || print_failure "Git could not be set up"
   ensure_zsh || print_failure "Zsh could not be set up"
+  ensure_gum || print_warning "gum could not be installed; the dot TUI will fall back to plain text"
   ensure_dotfiles || print_failure "Dotfiles could not be set up"
   print_status "Running initial dotfiles setup"
-  "${DOTFILES_PATH:-$HOME/.dotfiles}/bin/redot.sh" || print_failure "Initial dotfiles setup failed"
+  "${DOTFILES_PATH:-$HOME/.dotfiles}/bin/dot.sh" sync || print_failure "Initial dotfiles setup failed"
   persist_dotfiles_path
   print_status "Bootstrap complete"
+  print_status "Run 'dot' to open the dotfiles menu."
 }
 
 # ------------------------------------------------------------------------------------------------------
@@ -72,6 +74,18 @@ ensure_homebrew() {
     eval "$(/opt/homebrew/bin/brew shellenv)"
   fi
   print_status "Homebrew enabled"
+}
+
+# ------------------------------------------------------------------------------------------------------
+ensure_gum() {
+  print_status "Checking gum"
+  if command -v gum >/dev/null 2>&1; then
+    return 0
+  fi
+
+  print_status "Installing gum"
+  brew install gum || return 1
+  print_status "Gum installed"
 }
 
 # ------------------------------------------------------------------------------------------------------

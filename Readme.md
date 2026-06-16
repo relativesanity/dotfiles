@@ -11,7 +11,7 @@ To bootstrap a new machine, run:
 ```
 
 This will:
-- Install Homebrew, Git, and Zsh
+- Install Homebrew, Git, Zsh, and `gum` (for the `dot` TUI)
 - Clone this repository to `~/.dotfiles`
 - Detect environment (home vs work) and install appropriate packages
 - Symlink all configurations using Stow
@@ -67,7 +67,7 @@ The dotfiles automatically detect your environment based on username:
 - **Work** (other usernames): Installs core packages only
 
 Package files:
-- `Brewfile` - Core packages required for deployment and a working terminal (stow, git, gh, neovim, tmux, asdf, fzf, ripgrep, bat, zoxide, starship, ghostty) — see `Brewfile` for the full list
+- `Brewfile` - Core packages required for deployment and a working terminal (stow, git, gh, gum, neovim, tmux, asdf, fzf, ripgrep, bat, zoxide, starship, ghostty) — see `Brewfile` for the full list
 - `Brewfile.home` - Personal packages (full setup)
 - `Brewfile.work` - Work-specific packages (add as needed)
 - `Brewfile.local` - Machine-specific overrides (gitignored)
@@ -99,17 +99,34 @@ See `kanata/kanata.md` for detailed instructions.
 
 ## Maintenance
 
-**Update everything**
+Everything is driven by the **`dot`** command — a `gum`-powered TUI front door. Run
+it with no arguments to open the menu, which shows a status summary (branch, brew
+drift, stow links, asdf) and lets you pick an action:
+
 ```bash
-redot  # Alias for ./bin/redot.sh
+dot
 ```
 
-**Update packages only**
+Each action also has a direct subcommand, and the preview-before-apply steps show a
+dry-run summary before anything changes:
+
 ```bash
-repack  # Alias for ./bin/repack.sh
+dot sync     # pull, then packages + symlinks + runtimes (full update)
+dot pack     # preview & apply Brewfile changes
+dot stow     # preview & apply stow symlinks
+dot env      # preview & install asdf runtimes
+dot doctor   # environment health check
 ```
 
-**Re-symlink configs**
-```bash
-restow  # Alias for ./bin/restow.sh
-```
+The familiar commands still work and map onto `dot`:
+
+| Command  | Equivalent   | Does                                  |
+| -------- | ------------ | ------------------------------------- |
+| `redot`  | `dot sync`   | Update everything                     |
+| `repack` | `dot pack`   | Packages only (flags pass through)    |
+| `restow` | `dot stow`   | Re-symlink configs                    |
+| `reenv`  | `dot env`    | Install asdf runtimes                 |
+
+Flags pass straight through, so `repack --clear-cache` / `dot pack --clear-cache`
+behave exactly as before. `gum` is optional: without it every screen falls back to
+plain text (this is what keeps the piped bootstrap working).
