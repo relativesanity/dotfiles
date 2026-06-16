@@ -21,6 +21,12 @@ This will:
 DOTFILES_BRANCH=branch-name /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/relativesanity/dotfiles/refs/heads/branch-name/bin/bootstrap.sh)"
 ```
 
+**To clone to a custom location** (defaults to `~/.dotfiles`):
+```bash
+DOTFILES_PATH=/custom/path /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/relativesanity/dotfiles/refs/heads/main/bin/bootstrap.sh)"
+```
+Bootstrap persists `DOTFILES_PATH` to `~/.zprofile.local` so future shells resolve the repo to the same place.
+
 ## Post-Bootstrap Steps
 
 ### Authentication
@@ -48,6 +54,11 @@ Create `~/.env.local.sh` for machine-specific environment variables:
 export OPENAI_API_KEY="sk-..."
 export WORK_PROJECT_PATH="$HOME/work"
 ```
+
+**Local Shell Overrides**
+Each is sourced if present, after the tracked config:
+- `~/.zprofile.local` — machine-specific PATH additions and login-shell setup
+- `~/.zshrc.local` — machine-specific interactive shell tweaks
 
 **Environment-Specific Packages**
 

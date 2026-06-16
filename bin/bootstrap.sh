@@ -13,6 +13,7 @@ trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 # Usage:
 #   ./bootstrap.sh
 #   DOTFILES_BRANCH=branch-name ./bootstrap.sh
+#   DOTFILES_PATH=/custom/path ./bootstrap.sh
 #
 # Prerequisites:
 #   - None (script will install required package managers)
@@ -30,8 +31,27 @@ bootstrap() {
   ensure_zsh || print_failure "Zsh could not be set up"
   ensure_dotfiles || print_failure "Dotfiles could not be set up"
   print_status "Running initial dotfiles setup"
-  "$HOME/.dotfiles/bin/redot.sh" || print_failure "Initial dotfiles setup failed"
+  "${DOTFILES_PATH:-$HOME/.dotfiles}/bin/redot.sh" || print_failure "Initial dotfiles setup failed"
+  persist_dotfiles_path
   print_status "Bootstrap complete"
+}
+
+# ------------------------------------------------------------------------------------------------------
+# A custom DOTFILES_PATH only lives for this run; persist it to ~/.zprofile.local so
+# future shells (and the bin scripts) resolve the repo to the same place.
+persist_dotfiles_path() {
+  local dotfiles local_profile
+  dotfiles="${DOTFILES_PATH:-$HOME/.dotfiles}"
+  [[ "$dotfiles" == "$HOME/.dotfiles" ]] && return 0
+
+  local_profile="$HOME/.zprofile.local"
+  if [[ -f "$local_profile" ]] && grep -qF "DOTFILES_PATH" "$local_profile"; then
+    print_warning "DOTFILES_PATH already present in $local_profile; leaving it untouched."
+    return 0
+  fi
+
+  echo "export DOTFILES_PATH=\"$dotfiles\"" >>"$local_profile"
+  print_status "Persisted DOTFILES_PATH to $local_profile for future shells."
 }
 
 # ------------------------------------------------------------------------------------------------------
@@ -97,8 +117,9 @@ ensure_zsh() {
 
 # ------------------------------------------------------------------------------------------------------
 ensure_dotfiles() {
+  local dotfiles="${DOTFILES_PATH:-$HOME/.dotfiles}"
   print_status "Checking dotfiles"
-  if [[ -d $HOME/.dotfiles ]]; then
+  if [[ -d $dotfiles ]]; then
     return 0
   fi
 
@@ -106,8 +127,8 @@ ensure_dotfiles() {
 
   print_status "Downloading dotfiles"
   cd "$HOME" &&
-    git clone https://github.com/relativesanity/dotfiles "$HOME"/.dotfiles &&
-    cd "$HOME"/.dotfiles &&
+    git clone https://github.com/relativesanity/dotfiles "$dotfiles" &&
+    cd "$dotfiles" &&
     git checkout "$branch" || return 1
   print_status "Dotfiles downloaded"
 }
@@ -120,6 +141,10 @@ print_status() {
 print_failure() {
   echo -e "\033[0;31m$1\033[0m"
   return 1
+}
+
+print_warning() {
+  echo -e "\033[0;33m$1\033[0m"
 }
 
 # ------------------------------------------------------------------------------------------------------

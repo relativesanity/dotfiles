@@ -55,8 +55,7 @@ alias lg='lazygit'
 alias gs='git status'
 alias gd='git diff'
 
-DOTFILES_PATH="$HOME/.dotfiles"
-alias dotfiles='cd $DOTFILES_PATH'
+alias dotfiles='cd ${DOTFILES_PATH:-$HOME/.dotfiles}'
 
 ICLOUD_PATH="$HOME/Library/Mobile Documents/com~apple~CloudDocs"
 alias icloud='cd "$ICLOUD_PATH"'

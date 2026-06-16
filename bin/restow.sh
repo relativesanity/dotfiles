@@ -39,7 +39,7 @@ readonly REQUIRED_DIRECTORIES=(
 STOW_PACKAGES=()
 while IFS= read -r pkg; do
   STOW_PACKAGES+=("$pkg")
-done < <(find "$HOME/.dotfiles" -maxdepth 1 -mindepth 1 -type d \
+done < <(find "${DOTFILES_PATH:-$HOME/.dotfiles}" -maxdepth 1 -mindepth 1 -type d \
   ! -name '.*' ! -name 'bin' ! -name 'kanata' \
   -exec basename {} \; | sort)
 
@@ -91,7 +91,7 @@ stow_packages() {
   print_status "Stowing…"
   for package in "${STOW_PACKAGES[@]}"; do
     print_status "Stowing $package"
-    if ! stow -d "$HOME/.dotfiles" -t "$HOME" --restow "$package" 2>&1; then
+    if ! stow -d "${DOTFILES_PATH:-$HOME/.dotfiles}" -t "$HOME" --restow "$package" 2>&1; then
       print_warning "$package has local overrides — skipping conflicting files (expected on machine-specific configs)"
     fi
   done
