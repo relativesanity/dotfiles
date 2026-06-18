@@ -84,7 +84,6 @@ readonly REQUIRED_DIRECTORIES=(
   "$HOME/.config/nvim"
   "$HOME/.config/sketchybar"
   "$HOME/.config/tmux"
-  "$HOME/.homebrew"
 )
 
 # ------------------------------------------------------------------------------------------------------
