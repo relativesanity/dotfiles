@@ -350,15 +350,9 @@ bundle_homebrew() {
 
   print_status "Bundling Homebrew packages for environment: $(detect_environment)"
 
-  # Trust the taps declared for this environment before bundling. Homebrew's
-  # trust store (~/.homebrew/trust.json) is a real local file owned by brew — not
-  # tracked here — so it stays correct per environment (home vs work declare
-  # different taps) and is reasserted idempotently on every run.
-  { grep -hE '^tap ' "${brewfiles[@]}" || true; } | awk '{gsub(/['\''"]/, "", $2); print $2}' \
-    | while IFS= read -r tap; do
-        [[ -n "$tap" ]] && brew trust "$tap" >/dev/null 2>&1 || true
-      done
-
+  # Tap trust is declarative: tapped packages carry `trusted: true` in the
+  # Brewfiles, so `brew bundle` trusts them before tapping and rewrites
+  # ~/.homebrew/trust.json to match on cleanup. No manual `brew trust` needed.
   if [[ "$update_only" == "true" ]]; then
     cat "${brewfiles[@]}" | brew bundle --file=-
   else

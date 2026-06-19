@@ -5,7 +5,7 @@ tap 'felixkratz/formulae'
 tap 'nikitabobko/tap'
 
 brew 'awscli'
-brew 'felixkratz/formulae/borders'
+brew 'felixkratz/formulae/borders', trusted: true
 brew 'gpg'
 brew 'lazygit'
 brew 'mas'
@@ -15,7 +15,7 @@ cask 'claude-code@latest'
 cask 'cursor'
 cask 'granola'
 cask 'logi-options+'
-cask 'nikitabobko/tap/aerospace'
+cask 'nikitabobko/tap/aerospace', trusted: true
 cask 'obsidian'
 cask 'superkey'
 

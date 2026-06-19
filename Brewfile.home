@@ -16,7 +16,7 @@ brew 'netlify-cli'
 brew 'node'
 
 # Casks
-cask 'nikitabobko/tap/aerospace'
+cask 'nikitabobko/tap/aerospace', trusted: true
 cask 'backblaze'
 cask 'claude'
 cask 'claude-code@latest'
