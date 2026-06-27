@@ -98,7 +98,6 @@ return {
     local notify = require("mini.notify")
     notify.setup()
     vim.notify = notify.make_notify() -- route vim.notify through the tidy float
-    require("mini.animate").setup() -- animate scroll/cursor/resize (for fun)
     require("mini.cmdline").setup() -- cmdline autocomplete, autocorrect, range peek
   end,
 }
