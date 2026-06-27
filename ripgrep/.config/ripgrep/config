@@ -1,0 +1,9 @@
+# ripgrep configuration — loaded via $RIPGREP_CONFIG_PATH (set in .zshrc).
+# One argument per line; ripgrep reads this for every invocation, including
+# tools that shell out to rg (e.g. Neovim's mini.pick).
+
+# Search hidden files and directories (dotfiles) by default.
+--hidden
+
+# …but never descend into the .git directory.
+--glob=!.git/**

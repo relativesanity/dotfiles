@@ -11,6 +11,7 @@ bindkey -v
 # set up common environment
 export EDITOR=nvim
 export VISUAL=nvim
+export RIPGREP_CONFIG_PATH=$HOME/.config/ripgrep/config
 [[ -e $HOME/.env.local.sh ]] && source $HOME/.env.local.sh
 
 
