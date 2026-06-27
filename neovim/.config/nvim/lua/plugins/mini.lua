@@ -53,10 +53,52 @@ return {
     map("n", "<leader>fg", function() pick.builtin.grep_live() end, { desc = "Live grep" })
     map("n", "<leader>fb", function() pick.builtin.buffers() end, { desc = "Buffers" })
     map("n", "<leader>fh", function() pick.builtin.help() end, { desc = "Help tags" })
-    map("n", "<leader>fr", function() pick.builtin.resume() end, { desc = "Resume last pick" })
+    -- <leader>fr is intentionally left free for a recents picker in phase 2
+    -- (mini.extra oldfiles / mini.visits frecency). Resume is available via :Pick.
+
+    -- Key clues -----------------------------------------------------------
+    -- which-key-style popups after a short pause. Triggers pick which prefixes
+    -- to watch; gen_clues add descriptions. (' and \ aren't triggers — pressing
+    -- [ or ] shows the bracketed clues; the aliases just execute.)
+    local clue = require("mini.clue")
+    clue.setup({
+      triggers = {
+        { mode = "n", keys = "<Leader>" },
+        { mode = "x", keys = "<Leader>" },
+        { mode = "n", keys = "g" },
+        { mode = "x", keys = "g" },
+        { mode = "n", keys = "z" },
+        { mode = "x", keys = "z" },
+        { mode = "n", keys = "[" },
+        { mode = "n", keys = "]" },
+        { mode = "x", keys = "[" },
+        { mode = "x", keys = "]" },
+        { mode = "n", keys = '"' },
+        { mode = "x", keys = '"' },
+        { mode = "i", keys = "<C-r>" },
+        { mode = "n", keys = "<C-w>" },
+      },
+      clues = {
+        { mode = "n", keys = "<Leader>f", desc = "+find" },
+        clue.gen_clues.g(),
+        clue.gen_clues.z(),
+        clue.gen_clues.square_brackets(),
+        clue.gen_clues.registers(),
+        clue.gen_clues.windows(),
+        clue.gen_clues.builtin_completion(),
+      },
+    })
 
     -- Git -----------------------------------------------------------------
     require("mini.diff").setup() -- gutter signs; gh apply, gH reset, [h ]h hunks
     require("mini.git").setup() -- :Git command, MiniGit.show_at_cursor
+
+    -- Polish --------------------------------------------------------------
+    require("mini.trailspace").setup() -- highlight trailing ws; :lua MiniTrailspace.trim()
+    local notify = require("mini.notify")
+    notify.setup()
+    vim.notify = notify.make_notify() -- route vim.notify through the tidy float
+    require("mini.animate").setup() -- animate scroll/cursor/resize (for fun)
+    require("mini.cmdline").setup() -- cmdline autocomplete, autocorrect, range peek
   end,
 }
