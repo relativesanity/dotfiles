@@ -40,7 +40,9 @@ return {
     -- parser (zsh, ghostty, …) on the classic regex syntax instead of erroring.
     vim.api.nvim_create_autocmd("FileType", {
       callback = function(args)
-        pcall(vim.treesitter.start, args.buf)
+        if not pcall(vim.treesitter.start, args.buf) then return end
+        -- vim's indenters need vim syntax, which treesitter highlighting replaces
+        vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
       end,
     })
 
