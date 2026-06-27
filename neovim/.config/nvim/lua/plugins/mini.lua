@@ -29,6 +29,12 @@ return {
     require("mini.pairs").setup() -- auto-close brackets and quotes
     require("mini.splitjoin").setup() -- gS toggles a block one-line <-> multi-line
     require("mini.bracketed").setup() -- [b ]b, [q ]q, [d ]d … unimpaired-style motions
+    -- Also reach the bracketed motions via ' and \ (just below [ and ] on a
+    -- normal board; stacked vertically on the Voyager). remap=true so ' behaves
+    -- as [ and \ as ], keeping the original [ ] prefixes too. Trade-off: this
+    -- shadows ' mark-line jumps — use ` (backtick) for marks instead.
+    vim.keymap.set({ "n", "x", "o" }, "'", "[", { remap = true })
+    vim.keymap.set({ "n", "x", "o" }, "\\", "]", { remap = true })
     -- Operators: g= evaluate, gx exchange, gm multiply, gr replace, gs sort.
     -- Note: gx shadows the builtin open-URL, and gr will overlap LSP's gr*
     -- mappings once we add ruby-lsp — we'll reconcile that in phase 2.
