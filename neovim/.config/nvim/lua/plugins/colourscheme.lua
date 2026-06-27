@@ -1,6 +1,8 @@
 return {
   {
     "catppuccin/nvim",
+    name = "catppuccin",
+    priority = 1000,
     opts = {
       transparent_background = true,
       float = {
@@ -13,12 +15,6 @@ return {
           CursorLineNr = { fg = colors.text },
         }
       end,
-    },
-  },
-  {
-    "LazyVim/LazyVim",
-    opts = {
-      colorscheme = "catppuccin-mocha",
     },
   },
 }
