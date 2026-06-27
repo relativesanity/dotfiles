@@ -54,5 +54,9 @@ return {
     map("n", "<leader>fb", function() pick.builtin.buffers() end, { desc = "Buffers" })
     map("n", "<leader>fh", function() pick.builtin.help() end, { desc = "Help tags" })
     map("n", "<leader>fr", function() pick.builtin.resume() end, { desc = "Resume last pick" })
+
+    -- Git -----------------------------------------------------------------
+    require("mini.diff").setup() -- gutter signs; gh apply, gH reset, [h ]h hunks
+    require("mini.git").setup() -- :Git command, MiniGit.show_at_cursor
   end,
 }
