@@ -12,6 +12,9 @@ return {
         transparent = true,
         solid = false,
       },
+      integrations = {
+        mini = { enabled = true }, -- themes mini.statusline, mini.pick et al.
+      },
       custom_highlights = function(colors)
         return {
           LineNr = { fg = colors.overlay1 },
