@@ -40,5 +40,6 @@ return {
     vim.keymap.set("n", "<leader>fb", function() MiniPick.builtin.buffers() end, { desc = "Buffers" })
     vim.keymap.set("n", "<leader>fh", function() MiniPick.builtin.help() end, { desc = "Help tags" })
     vim.keymap.set("n", "<leader>fr", function() MiniExtra.pickers.oldfiles() end, { desc = "Recent files" })
+    vim.keymap.set("n", "<leader>fj", function() MiniExtra.pickers.buf_lines({ scope = "current" }) end, { desc = "Jump to line" })
   end,
 }
