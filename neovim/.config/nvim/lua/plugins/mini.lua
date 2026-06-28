@@ -27,6 +27,15 @@ return {
       m = MiniAi.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }),
     }
 
+    require("mini.hipatterns").setup()
+    MiniHipatterns.config.highlighters = {
+      fixme = { pattern = "%f[%w]()FIXME()%f[%W]", group = "MiniHipatternsFixme" },
+      hack = { pattern = "%f[%w]()HACK()%f[%W]", group = "MiniHipatternsHack" },
+      todo = { pattern = "%f[%w]()TODO()%f[%W]", group = "MiniHipatternsTodo" },
+      note = { pattern = "%f[%w]()NOTE()%f[%W]", group = "MiniHipatternsNote" },
+      hex_color = MiniHipatterns.gen_highlighter.hex_color(), -- #rrggbb shown in its colour
+    }
+
     require("mini.bracketed").setup()
     -- allow ' and \ as alternatives for [ and ] on my Voyager
     vim.keymap.set({ "n", "x", "o" }, "'", "[", { remap = true })
