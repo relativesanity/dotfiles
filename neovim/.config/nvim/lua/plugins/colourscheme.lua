@@ -1,11 +1,9 @@
+-- Both schemes are installed; the active one is chosen in config/init.lua.
 return {
   {
     "catppuccin/nvim",
     name = "catppuccin",
     priority = 1000,
-    init = function()
-      vim.cmd.colorscheme "catppuccin-nvim"
-    end,
     opts = {
       transparent_background = true,
       float = {
@@ -22,5 +20,9 @@ return {
         }
       end,
     },
+  },
+  {
+    "RRethy/nvim-base16",
+    priority = 1000,
   },
 }
