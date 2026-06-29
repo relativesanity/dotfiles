@@ -17,6 +17,7 @@ vim.opt.cursorline = true -- highlight the current line
 vim.opt.number = true -- show line numbers
 vim.opt.relativenumber = true -- relative line numbers for easy jumping
 vim.opt.scrolloff = 8 -- keep 8 lines of context above/below cursor
+vim.opt.shortmess:append("I") -- no intro splash; start on a blank buffer
 vim.opt.signcolumn = "yes" -- always reserve space for signs
 vim.opt.splitbelow = true -- split below instead of above
 vim.opt.splitright = true -- split right instead of left
