@@ -1,3 +1,7 @@
+-- paste the last yank — register 0 survives deletes, plain p doesn't
+vim.keymap.set({ "n", "x" }, "<leader>p", '"0p', { desc = "Paste last yank (after)" })
+vim.keymap.set({ "n", "x" }, "<leader>P", '"0P', { desc = "Paste last yank (before)" })
+
 -- quickfix navigation
 vim.keymap.set("n", "<leader>cn", "<cmd>cnext<cr>")
 vim.keymap.set("n", "<leader>cp", "<cmd>cprev<cr>")
