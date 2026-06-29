@@ -8,6 +8,13 @@
 # vim motions
 bindkey -v
 
+# Restore a steady bar cursor at every prompt. TUI apps (nvim, less, …) reset
+# the cursor to a block on exit and neither terminfo nor tmux reliably reasserts
+# it, so do it here — matches Ghostty/tmux's configured bar (\e[6 q = steady bar).
+autoload -Uz add-zsh-hook
+_cursor_to_bar() { print -n '\e[6 q' }
+add-zsh-hook precmd _cursor_to_bar
+
 # set up common environment
 export EDITOR=nvim
 export VISUAL=nvim
