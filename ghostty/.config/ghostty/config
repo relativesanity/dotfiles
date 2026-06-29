@@ -16,3 +16,7 @@ fullscreen = true
 
 mouse-hide-while-typing = true
 keybind = shift+enter=text:\x1b\r
+cursor-style = bar
+cursor-style-blink = false
+adjust-cursor-thickness = 3
+cursor-color = #7f849c
