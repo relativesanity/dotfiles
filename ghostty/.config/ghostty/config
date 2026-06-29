@@ -18,5 +18,5 @@ mouse-hide-while-typing = true
 keybind = shift+enter=text:\x1b\r
 cursor-style = bar
 cursor-style-blink = false
-adjust-cursor-thickness = 3
+adjust-cursor-thickness = 6
 cursor-color = #7f849c
