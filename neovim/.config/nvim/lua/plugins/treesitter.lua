@@ -43,6 +43,11 @@ return {
         if not pcall(vim.treesitter.start, args.buf) then return end
         -- vim's indenters need vim syntax, which treesitter highlighting replaces
         vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        -- ruby's '.'/':'' indentkeys retrigger treesitter mid-chain and dedent to col 0
+        local ft = vim.bo[args.buf].filetype
+        if ft == "ruby" or ft == "eruby" then
+          vim.opt_local.indentkeys:remove({ ".", ":" })
+        end
       end,
     })
 
