@@ -9,7 +9,8 @@ return {
     require("mini.surround").setup()
     require("mini.pairs").setup()
     require("mini.splitjoin").setup()
-    require("mini.operators").setup()
+    -- cr/cx free up gr* for LSP keymaps and gx for the builtin open-URL
+    require("mini.operators").setup({ replace = { prefix = "cr" }, exchange = { prefix = "cx" } })
     require("mini.diff").setup()
     require("mini.git").setup()
     require("mini.trailspace").setup()
