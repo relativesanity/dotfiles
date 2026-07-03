@@ -10,7 +10,7 @@ alias la='ll -a'
 
 alias mkdir='mkdir -p'
 
-TMUX_DEFAULT_SESSION_NAME="jbOS"
+TMUX_DEFAULT_SESSION_NAME="tmux"
 switch() {
   local session
   if [[ -n "$1" ]]; then

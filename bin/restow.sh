@@ -82,6 +82,7 @@ readonly REQUIRED_DIRECTORIES=(
   "$HOME/.config/git"
   "$HOME/.config/hcloud"
   "$HOME/.config/nvim"
+  "$HOME/.config/ripgrep"
   "$HOME/.config/sketchybar"
   "$HOME/.config/tmux"
 )

@@ -1,4 +1,5 @@
 theme = Catppuccin Mocha
+# theme = Black Metal (Bathory)
 
 font-size = 14
 
@@ -11,6 +12,11 @@ window-padding-balance = true
 
 window-width = 110
 window-height = 30
+fullscreen = true
 
 mouse-hide-while-typing = true
 keybind = shift+enter=text:\x1b\r
+cursor-style = bar
+cursor-style-blink = false
+adjust-cursor-thickness = 6
+cursor-color = #7f849c
