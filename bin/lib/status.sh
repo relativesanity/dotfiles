@@ -128,23 +128,18 @@ status_stow() {
   fi
 }
 
-status_asdf() {
-  local plugin version summary missing
-  command -v asdf >/dev/null 2>&1 || { printf 'not installed'; return 0; }
-  [[ -e "$HOME/.tool-versions" ]] || { printf 'no .tool-versions'; return 0; }
+status_rv() {
+  local version
+  command -v rv >/dev/null 2>&1 || { printf 'not installed'; return 0; }
+  [[ -e "$HOME/.ruby-version" ]] || { printf 'no .ruby-version'; return 0; }
 
-  summary=""
-  missing=0
-  while IFS=' ' read -r plugin version; do
-    [[ -z "$plugin" || "$plugin" =~ ^# ]] && continue
-    summary+="${summary:+ · }$plugin $version"
-    [[ "$version" == "system" ]] && continue
-    asdf where "$plugin" "$version" >/dev/null 2>&1 || missing=$((missing + 1))
-  done < "$HOME/.tool-versions"
+  # First non-blank, non-comment line, trimmed of surrounding whitespace.
+  version="$(sed -e 's/#.*//' -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' "$HOME/.ruby-version" | grep -m1 .)"
+  [[ -n "$version" ]] || { printf 'no .ruby-version'; return 0; }
 
-  if [[ "$missing" -gt 0 ]]; then
-    printf '%s  (%s to install)' "$summary" "$missing"
+  if rv ruby find "$version" >/dev/null 2>&1; then
+    printf 'ruby %s  (in sync)' "$version"
   else
-    printf '%s  (in sync)' "$summary"
+    printf 'ruby %s  (to install)' "$version"
   fi
 }

@@ -20,40 +20,16 @@ reenv() {
   "${DOTFILES_PATH:-$HOME/.dotfiles}/bin/dot.sh" env "$@"
 }
 
-asdf-load() {
-  local versions_file="${1:-.tool-versions}"
-
-  if [[ ! -e "$versions_file" ]]; then
-    echo "No .tool-versions found at: $versions_file"
+# Install the Ruby the current project asks for. rv reads the version from
+# .ruby-version / .tool-versions / Gemfile.lock; pass an explicit version to
+# override. rv auto-switches on cd, so this just ensures it's installed.
+ruby-load() {
+  if ! command -v rv >/dev/null 2>&1; then
+    echo "rv not installed"
     return 1
   fi
 
-  if ! command -v asdf >/dev/null 2>&1; then
-    echo "asdf not installed"
-    return 1
-  fi
-
-  local installed_plugins
-  installed_plugins=$(asdf plugin list 2>/dev/null || true)
-
-  while IFS=' ' read -r plugin version; do
-    [[ -z "$plugin" || "$plugin" =~ ^# ]] && continue
-
-    if ! echo "$installed_plugins" | grep -q "^${plugin}$"; then
-      echo "Adding asdf plugin: $plugin"
-      asdf plugin add "$plugin"
-    fi
-
-    # 'system' is a pseudo-version meaning "defer to the OS install"; there
-    # is nothing to install for it.
-    if [[ "$version" == "system" ]]; then
-      echo "Using system $plugin, skipping install"
-      continue
-    fi
-
-    echo "Installing $plugin $version"
-    asdf install "$plugin" "$version"
-  done < "$versions_file"
+  rv ruby install "$@"
 }
 
 drag-toggle() {

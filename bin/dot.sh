@@ -15,7 +15,7 @@ trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 #   ./dot.sh sync [flags]    pull, then packages + symlinks + runtimes
 #   ./dot.sh pack [flags]    preview & apply Brewfile changes (repack)
 #   ./dot.sh stow            preview & apply stow symlinks (restow)
-#   ./dot.sh env             preview & install asdf runtimes (reenv)
+#   ./dot.sh env             preview & install ruby runtimes (reenv)
 #   ./dot.sh doctor          environment health check
 #
 # Any flags after a subcommand pass straight through to the underlying engine
@@ -43,20 +43,20 @@ dot_menu() {
     return 0
   fi
 
-  local env git brew stow asdf
+  local env git brew stow rv
   env="$(detect_environment)"
   print_status "Gathering status…"
   git="$(status_git)"
   brew="$(status_brew)"
   stow="$(status_stow)"
-  asdf="$(status_asdf)"
+  rv="$(status_rv)"
 
   ui_header "dotfiles · $(whoami)" "$env · ${git%% *}"
   ui_box \
     "⎇  $git" \
     "📦 brew   $brew" \
     "🔗 stow   $stow" \
-    "🔧 asdf   $asdf"
+    "🔧 rv     $rv"
   echo
 
   # Labels lead with the subcommand verb (what `dot <verb>` runs) plus a gloss.
@@ -65,7 +65,7 @@ dot_menu() {
     "Sync      pull & apply everything" \
     "Pack      brew packages" \
     "Stow      config symlinks" \
-    "Env       asdf runtimes" \
+    "Env       ruby runtimes" \
     "Doctor    environment health check" \
     "Quit")" || return 0
 
@@ -158,7 +158,7 @@ dot_env() {
   ui_header "Env"
   "$DOT_DIR/bin/reenv.sh" --plan
   echo
-  if ui_confirm "Install asdf versions now?"; then
+  if ui_confirm "Install Ruby runtimes now?"; then
     "$DOT_DIR/bin/reenv.sh"
   fi
 }
@@ -170,7 +170,7 @@ dot_doctor() {
   local lines=()
   lines+=("$(_doctor_tool Homebrew brew)")
   lines+=("$(_doctor_tool Stow stow)")
-  lines+=("$(_doctor_tool asdf)")
+  lines+=("$(_doctor_tool rv)")
   lines+=("$(_doctor_tool gum)")
   lines+=("$(_doctor_tool mas)")
 
@@ -194,7 +194,7 @@ dot_doctor() {
   echo "  git    $(status_git)"
   echo "  brew   $(status_brew)"
   echo "  stow   $(status_stow)"
-  echo "  asdf   $(status_asdf)"
+  echo "  rv     $(status_rv)"
 }
 
 # Print "✓ name version" or "✗ name missing" for a tool.
@@ -220,7 +220,7 @@ Usage:
   dot sync [flags]    pull, then packages + symlinks + runtimes (= redot)
   dot pack [flags]    preview & apply Brewfile changes           (= repack)
   dot stow            preview & apply stow symlinks              (= restow)
-  dot env             preview & install asdf runtimes            (= reenv)
+  dot env             preview & install ruby runtimes            (= reenv)
   dot doctor          environment health check
 
 Flags after pack/sync pass through to repack:

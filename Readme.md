@@ -67,7 +67,7 @@ The dotfiles automatically detect your environment based on username:
 - **Work** (other usernames): Installs core packages only
 
 Package files:
-- `Brewfile` - Core packages required for deployment and a working terminal (stow, git, gh, gum, neovim, tmux, asdf, fzf, ripgrep, bat, zoxide, starship, ghostty) — see `Brewfile` for the full list
+- `Brewfile` - Core packages required for deployment and a working terminal (stow, git, gh, gum, neovim, tmux, rv, fzf, ripgrep, bat, zoxide, starship, ghostty) — see `Brewfile` for the full list
 - `Brewfile.home` - Personal packages (full setup)
 - `Brewfile.work` - Work-specific packages (add as needed)
 - `Brewfile.local` - Machine-specific overrides (gitignored)
@@ -101,7 +101,7 @@ See `kanata/kanata.md` for detailed instructions.
 
 Everything is driven by the **`dot`** command — a `gum`-powered TUI front door. Run
 it with no arguments to open the menu, which shows a status summary (branch, brew
-drift, stow links, asdf) and lets you pick an action:
+drift, stow links, rv) and lets you pick an action:
 
 ```bash
 dot
@@ -114,7 +114,7 @@ dry-run summary before anything changes:
 dot sync     # pull, then packages + symlinks + runtimes (full update)
 dot pack     # preview & apply Brewfile changes
 dot stow     # preview & apply stow symlinks
-dot env      # preview & install asdf runtimes
+dot env      # preview & install ruby runtimes
 dot doctor   # environment health check
 ```
 
@@ -125,7 +125,7 @@ The familiar commands still work and map onto `dot`:
 | `redot`  | `dot sync`   | Update everything                     |
 | `repack` | `dot pack`   | Packages only (flags pass through)    |
 | `restow` | `dot stow`   | Re-symlink configs                    |
-| `reenv`  | `dot env`    | Install asdf runtimes                 |
+| `reenv`  | `dot env`    | Install ruby runtimes                 |
 
 Flags pass straight through, so `repack --clear-cache` / `dot pack --clear-cache`
 behave exactly as before. `gum` is optional: without it every screen falls back to

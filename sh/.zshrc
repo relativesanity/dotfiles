@@ -60,10 +60,12 @@ setopt hist_find_no_dups
 command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init --cmd gg zsh)"
 command -v starship >/dev/null 2>&1 && eval "$(starship init zsh)"
 command -v fzf >/dev/null 2>&1 && eval "$(fzf --zsh)"
-if command -v asdf >/dev/null 2>&1;
+if command -v rv >/dev/null 2>&1;
 then
-  export ASDF_DATA_DIR="$HOME/.asdf"
-  export PATH="$ASDF_DATA_DIR/shims:$PATH"
+  # rv drives PATH/GEM_HOME per-directory via a preexec hook; it also reads
+  # ~/.ruby-version and project .ruby-version/.tool-versions files.
+  eval "$(rv shell init zsh)"
+  eval "$(rv shell completions zsh)"
 fi
 
 # load common aliases
