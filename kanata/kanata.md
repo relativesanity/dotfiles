@@ -35,41 +35,73 @@ Finally, start kanata using the following command:
 sudo launchctl start com.example.kanata
 ```
 
-Note that you may need to grant Input Monitoring permissions to Kanata in
-System Preferences > Security & Privacy > Privacy > Input Monitoring. This is done by
-hitting the `+` button and navigating to the path for kanata,
-likely /opt/homebrew/bin/kanata.
+Kanata needs **two** separate permissions to open the keyboard, both under
+System Settings > Privacy & Security. Grant both; missing either causes the same
+"failed to open keyboard device(s)" failure:
+
+- **Input Monitoring**
+- **Accessibility**
+
+For each, hit the `+` button and navigate to the kanata binary, likely
+`/opt/homebrew/bin/kanata`, then make sure its toggle is on.
+
+Finally, pin the formula so Homebrew stops silently updating the binary out from
+under these permission grants (`repack`/`dot pack` runs a bare `brew upgrade`,
+which is what keeps bumping it):
+
+```bash
+brew pin kanata
+```
+
+The pin is machine-local brew state (a symlink under
+`$(brew --prefix)/var/homebrew/pinned/`), not tracked in this repo and not
+expressible in a Brewfile — so it's a required manual step on every new machine.
+Pending kanata updates still show up in the `dot pack` summary under "Held back";
+take one deliberately with `brew unpin kanata && brew upgrade kanata`, then
+re-grant both permissions and `brew pin kanata` again.
 
 ## Troubleshooting
 
-### IOKit Permission Errors
+### Permission Errors ("failed to open keyboard device(s)")
 
-**Symptom**: Kanata fails to start with errors in the logs similar to:
+**Symptom**: Kanata fails to start, `KeepAlive` restarts it every ~10s, and the
+logs show `config file is valid` but then one of:
 ```
+kanata needs macOS Input Monitoring permission ...
+kanata needs macOS Accessibility permission ...
 IOHIDDeviceOpen error: (iokit/common) not permitted Apple Internal Keyboard / Trackpad
 ```
 
 **Cause**: This typically occurs after Homebrew updates the kanata binary. macOS
-revokes previously granted Input Monitoring permissions when the binary changes.
+pins permissions to the exact binary and revokes them when it changes, so the new
+binary is unauthorized. Kanata needs **both** Input Monitoring and Accessibility;
+they are revoked independently, so fixing one can just surface the other on the
+next restart (Accessibility is the commonly-missed second one — jtroo/kanata#1211).
 
-**Solution**:
-1. Open System Settings > Privacy & Security > Input Monitoring (or System Preferences > Security & Privacy > Privacy > Input Monitoring on older macOS)
-2. Find the kanata entry in the list - it may show an error or warning icon
-3. Remove the existing kanata entry by selecting it and clicking the `-` button
-4. Click the `+` button to re-add kanata
-5. Navigate to `/opt/homebrew/bin/kanata` and select it
-6. Restart the kanata service:
-   ```bash
-   sudo launchctl stop com.example.kanata
-   sudo launchctl start com.example.kanata
-   ```
-7. Verify kanata is running by checking the logs:
-   ```bash
-   tail -f /Library/Logs/Kanata/kanata.out.log
-   tail -f /Library/Logs/Kanata/kanata.err.log
-   ```
+**Solution**: for **each** of Input Monitoring **and** Accessibility, under
+System Settings > Privacy & Security:
+1. Find the kanata entry — it may show an error or warning icon, or point at a
+   stale binary path
+2. Remove it with the `-` button (macOS pins the old path; a stale entry won't
+   authorize the current binary)
+3. Click `+`, navigate to `/opt/homebrew/bin/kanata`, and select it
+4. Make sure its toggle is on
 
-**Note**: You'll need to repeat this process each time Homebrew updates the kanata binary.
+Then restart the daemon (it's already loaded, so `kickstart -k` re-runs it in
+place — cleaner than stop/start):
+```bash
+sudo launchctl kickstart -k system/com.example.kanata
+```
+
+Verify it grabbed the keyboard cleanly (look for `keyboard grabbed, entering
+event processing loop` with no following `[ERROR]`):
+```bash
+tail -f /Library/Logs/Kanata/kanata.out.log /Library/Logs/Kanata/kanata.err.log
+```
+
+**Note**: You'll need to repeat this each time Homebrew updates the kanata binary.
+To avoid the churn, `brew pin kanata` stops it from silently updating out from
+under the permission grants.
 
 ## Resources
 

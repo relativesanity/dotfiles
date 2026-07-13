@@ -88,8 +88,11 @@ Helper shell functions (defined in `sh/.zfunctions.sh`) toggle a couple of macOS
 
 **System Permissions**
 Grant permissions when prompted:
-- Accessibility (for AeroSpace)
+- Accessibility (for AeroSpace, and for Kanata if installed)
 - Input Monitoring (for Kanata, if installed)
+
+Kanata needs *both* Accessibility and Input Monitoring, and macOS revokes them
+whenever Homebrew updates the binary — see `kanata/kanata.md` for the re-grant fix.
 
 ### Kanata Setup (Laptops Only)
 
