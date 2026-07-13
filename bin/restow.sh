@@ -80,7 +80,6 @@ readonly REQUIRED_DIRECTORIES=(
   "$HOME/.config/btop"
   "$HOME/.config/ghostty"
   "$HOME/.config/git"
-  "$HOME/.config/hcloud"
   "$HOME/.config/nvim"
   "$HOME/.config/ripgrep"
   "$HOME/.config/sketchybar"

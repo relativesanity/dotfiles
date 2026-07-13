@@ -36,8 +36,9 @@ Bootstrap persists `DOTFILES_PATH` to `~/.zprofile.local` so future shells resol
 gh auth login
 ```
 
-**Hetzner Cloud CLI**
-Edit `~/.config/hcloud/cli.toml` and add your API token.
+CLIs that write their own credentials into their config (e.g. Hetzner's
+`hcloud`) are not stowed — authenticate them locally per each tool's own
+instructions, so no API tokens ever land in this repo.
 
 ### Optional Configurations
 
