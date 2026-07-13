@@ -417,6 +417,19 @@ summarize_repack() {
     lines+=("  $entry  (pruned this run)")
   done <<<"$(lines_added "$after_cache" "$before_cache")"
 
+  # update_homebrew already ran `brew upgrade`, so anything still outdated was
+  # held back — pinned or version-locked. Surface it so a pinned formula (e.g.
+  # kanata, pinned to keep macOS from revoking its keyboard permissions) doesn't
+  # go stale unnoticed.
+  local held
+  held="$(brew outdated --formula --verbose 2>/dev/null || true)"
+  if [[ -n "$held" ]]; then
+    lines+=("Held back (pinned/outdated):")
+    while IFS= read -r entry; do
+      [[ -n "$entry" ]] && lines+=("  $entry")
+    done <<<"$held"
+  fi
+
   echo
   ui_box "repack summary" "" "${lines[@]}"
 }
