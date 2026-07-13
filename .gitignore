@@ -1,7 +1,5 @@
 Brewfile.lock.json
 Brewfile.local
 Brewfile.cache
-ssh/.ssh/id*
-ssh/.ssh/known_hosts*
 neovim/.config/nvim/lazy-lock.json
 CLAUDE.local.md
