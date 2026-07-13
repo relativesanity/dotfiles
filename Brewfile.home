@@ -2,12 +2,10 @@
 tap 'nikitabobko/tap'
 
 # Brews
-brew 'bat'
 brew 'btop'
 brew 'eza'
 brew 'fastfetch'
 brew 'fd'
-brew 'fzf'
 brew 'jq'
 brew 'lazygit'
 brew 'mas'
@@ -25,17 +23,18 @@ cask 'font-ia-writer-duo'
 cask 'font-ia-writer-mono'
 cask 'font-ia-writer-quattro'
 cask 'font-jetbrains-mono-nerd-font'
-cask 'ghostty'
 cask 'google-chrome'
 cask 'granola'
 cask 'logi-options+'
 cask 'obsidian'
+cask 'orbstack'
 cask 'readwise-ibooks'
 cask 'signal'
 cask 'superkey'
 cask 'superwhisper'
 cask 'tailscale-app'
 cask 'thingsmacsandboxhelper'
+cask 'utm'
 
 # Mac App Store
 mas '1Blocker - Ad Blocker', id: 1365531024
