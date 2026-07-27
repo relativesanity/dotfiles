@@ -33,7 +33,10 @@ return {
     local erb = snippets.gen_loader.from_file(
       vim.fn.stdpath("data") .. "/lazy/friendly-snippets/snippets/erb.json"
     )
-    local by_lang = snippets.gen_loader.from_lang()
+    -- html snippets are excluded: emmet-language-server already resolves the same
+    -- abbreviations (and its `div.card>ul>li*3` beats friendly-snippets' static
+    -- `div.`/`div#` entries), so loading them just doubled every markup match.
+    local by_lang = snippets.gen_loader.from_lang({ lang_patterns = { html = {} } })
     -- Inside class="…" the treesitter *language* is still html, so language-keyed
     -- snippets cheerfully offer tag snippets (`p`, `div`) where only a class name
     -- is valid. Only the node type separates them. ignore_injections=false is
