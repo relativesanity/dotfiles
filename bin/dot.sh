@@ -15,7 +15,7 @@ trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 #   ./dot.sh sync [flags]    pull, then packages + symlinks + runtimes
 #   ./dot.sh pack [flags]    preview & apply Brewfile changes (repack)
 #   ./dot.sh stow            preview & apply stow symlinks (restow)
-#   ./dot.sh env             preview & install ruby runtimes (reenv)
+#   ./dot.sh env             preview & install language runtimes (reenv)
 #   ./dot.sh doctor          environment health check
 #
 # Any flags after a subcommand pass straight through to the underlying engine
@@ -220,7 +220,7 @@ Usage:
   dot sync [flags]    pull, then packages + symlinks + runtimes (= redot)
   dot pack [flags]    preview & apply Brewfile changes           (= repack)
   dot stow            preview & apply stow symlinks              (= restow)
-  dot env             preview & install ruby runtimes            (= reenv)
+  dot env             preview & install language runtimes        (= reenv)
   dot doctor          environment health check
 
 Flags after pack/sync pass through to repack:

@@ -45,8 +45,8 @@ vim.lsp.enable("tailwindcss")
 -- menu rather than only behind emmet-vim's <C-y>,. No project root is needed —
 -- it works per-file, so root_dir is just the file's own directory.
 --
--- NOT installed by any Brewfile (no formula exists); a new machine needs:
---   npm i -g @olrtg/emmet-language-server
+-- No Homebrew formula exists, so it's declared in node/.default-npm and
+-- installed globally by `dot env` rather than by `dot pack`.
 vim.lsp.config("emmet_language_server", {
   cmd = { "emmet-language-server", "--stdio" },
   filetypes = { "html", "eruby", "css", "scss", "javascriptreact", "typescriptreact" },

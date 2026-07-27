@@ -6,21 +6,23 @@ IFS=$'\n\t'       # Stricter word splitting
 # Trap Ctrl-C (SIGINT) and exit gracefully
 trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 
-# rv runtime installer
-# Installs the Ruby pinned in ~/.ruby-version and the CLI tools listed in
-# ~/.default-gems (each as an isolated `rv tool`).
+# Language runtime installer
+# Installs the Ruby pinned in ~/.ruby-version, the CLI tools listed in
+# ~/.default-gems (each as an isolated `rv tool`), and the global npm packages
+# listed in ~/.default-npm (language servers with no Homebrew formula).
 # Supports:
-#   - macOS (via rv)
+#   - macOS (via rv and npm)
 #
 # Usage:
 #   ./reenv.sh [--plan]
 #
 # Options:
-#   --plan  Show whether the pinned Ruby and default tools are installed vs
-#           missing, then exit without installing anything
+#   --plan  Show whether the pinned Ruby, default tools and npm packages are
+#           installed vs missing, then exit without installing anything
 #
 # Prerequisites:
 #   - rv must be installed (optional - skips if not present)
+#   - npm must be installed (optional - skips if not present)
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=lib/ui.sh
@@ -28,6 +30,7 @@ source "$SCRIPT_DIR/lib/ui.sh"
 
 RUBY_VERSION_FILE="$HOME/.ruby-version"
 DEFAULT_GEMS_FILE="$HOME/.default-gems"
+DEFAULT_NPM_FILE="$HOME/.default-npm"
 
 # Echo the pinned Ruby version (first non-blank, non-comment line, trimmed),
 # or nothing if the file is absent/empty.
@@ -53,6 +56,17 @@ default_gems() {
   done < "$DEFAULT_GEMS_FILE"
 }
 
+# Echo the declared global npm packages, one per line.
+default_npm() {
+  [[ -e "$DEFAULT_NPM_FILE" ]] || return 0
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    line="${line#"${line%%[![:space:]]*}"}"
+    line="${line%"${line##*[![:space:]]}"}"
+    [[ -z "$line" || "$line" =~ ^# ]] && continue
+    echo "$line"
+  done < "$DEFAULT_NPM_FILE"
+}
+
 reenv() {
   local plan=false
   for arg in "$@"; do
@@ -66,75 +80,108 @@ reenv() {
 
   echo -e "\033[1;36m== reenv ==\033[0m"
 
+  local version="" installed_now=0 already=0 tools=0
+
+  # rv is optional and gated separately from npm, so a machine missing one still
+  # gets everything the other manages.
   if ! command -v rv >/dev/null 2>&1; then
-    print_status "rv not installed, skipping"
-    return 0
-  fi
-
-  local version installed_now=0 already=0
-  version="$(pinned_ruby)"
-
-  if [[ -z "$version" ]]; then
-    print_status "No ~/.ruby-version configured, skipping Ruby install"
-  elif rv ruby find "$version" >/dev/null 2>&1; then
-    print_status "Ruby $version already installed"
-    already=1
+    print_status "rv not installed, skipping Ruby"
   else
-    print_status "Installing Ruby $version"
-    rv ruby install "$version"
-    installed_now=1
+    version="$(pinned_ruby)"
+
+    if [[ -z "$version" ]]; then
+      print_status "No ~/.ruby-version configured, skipping Ruby install"
+    elif rv ruby find "$version" >/dev/null 2>&1; then
+      print_status "Ruby $version already installed"
+      already=1
+    else
+      print_status "Installing Ruby $version"
+      rv ruby install "$version"
+      installed_now=1
+    fi
+
+    # Default tools: `rv tool install` is idempotent (skips when already present),
+    # so we can call it unconditionally for each declared gem.
+    while IFS= read -r gem; do
+      [[ -z "$gem" ]] && continue
+      tools=$((tools + 1))
+      print_status "Installing tool: $gem"
+      rv tool install "$gem"
+    done < <(default_gems)
+
+    print_status "rv setup complete"
   fi
 
-  # Default tools: `rv tool install` is idempotent (skips when already present),
-  # so we can call it unconditionally for each declared gem.
-  local tools=0
-  while IFS= read -r gem; do
-    [[ -z "$gem" ]] && continue
-    tools=$((tools + 1))
-    print_status "Installing tool: $gem"
-    rv tool install "$gem"
-  done < <(default_gems)
-
-  print_status "rv setup complete"
+  # Global npm packages: language servers Homebrew has no formula for. Unlike
+  # `rv tool install`, `npm i -g` refetches even when current, so check first.
+  local pkgs=0 pkgs_installed=0
+  if ! command -v npm >/dev/null 2>&1; then
+    print_status "npm not installed, skipping global packages"
+  else
+    while IFS= read -r pkg; do
+      [[ -z "$pkg" ]] && continue
+      pkgs=$((pkgs + 1))
+      if npm ls -g --depth=0 "$pkg" >/dev/null 2>&1; then
+        print_status "npm package already installed: $pkg"
+      else
+        print_status "Installing npm package: $pkg"
+        npm install -g "$pkg"
+        pkgs_installed=$((pkgs_installed + 1))
+      fi
+    done < <(default_npm)
+  fi
 
   echo
   ui_box "reenv summary" "" \
     "Ruby: ${version:-none} (installed this run: ${installed_now}, already: ${already})" \
-    "Tools: ${tools} declared"
+    "Tools: ${tools} declared" \
+    "npm: ${pkgs} declared (installed this run: ${pkgs_installed})"
 }
 
 # ------------------------------------------------------------------------------------------------------
-# Read-only preview: compare ~/.ruby-version and ~/.default-gems against what
-# rv already has installed. No side effects.
+# Read-only preview: compare ~/.ruby-version, ~/.default-gems and ~/.default-npm
+# against what rv and npm already have installed. No side effects.
 plan_reenv() {
   echo "Plan — reenv (dry run, nothing installed)"
   echo
 
   if ! command -v rv >/dev/null 2>&1; then
     echo "  rv not installed — skipped"
-    return 0
-  fi
-
-  local version tools_installed
-  version="$(pinned_ruby)"
-
-  if [[ -z "$version" ]]; then
-    echo "  No ~/.ruby-version configured — skipped"
-  elif rv ruby find "$version" >/dev/null 2>&1; then
-    printf '  ✓ ruby %s\n' "$version"
   else
-    printf '  + ruby %s   (not installed)\n' "$version"
+    local version tools_installed
+    version="$(pinned_ruby)"
+
+    if [[ -z "$version" ]]; then
+      echo "  No ~/.ruby-version configured — skipped"
+    elif rv ruby find "$version" >/dev/null 2>&1; then
+      printf '  ✓ ruby %s\n' "$version"
+    else
+      printf '  + ruby %s   (not installed)\n' "$version"
+    fi
+
+    tools_installed="$(rv tool list 2>/dev/null || true)"
+    while IFS= read -r gem; do
+      [[ -z "$gem" ]] && continue
+      if grep -qiw "$gem" <<<"$tools_installed"; then
+        printf '  ✓ tool %s\n' "$gem"
+      else
+        printf '  + tool %s   (not installed)\n' "$gem"
+      fi
+    done < <(default_gems)
   fi
 
-  tools_installed="$(rv tool list 2>/dev/null || true)"
-  while IFS= read -r gem; do
-    [[ -z "$gem" ]] && continue
-    if grep -qiw "$gem" <<<"$tools_installed"; then
-      printf '  ✓ tool %s\n' "$gem"
-    else
-      printf '  + tool %s   (not installed)\n' "$gem"
-    fi
-  done < <(default_gems)
+  if ! command -v npm >/dev/null 2>&1; then
+    echo "  npm not installed — skipped"
+  else
+    while IFS= read -r pkg; do
+      [[ -z "$pkg" ]] && continue
+      if npm ls -g --depth=0 "$pkg" >/dev/null 2>&1; then
+        printf '  ✓ npm %s\n' "$pkg"
+      else
+        printf '  + npm %s   (not installed)\n' "$pkg"
+      fi
+    done < <(default_npm)
+  fi
 }
 
 # ------------------------------------------------------------------------------------------------------
