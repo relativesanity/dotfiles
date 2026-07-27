@@ -30,7 +30,9 @@ return {
     -- from_lang() keys off the *treesitter* language under the cursor, which in a
     -- .html.erb buffer is html (or ruby inside <% %>) and never eruby — so
     -- eruby.json needs its own filetype-gated loader to load at all.
-    local erb = snippets.gen_loader.from_file(vim.fn.stdpath("config") .. "/snippets/eruby.json")
+    local erb = snippets.gen_loader.from_file(
+      vim.fn.stdpath("data") .. "/lazy/friendly-snippets/snippets/erb.json"
+    )
     local by_lang = snippets.gen_loader.from_lang()
     -- Inside class="…" the treesitter *language* is still html, so language-keyed
     -- snippets cheerfully offer tag snippets (`p`, `div`) where only a class name
@@ -59,21 +61,14 @@ return {
     snippets.start_lsp_server({ match = false })
 
     require("mini.completion").setup()
-    -- Supertab: cycle the popup if one is open, else jump to the next snippet
-    -- placeholder if a session is live, else insert a literal Tab. Popup is
-    -- checked first so completing *inside* a placeholder still works.
-    -- <C-l>/<C-h> stay bound to the jumps too, for when a popup is in the way.
-    local function supertab(pum_key, direction, fallback)
-      return function()
-        if vim.fn.pumvisible() == 1 then return pum_key end
-        if MiniSnippets.session.get() ~= nil then
-          return "<Cmd>lua MiniSnippets.session.jump('" .. direction .. "')<CR>"
-        end
-        return fallback
-      end
+    -- Tab only cycles the popup; snippet placeholder jumps stay on <C-l>/<C-h>.
+    -- Overloading Tab with the jumps too made it unpredictable which of the
+    -- three things a press would do.
+    local pum = function(key, fallback)
+      return function() return vim.fn.pumvisible() == 1 and key or fallback end
     end
-    vim.keymap.set("i", "<Tab>", supertab("<C-n>", "next", "<Tab>"), { expr = true })
-    vim.keymap.set("i", "<S-Tab>", supertab("<C-p>", "prev", "<S-Tab>"), { expr = true })
+    vim.keymap.set("i", "<Tab>", pum("<C-n>", "<Tab>"), { expr = true })
+    vim.keymap.set("i", "<S-Tab>", pum("<C-p>", "<S-Tab>"), { expr = true })
 
     require("mini.ai").setup()
     MiniAi.config.custom_textobjects = {
