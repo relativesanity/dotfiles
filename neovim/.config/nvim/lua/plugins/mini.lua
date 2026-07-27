@@ -1,6 +1,10 @@
 return {
   "echasnovski/mini.nvim",
   version = false, -- track main (echasnovski keeps it stable)
+  -- Community snippet collection, data only (no lua). Must be on the runtimepath
+  -- rather than lazy-loaded, since gen_loader.from_lang() finds it by globbing rtp.
+  -- ESCAPE HATCH: delete this line to drop back to just snippets/eruby.json.
+  dependencies = { "rafamadriz/friendly-snippets" },
   config = function()
     require("mini.icons").setup()
     MiniIcons.mock_nvim_web_devicons()
@@ -27,14 +31,49 @@ return {
     -- .html.erb buffer is html (or ruby inside <% %>) and never eruby — so
     -- eruby.json needs its own filetype-gated loader to load at all.
     local erb = snippets.gen_loader.from_file(vim.fn.stdpath("config") .. "/snippets/eruby.json")
+    local by_lang = snippets.gen_loader.from_lang()
+    -- Inside class="…" the treesitter *language* is still html, so language-keyed
+    -- snippets cheerfully offer tag snippets (`p`, `div`) where only a class name
+    -- is valid. Only the node type separates them. ignore_injections=false is
+    -- required: without it erb reports the outer embedded_template node instead
+    -- of the injected html one, and the check silently never fires.
+    local function in_attribute_value()
+      local ok, node = pcall(vim.treesitter.get_node, { ignore_injections = false })
+      if not ok or node == nil then return false end
+      local t = node:type()
+      return t == "attribute_value" or t == "quoted_attribute_value"
+    end
     snippets.setup({
       snippets = {
         function(context)
-          return vim.bo[context.buf_id].filetype == "eruby" and erb(context) or {}
+          if in_attribute_value() then return {} end
+          local out = { by_lang(context) }
+          if vim.bo[context.buf_id].filetype == "eruby" then table.insert(out, erb(context)) end
+          return out
         end,
-        snippets.gen_loader.from_lang(),
       },
     })
+    -- Serve the loaded snippets as an in-process LSP source so they land in the
+    -- same menu as ruby_lsp instead of needing their own key. match=false hands
+    -- filtering to the completion engine, which is what mini.completion expects.
+    snippets.start_lsp_server({ match = false })
+
+    require("mini.completion").setup()
+    -- Supertab: cycle the popup if one is open, else jump to the next snippet
+    -- placeholder if a session is live, else insert a literal Tab. Popup is
+    -- checked first so completing *inside* a placeholder still works.
+    -- <C-l>/<C-h> stay bound to the jumps too, for when a popup is in the way.
+    local function supertab(pum_key, direction, fallback)
+      return function()
+        if vim.fn.pumvisible() == 1 then return pum_key end
+        if MiniSnippets.session.get() ~= nil then
+          return "<Cmd>lua MiniSnippets.session.jump('" .. direction .. "')<CR>"
+        end
+        return fallback
+      end
+    end
+    vim.keymap.set("i", "<Tab>", supertab("<C-n>", "next", "<Tab>"), { expr = true })
+    vim.keymap.set("i", "<S-Tab>", supertab("<C-p>", "prev", "<S-Tab>"), { expr = true })
 
     require("mini.ai").setup()
     MiniAi.config.custom_textobjects = {

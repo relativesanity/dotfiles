@@ -14,6 +14,10 @@ vim.opt.autoread = true -- re-read the buffer if it's edited elsewhere
 vim.opt.clipboard = "unnamedplus" -- sync register with the system clipboard
 vim.opt.colorcolumn = "80,100" -- show columns at 80 and 100 chars
 vim.opt.cursorline = true -- highlight the current line
+-- fuzzy makes mini.completion narrow as you keep typing; pumheight caps how tall
+-- the menu can get regardless of how many items match
+vim.opt.completeopt = "menuone,noselect,fuzzy"
+vim.opt.pumheight = 10
 vim.opt.number = true -- show line numbers
 vim.opt.relativenumber = true -- relative line numbers for easy jumping
 vim.opt.scrolloff = 8 -- keep 8 lines of context above/below cursor
