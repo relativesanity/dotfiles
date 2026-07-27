@@ -19,6 +19,23 @@ return {
     require("mini.notify").setup()
     vim.notify = MiniNotify.make_notify()
 
+    -- Snippets from snippets/<lang>.json beside this config. Emmet covers markup
+    -- but structurally can't emit erb blocks: it rewrites every | into its cursor
+    -- marker, so `do |item|` is unexpressible. <C-j> expands, <C-l>/<C-h> jump.
+    local snippets = require("mini.snippets")
+    -- from_lang() keys off the *treesitter* language under the cursor, which in a
+    -- .html.erb buffer is html (or ruby inside <% %>) and never eruby — so
+    -- eruby.json needs its own filetype-gated loader to load at all.
+    local erb = snippets.gen_loader.from_file(vim.fn.stdpath("config") .. "/snippets/eruby.json")
+    snippets.setup({
+      snippets = {
+        function(context)
+          return vim.bo[context.buf_id].filetype == "eruby" and erb(context) or {}
+        end,
+        snippets.gen_loader.from_lang(),
+      },
+    })
+
     require("mini.ai").setup()
     MiniAi.config.custom_textobjects = {
       -- treesitter method/class/block objects (queries from nvim-treesitter-textobjects).

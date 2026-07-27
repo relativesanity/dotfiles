@@ -1,0 +1,16 @@
+{
+  "erb tag":       { "prefix": "erb",    "body": "<% $1 %>$0" },
+  "erb output":    { "prefix": "erbo",   "body": "<%= $1 %>$0" },
+  "erb comment":   { "prefix": "erbc",   "body": "<%# $1 %>$0" },
+
+  "if":            { "prefix": "if",     "body": ["<% if $1 %>", "  $0", "<% end %>"] },
+  "if else":       { "prefix": "ife",    "body": ["<% if $1 %>", "  $2", "<% else %>", "  $0", "<% end %>"] },
+  "unless":        { "prefix": "unless", "body": ["<% unless $1 %>", "  $0", "<% end %>"] },
+  "each":          { "prefix": "each",   "body": ["<% $1.each do |${2:item}| %>", "  $0", "<% end %>"] },
+
+  "render":        { "prefix": "render", "body": "<%= render $1 %>$0" },
+  "render partial":{ "prefix": "rp",     "body": "<%= render \"$1\", ${2:locals}: $0 %>" },
+  "link_to":       { "prefix": "link",   "body": "<%= link_to \"$1\", $2 %>$0" },
+  "form_with":     { "prefix": "form",   "body": ["<%= form_with model: $1 do |form| %>", "  $0", "<% end %>"] },
+  "content_for":   { "prefix": "cfor",   "body": ["<%= content_for :$1 do %>", "  $0", "<% end %>"] }
+}
