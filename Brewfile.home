@@ -12,6 +12,7 @@ brew 'mas'
 brew 'mosh'
 brew 'netlify-cli'
 brew 'node'
+brew 'tailwindcss-language-server' # class completions in html/erb; see neovim lsp.lua
 
 # Casks
 cask 'nikitabobko/tap/aerospace', trusted: true
