@@ -41,11 +41,18 @@ return {
     vim.api.nvim_create_autocmd("FileType", {
       callback = function(args)
         if not pcall(vim.treesitter.start, args.buf) then return end
+        -- Only take over indenting where the parser ships indent queries.
+        -- embedded_template (eruby) has none, so claiming indentexpr there left
+        -- erb with no indenting at all instead of nvim's own indent/eruby.vim,
+        -- which handles the html+ruby mix. eruby is the only such filetype here.
+        local ft = vim.bo[args.buf].filetype
+        local lang = vim.treesitter.language.get_lang(ft) or ft
+        local ok, query = pcall(vim.treesitter.query.get, lang, "indents")
+        if not (ok and query) then return end
         -- vim's indenters need vim syntax, which treesitter highlighting replaces
         vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
         -- ruby's '.'/':'' indentkeys retrigger treesitter mid-chain and dedent to col 0
-        local ft = vim.bo[args.buf].filetype
-        if ft == "ruby" or ft == "eruby" then
+        if ft == "ruby" then
           vim.opt_local.indentkeys:remove({ ".", ":" })
         end
       end,
