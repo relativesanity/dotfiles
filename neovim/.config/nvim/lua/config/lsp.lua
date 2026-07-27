@@ -41,4 +41,20 @@ vim.lsp.config("tailwindcss", {
 })
 vim.lsp.enable("tailwindcss")
 
+-- Emmet abbreviations as completion items, so `div.card>ul>li*3` resolves in the
+-- menu rather than only behind emmet-vim's <C-y>,. No project root is needed —
+-- it works per-file, so root_dir is just the file's own directory.
+--
+-- NOT installed by any Brewfile (no formula exists); a new machine needs:
+--   npm i -g @olrtg/emmet-language-server
+vim.lsp.config("emmet_language_server", {
+  cmd = { "emmet-language-server", "--stdio" },
+  filetypes = { "html", "eruby", "css", "scss", "javascriptreact", "typescriptreact" },
+  root_dir = function(bufnr, on_dir)
+    local path = vim.api.nvim_buf_get_name(bufnr)
+    if path ~= "" then on_dir(vim.fs.dirname(path)) end
+  end,
+})
+vim.lsp.enable("emmet_language_server")
+
 vim.diagnostic.config({ virtual_text = true })
