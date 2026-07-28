@@ -42,8 +42,8 @@ vim.lsp.config("tailwindcss", {
 vim.lsp.enable("tailwindcss")
 
 -- Emmet abbreviations as completion items, so `div.card>ul>li*3` resolves in the
--- menu rather than only behind emmet-vim's <C-y>,. No project root is needed —
--- it works per-file, so root_dir is just the file's own directory.
+-- same menu as everything else. No project root is needed — it works per-file,
+-- so root_dir is just the file's own directory.
 --
 -- No Homebrew formula exists, so it's declared in node/.default-npm and
 -- installed globally by `dot env` rather than by `dot pack`.
