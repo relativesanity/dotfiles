@@ -143,3 +143,30 @@ status_rv() {
     printf 'ruby %s  (to install)' "$version"
   fi
 }
+
+# ------------------------------------------------------------------------------------------------------
+# Global npm tools declared in ~/.default-npm vs what npm has installed.
+# Lists installed packages once and matches locally: `npm ls` costs ~0.3s, and
+# this runs on every menu render.
+status_npm() {
+  local installed declared=0 missing=0 pkg
+  command -v npm >/dev/null 2>&1 || { printf 'not installed'; return 0; }
+  [[ -e "$HOME/.default-npm" ]] || { printf 'no .default-npm'; return 0; }
+
+  installed="$(npm ls -g --depth=0 --parseable 2>/dev/null || true)"
+
+  while IFS= read -r pkg || [[ -n "$pkg" ]]; do
+    pkg="$(sed -e 's/#.*//' -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' <<<"$pkg")"
+    [[ -z "$pkg" ]] && continue
+    declared=$((declared + 1))
+    grep -q "/${pkg}\$" <<<"$installed" || missing=$((missing + 1))
+  done < "$HOME/.default-npm"
+
+  if [[ "$declared" -eq 0 ]]; then
+    printf 'none declared'
+  elif [[ "$missing" -eq 0 ]]; then
+    printf '%s tool(s)  (in sync)' "$declared"
+  else
+    printf '%s of %s to install' "$missing" "$declared"
+  fi
+}

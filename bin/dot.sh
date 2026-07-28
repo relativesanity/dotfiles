@@ -43,20 +43,22 @@ dot_menu() {
     return 0
   fi
 
-  local env git brew stow rv
+  local env git brew stow rv npm
   env="$(detect_environment)"
   print_status "Gathering status…"
   git="$(status_git)"
   brew="$(status_brew)"
   stow="$(status_stow)"
   rv="$(status_rv)"
+  npm="$(status_npm)"
 
   ui_header "dotfiles · $(whoami)" "$env · ${git%% *}"
   ui_box \
     "⎇  $git" \
     "📦 brew   $brew" \
     "🔗 stow   $stow" \
-    "🔧 rv     $rv"
+    "🔧 rv     $rv" \
+    "⬢  npm    $npm"
   echo
 
   # Labels lead with the subcommand verb (what `dot <verb>` runs) plus a gloss.
@@ -171,6 +173,7 @@ dot_doctor() {
   lines+=("$(_doctor_tool Homebrew brew)")
   lines+=("$(_doctor_tool Stow stow)")
   lines+=("$(_doctor_tool rv)")
+  lines+=("$(_doctor_tool npm)")
   lines+=("$(_doctor_tool gum)")
   lines+=("$(_doctor_tool mas)")
 
@@ -195,6 +198,7 @@ dot_doctor() {
   echo "  brew   $(status_brew)"
   echo "  stow   $(status_stow)"
   echo "  rv     $(status_rv)"
+  echo "  npm    $(status_npm)"
 }
 
 # Print "✓ name version" or "✗ name missing" for a tool.
