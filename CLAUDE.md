@@ -29,13 +29,22 @@ Two sourced libraries (no top-level side effects):
 - `bin/lib/status.sh` — shared data: `detect_environment`, `intent_brewfiles`,
   `compute_untracked`, `stow_packages_list`, and the one-line `status_*` summaries.
   This is the single home for the brew intent/cache logic — don't redefine it in an
-  engine.
+  engine. `compute_untracked` returns non-zero and echoes nothing when its brew/mas
+  probes fail; callers MUST check that status, because the cache it feeds is what
+  shields undeclared apps from `brew bundle --zap` — treating a failed probe as
+  "nothing untracked" deletes the shield and uninstalls the lot. Never consume it
+  via `< <(…)`, which discards the status.
 - `bin/lib/ui.sh` — the ONLY file that knows about `gum`. Every wrapper
   (`ui_menu`/`ui_confirm`/`ui_spin`/`ui_box`/`ui_header`/`print_*`) falls back to
   plain text when `gum` is absent or output isn't a TTY, and the interactive ones
   take a safe default (decline / no selection) rather than hang. This fallback
   contract is what keeps the piped `curl | bash` bootstrap and non-interactive runs
   working — preserve it.
+
+Engines invoked as `if ! engine "$@"` run with errexit *disabled* for their entire
+body — bash ignores `set -e` inside a condition — so every step must fail
+explicitly (`cmd || { print_failure "…"; return 1; }`). A bare
+`cmd || print_failure "…"` prints in red and then carries straight on.
 
 `--plan` convention: each engine accepts `--plan` to print a read-only dry-run
 summary and exit without side effects. `dot` renders that before asking to apply.

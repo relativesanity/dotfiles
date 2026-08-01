@@ -42,31 +42,55 @@ intent_brewfiles() {
 # ------------------------------------------------------------------------------------------------------
 # Echo untracked mas apps and casks — installed but not declared in any tracked
 # Brewfile — as Brewfile entries, one per line. No side effects.
+#
+# Returns non-zero, having echoed nothing, if either probe fails. Callers MUST
+# check that status: the cache built from this list is what shields undeclared
+# apps from `brew bundle --zap`, so a failed probe read as "nothing untracked"
+# would uninstall the very apps it exists to protect.
 compute_untracked() {
-  local line id name declared
-  local intent=()
+  # `probe_rc`, not `status`: this file is sourced, and `status` is read-only in zsh.
+  local line id name declared out mas_list probe_rc=0
+  local intent=() result=()
   while IFS= read -r line; do intent+=("$line"); done < <(intent_brewfiles)
 
   # Casks: defer matching to brew (handles tap prefixes, versions, metacharacters).
   # Piping the Brewfile via stdin makes stdin a non-tty, suppressing the cleanup
-  # prompt; `|| true` absorbs the exit-1-on-drift. Parse only the casks section;
-  # tokens never contain spaces, so whitespace-splitting the columns is safe.
-  cat "${intent[@]}" | brew bundle cleanup --casks --file=- 2>/dev/null | awk '
+  # prompt. brew exits 1 both when it finds drift and when it fails outright, so
+  # the status alone can't tell those apart — but a run that got far enough to
+  # report either exits 0 or ends with brew's "Run `brew bundle cleanup --force`"
+  # trailer. Anything else (invalid Brewfile, broken tap) is a genuine failure.
+  out="$(cat "${intent[@]}" | brew bundle cleanup --casks --file=- 2>&1)" || probe_rc=$?
+  if ((probe_rc != 0)) && ! grep -qF 'Run `brew bundle cleanup --force`' <<<"$out"; then
+    return 1
+  fi
+
+  # Parse only the casks section; tokens never contain spaces, so
+  # whitespace-splitting the columns is safe.
+  while IFS= read -r line; do
+    [[ -n "$line" ]] && result+=("$line")
+  done < <(awk '
     /^Would uninstall casks:/ { grab = 1; next }
     /^Would / || /^Run `brew/ { grab = 0 }
     grab { for (i = 1; i <= NF; i++) print "cask \"" $i "\"" }
-  ' || true
+  ' <<<"$out")
 
   # mas: pure integer-id comparison, computed locally (no normalization needed).
   # `mas list` prints "<id>  <name>  (<version>)"; take the id, drop the trailing
   # version, and join the middle fields back into the name.
   if command -v mas >/dev/null 2>&1; then
+    mas_list="$(mas list)" || return 1
     declared=$(grep -rhoE 'id: [0-9]+' "${intent[@]}" | grep -oE '[0-9]+' | sort -u)
     while IFS=$'\t' read -r id name; do
+      [[ -n "$id" ]] || continue
       grep -qxF "$id" <<<"$declared" && continue
-      echo "mas \"$name\", id: $id"
-    done < <(mas list | awk '{ id=$1; n=$2; for (i=3; i<NF; i++) n=n" "$i; print id "\t" n }')
+      result+=("mas \"$name\", id: $id")
+    done < <(awk '{ id=$1; n=$2; for (i=3; i<NF; i++) n=n" "$i; print id "\t" n }' <<<"$mas_list")
   fi
+
+  # Buffered until here so a late failure can never leave a caller holding a
+  # partial list it would mistake for the whole picture.
+  ((${#result[@]})) && printf '%s\n' "${result[@]}"
+  return 0
 }
 
 # ------------------------------------------------------------------------------------------------------
@@ -101,9 +125,15 @@ status_git() {
 }
 
 status_brew() {
-  local untracked outdated
+  local untracked outdated list
   command -v brew >/dev/null 2>&1 || { printf 'brew not installed'; return 0; }
-  untracked="$(compute_untracked 2>/dev/null | grep -c . || true)"
+  # '?' rather than 0 when the probe fails — "0 untracked" would read as "nothing
+  # to shield", which is the opposite of what an unknown answer means here.
+  if list="$(compute_untracked 2>/dev/null)"; then
+    untracked="$(grep -c . <<<"$list" || true)"
+  else
+    untracked='?'
+  fi
   outdated="$(brew outdated --quiet 2>/dev/null | grep -c . || true)"
   printf '%s untracked · %s outdated' "${untracked:-0}" "${outdated:-0}"
 }
