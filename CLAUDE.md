@@ -17,6 +17,8 @@ Non-obvious facts:
 
 Use `/commit`. Only commit when explicitly asked. Order commits as a logical narrative (foundation before features), not grouped by type of change.
 
+A `PreToolUse` hook (`claude/.claude/hooks/check-doc-drift.sh`, wired up in `claude/.claude/settings.json`) blocks any `git commit` that removes a shell function or deletes a file whose name is still referenced in a tracked file. This is enforcement, not a reminder — the harness runs it, so it cannot be skipped. When a mention is deliberate (a migration note naming an old filename, say), put `doc-drift-ok` on that line and the check ignores it. It searches tracked files only, so scratch files never trigger it.
+
 ## Architecture (`bin/`)
 
 Each script stands alone and is the front door to its own job: `repack.sh`
