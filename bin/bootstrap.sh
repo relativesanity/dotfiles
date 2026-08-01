@@ -55,6 +55,7 @@ bootstrap() {
   local dotfiles="${DOTFILES_PATH:-$HOME/.dotfiles}"
   if ! confirm_full_install; then
     print_status "Stopping after bootstrap. Run '$dotfiles/bin/dot.sh' to install packages and symlinks."
+    print_status "(the shorter 'dot' command appears once the shell configs are stowed)"
     return 0
   fi
 
@@ -119,6 +120,10 @@ persist_dotfiles_path() {
 }
 
 # ------------------------------------------------------------------------------------------------------
+# repack.sh has an ensure_homebrew too, and the duplication is deliberate: this
+# one *installs* Homebrew, that one only configures an existing install. They
+# can't be shared — bootstrap runs from `curl` before the repo exists, so it
+# cannot source bin/lib. Don't merge them into a library.
 ensure_homebrew() {
   print_status "Checking homebrew"
   if command -v brew >/dev/null 2>&1; then
