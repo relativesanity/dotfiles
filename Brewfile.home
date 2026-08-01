@@ -1,60 +1,60 @@
 # Taps
-tap 'nikitabobko/tap'
+tap "nikitabobko/tap"
 
 # Brews
-brew 'btop'
-brew 'eza'
-brew 'fastfetch'
-brew 'fd'
-brew 'jq'
-brew 'lazygit'
-brew 'mas'
-brew 'mosh'
-brew 'netlify-cli'
-brew 'node'
-brew 'tailwindcss-language-server' # class completions in html/erb; see neovim lsp.lua
+brew "btop"
+brew "eza"
+brew "fastfetch"
+brew "fd"
+brew "jq"
+brew "lazygit"
+brew "mas"
+brew "mosh"
+brew "netlify-cli"
+brew "node"
+brew "tailwindcss-language-server" # class completions in html/erb; see neovim lsp.lua
 
 # Casks
-cask 'nikitabobko/tap/aerospace', trusted: true
-cask 'backblaze'
-cask 'claude'
-cask 'claude-code@latest'
-cask 'devonthink'
-cask 'font-ia-writer-duo'
-cask 'font-ia-writer-mono'
-cask 'font-ia-writer-quattro'
-cask 'font-jetbrains-mono-nerd-font'
-cask 'google-chrome'
-cask 'granola'
-cask 'logi-options+'
-cask 'obsidian'
-cask 'orbstack'
-cask 'readwise-ibooks'
-cask 'signal'
-cask 'superkey'
-cask 'superwhisper'
-cask 'tailscale-app'
-cask 'thingsmacsandboxhelper'
-cask 'utm'
+cask "nikitabobko/tap/aerospace", trusted: true
+cask "backblaze"
+cask "claude"
+cask "claude-code@latest"
+cask "devonthink"
+cask "font-ia-writer-duo"
+cask "font-ia-writer-mono"
+cask "font-ia-writer-quattro"
+cask "font-jetbrains-mono-nerd-font"
+cask "google-chrome"
+cask "granola"
+cask "logi-options+"
+cask "obsidian"
+cask "orbstack"
+cask "readwise-ibooks"
+cask "signal"
+cask "superkey"
+cask "superwhisper"
+cask "tailscale-app"
+cask "thingsmacsandboxhelper"
+cask "utm"
 
 # Mac App Store
-mas '1Blocker - Ad Blocker', id: 1365531024
-mas 'Bear: Markdown Notes', id: 1091189122
-mas 'DaisyDisk', id: 411643860
-mas 'Day One', id: 1055511498
-mas 'Displaperture', id: 1543920362
-mas 'Fantastical - Calendar', id: 975937182
-mas 'Hand Mirror', id: 1502839586
-mas 'iA Writer', id: 775737590
-mas 'Keynote: Design Presentations', id: 361285480
-mas 'NordVPN: VPN Fast & Secure', id: 905953485
-mas 'Numbers: Make Spreadsheets', id: 361304891
-mas 'Pages: Create Documents', id: 361309726
-mas 'Photomator', id: 1444636541
-mas 'Save to Reader', id: 1640236961
-mas 'Soulver 4', id: 1508732804
-mas 'TestFlight', id: 899247664
-mas 'Things 3', id: 904280696
-mas 'Triode - Internet Radio', id: 1450027401
-mas 'UnTrap for YouTube', id: 1637438059
-mas 'Xcode', id: 497799835
+mas "1Blocker - Ad Blocker", id: 1365531024
+mas "Bear: Markdown Notes", id: 1091189122
+mas "DaisyDisk", id: 411643860
+mas "Day One", id: 1055511498
+mas "Displaperture", id: 1543920362
+mas "Fantastical - Calendar", id: 975937182
+mas "Hand Mirror", id: 1502839586
+mas "iA Writer", id: 775737590
+mas "Keynote: Design Presentations", id: 361285480
+mas "NordVPN: VPN Fast & Secure", id: 905953485
+mas "Numbers: Make Spreadsheets", id: 361304891
+mas "Pages: Create Documents", id: 361309726
+mas "Photomator", id: 1444636541
+mas "Save to Reader", id: 1640236961
+mas "Soulver 4", id: 1508732804
+mas "TestFlight", id: 899247664
+mas "Things 3", id: 904280696
+mas "Triode - Internet Radio", id: 1450027401
+mas "UnTrap for YouTube", id: 1637438059
+mas "Xcode", id: 497799835

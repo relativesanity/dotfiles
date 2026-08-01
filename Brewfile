@@ -2,18 +2,18 @@
 # These packages are required for dotfiles deployment and basic terminal functionality.
 # Environment-specific packages are in Brewfile.home or Brewfile.work
 
-brew 'bat'
-brew 'fzf'
-brew 'gh'
-brew 'git'
-brew 'libyaml'
-brew 'neovim'
-brew 'ripgrep'
-brew 'rv' # Ruby version + gem manager (prebuilt rubies, no compiling); see ruby/.ruby-version
-brew 'starship'
-brew 'stow'
-brew 'tmux'
-brew 'tree-sitter-cli' # nvim-treesitter (main) builds parsers via the tree-sitter CLI
-brew 'zoxide'
+brew "bat"
+brew "fzf"
+brew "gh"
+brew "git"
+brew "libyaml"
+brew "neovim"
+brew "ripgrep"
+brew "rv" # Ruby version + gem manager (prebuilt rubies, no compiling); see ruby/.ruby-version
+brew "starship"
+brew "stow"
+brew "tmux"
+brew "tree-sitter-cli" # nvim-treesitter (main) builds parsers via the tree-sitter CLI
+brew "zoxide"
 
-cask 'ghostty'
+cask "ghostty"
