@@ -55,7 +55,7 @@ findings=""
 for name in "${names[@]}"; do
   hits="$(git grep -nE "(^|[^A-Za-z0-9_./-])${name//./\\.}([^A-Za-z0-9_-]|$)" 2>/dev/null |
     grep -v 'doc-drift-ok' || true)"
-  [[ -n "$hits" ]] && findings+="  $name is still referenced:"$'\n'"$(sed 's/^/    /' <<<"$hits")"$'\n'
+  [[ -n "$hits" ]] && findings+="  $name is still referenced:"$'\n'"    ${hits//$'\n'/$'\n'    }"$'\n'
 done
 
 [[ -n "$findings" ]] || exit 0
