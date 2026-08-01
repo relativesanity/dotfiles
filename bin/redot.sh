@@ -8,24 +8,13 @@ trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 
 # Dotfiles sync - pull, then packages, symlinks and language runtimes
 # Runs repack, restow and reenv in that order (reenv needs rv, which repack
-# installs). Each of those prints its own plan and asks before applying, so
-# this script only orchestrates — it asks nothing of its own.
+# installs). Each prints its own plan and asks before applying, so this script
+# only orchestrates — it asks nothing of its own.
 # Supports:
 #   - macOS (via Homebrew)
 #
 # Usage:
-#   ./redot.sh [--plan] [--yes] [repack flags…]
-#
-# Options:
-#   --plan  Print each script's dry-run plan in turn, then exit without
-#           applying anything
-#   --yes   Pass --yes to each script, applying without prompts
-#
-# Any other flags pass through to repack, e.g:
-#   --update-only   bundle without removing anything
-#   --skip-cache    zap apps not in the Brewfiles or the cache
-#   --clear-cache   delete the cache and zap every untracked app
-#   --select-cache  pick which untracked apps to prune; keep the rest cached
+#   ./redot.sh [--install-only | --prune]       (--help for the options)
 #
 # Prerequisites:
 #   - dotfiles repository must be present
@@ -35,21 +24,27 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=lib/common.sh
 source "$SCRIPT_DIR/lib/common.sh"
 
-redot() {
-  local plan=false
-  local yes=false
-  local repack_args=()
-  local arg
-  for arg in "$@"; do
-    case "$arg" in
-      --plan) plan=true ;;
-      --yes) yes=true ;;
-      *) repack_args+=("$arg") ;;
-    esac
-  done
+usage() {
+  cat <<'EOF'
+redot — pull the dotfiles repo, then apply all of it
 
-  if [[ "$plan" == "true" ]]; then
-    plan_redot ${repack_args[@]+"${repack_args[@]}"}
+Usage: redot.sh [--install-only | --prune]
+
+Runs repack, then restow, then reenv (reenv needs rv, which repack installs).
+Each prints its own plan and asks before applying — answer no to preview only.
+
+Options (passed through to repack):
+  --install-only  Install what's declared and missing; no upgrades, no removals.
+  --prune         Use Brewfile.keep as it stands, removing anything not on it.
+  --help, -h      Show this.
+
+restow and reenv take no options.
+EOF
+}
+
+redot() {
+  if [[ "${1:-}" == "--help" || "${1:-}" == "-h" ]]; then
+    usage
     return 0
   fi
 
@@ -57,18 +52,12 @@ redot() {
 
   pull_dotfiles || return 1
 
-  # --yes is the only flag the other two understand; the rest are repack's.
-  local pass=()
-  if [[ "$yes" == "true" ]]; then
-    pass+=(--yes)
-    repack_args+=(--yes)
-  fi
-
-  "$SCRIPT_DIR/repack.sh" ${repack_args[@]+"${repack_args[@]}"} || return 1
+  # Only repack takes options; the other two are argument-free by design.
+  "$SCRIPT_DIR/repack.sh" "$@" || return 1
   echo
-  "$SCRIPT_DIR/restow.sh" ${pass[@]+"${pass[@]}"} || return 1
+  "$SCRIPT_DIR/restow.sh" || return 1
   echo
-  "$SCRIPT_DIR/reenv.sh" ${pass[@]+"${pass[@]}"} || return 1
+  "$SCRIPT_DIR/reenv.sh" || return 1
 }
 
 # ------------------------------------------------------------------------------------------------------
@@ -90,16 +79,6 @@ pull_dotfiles() {
     print_failure "Failed to pull from upstream"
     return 1
   }
-}
-
-# ------------------------------------------------------------------------------------------------------
-# Read-only preview: each script's own plan, in the order they would run.
-plan_redot() {
-  local script
-  for script in repack restow reenv; do
-    "$SCRIPT_DIR/$script.sh" --plan "$@"
-    echo
-  done
 }
 
 # ------------------------------------------------------------------------------------------------------

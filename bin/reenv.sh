@@ -14,14 +14,9 @@ trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 #   - macOS (via rv and npm)
 #
 # Usage:
-#   ./reenv.sh [--plan] [--yes]
+#   ./reenv.sh                                 (--help for detail)
 #
-# Run with no arguments it prints the plan and asks before applying.
-#
-# Options:
-#   --plan  Show whether the pinned Ruby, default tools and npm packages are
-#           installed vs missing, then exit without installing anything
-#   --yes   Install without printing the plan or asking
+# Prints a plan and asks before applying. Takes no options.
 #
 # Prerequisites:
 #   - rv must be installed (optional - skips if not present)
@@ -70,29 +65,39 @@ default_npm() {
   done < "$DEFAULT_NPM_FILE"
 }
 
-reenv() {
-  local plan=false
-  local yes=false
-  for arg in "$@"; do
-    [[ "$arg" == "--plan" ]] && plan=true
-    [[ "$arg" == "--yes" ]] && yes=true
-  done
+usage() {
+  cat <<'EOF'
+reenv — install the language runtimes and global tools
 
-  if [[ "$plan" == "true" ]]; then
-    plan_reenv
+Usage: reenv.sh
+
+Takes no options. It prints a plan and asks before applying — answer no to
+preview only.
+
+Installs the Ruby pinned in ~/.ruby-version, the CLI tools in ~/.default-gems
+(each as an isolated rv tool), and the global npm packages in ~/.default-npm.
+EOF
+}
+
+reenv() {
+  if [[ "${1:-}" == "--help" || "${1:-}" == "-h" ]]; then
+    usage
     return 0
+  fi
+  if [[ $# -gt 0 ]]; then
+    print_failure "Unknown option: $1"
+    print_status "Try 'reenv.sh --help'."
+    return 1
   fi
 
   print_header reenv
 
-  if [[ "$yes" == "false" ]]; then
-    plan_reenv
-    if ! confirm "Apply this plan?"; then
-      print_status "Nothing applied"
-      return 0
-    fi
-    echo
+  plan_reenv
+  if ! confirm "Apply this plan?"; then
+    print_status "Nothing applied"
+    return 0
   fi
+  echo
 
   local version="" installed_now=0 already=0 tools=0
 

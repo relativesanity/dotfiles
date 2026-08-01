@@ -4,7 +4,7 @@
 #
 # This file is meant to be *sourced*, not executed — it only defines functions
 # and has no side effects at load time. It holds the plain output/prompt helpers
-# every script uses and the brew intent/cache logic, which must live in exactly
+# every script uses and the brew intent/keep-list logic, which must live in exactly
 # one place (see compute_untracked below).
 #
 # bootstrap.sh deliberately does NOT source this: it runs from `curl` before the
@@ -39,47 +39,25 @@ print_block() {
 
 # confirm "question" — 0 for yes. Anything but y/yes is no.
 #
-# With no terminal reachable there is nobody to ask, so this answers YES: it
-# guards "apply the plan I just printed?" in a run the caller started
-# deliberately, and an unattended sync must neither stall nor quietly do
-# nothing. Destructive one-offs that should refuse instead (--clear-cache) ask
-# their own question rather than using this.
+# The two failure modes must not be conflated. Writing the prompt is the probe
+# for a terminal: if that fails there is nobody to ask, and an unattended run
+# answers YES so a cron sync neither stalls nor silently does nothing. But once
+# a terminal exists, a failed READ means EOF — Ctrl-D, or a pty closing — and
+# that is a person declining, so it answers NO. Treating both as yes would make
+# Ctrl-D at this prompt approve an uninstall.
 confirm() {
   local reply=""
-  { printf '%s [y/N] ' "$1" >/dev/tty; read -r reply </dev/tty; } 2>/dev/null || return 0
+  printf '%s [y/N] ' "$1" >/dev/tty 2>/dev/null || return 0
+  read -r reply </dev/tty 2>/dev/null || {
+    printf '\n' >/dev/tty 2>/dev/null || true
+    return 1
+  }
 
   # Strict IFS ($'\n\t') leaves surrounding spaces on, so " y" would miss below.
   reply="${reply#"${reply%%[![:space:]]*}"}"
   reply="${reply%"${reply##*[![:space:]]}"}"
 
   [[ "$reply" =~ ^[Yy]([Ee][Ss])?$ ]]
-}
-
-# choose_multi "header" -- item… — echo the chosen items, one per line.
-# Nothing is pre-selected, so an empty answer chooses nothing. Returns non-zero
-# only when there is no terminal to ask on; choosing nothing is a success.
-choose_multi() {
-  local header="$1"
-  shift
-  [[ "${1:-}" == "--" ]] && shift
-
-  local item i=1 line n
-  {
-    printf '%s\n' "$header"
-    for item in "$@"; do
-      printf '  %d) %s\n' "$i" "$item"
-      i=$((i + 1))
-    done
-    printf 'Numbers to select (space-separated, blank = none): '
-  } >/dev/tty 2>/dev/null || return 1
-  read -r line </dev/tty 2>/dev/null || return 1
-
-  local nums=()
-  IFS=' ' read -ra nums <<<"$line"
-  for n in ${nums[@]+"${nums[@]}"}; do
-    [[ "$n" =~ ^[0-9]+$ ]] && ((n >= 1 && n <= $#)) && printf '%s\n' "${!n}"
-  done
-  return 0
 }
 
 # ------------------------------------------------------------------------------------------------------
@@ -98,7 +76,7 @@ detect_environment() {
 
 # ------------------------------------------------------------------------------------------------------
 # Echo the tracked (intended) Brewfiles, in load order, one per line.
-# Deliberately excludes Brewfile.cache so the cache is always recomputed
+# Deliberately excludes Brewfile.keep so the keep-list is always recomputed
 # against intent and shrinks as entries are promoted into a real Brewfile.
 intent_brewfiles() {
   local filepath environment
@@ -115,7 +93,7 @@ intent_brewfiles() {
 # Brewfile — as Brewfile entries, one per line. No side effects.
 #
 # Returns non-zero, having echoed nothing, if either probe fails. Callers MUST
-# check that status: the cache built from this list is what shields undeclared
+# check that status: the keep-list built from it is what protects undeclared
 # apps from `brew bundle --zap`, so a failed probe read as "nothing untracked"
 # would uninstall the very apps it exists to protect.
 compute_untracked() {
@@ -133,7 +111,7 @@ compute_untracked() {
   #
   # Keep stderr out of it: brew's "Warning: Skipping …" lines share the stream
   # only if merged, and one landing between the casks header and the names below
-  # would be parsed word-by-word into bogus cache entries. Both markers this
+  # would be parsed word-by-word into bogus keep-list entries. Both markers this
   # reads — the header and the trailer — are on stdout.
   out="$(cat "${intent[@]}" | brew bundle cleanup --casks --file=- 2>/dev/null)" || probe_rc=$?
   if ((probe_rc != 0)) && ! grep -qF 'Run `brew bundle cleanup --force`' <<<"$out"; then

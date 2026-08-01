@@ -77,18 +77,24 @@ bootstrap() {
 # `bash -c "$(curl …)"` stdin is the TTY, but a genuinely piped run has stdin
 # consumed by the script itself — and `read -p` writes its prompt to stderr,
 # which disappears under `bootstrap.sh 2>log`, leaving what looks like a hang.
-# /dev/tty exists and tests readable even when there is no controlling terminal,
-# so attempting the redirect is the only reliable probe. When it fails there is
-# nobody to ask: continue, keeping unattended runs one-shot as they were before
-# this prompt existed.
+#
+# Writing the prompt is the probe for a terminal: /dev/tty exists and even tests
+# readable when there is no controlling terminal, so only the write reveals the
+# truth. If it fails there is nobody to ask and the run continues, staying
+# one-shot as it was before this prompt existed. A failed READ is different —
+# that is EOF from a person (Ctrl-D), so it stops.
 confirm_full_install() {
   local prompt="Continue to full installation? [y/N] " reply=""
 
-  { printf '%s' "$prompt" >/dev/tty; read -r reply </dev/tty; } 2>/dev/null || {
+  printf '%s' "$prompt" >/dev/tty 2>/dev/null || {
     # Say so rather than continue silently: the visible default is no, and an
     # unattended log should record that this run took the other branch.
     print_status "No terminal to prompt on; continuing to full installation."
     return 0
+  }
+  read -r reply </dev/tty 2>/dev/null || {
+    printf '\n' >/dev/tty 2>/dev/null || true
+    return 1
   }
 
   # Strict IFS ($'\n\t') means read leaves surrounding spaces on, so " y" would

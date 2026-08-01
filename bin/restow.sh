@@ -11,14 +11,9 @@ trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 #   - macOS (via Homebrew)
 #
 # Usage:
-#   ./restow.sh [--plan] [--yes]
+#   ./restow.sh                                 (--help for detail)
 #
-# Run with no arguments it prints the plan and asks before applying.
-#
-# Options:
-#   --plan  Simulate stowing (stow -n) and report conflicts, then exit without
-#           creating or changing any symlinks
-#   --yes   Apply without printing the plan or asking
+# Prints a plan and asks before applying. Takes no options.
 #
 # Prerequisites:
 #   - Homebrew must be available (or will be installed)
@@ -28,17 +23,29 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=lib/common.sh
 source "$SCRIPT_DIR/lib/common.sh"
 
-restow() {
-  local plan=false
-  local yes=false
-  for arg in "$@"; do
-    [[ "$arg" == "--plan" ]] && plan=true
-    [[ "$arg" == "--yes" ]] && yes=true
-  done
+usage() {
+  cat <<'EOF'
+restow — symlink the configs into place with GNU Stow
 
-  if [[ "$plan" == "true" ]]; then
-    plan_restow
+Usage: restow.sh
+
+Takes no options. It prints a plan and asks before applying — answer no to
+preview only.
+
+Skips any package whose target already exists as a real file, so local
+overrides are never clobbered.
+EOF
+}
+
+restow() {
+  if [[ "${1:-}" == "--help" || "${1:-}" == "-h" ]]; then
+    usage
     return 0
+  fi
+  if [[ $# -gt 0 ]]; then
+    print_failure "Unknown option: $1"
+    print_status "Try 'restow.sh --help'."
+    return 1
   fi
 
   print_header restow
@@ -48,14 +55,12 @@ restow() {
     return 1
   fi
 
-  if [[ "$yes" == "false" ]]; then
-    plan_restow
-    if ! confirm "Apply this plan?"; then
-      print_status "Nothing applied"
-      return 0
-    fi
-    echo
+  plan_restow
+  if ! confirm "Apply this plan?"; then
+    print_status "Nothing applied"
+    return 0
   fi
+  echo
 
   ensure_stow || {
     print_failure "Stow could not be set up"
