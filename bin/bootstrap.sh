@@ -177,7 +177,7 @@ ensure_zsh() {
   # Check if zsh is in /etc/shells
   if ! grep -q "$(command -v zsh)" /etc/shells; then
     print_status "Adding zsh to /etc/shells"
-    echo "$(command -v zsh)" | sudo tee -a /etc/shells >/dev/null || return 1
+    command -v zsh | sudo tee -a /etc/shells >/dev/null || return 1
   fi
 
   # Check if zsh is already the default shell

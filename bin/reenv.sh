@@ -23,7 +23,7 @@ trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 #   - npm must be installed (optional - skips if not present)
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# shellcheck source=lib/common.sh
+# shellcheck source-path=SCRIPTDIR source=lib/common.sh
 source "$SCRIPT_DIR/lib/common.sh"
 
 RUBY_VERSION_FILE="$HOME/.ruby-version"

@@ -24,7 +24,7 @@ trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 #   - dotfiles repository must be present
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# shellcheck source=lib/common.sh
+# shellcheck source-path=SCRIPTDIR source=lib/common.sh
 source "$SCRIPT_DIR/lib/common.sh"
 
 usage() {
@@ -320,7 +320,10 @@ migrate_legacy_keep_list() {
 # Echo the keep-list's real entries (no comments/blanks), one per line.
 read_keep_list() {
   local keep="${DOTFILES_PATH:-$HOME/.dotfiles}/Brewfile.keep"
-  [[ -f "$keep" ]] && grep -vE '^[[:space:]]*(#|$)' "$keep" || true
+  [[ -f "$keep" ]] || return 0
+  # A keep-list of only comments greps to nothing, which is a legitimate empty
+  # result, not an error.
+  grep -vE '^[[:space:]]*(#|$)' "$keep" || true
 }
 
 # ------------------------------------------------------------------------------------------------------

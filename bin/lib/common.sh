@@ -119,6 +119,7 @@ compute_untracked() {
   # would be parsed word-by-word into bogus keep-list entries. Both markers this
   # reads — the header and the trailer — are on stdout.
   out="$(cat "${intent[@]}" | brew bundle cleanup --casks --file=- 2>/dev/null)" || probe_rc=$?
+  # shellcheck disable=SC2016  # the backticks are literal text in brew's output
   if ((probe_rc != 0)) && ! grep -qF 'Run `brew bundle cleanup --force`' <<<"$out"; then
     return 1
   fi
