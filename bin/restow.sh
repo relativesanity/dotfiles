@@ -77,10 +77,15 @@ restow() {
   print_status "Stow complete"
 
   echo
-  print_block "restow summary" \
-    "Packages: $((STOW_LINKED + STOW_SKIPPED)) total" \
-    "Linked:   ${STOW_LINKED}" \
-    "Skipped:  ${STOW_SKIPPED} (local overrides)"
+  local summary=(
+    "Packages: $((STOW_LINKED + STOW_SKIPPED)) total"
+    "Linked:   ${STOW_LINKED}"
+  )
+  if ((STOW_SKIPPED > 0)); then
+    summary+=("NOT stowed: ${STOW_SKIPPED} — resolve the conflicting files and re-run:")
+    summary+=("${STOW_SKIPPED_NAMES[@]/#/  }")
+  fi
+  print_block "restow summary" "${summary[@]}"
 }
 
 # Pre-created before stowing so each app's main config dir is a real directory
@@ -187,13 +192,18 @@ stow_packages() {
   local package
   STOW_LINKED=0
   STOW_SKIPPED=0
+  STOW_SKIPPED_NAMES=()
   while IFS= read -r package; do
     print_status "Stowing $package"
     if stow -d "${DOTFILES_PATH:-$HOME/.dotfiles}" -t "$HOME" --restow "$package" 2>&1; then
       STOW_LINKED=$((STOW_LINKED + 1))
     else
       STOW_SKIPPED=$((STOW_SKIPPED + 1))
-      print_warning "$package has local overrides — skipping conflicting files (expected on machine-specific configs)"
+      STOW_SKIPPED_NAMES+=("$package")
+      # Not "some files were skipped": stow aborts the whole package on the
+      # first conflict, so NONE of it is linked. Say so — a silently unstowed
+      # sh package leaves a new machine with no shell config at all.
+      print_warning "$package NOT stowed — a conflicting file above blocks the whole package"
     fi
   done < <(stow_packages_list)
 }
