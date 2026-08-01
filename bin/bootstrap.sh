@@ -7,6 +7,9 @@ IFS=$'\n\t'       # Stricter word splitting
 trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 
 # Bootstrap script for new system setup
+# Installs the prerequisites and clones the repo, then asks before running the
+# initial `dot sync` (packages + symlinks); answering no leaves the machine
+# untouched beyond the clone.
 # Supports:
 #   - macOS (via Homebrew)
 #
@@ -26,16 +29,70 @@ bootstrap() {
     return 1
   fi
 
-  ensure_homebrew || print_failure "Homebrew could not be set up"
-  ensure_git || print_failure "Git could not be set up"
-  ensure_zsh || print_failure "Zsh could not be set up"
+  # Each guard returns explicitly instead of leaning on `set -e`: bootstrap is
+  # called from an `if !` condition, which disables errexit for everything it
+  # calls, so a bare `|| print_failure` prints in red and then carries on.
+  ensure_homebrew || {
+    print_failure "Homebrew could not be set up"
+    return 1
+  }
+  ensure_git || {
+    print_failure "Git could not be set up"
+    return 1
+  }
+  ensure_zsh || {
+    print_failure "Zsh could not be set up"
+    return 1
+  }
+  # gum is the one optional prerequisite — without it the dot TUI is plain text.
   ensure_gum || print_warning "gum could not be installed; the dot TUI will fall back to plain text"
-  ensure_dotfiles || print_failure "Dotfiles could not be set up"
-  print_status "Running initial dotfiles setup"
-  "${DOTFILES_PATH:-$HOME/.dotfiles}/bin/dot.sh" sync || print_failure "Initial dotfiles setup failed"
+  ensure_dotfiles || {
+    print_failure "Dotfiles could not be set up"
+    return 1
+  }
   persist_dotfiles_path
+
+  local dotfiles="${DOTFILES_PATH:-$HOME/.dotfiles}"
+  if ! confirm_full_install; then
+    print_status "Stopping after bootstrap. Run '$dotfiles/bin/dot.sh' to install packages and symlinks."
+    return 0
+  fi
+
+  print_status "Running initial dotfiles setup"
+  if ! "$dotfiles/bin/dot.sh" sync; then
+    print_failure "Initial dotfiles setup failed"
+    return 1
+  fi
   print_status "Bootstrap complete"
   print_status "Run 'dot' to open the dotfiles menu."
+}
+
+# ------------------------------------------------------------------------------------------------------
+# Bootstrap only prepares the machine; `dot sync` is what changes it — it installs
+# every package and, through `brew bundle --zap`, uninstalls anything undeclared.
+# Ask before crossing that line, defaulting to no: on a fresh machine one extra
+# keystroke costs nothing, and on a machine that already has the repo a mistyped
+# answer would zap real apps.
+#
+# Ask on the controlling terminal rather than on stdin. Under the documented
+# `bash -c "$(curl …)"` stdin is the TTY, but a genuinely piped run has stdin
+# consumed by the script itself — and `read -p` writes its prompt to stderr,
+# which disappears under `bootstrap.sh 2>log`, leaving what looks like a hang.
+# /dev/tty exists and tests readable even when there is no controlling terminal,
+# so attempting the redirect is the only reliable probe. When it fails there is
+# nobody to ask: continue, keeping unattended runs one-shot as they were before
+# this prompt existed.
+confirm_full_install() {
+  local prompt="Continue to full installation? [y/N] " reply=""
+
+  { printf '%s' "$prompt" >/dev/tty; read -r reply </dev/tty; } 2>/dev/null || return 0
+
+  # Strict IFS ($'\n\t') means read leaves surrounding spaces on, so " y" would
+  # miss the match below. Trim them rather than let a stray space decide this.
+  reply="${reply#"${reply%%[![:space:]]*}"}"
+  reply="${reply%"${reply##*[![:space:]]}"}"
+
+  [[ "$reply" =~ ^[Yy]([Ee][Ss])?$ ]]
 }
 
 # ------------------------------------------------------------------------------------------------------
@@ -65,7 +122,7 @@ ensure_homebrew() {
 
   if [[ ! -e /opt/homebrew/bin/brew ]]; then
     print_status "Installing homebrew"
-    /usr/bin/env bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    /usr/bin/env bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || return 1
   fi
   print_status "Homebrew installed"
 
@@ -73,6 +130,10 @@ ensure_homebrew() {
     print_status "Enabling homebrew"
     eval "$(/opt/homebrew/bin/brew shellenv)"
   fi
+
+  # Confirm rather than assume: the installer and shellenv can both fail, and the
+  # caller's guard sees nothing but this function's status.
+  command -v brew >/dev/null 2>&1 || return 1
   print_status "Homebrew enabled"
 }
 

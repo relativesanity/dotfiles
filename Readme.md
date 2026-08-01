@@ -13,8 +13,16 @@ To bootstrap a new machine, run:
 This will:
 - Install Homebrew, Git, Zsh, and `gum` (for the `dot` TUI)
 - Clone this repository to `~/.dotfiles`
+- Ask whether to continue to the full installation — answer `y`; anything else stops here
 - Detect environment (home vs work) and install appropriate packages
 - Symlink all configurations using Stow
+
+The prompt defaults to no because continuing runs `brew bundle --zap`, which
+uninstalls anything the Brewfiles don't declare. Declining leaves the machine
+untouched beyond the prerequisites and the clone — pick up later with
+`~/.dotfiles/bin/dot.sh` (nothing is stowed yet, so the `dot` shell function
+doesn't exist until the first sync). Runs with no terminal attached can't be
+asked, so they install everything, as before.
 
 **To test a specific branch:**
 ```bash
