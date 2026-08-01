@@ -33,21 +33,26 @@ print_block() {
 # ------------------------------------------------------------------------------------------------------
 # Prompts.
 #
-# These ask on the controlling terminal, never on stdin. A script here can be
-# reached through `curl | bash`, where stdin is the script text itself and a
-# read would silently swallow it as the answer.
+# These use the controlling terminal, never stdin. A script here can be reached
+# through `curl | bash`, where stdin is the script text itself and a read would
+# silently swallow it as the answer.
 
-# confirm "question" — 0 for yes. Anything but y/yes is no.
-#
-# The two failure modes must not be conflated. Writing the prompt is the probe
-# for a terminal: if that fails there is nobody to ask, and an unattended run
-# answers YES so a cron sync neither stalls nor silently does nothing. But once
-# a terminal exists, a failed READ means EOF — Ctrl-D, or a pty closing — and
-# that is a person declining, so it answers NO. Treating both as yes would make
-# Ctrl-D at this prompt approve an uninstall.
+# Refuse to run at all without a terminal. Every script asks before applying, so
+# no terminal means no consent — and unattended use is explicitly unsupported, so
+# there is no "assume yes" fallback to reach for. Writing to /dev/tty is the only
+# reliable probe: the device tests readable even when there is no controlling
+# terminal. Call this before doing any work.
+require_terminal() {
+  printf '' >/dev/tty 2>/dev/null && return 0
+  print_failure "No terminal available — these scripts ask before applying, and unattended runs are unsupported"
+  return 1
+}
+
+# confirm "question" — 0 for yes. Anything but y/yes is no, including EOF
+# (Ctrl-D). Call require_terminal first; without one this answers no.
 confirm() {
   local reply=""
-  printf '%s [y/N] ' "$1" >/dev/tty 2>/dev/null || return 0
+  printf '%s [y/N] ' "$1" >/dev/tty 2>/dev/null || return 1
   read -r reply </dev/tty 2>/dev/null || {
     printf '\n' >/dev/tty 2>/dev/null || true
     return 1

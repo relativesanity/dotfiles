@@ -80,17 +80,15 @@ bootstrap() {
 #
 # Writing the prompt is the probe for a terminal: /dev/tty exists and even tests
 # readable when there is no controlling terminal, so only the write reveals the
-# truth. If it fails there is nobody to ask and the run continues, staying
-# one-shot as it was before this prompt existed. A failed READ is different —
-# that is EOF from a person (Ctrl-D), so it stops.
+# truth. No terminal means nobody consented, so it stops after the clone rather
+# than installing anything — unattended runs are unsupported. A failed READ is
+# EOF from a person (Ctrl-D), which also stops.
 confirm_full_install() {
   local prompt="Continue to full installation? [y/N] " reply=""
 
   printf '%s' "$prompt" >/dev/tty 2>/dev/null || {
-    # Say so rather than continue silently: the visible default is no, and an
-    # unattended log should record that this run took the other branch.
-    print_status "No terminal to prompt on; continuing to full installation."
-    return 0
+    print_warning "No terminal to ask on; stopping after the clone."
+    return 1
   }
   read -r reply </dev/tty 2>/dev/null || {
     printf '\n' >/dev/tty 2>/dev/null || true

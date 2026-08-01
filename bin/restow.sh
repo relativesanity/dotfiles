@@ -50,6 +50,8 @@ restow() {
 
   print_header restow
 
+  require_terminal || return 1
+
   if ! is_macos; then
     print_failure "Unsupported operating system"
     return 1

@@ -21,8 +21,8 @@ The prompt defaults to no because continuing runs `brew bundle --zap`, which
 uninstalls anything the Brewfiles don't declare. Declining leaves the machine
 untouched beyond the prerequisites and the clone — pick up later with
 `~/.dotfiles/bin/redot.sh` (nothing is stowed yet, so the `redot` shell function
-doesn't exist until the first sync). Runs with no terminal attached can't be
-asked, so they install everything, as before.
+doesn't exist until the first sync). With no terminal to ask on, bootstrap stops
+after the clone rather than installing anything.
 
 **To test a specific branch:**
 ```bash
@@ -135,5 +135,5 @@ change that, and pass through `redot`:
 **Removing an app you installed by hand:** it's on the keep-list, so a normal run
 protects it. Delete its line from `Brewfile.keep`, then `repack --prune`.
 
-Runs with no terminal attached (cron, `curl | bash`) apply without asking, so
-unattended syncs still work.
+These scripts always ask before applying, so they need a terminal and refuse
+without one. Unattended use (cron, CI) is not supported.

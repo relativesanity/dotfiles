@@ -45,10 +45,12 @@ One sourced library (no top-level side effects):
 it carries its own copies of the handful of helpers it needs. That duplication
 (`ensure_homebrew`, `confirm_full_install`) is deliberate; don't merge it away.
 
-`confirm` and `choose_multi` ask on `/dev/tty`, never on stdin: these scripts can
-be reached through `curl | bash`, where stdin is the script text itself and a
-read would swallow it as the answer. With no terminal reachable `confirm` answers
-yes, so unattended syncs neither stall nor quietly do nothing.
+`confirm` asks on `/dev/tty`, never on stdin: these scripts can be reached
+through `curl | bash`, where stdin is the script text itself and a read would
+swallow it as the answer. **Unattended runs are explicitly unsupported** — every
+script calls `require_terminal` first and refuses without one. There is no
+"assume yes" fallback and none should be added: no terminal means nobody
+consented, and the thing being consented to is `brew bundle --zap`.
 
 A script invoked as `if ! name "$@"` runs with errexit *disabled* for its entire
 body — bash ignores `set -e` inside a condition — so every step must fail
@@ -59,8 +61,7 @@ Plan-then-confirm convention: every script prints what it would do and asks
 before applying. That gate is the safety rail for `brew bundle --zap`, so it
 lives in the script, never in a caller. Keep the `plan_*` functions strictly
 side-effect-free (no keep-list writes, no symlinks) — they run before consent.
-There is no `--plan` or `--yes`: to preview, run it and answer no. With no
-terminal reachable `confirm` answers yes, so unattended runs still apply.
+There is no `--plan` or `--yes`: to preview, run it and answer no.
 
 `restow` and `reenv` take no options at all and reject any argument. `repack`
 takes exactly two, `--install-only` and `--prune`, and rejects anything else —

@@ -50,6 +50,8 @@ redot() {
 
   print_header redot
 
+  require_terminal || return 1
+
   pull_dotfiles || return 1
 
   # Only repack takes options; the other two are argument-free by design.

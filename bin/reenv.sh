@@ -92,6 +92,8 @@ reenv() {
 
   print_header reenv
 
+  require_terminal || return 1
+
   plan_reenv
   if ! confirm "Apply this plan?"; then
     print_status "Nothing applied"
