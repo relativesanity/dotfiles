@@ -43,10 +43,23 @@ EOF
 }
 
 redot() {
-  if [[ "${1:-}" == "--help" || "${1:-}" == "-h" ]]; then
-    usage
-    return 0
-  fi
+  # Validate here rather than letting repack reject it later: by then this has
+  # already pulled, and the error would name repack for a flag typed at redot.
+  local arg
+  for arg in "$@"; do
+    case "$arg" in
+      --help | -h)
+        usage
+        return 0
+        ;;
+      --install-only | --prune) ;;
+      *)
+        print_failure "Unknown option: $arg"
+        print_status "Try 'redot.sh --help'."
+        return 1
+        ;;
+    esac
+  done
 
   print_header redot
 
