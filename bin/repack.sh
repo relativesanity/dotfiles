@@ -11,11 +11,14 @@ trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 #   - macOS (via Homebrew)
 #
 # Usage:
-#   ./repack.sh [--plan] [--update-only] [--skip-cache] [--clear-cache] [--select-cache]
+#   ./repack.sh [--plan] [--yes] [--update-only] [--skip-cache] [--clear-cache] [--select-cache]
+#
+# Run with no arguments it prints the plan and asks before applying.
 #
 # Options:
 #   --plan          Print a read-only summary of what would change, then exit
 #                   without touching anything
+#   --yes           Apply without printing the plan or asking
 #   --update-only   Run brew bundle without --zap and --force-cleanup
 #   --skip-cache    Skip refreshing Brewfile.cache; honour the existing cache but
 #                   zap anything not in the Brewfiles or that cache
@@ -29,10 +32,8 @@ trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 #   - dotfiles repository must be present
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# shellcheck source=lib/status.sh
-source "$SCRIPT_DIR/lib/status.sh"
-# shellcheck source=lib/ui.sh
-source "$SCRIPT_DIR/lib/ui.sh"
+# shellcheck source=lib/common.sh
+source "$SCRIPT_DIR/lib/common.sh"
 
 repack() {
   local update_only=false
@@ -40,8 +41,10 @@ repack() {
   local clear_cache=false
   local select_cache_mode=false
   local plan=false
+  local yes=false
   for arg in "$@"; do
     [[ "$arg" == "--plan" ]] && plan=true
+    [[ "$arg" == "--yes" ]] && yes=true
     [[ "$arg" == "--update-only" ]] && update_only=true
     [[ "$arg" == "--skip-cache" ]] && skip_cache=true
     [[ "$arg" == "--clear-cache" ]] && clear_cache=true
@@ -53,11 +56,23 @@ repack() {
     return 0
   fi
 
-  echo -e "\033[1;36m== repack ==\033[0m"
+  print_header repack
 
   if ! is_macos; then
     print_failure "Unsupported operating system"
     return 1
+  fi
+
+  # Show the plan and ask before changing anything — `brew bundle --zap`
+  # uninstalls whatever the Brewfiles don't declare. The two cache modes skip
+  # this because they ask their own, more specific question further down.
+  if [[ "$yes" == "false" && "$clear_cache" == "false" && "$select_cache_mode" == "false" ]]; then
+    plan_repack
+    if ! confirm "Apply this plan?"; then
+      print_status "Nothing applied"
+      return 0
+    fi
+    echo
   fi
 
   # Every step below returns explicitly rather than leaning on `set -e`: repack is
@@ -287,7 +302,7 @@ select_cache() {
   fi
 
   local prune_output
-  prune_output="$(ui_choose_multi "Apps to prune (unselected stay cached and shielded)" -- "${candidates[@]}")" || {
+  prune_output="$(choose_multi "Apps to prune (unselected stay cached and shielded)" -- "${candidates[@]}")" || {
     print_status "Cache review cancelled — no changes"
     return 1
   }
@@ -310,7 +325,7 @@ select_cache() {
     [[ "$in_selected" == false ]] && keepers+=("$c")
   done
 
-  echo -e "\033[0;33m== prune cached apps ==\033[0m"
+  print_warning "== prune cached apps =="
   echo "Will be removed from the cache and uninstalled on this run:"
   printf '  %s\n' "${selected[@]}"
   if [[ ${#keepers[@]} -gt 0 ]]; then
@@ -318,7 +333,7 @@ select_cache() {
     printf '  %s\n' "${keepers[@]}"
   fi
 
-  if ! ui_confirm "Prune ${#selected[@]} app(s)?"; then
+  if ! confirm "Prune ${#selected[@]} app(s)?"; then
     print_status "Prune cancelled — no changes"
     return 1
   fi
@@ -355,7 +370,7 @@ cache_untracked() {
   count=${#entries[@]}
   print_status "Cached $count untracked $([[ $count -eq 1 ]] && echo entry || echo entries) (shielded from cleanup):"
   printf '  %s\n' "${entries[@]}"
-  echo -e "\033[0;33mPromote keepers into Brewfile.home/.work to track them; the rest reappear here each run.\033[0m"
+  print_warning "Promote keepers into Brewfile.home/.work to track them; the rest reappear here each run."
 }
 
 # ------------------------------------------------------------------------------------------------------
@@ -386,7 +401,7 @@ clear_cache_prompt() {
     return 0
   fi
 
-  echo -e "\033[0;33m== clear cache ==\033[0m"
+  print_warning "== clear cache =="
   echo "Deletes Brewfile.cache and zaps every untracked app on this bundle:"
   if [[ -n "$cached" ]]; then
     echo "Currently cached (will be uninstalled):"
@@ -499,7 +514,7 @@ summarize_repack() {
   fi
 
   echo
-  ui_box "repack summary" "" "${lines[@]}"
+  print_block "repack summary" "${lines[@]}"
 }
 
 # ------------------------------------------------------------------------------------------------------

@@ -11,7 +11,7 @@ To bootstrap a new machine, run:
 ```
 
 This will:
-- Install Homebrew, Git, Zsh, and `gum` (for the `dot` TUI)
+- Install Homebrew, Git and Zsh
 - Clone this repository to `~/.dotfiles`
 - Ask whether to continue to the full installation — answer `y`; anything else stops here
 - Detect environment (home vs work) and install appropriate packages
@@ -20,7 +20,7 @@ This will:
 The prompt defaults to no because continuing runs `brew bundle --zap`, which
 uninstalls anything the Brewfiles don't declare. Declining leaves the machine
 untouched beyond the prerequisites and the clone — pick up later with
-`~/.dotfiles/bin/dot.sh` (nothing is stowed yet, so the `dot` shell function
+`~/.dotfiles/bin/redot.sh` (nothing is stowed yet, so the `redot` shell function
 doesn't exist until the first sync). Runs with no terminal attached can't be
 asked, so they install everything, as before.
 
@@ -76,7 +76,7 @@ The dotfiles automatically detect your environment based on username:
 - **Work** (other usernames): Installs core packages only
 
 Package files:
-- `Brewfile` - Core packages required for deployment and a working terminal (stow, git, gh, gum, neovim, tmux, rv, fzf, ripgrep, bat, zoxide, starship, ghostty, libyaml, tree-sitter-cli) — see `Brewfile` for the full list
+- `Brewfile` - Core packages required for deployment and a working terminal (stow, git, gh, neovim, tmux, rv, fzf, ripgrep, bat, zoxide, starship, ghostty, libyaml, tree-sitter-cli) — see `Brewfile` for the full list
 - `Brewfile.home` - Personal packages (full setup)
 - `Brewfile.work` - Work-specific packages (add as needed)
 - `Brewfile.local` - Machine-specific overrides (gitignored)
@@ -111,34 +111,31 @@ See `kanata/kanata.md` for detailed instructions.
 
 ## Maintenance
 
-Everything is driven by the **`dot`** command — a `gum`-powered TUI front door. Run
-it with no arguments to open the menu, which shows a status summary (branch, brew
-drift, stow links, rv) and lets you pick an action:
+Each script does one job and is safe to run on its own — run bare, it prints a
+plan and asks before changing anything:
+
+| Command  | Does                                               |
+| -------- | -------------------------------------------------- |
+| `redot`  | Pull, then all three below, in order                |
+| `repack` | Brew packages (flags below)                         |
+| `restow` | Re-symlink configs                                  |
+| `reenv`  | Install ruby runtimes and global tools              |
 
 ```bash
-dot
+redot              # the usual: pull and apply everything
+redot --plan       # every script's dry run, nothing applied
+redot --yes        # apply without prompts (unattended)
+repack --plan      # just the brew preview
 ```
 
-Each action also has a direct subcommand, and the preview-before-apply steps show a
-dry-run summary before anything changes:
+Repack flags pass through `redot`:
 
-```bash
-dot sync     # pull, then packages + symlinks + runtimes (full update)
-dot pack     # preview & apply Brewfile changes
-dot stow     # preview & apply stow symlinks
-dot env      # preview & install ruby runtimes
-dot doctor   # environment health check
-```
+| Flag             | Does                                                        |
+| ---------------- | ----------------------------------------------------------- |
+| `--update-only`  | Bundle without removing anything                             |
+| `--skip-cache`   | Zap apps not in the Brewfiles or the cache                    |
+| `--clear-cache`  | Delete the cache and zap every untracked app                  |
+| `--select-cache` | Pick which untracked apps to prune; keep the rest cached      |
 
-The familiar commands still work and map onto `dot`:
-
-| Command  | Equivalent   | Does                                  |
-| -------- | ------------ | ------------------------------------- |
-| `redot`  | `dot sync`   | Update everything                     |
-| `repack` | `dot pack`   | Packages only (flags pass through)    |
-| `restow` | `dot stow`   | Re-symlink configs                    |
-| `reenv`  | `dot env`    | Install ruby runtimes                 |
-
-Flags pass straight through, so `repack --clear-cache` / `dot pack --clear-cache`
-behave exactly as before. `gum` is optional: without it every screen falls back to
-plain text (this is what keeps the piped bootstrap working).
+Runs with no terminal attached (cron, `curl | bash`) apply without asking, so
+unattended syncs still work.

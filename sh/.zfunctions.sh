@@ -1,23 +1,19 @@
-# The dotfiles front door. `dot` opens the menu; the re* commands map to its
-# subcommands so existing muscle memory (and flags like --clear-cache) keep working.
-dot() {
-  "${DOTFILES_PATH:-$HOME/.dotfiles}/bin/dot.sh" "$@"
-}
-
+# The dotfiles scripts. redot runs the lot; the others do one part each. Every
+# one prints a plan and asks before applying, so they are safe to run bare.
 redot() {
-  "${DOTFILES_PATH:-$HOME/.dotfiles}/bin/dot.sh" sync "$@"
+  "${DOTFILES_PATH:-$HOME/.dotfiles}/bin/redot.sh" "$@"
 }
 
 restow() {
-  "${DOTFILES_PATH:-$HOME/.dotfiles}/bin/dot.sh" stow "$@"
+  "${DOTFILES_PATH:-$HOME/.dotfiles}/bin/restow.sh" "$@"
 }
 
 repack() {
-  "${DOTFILES_PATH:-$HOME/.dotfiles}/bin/dot.sh" pack "$@"
+  "${DOTFILES_PATH:-$HOME/.dotfiles}/bin/repack.sh" "$@"
 }
 
 reenv() {
-  "${DOTFILES_PATH:-$HOME/.dotfiles}/bin/dot.sh" env "$@"
+  "${DOTFILES_PATH:-$HOME/.dotfiles}/bin/reenv.sh" "$@"
 }
 
 # Install the Ruby the current project asks for. rv reads the version from

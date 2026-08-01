@@ -1,15 +1,86 @@
 #!/usr/bin/env bash
 
-# Shared data + summary helpers for the dotfiles scripts.
+# Shared helpers for the dotfiles scripts.
 #
-# This file is meant to be *sourced*, not executed — it only defines
-# functions and has no side effects at load time. It is the single home for
-# the brew intent/cache logic (shared by repack.sh and the status summaries)
-# and for the one-line status builders the dot menu header and doctor render.
+# This file is meant to be *sourced*, not executed — it only defines functions
+# and has no side effects at load time. It holds the plain output/prompt helpers
+# every script uses and the brew intent/cache logic, which must live in exactly
+# one place (see compute_untracked below).
 #
-# Every status_* builder is defensive (2>/dev/null, || true) so it can be used
-# in a command substitution from a caller running under `set -euo pipefail`
-# without aborting that caller when a probe legitimately fails.
+# bootstrap.sh deliberately does NOT source this: it runs from `curl` before the
+# repo exists, so it carries its own copies of the few helpers it needs.
+
+# ------------------------------------------------------------------------------------------------------
+# Output.
+print_status() { echo "$1"; }
+print_warning() { echo -e "\033[0;33m$1\033[0m"; }
+print_failure() {
+  echo -e "\033[0;31m$1\033[0m"
+  return 1
+}
+
+# The banner each script prints on start.
+print_header() { echo -e "\033[1;36m== $1 ==\033[0m"; }
+
+# A titled block of indented lines, for end-of-run summaries.
+print_block() {
+  local title="$1"
+  shift
+  echo "$title"
+  printf '  %s\n' "$@"
+}
+
+# ------------------------------------------------------------------------------------------------------
+# Prompts.
+#
+# These ask on the controlling terminal, never on stdin. A script here can be
+# reached through `curl | bash`, where stdin is the script text itself and a
+# read would silently swallow it as the answer.
+
+# confirm "question" — 0 for yes. Anything but y/yes is no.
+#
+# With no terminal reachable there is nobody to ask, so this answers YES: it
+# guards "apply the plan I just printed?" in a run the caller started
+# deliberately, and an unattended sync must neither stall nor quietly do
+# nothing. Destructive one-offs that should refuse instead (--clear-cache) ask
+# their own question rather than using this.
+confirm() {
+  local reply=""
+  { printf '%s [y/N] ' "$1" >/dev/tty; read -r reply </dev/tty; } 2>/dev/null || return 0
+
+  # Strict IFS ($'\n\t') leaves surrounding spaces on, so " y" would miss below.
+  reply="${reply#"${reply%%[![:space:]]*}"}"
+  reply="${reply%"${reply##*[![:space:]]}"}"
+
+  [[ "$reply" =~ ^[Yy]([Ee][Ss])?$ ]]
+}
+
+# choose_multi "header" -- item… — echo the chosen items, one per line.
+# Nothing is pre-selected, so an empty answer chooses nothing. Returns non-zero
+# only when there is no terminal to ask on; choosing nothing is a success.
+choose_multi() {
+  local header="$1"
+  shift
+  [[ "${1:-}" == "--" ]] && shift
+
+  local item i=1 line n
+  {
+    printf '%s\n' "$header"
+    for item in "$@"; do
+      printf '  %d) %s\n' "$i" "$item"
+      i=$((i + 1))
+    done
+    printf 'Numbers to select (space-separated, blank = none): '
+  } >/dev/tty 2>/dev/null || return 1
+  read -r line </dev/tty 2>/dev/null || return 1
+
+  local nums=()
+  IFS=' ' read -ra nums <<<"$line"
+  for n in ${nums[@]+"${nums[@]}"}; do
+    [[ "$n" =~ ^[0-9]+$ ]] && ((n >= 1 && n <= $#)) && printf '%s\n' "${!n}"
+  done
+  return 0
+}
 
 # ------------------------------------------------------------------------------------------------------
 is_macos() {
@@ -105,103 +176,4 @@ stow_packages_list() {
   find "${DOTFILES_PATH:-$HOME/.dotfiles}" -maxdepth 1 -mindepth 1 -type d \
     ! -name '.*' ! -name 'bin' ! -name 'kanata' \
     -exec basename {} \; | sort
-}
-
-# ------------------------------------------------------------------------------------------------------
-# One-line status summaries. Each echoes a short human string; callers compose
-# them into the menu header and the doctor view.
-
-status_git() {
-  local dir branch behind ahead
-  dir="${DOTFILES_PATH:-$HOME/.dotfiles}"
-  branch="$(git -C "$dir" branch --show-current 2>/dev/null || echo '?')"
-
-  if git -C "$dir" rev-parse --abbrev-ref '@{upstream}' >/dev/null 2>&1; then
-    # rev-list --left-right --count prints "<behind>\t<ahead>" for @{upstream}...HEAD
-    { read -r behind ahead; } < <(git -C "$dir" rev-list --left-right --count '@{upstream}...HEAD' 2>/dev/null || echo '0	0')
-    if [[ "${behind:-0}" -gt 0 ]]; then
-      printf '%s ↑%s ↓%s  (behind upstream)' "$branch" "${ahead:-0}" "${behind:-0}"
-    else
-      printf '%s ↑%s ↓%s' "$branch" "${ahead:-0}" "${behind:-0}"
-    fi
-  else
-    printf '%s  (no upstream)' "$branch"
-  fi
-}
-
-status_brew() {
-  local untracked outdated list
-  command -v brew >/dev/null 2>&1 || { printf 'brew not installed'; return 0; }
-  # '?' rather than 0 when the probe fails — "0 untracked" would read as "nothing
-  # to shield", which is the opposite of what an unknown answer means here.
-  if list="$(compute_untracked 2>/dev/null)"; then
-    untracked="$(grep -c . <<<"$list" || true)"
-  else
-    untracked='?'
-  fi
-  outdated="$(brew outdated --quiet 2>/dev/null | grep -c . || true)"
-  printf '%s untracked · %s outdated' "${untracked:-0}" "${outdated:-0}"
-}
-
-status_stow() {
-  local dir pkg total conflict
-  dir="${DOTFILES_PATH:-$HOME/.dotfiles}"
-  command -v stow >/dev/null 2>&1 || { printf 'stow not installed'; return 0; }
-  total=0
-  conflict=0
-  while IFS= read -r pkg; do
-    total=$((total + 1))
-    if stow -n -d "$dir" -t "$HOME" --restow "$pkg" 2>&1 | grep -qi 'conflict'; then
-      conflict=$((conflict + 1))
-    fi
-  done < <(stow_packages_list)
-
-  if [[ "$conflict" -gt 0 ]]; then
-    printf '%s packages linked · %s conflict(s)' "$total" "$conflict"
-  else
-    printf '%s packages linked' "$total"
-  fi
-}
-
-status_rv() {
-  local version
-  command -v rv >/dev/null 2>&1 || { printf 'not installed'; return 0; }
-  [[ -e "$HOME/.ruby-version" ]] || { printf 'no .ruby-version'; return 0; }
-
-  # First non-blank, non-comment line, trimmed of surrounding whitespace.
-  version="$(sed -e 's/#.*//' -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' "$HOME/.ruby-version" | grep -m1 .)"
-  [[ -n "$version" ]] || { printf 'no .ruby-version'; return 0; }
-
-  if rv ruby find "$version" >/dev/null 2>&1; then
-    printf 'ruby %s  (in sync)' "$version"
-  else
-    printf 'ruby %s  (to install)' "$version"
-  fi
-}
-
-# ------------------------------------------------------------------------------------------------------
-# Global npm tools declared in ~/.default-npm vs what npm has installed.
-# Lists installed packages once and matches locally: `npm ls` costs ~0.3s, and
-# this runs on every menu render.
-status_npm() {
-  local installed declared=0 missing=0 pkg
-  command -v npm >/dev/null 2>&1 || { printf 'not installed'; return 0; }
-  [[ -e "$HOME/.default-npm" ]] || { printf 'no .default-npm'; return 0; }
-
-  installed="$(npm ls -g --depth=0 --parseable 2>/dev/null || true)"
-
-  while IFS= read -r pkg || [[ -n "$pkg" ]]; do
-    pkg="$(sed -e 's/#.*//' -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' <<<"$pkg")"
-    [[ -z "$pkg" ]] && continue
-    declared=$((declared + 1))
-    grep -q "/${pkg}\$" <<<"$installed" || missing=$((missing + 1))
-  done < "$HOME/.default-npm"
-
-  if [[ "$declared" -eq 0 ]]; then
-    printf 'none declared'
-  elif [[ "$missing" -eq 0 ]]; then
-    printf '%s tool(s)  (in sync)' "$declared"
-  else
-    printf '%s of %s to install' "$missing" "$declared"
-  fi
 }

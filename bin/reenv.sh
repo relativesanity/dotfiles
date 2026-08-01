@@ -14,19 +14,22 @@ trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 #   - macOS (via rv and npm)
 #
 # Usage:
-#   ./reenv.sh [--plan]
+#   ./reenv.sh [--plan] [--yes]
+#
+# Run with no arguments it prints the plan and asks before applying.
 #
 # Options:
 #   --plan  Show whether the pinned Ruby, default tools and npm packages are
 #           installed vs missing, then exit without installing anything
+#   --yes   Install without printing the plan or asking
 #
 # Prerequisites:
 #   - rv must be installed (optional - skips if not present)
 #   - npm must be installed (optional - skips if not present)
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# shellcheck source=lib/ui.sh
-source "$SCRIPT_DIR/lib/ui.sh"
+# shellcheck source=lib/common.sh
+source "$SCRIPT_DIR/lib/common.sh"
 
 RUBY_VERSION_FILE="$HOME/.ruby-version"
 DEFAULT_GEMS_FILE="$HOME/.default-gems"
@@ -69,8 +72,10 @@ default_npm() {
 
 reenv() {
   local plan=false
+  local yes=false
   for arg in "$@"; do
     [[ "$arg" == "--plan" ]] && plan=true
+    [[ "$arg" == "--yes" ]] && yes=true
   done
 
   if [[ "$plan" == "true" ]]; then
@@ -78,7 +83,16 @@ reenv() {
     return 0
   fi
 
-  echo -e "\033[1;36m== reenv ==\033[0m"
+  print_header reenv
+
+  if [[ "$yes" == "false" ]]; then
+    plan_reenv
+    if ! confirm "Apply this plan?"; then
+      print_status "Nothing applied"
+      return 0
+    fi
+    echo
+  fi
 
   local version="" installed_now=0 already=0 tools=0
 
@@ -132,7 +146,7 @@ reenv() {
   fi
 
   echo
-  ui_box "reenv summary" "" \
+  print_block "reenv summary" \
     "Ruby: ${version:-none} (installed this run: ${installed_now}, already: ${already})" \
     "Tools: ${tools} declared" \
     "npm: ${pkgs} declared (installed this run: ${pkgs_installed})"

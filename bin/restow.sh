@@ -11,26 +11,29 @@ trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 #   - macOS (via Homebrew)
 #
 # Usage:
-#   ./restow.sh [--plan]
+#   ./restow.sh [--plan] [--yes]
+#
+# Run with no arguments it prints the plan and asks before applying.
 #
 # Options:
 #   --plan  Simulate stowing (stow -n) and report conflicts, then exit without
 #           creating or changing any symlinks
+#   --yes   Apply without printing the plan or asking
 #
 # Prerequisites:
 #   - Homebrew must be available (or will be installed)
 #   - dotfiles repository must be present
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# shellcheck source=lib/status.sh
-source "$SCRIPT_DIR/lib/status.sh"
-# shellcheck source=lib/ui.sh
-source "$SCRIPT_DIR/lib/ui.sh"
+# shellcheck source=lib/common.sh
+source "$SCRIPT_DIR/lib/common.sh"
 
 restow() {
   local plan=false
+  local yes=false
   for arg in "$@"; do
     [[ "$arg" == "--plan" ]] && plan=true
+    [[ "$arg" == "--yes" ]] && yes=true
   done
 
   if [[ "$plan" == "true" ]]; then
@@ -38,11 +41,20 @@ restow() {
     return 0
   fi
 
-  echo -e "\033[1;36m== restow ==\033[0m"
+  print_header restow
 
   if ! is_macos; then
     print_failure "Unsupported operating system"
     return 1
+  fi
+
+  if [[ "$yes" == "false" ]]; then
+    plan_restow
+    if ! confirm "Apply this plan?"; then
+      print_status "Nothing applied"
+      return 0
+    fi
+    echo
   fi
 
   ensure_stow || {
@@ -60,7 +72,7 @@ restow() {
   print_status "Stow complete"
 
   echo
-  ui_box "restow summary" "" \
+  print_block "restow summary" \
     "Packages: $((STOW_LINKED + STOW_SKIPPED)) total" \
     "Linked:   ${STOW_LINKED}" \
     "Skipped:  ${STOW_SKIPPED} (local overrides)"
