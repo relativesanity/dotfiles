@@ -89,10 +89,17 @@ echo 'brew "package-name"' >> Brewfile.work
 repack
 ```
 
-### macOS Customization
+### Shell Helpers
 
-A helper shell function (defined in `sh/.zfunctions.sh`) toggles a macOS default:
+Defined in `sh/.zfunctions.sh`, alongside the `redot`/`repack`/`restow`/`reenv`
+wrappers covered under Maintenance below:
+- `ruby-load [version]` — install the Ruby the current project asks for. `rv` reads
+  the version from `.ruby-version`, `.tool-versions` or `Gemfile.lock` and switches
+  automatically on `cd`, so this only ensures it's installed; pass a version to override
+- `git-ssh` — rewrite the current repo's GitHub `origin` from HTTPS to SSH
 - `drag-toggle` — enable/disable ctrl+cmd window dragging (`NSWindowShouldDragOnGesture`)
+
+### macOS Customization
 
 **System Permissions**
 Grant permissions when prompted:
