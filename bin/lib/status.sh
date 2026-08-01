@@ -59,7 +59,12 @@ compute_untracked() {
   # the status alone can't tell those apart — but a run that got far enough to
   # report either exits 0 or ends with brew's "Run `brew bundle cleanup --force`"
   # trailer. Anything else (invalid Brewfile, broken tap) is a genuine failure.
-  out="$(cat "${intent[@]}" | brew bundle cleanup --casks --file=- 2>&1)" || probe_rc=$?
+  #
+  # Keep stderr out of it: brew's "Warning: Skipping …" lines share the stream
+  # only if merged, and one landing between the casks header and the names below
+  # would be parsed word-by-word into bogus cache entries. Both markers this
+  # reads — the header and the trailer — are on stdout.
+  out="$(cat "${intent[@]}" | brew bundle cleanup --casks --file=- 2>/dev/null)" || probe_rc=$?
   if ((probe_rc != 0)) && ! grep -qF 'Run `brew bundle cleanup --force`' <<<"$out"; then
     return 1
   fi
