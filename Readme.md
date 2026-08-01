@@ -91,9 +91,8 @@ repack
 
 ### macOS Customization
 
-Helper shell functions (defined in `sh/.zfunctions.sh`) toggle a couple of macOS defaults:
+A helper shell function (defined in `sh/.zfunctions.sh`) toggles a macOS default:
 - `drag-toggle` — enable/disable ctrl+cmd window dragging (`NSWindowShouldDragOnGesture`)
-- `menu-icons-toggle` — show/hide menu bar action icons (`NSMenuEnableActionImages`)
 
 **System Permissions**
 Grant permissions when prompted:
