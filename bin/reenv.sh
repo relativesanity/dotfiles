@@ -14,19 +14,17 @@ trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 #   - macOS (via rv and npm)
 #
 # Usage:
-#   ./reenv.sh [--plan]
+#   ./reenv.sh                                 (--help for detail)
 #
-# Options:
-#   --plan  Show whether the pinned Ruby, default tools and npm packages are
-#           installed vs missing, then exit without installing anything
+# Prints a plan and asks before applying. Takes no options.
 #
 # Prerequisites:
 #   - rv must be installed (optional - skips if not present)
 #   - npm must be installed (optional - skips if not present)
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# shellcheck source=lib/ui.sh
-source "$SCRIPT_DIR/lib/ui.sh"
+# shellcheck source-path=SCRIPTDIR source=lib/common.sh
+source "$SCRIPT_DIR/lib/common.sh"
 
 RUBY_VERSION_FILE="$HOME/.ruby-version"
 DEFAULT_GEMS_FILE="$HOME/.default-gems"
@@ -67,18 +65,41 @@ default_npm() {
   done < "$DEFAULT_NPM_FILE"
 }
 
-reenv() {
-  local plan=false
-  for arg in "$@"; do
-    [[ "$arg" == "--plan" ]] && plan=true
-  done
+usage() {
+  cat <<'EOF'
+reenv — install the language runtimes and global tools
 
-  if [[ "$plan" == "true" ]]; then
-    plan_reenv
+Usage: reenv.sh
+
+Takes no options. It prints a plan and asks before applying — answer no to
+preview only.
+
+Installs the Ruby pinned in ~/.ruby-version, the CLI tools in ~/.default-gems
+(each as an isolated rv tool), and the global npm packages in ~/.default-npm.
+EOF
+}
+
+reenv() {
+  if [[ "${1:-}" == "--help" || "${1:-}" == "-h" ]]; then
+    usage
     return 0
   fi
+  if [[ $# -gt 0 ]]; then
+    print_failure "Unknown option: $1"
+    print_status "Try 'reenv.sh --help'."
+    return 1
+  fi
 
-  echo -e "\033[1;36m== reenv ==\033[0m"
+  print_header reenv
+
+  require_terminal || return 1
+
+  plan_reenv
+  if ! confirm "Apply this plan?"; then
+    print_status "Nothing applied"
+    return 0
+  fi
+  echo
 
   local version="" installed_now=0 already=0 tools=0
 
@@ -132,7 +153,7 @@ reenv() {
   fi
 
   echo
-  ui_box "reenv summary" "" \
+  print_block "reenv summary" \
     "Ruby: ${version:-none} (installed this run: ${installed_now}, already: ${already})" \
     "Tools: ${tools} declared" \
     "npm: ${pkgs} declared (installed this run: ${pkgs_installed})"

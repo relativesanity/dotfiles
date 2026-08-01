@@ -1,6 +1,6 @@
 Brewfile.lock.json
 Brewfile.local
-Brewfile.cache
-Brewfile.cache.tmp.*
+Brewfile.keep
+Brewfile.keep.tmp.*
 neovim/.config/nvim/lazy-lock.json
 CLAUDE.local.md

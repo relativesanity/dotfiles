@@ -11,39 +11,58 @@ trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 #   - macOS (via Homebrew)
 #
 # Usage:
-#   ./restow.sh [--plan]
+#   ./restow.sh                                 (--help for detail)
 #
-# Options:
-#   --plan  Simulate stowing (stow -n) and report conflicts, then exit without
-#           creating or changing any symlinks
+# Prints a plan and asks before applying. Takes no options.
 #
 # Prerequisites:
 #   - Homebrew must be available (or will be installed)
 #   - dotfiles repository must be present
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# shellcheck source=lib/status.sh
-source "$SCRIPT_DIR/lib/status.sh"
-# shellcheck source=lib/ui.sh
-source "$SCRIPT_DIR/lib/ui.sh"
+# shellcheck source-path=SCRIPTDIR source=lib/common.sh
+source "$SCRIPT_DIR/lib/common.sh"
+
+usage() {
+  cat <<'EOF'
+restow — symlink the configs into place with GNU Stow
+
+Usage: restow.sh
+
+Takes no options. It prints a plan and asks before applying — answer no to
+preview only.
+
+Skips any package whose target already exists as a real file, so local
+overrides are never clobbered.
+EOF
+}
 
 restow() {
-  local plan=false
-  for arg in "$@"; do
-    [[ "$arg" == "--plan" ]] && plan=true
-  done
-
-  if [[ "$plan" == "true" ]]; then
-    plan_restow
+  if [[ "${1:-}" == "--help" || "${1:-}" == "-h" ]]; then
+    usage
     return 0
   fi
+  if [[ $# -gt 0 ]]; then
+    print_failure "Unknown option: $1"
+    print_status "Try 'restow.sh --help'."
+    return 1
+  fi
 
-  echo -e "\033[1;36m== restow ==\033[0m"
+  print_header restow
+
+  require_terminal || return 1
 
   if ! is_macos; then
     print_failure "Unsupported operating system"
     return 1
   fi
+
+  plan_restow
+  if ! confirm "Apply this plan?"; then
+    print_status "Nothing applied"
+    return 0
+  fi
+  echo
 
   ensure_stow || {
     print_failure "Stow could not be set up"
@@ -60,10 +79,15 @@ restow() {
   print_status "Stow complete"
 
   echo
-  ui_box "restow summary" "" \
-    "Packages: $((STOW_LINKED + STOW_SKIPPED)) total" \
-    "Linked:   ${STOW_LINKED}" \
-    "Skipped:  ${STOW_SKIPPED} (local overrides)"
+  local summary=(
+    "Packages: $((STOW_LINKED + STOW_SKIPPED)) total"
+    "Linked:   ${STOW_LINKED}"
+  )
+  if ((STOW_SKIPPED > 0)); then
+    summary+=("NOT stowed: ${STOW_SKIPPED} — resolve the conflicting files and re-run:")
+    summary+=("${STOW_SKIPPED_NAMES[@]/#/  }")
+  fi
+  print_block "restow summary" "${summary[@]}"
 }
 
 # Pre-created before stowing so each app's main config dir is a real directory
@@ -170,13 +194,18 @@ stow_packages() {
   local package
   STOW_LINKED=0
   STOW_SKIPPED=0
+  STOW_SKIPPED_NAMES=()
   while IFS= read -r package; do
     print_status "Stowing $package"
     if stow -d "${DOTFILES_PATH:-$HOME/.dotfiles}" -t "$HOME" --restow "$package" 2>&1; then
       STOW_LINKED=$((STOW_LINKED + 1))
     else
       STOW_SKIPPED=$((STOW_SKIPPED + 1))
-      print_warning "$package has local overrides — skipping conflicting files (expected on machine-specific configs)"
+      STOW_SKIPPED_NAMES+=("$package")
+      # Not "some files were skipped": stow aborts the whole package on the
+      # first conflict, so NONE of it is linked. Say so — a silently unstowed
+      # sh package leaves a new machine with no shell config at all.
+      print_warning "$package NOT stowed — a conflicting file above blocks the whole package"
     fi
   done < <(stow_packages_list)
 }

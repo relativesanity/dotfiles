@@ -7,9 +7,9 @@ IFS=$'\n\t'       # Stricter word splitting
 trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 
 # Bootstrap script for new system setup
-# Installs the prerequisites and clones the repo, then asks before running the
-# initial `dot sync` (packages + symlinks); answering no leaves the machine
-# untouched beyond the clone.
+# Installs the prerequisites and clones the repo, then asks before handing over
+# to redot for the full install (packages + symlinks + runtimes); answering no
+# leaves the machine untouched beyond the clone.
 # Supports:
 #   - macOS (via Homebrew)
 #
@@ -44,8 +44,6 @@ bootstrap() {
     print_failure "Zsh could not be set up"
     return 1
   }
-  # gum is the one optional prerequisite — without it the dot TUI is plain text.
-  ensure_gum || print_warning "gum could not be installed; the dot TUI will fall back to plain text"
   ensure_dotfiles || {
     print_failure "Dotfiles could not be set up"
     return 1
@@ -54,22 +52,22 @@ bootstrap() {
 
   local dotfiles="${DOTFILES_PATH:-$HOME/.dotfiles}"
   if ! confirm_full_install; then
-    print_status "Stopping after bootstrap. Run '$dotfiles/bin/dot.sh' to install packages and symlinks."
-    print_status "(the shorter 'dot' command appears once the shell configs are stowed)"
+    print_status "Stopping after bootstrap. Run '$dotfiles/bin/redot.sh' to install packages and symlinks."
+    print_status "(the shorter 'redot' command appears once the shell configs are stowed)"
     return 0
   fi
 
   print_status "Running initial dotfiles setup"
-  if ! "$dotfiles/bin/dot.sh" sync; then
+  if ! "$dotfiles/bin/redot.sh"; then
     print_failure "Initial dotfiles setup failed"
     return 1
   fi
   print_status "Bootstrap complete"
-  print_status "Run 'dot' to open the dotfiles menu."
+  print_status "Run 'redot' to sync, or repack/restow/reenv for one part."
 }
 
 # ------------------------------------------------------------------------------------------------------
-# Bootstrap only prepares the machine; `dot sync` is what changes it — it installs
+# Bootstrap only prepares the machine; redot is what changes it — it installs
 # every package and, through `brew bundle --zap`, uninstalls anything undeclared.
 # Ask before crossing that line, defaulting to no: on a fresh machine one extra
 # keystroke costs nothing, and on a machine that already has the repo a mistyped
@@ -79,18 +77,22 @@ bootstrap() {
 # `bash -c "$(curl …)"` stdin is the TTY, but a genuinely piped run has stdin
 # consumed by the script itself — and `read -p` writes its prompt to stderr,
 # which disappears under `bootstrap.sh 2>log`, leaving what looks like a hang.
-# /dev/tty exists and tests readable even when there is no controlling terminal,
-# so attempting the redirect is the only reliable probe. When it fails there is
-# nobody to ask: continue, keeping unattended runs one-shot as they were before
-# this prompt existed.
+#
+# Writing the prompt is the probe for a terminal: /dev/tty exists and even tests
+# readable when there is no controlling terminal, so only the write reveals the
+# truth. No terminal means nobody consented, so it stops after the clone rather
+# than installing anything — unattended runs are unsupported. A failed READ is
+# EOF from a person (Ctrl-D), which also stops.
 confirm_full_install() {
   local prompt="Continue to full installation? [y/N] " reply=""
 
-  { printf '%s' "$prompt" >/dev/tty; read -r reply </dev/tty; } 2>/dev/null || {
-    # Say so rather than continue silently: the visible default is no, and an
-    # unattended log should record that this run took the other branch.
-    print_status "No terminal to prompt on; continuing to full installation."
-    return 0
+  printf '%s' "$prompt" >/dev/tty 2>/dev/null || {
+    print_warning "No terminal to ask on; stopping after the clone."
+    return 1
+  }
+  read -r reply </dev/tty 2>/dev/null || {
+    printf '\n' >/dev/tty 2>/dev/null || true
+    return 1
   }
 
   # Strict IFS ($'\n\t') means read leaves surrounding spaces on, so " y" would
@@ -120,10 +122,9 @@ persist_dotfiles_path() {
 }
 
 # ------------------------------------------------------------------------------------------------------
-# repack.sh has an ensure_homebrew too, and the duplication is deliberate: this
-# one *installs* Homebrew, that one only configures an existing install. They
-# can't be shared — bootstrap runs from `curl` before the repo exists, so it
-# cannot source bin/lib. Don't merge them into a library.
+# repack.sh has an ensure_homebrew too, and lib/common.sh has a confirm() much
+# like confirm_full_install. The duplication is deliberate: bootstrap runs from
+# `curl` before the repo exists, so it cannot source bin/lib. Don't merge them.
 ensure_homebrew() {
   print_status "Checking homebrew"
   if command -v brew >/dev/null 2>&1; then
@@ -145,18 +146,6 @@ ensure_homebrew() {
   # caller's guard sees nothing but this function's status.
   command -v brew >/dev/null 2>&1 || return 1
   print_status "Homebrew enabled"
-}
-
-# ------------------------------------------------------------------------------------------------------
-ensure_gum() {
-  print_status "Checking gum"
-  if command -v gum >/dev/null 2>&1; then
-    return 0
-  fi
-
-  print_status "Installing gum"
-  brew install gum || return 1
-  print_status "Gum installed"
 }
 
 # ------------------------------------------------------------------------------------------------------
@@ -188,7 +177,7 @@ ensure_zsh() {
   # Check if zsh is in /etc/shells
   if ! grep -q "$(command -v zsh)" /etc/shells; then
     print_status "Adding zsh to /etc/shells"
-    echo "$(command -v zsh)" | sudo tee -a /etc/shells >/dev/null || return 1
+    command -v zsh | sudo tee -a /etc/shells >/dev/null || return 1
   fi
 
   # Check if zsh is already the default shell
