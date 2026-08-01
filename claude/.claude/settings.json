@@ -9,20 +9,5 @@
   "theme": "auto",
   "skipAutoPermissionPrompt": true,
   "voiceEnabled": true,
-  "skipWorkflowUsageWarning": true,
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/check-doc-drift.sh",
-            "timeout": 20,
-            "statusMessage": "Checking for stale references"
-          }
-        ]
-      }
-    ]
-  }
+  "skipWorkflowUsageWarning": true
 }
