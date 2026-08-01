@@ -85,7 +85,12 @@ bootstrap() {
 confirm_full_install() {
   local prompt="Continue to full installation? [y/N] " reply=""
 
-  { printf '%s' "$prompt" >/dev/tty; read -r reply </dev/tty; } 2>/dev/null || return 0
+  { printf '%s' "$prompt" >/dev/tty; read -r reply </dev/tty; } 2>/dev/null || {
+    # Say so rather than continue silently: the visible default is no, and an
+    # unattended log should record that this run took the other branch.
+    print_status "No terminal to prompt on; continuing to full installation."
+    return 0
+  }
 
   # Strict IFS ($'\n\t') means read leaves surrounding spaces on, so " y" would
   # miss the match below. Trim them rather than let a stray space decide this.

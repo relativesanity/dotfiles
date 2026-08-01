@@ -81,12 +81,16 @@ repack() {
 
   if [[ "$select_cache_mode" == "true" ]]; then
     # select_cache writes a curated cache and returns 0 to proceed with the zap
-    # that prunes the deselected apps; any other status means leave things as-is.
-    if select_cache; then
-      skip_cache=true
-    else
-      return 0
-    fi
+    # that prunes the deselected apps; 1 means "nothing to do, leave things as
+    # they are", and 2 means it could not tell — which is a failed run, not a
+    # quiet no-op, so it must not exit 0.
+    local select_rc=0
+    select_cache || select_rc=$?
+    case "$select_rc" in
+      0) skip_cache=true ;;
+      2) return 1 ;;
+      *) return 0 ;;
+    esac
   fi
 
   # Snapshot installed packages + cache before changes, so the summary can show
@@ -111,6 +115,10 @@ repack() {
     # while nothing has been uninstalled yet rather than bundle without it.
     cache_untracked || {
       print_failure "Untracked apps could not be cached — stopping before cleanup so nothing is uninstalled"
+      # Named because a reworded brew trailer would block every run, and this is
+      # the way through. Deliberately hedged: it honours the *existing* cache and
+      # still zaps anything that has drifted in since it was written.
+      print_status "If the cache on disk is still current, --skip-cache bundles against it (and zaps uncached drift)."
       return 1
     }
   fi
@@ -128,7 +136,11 @@ repack() {
       rc=1
     }
   fi
-  ((rc == 0)) && print_status "Repack complete"
+  # A plain `((rc == 0)) && print_status …` would itself return 1 when rc is 1,
+  # aborting before the summary the moment this runs under a live errexit.
+  if ((rc == 0)); then
+    print_status "Repack complete"
+  fi
 
   summarize_repack "$before_formulae" "$before_casks" "$before_cache"
   return "$rc"
@@ -262,9 +274,10 @@ select_cache() {
   local line c s in_selected untracked
   local candidates=() selected=() keepers=()
 
+  # 2, not 1: the caller distinguishes "could not tell" from "nothing to do".
   untracked="$(compute_untracked)" || {
     print_failure "Could not determine which apps are untracked — leaving the cache untouched"
-    return 1
+    return 2
   }
   while IFS= read -r line; do [[ -n "$line" ]] && candidates+=("$line"); done <<<"$untracked"
 
