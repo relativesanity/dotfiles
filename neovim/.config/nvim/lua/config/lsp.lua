@@ -46,7 +46,7 @@ vim.lsp.enable("tailwindcss")
 -- so root_dir is just the file's own directory.
 --
 -- No Homebrew formula exists, so it's declared in node/.default-npm and
--- installed globally by `dot env` rather than by `dot pack`.
+-- installed globally by `reenv` rather than by `repack`.
 vim.lsp.config("emmet_language_server", {
   cmd = { "emmet-language-server", "--stdio" },
   filetypes = { "html", "eruby", "css", "scss", "javascriptreact", "typescriptreact" },

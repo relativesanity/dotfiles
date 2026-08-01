@@ -1,4 +1,4 @@
-# Global npm CLI tools, installed by `dot env`. One per line.
+# Global npm CLI tools, installed by `reenv`. One per line.
 # These are language servers Homebrew has no formula for — anything with a
 # formula belongs in a Brewfile instead.
 @olrtg/emmet-language-server

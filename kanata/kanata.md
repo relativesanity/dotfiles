@@ -46,7 +46,7 @@ For each, hit the `+` button and navigate to the kanata binary, likely
 `/opt/homebrew/bin/kanata`, then make sure its toggle is on.
 
 Finally, pin the formula so Homebrew stops silently updating the binary out from
-under these permission grants (`repack`/`dot pack` runs a bare `brew upgrade`,
+under these permission grants (`repack` runs a bare `brew upgrade`,
 which is what keeps bumping it):
 
 ```bash
@@ -56,7 +56,7 @@ brew pin kanata
 The pin is machine-local brew state (a symlink under
 `$(brew --prefix)/var/homebrew/pinned/`), not tracked in this repo and not
 expressible in a Brewfile — so it's a required manual step on every new machine.
-Pending kanata updates still show up in the `dot pack` summary under "Held back";
+Pending kanata updates still show up in the `repack` summary under "Held back";
 take one deliberately with `brew unpin kanata && brew upgrade kanata`, then
 re-grant both permissions and `brew pin kanata` again.
 
