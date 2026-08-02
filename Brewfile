@@ -8,6 +8,7 @@ brew "gh"
 brew "git"
 brew "libyaml"
 brew "neovim"
+brew "node"
 brew "ripgrep"
 brew "rv" # Ruby version + gem manager (prebuilt rubies, no compiling); see ruby/.ruby-version
 brew "starship"
