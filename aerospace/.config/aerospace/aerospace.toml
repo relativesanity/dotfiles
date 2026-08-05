@@ -31,6 +31,10 @@ on-focus-changed = [
 
 config-version = 2
 
+# Keeps workspaces 1-5 alive when empty so sketchybar always lists all 5.
+# Details: https://github.com/nikitabobko/AeroSpace/issues/999
+persistent-workspaces = ["1", "2", "3", "4", "5"]
+
 # Start AeroSpace at login
 start-at-login = true
 
