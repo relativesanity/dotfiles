@@ -3,6 +3,10 @@
 This is not going to be needed on most keyboards, but for laptops it is
 very handy. Ensure you add kanata and karabiner-elements to your Brewfile.local,
 and then completely set up Karabiner Elements, including granting all permissions.
+Karabiner Elements itself is only there for convenience — it auto-manages the
+VirtualHIDDevice driver daemon. See [Standalone driver, without Karabiner
+Elements](#standalone-driver-without-karabiner-elements) below if you'd rather
+skip installing it.
 
 ## Multiple Keyboard Support
 
@@ -18,6 +22,63 @@ kanata --list
 The configuration uses `macos-dev-names-include` to target only the
 "Apple Internal Keyboard / Trackpad" device. External keyboards like mechanical
 boards will continue to work normally without kanata modifications.
+
+## Karabiner VirtualHIDDevice Driver
+
+Kanata grabs keyboard *output* on macOS through the
+[Karabiner-DriverKit-VirtualHIDDevice](https://github.com/pqrs-org/Karabiner-DriverKit-VirtualHIDDevice)
+driver. This is **not the same thing** as the Input Monitoring/Accessibility
+permissions below, and it's not available via Homebrew — `karabiner-elements`
+(the cask) bundles its own copy of this driver, but that copy is pinned to
+whatever version shipped with that release of Karabiner Elements, and it can
+be older than what kanata's client library speaks. That mismatch shows up as
+kanata running and grabbing the keyboard for *input*, then looping forever on:
+
+```
+connect_failed asio.system:2
+[INFO] Waiting for DriverKit virtual keyboard... (Ns/10.0s)
+[WARN] output backend not ready after 10s. Key output may fail until the backend recovers.
+```
+
+The driver has its own version line (v1.x, v5.x, v6.x, v8.x, ...), independent
+of both kanata's and Karabiner Elements' version numbers. Check the
+[kanata setup-macos.md](https://github.com/jtroo/kanata/blob/main/docs/setup-macos.md)
+for the version your installed kanata expects — as of kanata 1.12.0 that's
+**v6.2.0**; kanata >= v1.13.0 needs v8.0.0. Download the matching `.pkg` from
+its [releases page](https://github.com/pqrs-org/Karabiner-DriverKit-VirtualHIDDevice/releases)
+and run the installer — it activates the system extension itself, no
+`launchctl`/`forceActivate` dance needed as long as Karabiner Elements is
+already installed (its daemon manages the driver automatically and picks up
+the new version). If kanata is ever upgraded across that v1.13.0 line, the
+driver needs a matching upgrade or the same loop comes back.
+
+### Standalone driver, without Karabiner Elements
+
+Karabiner Elements isn't actually required by kanata — only the driver is.
+Skipping the `karabiner-elements` cask means its daemon isn't around to start
+the driver automatically, so the daemon needs its own LaunchDaemon instead.
+This repo ships one at `kanata/org.pqrs.Karabiner-VirtualHIDDevice-Daemon.plist`
+(copied from kanata's own `cfg_samples/karabiner-vhid-daemon.plist`):
+
+```bash
+sudo cp kanata/org.pqrs.Karabiner-VirtualHIDDevice-Daemon.plist \
+  /Library/LaunchDaemons/
+sudo launchctl bootstrap system \
+  /Library/LaunchDaemons/org.pqrs.Karabiner-VirtualHIDDevice-Daemon.plist
+```
+
+Verify it's running:
+
+```bash
+sudo launchctl list | grep org.pqrs
+```
+
+To uninstall:
+
+```bash
+sudo launchctl bootout system/org.pqrs.Karabiner-VirtualHIDDevice-Daemon
+sudo rm /Library/LaunchDaemons/org.pqrs.Karabiner-VirtualHIDDevice-Daemon.plist
+```
 
 ## Installation
 
@@ -103,8 +164,28 @@ tail -f /Library/Logs/Kanata/kanata.out.log /Library/Logs/Kanata/kanata.err.log
 To avoid the churn, `brew pin kanata` stops it from silently updating out from
 under the permission grants.
 
+### Driver version mismatch (`connect_failed asio.system:2`)
+
+**Symptom**: Kanata starts, logs `keyboard grabbed, entering event processing
+loop` (input side is fine), but then loops on:
+```
+connect_failed asio.system:2
+[INFO] Waiting for DriverKit virtual keyboard... (Ns/10.0s)
+[WARN] output backend not ready after 10s. Key output may fail until the backend recovers.
+```
+
+**Cause**: see [Karabiner VirtualHIDDevice Driver](#karabiner-virtualhiddevice-driver)
+above — the installed driver version doesn't match what this kanata version's
+client library speaks.
+
+**Solution**: install the matching driver `.pkg` from its
+[releases page](https://github.com/pqrs-org/Karabiner-DriverKit-VirtualHIDDevice/releases)
+per that section, then `sudo launchctl kickstart -k system/com.example.kanata`.
+
 ## Resources
 
 - https://github.com/jtroo/kanata/issues/1264#issuecomment-2763085239
 - https://github.com/jtroo/kanata/discussions/1537
 - https://github.com/dreamsofcode-io/home-row-mods/tree/main/kanata/macos
+- https://github.com/jtroo/kanata/blob/main/docs/setup-macos.md
+- https://github.com/pqrs-org/Karabiner-DriverKit-VirtualHIDDevice
