@@ -14,19 +14,22 @@
 #     Move+Go:   q/w/e/r/t - move window to workspace 1-5 and follow
 #     Fullscreen: p - toggle fullscreen
 
-# after-startup-command = [
-#     'exec-and-forget sketchybar'
-# ]
-#
-# # Notify Sketchybar about workspace changes
-# exec-on-workspace-change = ['/bin/bash', '-c',
-#     'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
-# ]
-#
-# # Notify Sketchybar about window focus changes
-# on-focus-changed = [
-#     'exec-and-forget sketchybar --trigger window_focus'
-# ]
+after-startup-command = [
+    'exec-and-forget sketchybar',
+    'exec-and-forget $HOME/.config/borders/bordersrc'
+]
+
+# Notify Sketchybar about workspace changes
+exec-on-workspace-change = ['/bin/bash', '-c',
+    'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
+]
+
+# Notify Sketchybar about window focus changes
+on-focus-changed = [
+    'exec-and-forget sketchybar --trigger window_focus'
+]
+
+config-version = 2
 
 # Start AeroSpace at login
 start-at-login = true
@@ -174,12 +177,67 @@ automatically-unhide-macos-hidden-apps = false
 # - Safari SSBs: /usr/libexec/PlistBuddy -c "Print CFBundleIdentifier" ~/Applications/AppName.app/Contents/Info.plist
 #   (Safari SSBs use format: com.apple.Safari.WebApp.{UUID})
 
-# Float everything by default. To opt specific apps into tiling, add rules like:
-#   [[on-window-detected]]
-#       if.app-id = 'com.example.SomeApp'
-#       run = 'layout tiling'
+# Tile everything by default (AeroSpace's default behavior). Apps below are
+# opted into floating instead.
 # Toggle the current window manually with ctrl-alt-shift-cmd-p
 [[on-window-detected]]
+    if.app-id = 'com.apple.calculator'
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-id = 'com.apple.iCal'
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-id = 'com.anthropic.claude-desktop'
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-id = 'com.apple.finder'
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-id = 'com.apple.mail'
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-id = 'com.apple.MobileSMS'
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-id = 'com.manytricks.Moom'
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-id = 'com.apple.Music'
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-id = 'org.whispersystems.signal-desktop'
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-id = 'com.culturedcode.ThingsMac'
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-id = 'com.apple.Safari.WebApp.4EF52CD3-780D-4265-8E9B-5EB7650B3196'
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-id = 'com.apple.Safari.WebApp.3D36C4CC-1ED4-4945-BB26-8A5373748889'
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-id = 'com.apple.Safari.WebApp.A140371B-6529-45EF-8F73-A9942E094D74'
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-id = 'com.apple.Safari.WebApp.ABA59A85-ADF9-4799-98A6-078299274FDE'
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-id = 'us.zoom.xos'
     run = 'layout floating'
 
 # 'service' binding mode declaration.
