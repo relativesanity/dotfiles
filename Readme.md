@@ -109,6 +109,11 @@ Grant permissions when prompted:
 Kanata needs *both* Accessibility and Input Monitoring, and macOS revokes them
 whenever Homebrew updates the binary — see `kanata/kanata.md` for the re-grant fix.
 
+**Tiling WM (Optional)**
+AeroSpace, Sketchybar, and JankyBorders (`borders`) are stowed but not installed
+by default — they're a set, added together via `Brewfile.local` on machines that
+want the tiling WM + bar + window borders.
+
 ### Kanata Setup (Laptops Only)
 
 Only needed for home row mods on MacBook internal keyboard.
