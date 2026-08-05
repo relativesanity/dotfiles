@@ -90,7 +90,7 @@ automatically-unhide-macos-hidden-apps = false
     inner.vertical =   [{ monitor."Studio Display" = 48 }, 16]
     outer.left =       [{ monitor."Studio Display" = 48 }, 16]
     outer.bottom =     [{ monitor."Studio Display" = 48 }, 16]
-    outer.top =        [{ monitor."Studio Display" = 48 }, 16]
+    outer.top =        [{ monitor."Studio Display" = 48 }, 24]
     outer.right =      [{ monitor."Studio Display" = 48 }, 16]
 
 # 'main' binding mode declaration
