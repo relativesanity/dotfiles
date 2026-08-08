@@ -193,7 +193,7 @@ automatically-unhide-macos-hidden-apps = false
     run = 'layout floating'
 
 [[on-window-detected]]
-    if.app-id = 'com.anthropic.claude-desktop'
+    if.app-id = 'com.anthropic.claudefordesktop'
     run = 'layout floating'
 
 [[on-window-detected]]
