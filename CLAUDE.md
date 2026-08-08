@@ -50,9 +50,18 @@ it carries its own copies of the handful of helpers it needs. That duplication
 `confirm` asks on `/dev/tty`, never on stdin: these scripts can be reached
 through `curl | bash`, where stdin is the script text itself and a read would
 swallow it as the answer. **Unattended runs are explicitly unsupported** — every
-script calls `require_terminal` first and refuses without one. There is no
-"assume yes" fallback and none should be added: no terminal means nobody
-consented, and the thing being consented to is `brew bundle --zap`.
+script calls `require_terminal` first and refuses without one, `-y` included:
+it still needs a real terminal, it just skips the per-plan `y/N` reads on it.
+
+`redot -y` auto-confirms every plan (`repack`, `restow`, `reenv` in turn) by
+exporting `DOTFILES_ASSUME_YES=true`, which `confirm` in `common.sh` checks
+before it ever touches `/dev/tty`. This is not a "`--yes`" flag on `repack`,
+`restow`, or `reenv` themselves — they still take no such option, and still
+reject one if passed directly. It's safe specifically because a bare `repack`
+rebuilds `Brewfile.keep` from installed-by-hand apps *before* it zaps, so `-y`
+on the default flow never removes anything undeclared and untracked; `--prune`
+is already the explicit, typed request to remove what's on the keep-list, with
+or without `-y`.
 
 A script invoked as `if ! name "$@"` runs with errexit *disabled* for its entire
 body — bash ignores `set -e` inside a condition — so every step must fail

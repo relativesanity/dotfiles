@@ -50,7 +50,16 @@ require_terminal() {
 
 # confirm "question" — 0 for yes. Anything but y/yes is no, including EOF
 # (Ctrl-D). Call require_terminal first; without one this answers no.
+#
+# DOTFILES_ASSUME_YES=true short-circuits to yes without touching the tty.
+# Set by redot's -y and exported to the child scripts it invokes — it is not a
+# flag on repack/restow/reenv themselves, which still take no such option.
 confirm() {
+  if [[ "${DOTFILES_ASSUME_YES:-}" == "true" ]]; then
+    printf '%s [y/N] y (auto-confirmed via -y)\n' "$1" >/dev/tty 2>/dev/null || true
+    return 0
+  fi
+
   local reply=""
   printf '%s [y/N] ' "$1" >/dev/tty 2>/dev/null || return 1
   read -r reply </dev/tty 2>/dev/null || {

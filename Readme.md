@@ -148,3 +148,8 @@ protects it. Delete its line from `Brewfile.keep`, then `repack --prune`.
 
 These scripts always ask before applying, so they need a terminal and refuse
 without one. Unattended use (cron, CI) is not supported.
+
+`redot -y` (or `--yes`) auto-confirms every plan instead of prompting three
+times — still needs a terminal, it just skips the `y/N` reads on it. This is a
+`redot`-only option; `repack`, `restow`, and `reenv` still take no such flag
+when run on their own.

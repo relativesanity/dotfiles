@@ -14,7 +14,7 @@ trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 #   - macOS (via Homebrew)
 #
 # Usage:
-#   ./redot.sh [--install-only | --prune]       (--help for the options)
+#   ./redot.sh [--install-only | --prune] [-y]  (--help for the options)
 #
 # Prerequisites:
 #   - dotfiles repository must be present
@@ -28,7 +28,7 @@ usage() {
   cat <<'EOF'
 redot — pull the dotfiles repo, then apply all of it
 
-Usage: redot.sh [--install-only | --prune]
+Usage: redot.sh [--install-only | --prune] [-y | --yes]
 
 Runs repack, then restow, then reenv (reenv needs rv, which repack installs).
 Each prints its own plan and asks before applying — answer no to preview only.
@@ -36,6 +36,13 @@ Each prints its own plan and asks before applying — answer no to preview only.
 Options (passed through to repack):
   --install-only  Install what's declared and missing; no upgrades, no removals.
   --prune         Use Brewfile.keep as it stands, removing anything not on it.
+
+Options (redot's own):
+  -y, --yes       Auto-confirm every plan instead of prompting. A bare repack
+                  rebuilds Brewfile.keep from installed-by-hand apps before it
+                  zaps, so this never removes anything undeclared and untracked;
+                  --prune is itself the explicit request to remove what's on the
+                  keep-list, -y or not.
   --help, -h      Show this.
 
 restow and reenv take no options.
@@ -45,6 +52,8 @@ EOF
 redot() {
   # Validate here rather than letting repack reject it later: by then this has
   # already pulled, and the error would name repack for a flag typed at redot.
+  local yes=false
+  local -a repack_args=()
   local arg
   for arg in "$@"; do
     case "$arg" in
@@ -52,7 +61,8 @@ redot() {
         usage
         return 0
         ;;
-      --install-only | --prune) ;;
+      --install-only | --prune) repack_args+=("$arg") ;;
+      -y | --yes) yes=true ;;
       *)
         print_failure "Unknown option: $arg"
         print_status "Try 'redot.sh --help'."
@@ -67,8 +77,17 @@ redot() {
 
   pull_dotfiles || return 1
 
+  if [[ "$yes" == "true" ]]; then
+    print_status "-y: auto-confirming every plan"
+    export DOTFILES_ASSUME_YES=true
+  fi
+
   # Only repack takes options; the other two are argument-free by design.
-  "$SCRIPT_DIR/repack.sh" "$@" || return 1
+  if [[ ${#repack_args[@]} -gt 0 ]]; then
+    "$SCRIPT_DIR/repack.sh" "${repack_args[@]}" || return 1
+  else
+    "$SCRIPT_DIR/repack.sh" || return 1
+  fi
   echo
   "$SCRIPT_DIR/restow.sh" || return 1
   echo
