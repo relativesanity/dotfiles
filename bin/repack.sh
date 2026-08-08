@@ -263,6 +263,11 @@ ensure_homebrew() {
 # ------------------------------------------------------------------------------------------------------
 # `brew update` always runs so newly declared packages resolve; the upgrade of
 # everything already installed is what --install-only skips.
+#
+# HOMEBREW_NO_ASK: brew's own "Do you want to proceed with the upgrade?" is
+# redundant here, not something to suppress only under -y — plan_repack already
+# listed these exact packages under "Would upgrade" and got a yes from confirm
+# above. Asking again is brew re-gating a decision this script already gated.
 update_homebrew() {
   local install_only="${1:-false}"
   print_status "Updating Homebrew"
@@ -271,7 +276,7 @@ update_homebrew() {
     print_status "Skipping upgrade of installed packages"
     return 0
   fi
-  brew upgrade
+  HOMEBREW_NO_ASK=1 brew upgrade
 }
 
 # ------------------------------------------------------------------------------------------------------
@@ -370,10 +375,13 @@ bundle_homebrew() {
   # Tap trust is declarative: tapped packages carry `trusted: true` in the
   # Brewfiles, so `brew bundle` trusts them before tapping and rewrites
   # ~/.homebrew/trust.json to match on cleanup. No manual `brew trust` needed.
+  #
+  # HOMEBREW_NO_ASK: see update_homebrew — plan_repack already listed what's
+  # missing and got a yes from confirm; brew's own ask-mode would ask again.
   if [[ "$install_only" == "true" ]]; then
-    cat "${brewfiles[@]}" | brew bundle --file=-
+    cat "${brewfiles[@]}" | HOMEBREW_NO_ASK=1 brew bundle --file=-
   else
-    cat "${brewfiles[@]}" | brew bundle --file=- --zap --force-cleanup
+    cat "${brewfiles[@]}" | HOMEBREW_NO_ASK=1 brew bundle --file=- --zap --force-cleanup
   fi
 }
 

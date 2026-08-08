@@ -72,7 +72,16 @@ Plan-then-confirm convention: every script prints what it would do and asks
 before applying. That gate is the safety rail for `brew bundle --zap`, so it
 lives in the script, never in a caller. Keep the `plan_*` functions strictly
 side-effect-free (no keep-list writes, no symlinks) — they run before consent.
-There is no `--plan` or `--yes`: to preview, run it and answer no.
+There is no `--plan`: to preview, run it and answer no (or see `redot -y`
+above for skipping the answering, not the previewing).
+
+Homebrew has its own separate "ask mode" (`Do you want to proceed with the
+upgrade? [y/n]`, gated by `$HOMEBREW_NO_ASK`) that fires from `brew upgrade`
+and `brew bundle` themselves, after our own confirm already succeeded.
+`repack.sh`'s `update_homebrew`/`bundle_homebrew` set `HOMEBREW_NO_ASK=1` on
+those calls unconditionally (not just under `-y`) because it's genuinely
+redundant every time, not an `-y`-only concern: `plan_repack` already listed
+the exact packages and got a yes from `confirm` moments earlier.
 
 `restow` and `reenv` take no options at all and reject any argument. `repack`
 takes exactly two, `--install-only` and `--prune`, and rejects anything else —
