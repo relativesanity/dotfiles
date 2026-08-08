@@ -1,5 +1,6 @@
 {
   "includeCoAuthoredBy": false,
+  "editorMode": "vim",
   "permissions": {
     "defaultMode": "auto"
   },
