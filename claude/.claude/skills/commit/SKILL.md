@@ -10,7 +10,7 @@ description: Stage and commit changes following the repository's established com
 3. Check if `CLAUDE.md`, `Readme.md`, or other documentation needs updating given the changes — if so, propose updates and wait for approval before proceeding
 4. If the change **removed or renamed** anything referred to by name — a command, flag, function, file or config key — grep the whole repo for the old name before committing. Stale references outlive the thing they describe, and the ones that rot unnoticed live outside `bin/` and the top-level `*.md`: `kanata/kanata.md`, `node/.default-npm`, comments in stowed configs like `neovim/.config/nvim/lua/config/lsp.lua`
 5. Stage the relevant files (prefer specific file names over `git add .`)
-6. Commit using the style observed in step 1, falling back to the default format below if no history exists
+6. Commit using the style observed in step 1, falling back to the default format below if no history exists. If step 1 shows single-line subjects, use a single-line subject — even for a change that feels like it deserves more. The body example below is the no-history fallback, not something to reach for just because a change has a rationale worth stating; don't let it override what step 1 actually showed.
 
 Never amend existing commits. Never use `--no-verify`.
 
@@ -21,7 +21,9 @@ Never amend existing commits. Never use `--no-verify`.
 - Present tense verb to start: "adds", "removes", "fixes", "updates", "changes", "moves", "renames", etc.
 - Example: `fixes the issue raised in ticket 1234`
 
-If more detail is needed, use the subject as the first line and add a short description after a blank line:
+If more detail is needed *and* the repo's own history uses bodies (step 1), add one — but only for context that isn't already recoverable from the diff or from docs the commit itself updates. A body that restates a rationale already written into `CLAUDE.md` or a code comment is redundant; skip it.
+
+Use the subject as the first line and add a short description after a blank line:
 
 ```
 fixes session timeout on mobile
