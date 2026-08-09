@@ -37,6 +37,7 @@ cask "utm"
 
 # Mac App Store
 mas "1Blocker - Ad Blocker", id: 1365531024
+mas "Amazon Kindle: Reading App", id: 302584613
 mas "Bear: Markdown Notes", id: 1091189122
 mas "DaisyDisk", id: 411643860
 mas "Day One", id: 1055511498
