@@ -9,7 +9,7 @@ local ensure = {
   "markdown", "markdown_inline",
   "json", "yaml", "toml",
   "git_config", "gitcommit", "gitignore", "diff",
-  "ssh_config", "tmux", "regex",
+  "ssh_config", "regex",
   -- ruby / rails (Brewfile is a ruby DSL; erb views, styling)
   "ruby", "embedded_template", "html", "css", "scss",
   -- javascript / typescript
