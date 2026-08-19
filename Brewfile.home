@@ -1,5 +1,6 @@
 # Brews
 brew "btop"
+brew "dnsglobe"
 brew "eza"
 brew "fastfetch"
 brew "fd"
