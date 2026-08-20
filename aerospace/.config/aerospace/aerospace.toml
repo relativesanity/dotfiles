@@ -167,7 +167,7 @@ automatically-unhide-macos-hidden-apps = false
     ctrl-alt-shift-cmd-t = ['move-node-to-workspace 5', 'workspace 5']
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#fullscreen
-    ctrl-alt-shift-cmd-p = 'layout floating tiling'
+    ctrl-alt-shift-slash = 'layout floating tiling'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
     # ctrl-alt-shift-tab = 'workspace-back-and-forth'
