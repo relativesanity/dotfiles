@@ -1,7 +1,8 @@
 -- windows.lua — Moom-ish window management for Hammerspoon
 
-local meh  = { "ctrl", "alt", "shift" }
-local step = 60 -- pixels per grow/shrink press
+local meh     = { "ctrl", "alt", "shift" }
+local step    = 60   -- pixels per grow/shrink press
+local maxFrac = 0.9  -- grow() won't exceed this fraction of screen width/height
 
 hs.window.animationDuration = 0 -- snap instantly, no easing
 
@@ -35,14 +36,16 @@ local function centredAt(w, h)
 end
 
 -- Grow/shrink from the centre outwards, keeping the window's midpoint fixed.
+-- Growth is clamped to maxFrac of the screen's width/height.
 -- resize(step, 0) or resize(0, step) if you ever want a single axis.
 local function resize(dw, dh)
   return function()
     local win = focused(); if not win then return end
-    local f = win:frame()
-    f.x, f.w = f.x - dw / 2, f.w + dw
-    f.y, f.h = f.y - dh / 2, f.h + dh
-    win:setFrame(f)
+    local f, s = win:frame(), win:screen():frame()
+    local cx, cy = f.x + f.w / 2, f.y + f.h / 2
+    local w = math.min(f.w + dw, s.w * maxFrac)
+    local h = math.min(f.h + dh, s.h * maxFrac)
+    win:setFrame({ x = cx - w / 2, y = cy - h / 2, w = w, h = h })
   end
 end
 
