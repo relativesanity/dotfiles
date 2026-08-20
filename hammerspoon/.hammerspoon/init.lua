@@ -1,5 +1,7 @@
 hs = hs
 
+require("windows")
+
 -- Modifier key combinations
 hyper = { "ctrl", "alt", "shift", "cmd" }
 
