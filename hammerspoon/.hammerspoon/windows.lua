@@ -49,6 +49,15 @@ local function resize(dw, dh)
   end
 end
 
+-- Toggle AeroSpace's floating/tiling layout, then centre if it landed on floating
+local function toggleFloatAndCentre()
+  hs.execute("/opt/homebrew/bin/aerospace layout floating tiling")
+  local layout = hs.execute("/opt/homebrew/bin/aerospace list-windows --focused --format '%{window-layout}'")
+  if layout:match("floating") then
+    centre()
+  end
+end
+
 -- Bindings ------------------------------------------------------------------
 -- 5th arg = repeat handler, so holding the key keeps resizing
 
@@ -58,3 +67,4 @@ hs.hotkey.bind(meh, ",", centre)
 hs.hotkey.bind(meh, ".", centredAt(0.8, 0.8))
 hs.hotkey.bind(meh, "n", grow, nil, grow)
 hs.hotkey.bind(meh, "m", shrink, nil, shrink)
+hs.hotkey.bind(meh, "/", toggleFloatAndCentre)

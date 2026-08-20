@@ -6,8 +6,11 @@
 #     Focus:     h/j/k/l - vim-style directional focus
 #     Move:      y/u/i/o - vim-style directional move
 #     Resize:    m/n - shrink/grow window
-#     Layout:    [ - toggle accordion/tiles, p - toggle floating/tiling
+#     Layout:    [ - toggle accordion/tiles
 #     Service:   ; - enter service mode (reload, reset layout, join windows)
+#
+#   Floating/tiling toggle (meh-/) lives in Hammerspoon's windows.lua, which
+#   also centres the window when it lands on floating — see ~/.hammerspoon
 #
 #   hyper (ctrl-alt-shift-cmd):
 #     Workspace: a/s/d/f/g - switch to workspace 1-5
@@ -165,9 +168,6 @@ automatically-unhide-macos-hidden-apps = false
     ctrl-alt-shift-cmd-e = ['move-node-to-workspace 3', 'workspace 3']
     ctrl-alt-shift-cmd-r = ['move-node-to-workspace 4', 'workspace 4']
     ctrl-alt-shift-cmd-t = ['move-node-to-workspace 5', 'workspace 5']
-
-    # See: https://nikitabobko.github.io/AeroSpace/commands#fullscreen
-    ctrl-alt-shift-slash = 'layout floating tiling'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
     # ctrl-alt-shift-tab = 'workspace-back-and-forth'
