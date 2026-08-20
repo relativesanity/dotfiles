@@ -1,12 +1,18 @@
 # Configuring Kanata for home row mods
 
 This is not going to be needed on most keyboards, but for laptops it is
-very handy. Ensure you add kanata and karabiner-elements to your Brewfile.local,
-and then completely set up Karabiner Elements, including granting all permissions.
-Karabiner Elements itself is only there for convenience — it auto-manages the
-VirtualHIDDevice driver daemon. See [Standalone driver, without Karabiner
-Elements](#standalone-driver-without-karabiner-elements) below if you'd rather
-skip installing it.
+very handy. Ensure you add kanata to your Brewfile.local.
+
+Kanata needs the Karabiner-DriverKit-VirtualHIDDevice driver to grab keyboard
+output on macOS — see [Karabiner VirtualHIDDevice
+Driver](#karabiner-virtualhiddevice-driver) below. The recommended setup
+installs that driver standalone, without the Karabiner Elements app: one less
+background app/daemon, and its "auto-manages driver updates" convenience
+doesn't reliably hold anyway (its bundled driver version can still lag behind
+what kanata needs, forcing the same manual `.pkg` install either way). Only
+add `karabiner-elements` to Brewfile.local and fully set it up, including
+granting all permissions, if you want it for its own remapping features —
+kanata itself doesn't need it.
 
 ## Multiple Keyboard Support
 
@@ -28,11 +34,38 @@ boards will continue to work normally without kanata modifications.
 Kanata grabs keyboard *output* on macOS through the
 [Karabiner-DriverKit-VirtualHIDDevice](https://github.com/pqrs-org/Karabiner-DriverKit-VirtualHIDDevice)
 driver. This is **not the same thing** as the Input Monitoring/Accessibility
-permissions below, and it's not available via Homebrew — `karabiner-elements`
-(the cask) bundles its own copy of this driver, but that copy is pinned to
-whatever version shipped with that release of Karabiner Elements, and it can
-be older than what kanata's client library speaks. That mismatch shows up as
-kanata running and grabbing the keyboard for *input*, then looping forever on:
+permissions below, and it's not available via Homebrew — it's a manual
+`.pkg` install either way, whether or not Karabiner Elements is involved.
+The driver has its own version line (v1.x, v5.x, v6.x, v8.x, ...), independent
+of both kanata's and Karabiner Elements' version numbers. Check the
+[kanata setup-macos.md](https://github.com/jtroo/kanata/blob/main/docs/setup-macos.md)
+for the version your installed kanata expects — as of kanata 1.12.0 that's
+**v6.2.0**; kanata >= v1.13.0 needs v8.0.0. Download the matching `.pkg` from
+its [releases page](https://github.com/pqrs-org/Karabiner-DriverKit-VirtualHIDDevice/releases)
+and run the installer. That installs the driver files but does **not** by
+itself activate the system extension — on a machine where this driver has
+never been approved before, `systemextensionsctl list` will show nothing for
+it even after the `.pkg` finishes. Trigger activation explicitly with the
+manager binary the `.pkg` drops (it's a hidden, dot-prefixed app; double-
+clicking or `open`-ing it does nothing — it needs a subcommand):
+
+```bash
+"/Applications/.Karabiner-VirtualHIDDevice-Manager.app/Contents/MacOS/Karabiner-VirtualHIDDevice-Manager" activate
+```
+
+That prints `request ... requires user approval` — System Settings > Privacy
+& Security should then show a banner (or check System Settings > General >
+Login Items & Extensions > Driver Extensions) to approve it. Confirm with
+`systemextensionsctl list`; the driver should show
+`org.pqrs.Karabiner-DriverKit-VirtualHIDDevice ... [activated enabled]`.
+Once approved, upgrading to a newer driver version later reportedly doesn't
+need this dance repeated — the daemon (whether started by Karabiner Elements
+or the standalone LaunchDaemon below) picks up the new version against the
+already-trusted extension — but that's unconfirmed against the initial-
+activation behavior above. If kanata is ever upgraded across the v1.13.0
+line, the driver needs a matching upgrade or you'll hit this mismatch
+symptom: kanata runs and grabs the keyboard for *input* fine, then loops
+forever on:
 
 ```
 connect_failed asio.system:2
@@ -40,21 +73,18 @@ connect_failed asio.system:2
 [WARN] output backend not ready after 10s. Key output may fail until the backend recovers.
 ```
 
-The driver has its own version line (v1.x, v5.x, v6.x, v8.x, ...), independent
-of both kanata's and Karabiner Elements' version numbers. Check the
-[kanata setup-macos.md](https://github.com/jtroo/kanata/blob/main/docs/setup-macos.md)
-for the version your installed kanata expects — as of kanata 1.12.0 that's
-**v6.2.0**; kanata >= v1.13.0 needs v8.0.0. Download the matching `.pkg` from
-its [releases page](https://github.com/pqrs-org/Karabiner-DriverKit-VirtualHIDDevice/releases)
-and run the installer — it activates the system extension itself, no
-`launchctl`/`forceActivate` dance needed as long as Karabiner Elements is
-already installed (its daemon manages the driver automatically and picks up
-the new version). If kanata is ever upgraded across that v1.13.0 line, the
-driver needs a matching upgrade or the same loop comes back.
+### Recommended: standalone driver, no Karabiner Elements
 
-### Standalone driver, without Karabiner Elements
+Karabiner Elements isn't actually required by kanata — only the driver is,
+and installing Karabiner Elements doesn't reliably save you from managing
+that driver by hand anyway: its bundled copy is pinned to whatever version
+shipped with that release, and it can be (and in practice has been) older
+than what kanata's client library speaks — so you can end up doing the
+manual `.pkg` install above *even with* Karabiner Elements installed. Given
+that, the standalone driver is the simpler default when you don't need
+Karabiner Elements for anything else: one less background app, and the same
+manual driver management either way.
 
-Karabiner Elements isn't actually required by kanata — only the driver is.
 Skipping the `karabiner-elements` cask means its daemon isn't around to start
 the driver automatically, so the daemon needs its own LaunchDaemon instead.
 This repo ships one at `kanata/org.pqrs.Karabiner-VirtualHIDDevice-Daemon.plist`
@@ -80,10 +110,19 @@ sudo launchctl bootout system/org.pqrs.Karabiner-VirtualHIDDevice-Daemon
 sudo rm /Library/LaunchDaemons/org.pqrs.Karabiner-VirtualHIDDevice-Daemon.plist
 ```
 
+### Alternative: with Karabiner Elements
+
+Only do this if you want Karabiner Elements for its own remapping features.
+Add `karabiner-elements` to Brewfile.local, then completely set it up,
+including granting all permissions. Its daemon replaces the LaunchDaemon
+above — skip that step. Expect the same manual driver `.pkg` install from
+above whenever its bundled driver version falls behind what kanata needs;
+Karabiner Elements being installed doesn't prevent that.
+
 ## Installation
 
-Quit Karabiner Elements, including the menu bar app, and copy the plist to the
-right place
+If you installed Karabiner Elements, quit it, including the menu bar app.
+Then copy the kanata plist to the right place:
 
 ```bash
 sudo cp kanata/com.example.kanata.plist /Library/LaunchDaemons/
@@ -181,6 +220,22 @@ client library speaks.
 **Solution**: install the matching driver `.pkg` from its
 [releases page](https://github.com/pqrs-org/Karabiner-DriverKit-VirtualHIDDevice/releases)
 per that section, then `sudo launchctl kickstart -k system/com.example.kanata`.
+
+### Driver not activated (`failed to open keyboard device(s): Karabiner-VirtualHIDDevice driver is not activated`)
+
+**Symptom**: kanata grabs input fine, Input Monitoring and Accessibility are
+both granted, but it still loops on this error (distinct from the version
+mismatch above — no `connect_failed asio.system:2`). `systemextensionsctl
+list` shows nothing for `org.pqrs.Karabiner-DriverKit-VirtualHIDDevice`.
+
+**Cause**: installing the driver `.pkg` does not activate the system
+extension by itself on a machine where it's never been approved before — see
+[Karabiner VirtualHIDDevice Driver](#karabiner-virtualhiddevice-driver)
+above.
+
+**Solution**: run the manager binary's `activate` subcommand and approve the
+resulting prompt, per that section, then
+`sudo launchctl kickstart -k system/com.example.kanata`.
 
 ## Resources
 
