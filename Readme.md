@@ -76,7 +76,7 @@ The dotfiles automatically detect your environment based on username:
 - **Work** (other usernames): Installs core packages only
 
 Package files:
-- `Brewfile` - Core packages required for deployment and a working terminal (stow, git, gh, neovim, node, tmux, rv, fzf, ripgrep, bat, zoxide, starship, ghostty, libyaml, tree-sitter-cli) — see `Brewfile` for the full list
+- `Brewfile` - Core packages required for deployment and a working terminal (stow, git, gh, neovim, tmux, mise, fzf, ripgrep, bat, zoxide, starship, ghostty, libyaml, tree-sitter-cli) — see `Brewfile` for the full list
 - `Brewfile.home` - Personal packages (full setup)
 - `Brewfile.work` - Work-specific packages (add as needed)
 - `Brewfile.local` - Machine-specific overrides (gitignored)
@@ -93,9 +93,6 @@ repack
 
 Defined in `sh/.zfunctions.sh`, alongside the `redot`/`repack`/`restow`/`reenv`
 wrappers covered under Maintenance below:
-- `ruby-load [version]` — install the Ruby the current project asks for. `rv` reads
-  the version from `.ruby-version`, `.tool-versions` or `Gemfile.lock` and switches
-  automatically on `cd`, so this only ensures it's installed; pass a version to override
 - `git-ssh` — rewrite the current repo's GitHub `origin` from HTTPS to SSH
 - `drag-toggle` — enable/disable ctrl+cmd window dragging (`NSWindowShouldDragOnGesture`)
 
@@ -130,7 +127,7 @@ asks before changing anything. To preview without applying, run it and answer no
 | `redot`  | Pull, then all three below, in order                    |
 | `repack` | Homebrew packages                                       |
 | `restow` | Re-symlink configs                                      |
-| `reenv`  | Install ruby runtimes and global tools                  |
+| `reenv`  | Install language runtimes and global tools              |
 
 A bare `repack` upgrades everything installed, installs what the Brewfiles
 declare, keeps the apps you installed by hand, and removes the rest. Two options

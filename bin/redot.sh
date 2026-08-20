@@ -7,7 +7,7 @@ IFS=$'\n\t'       # Stricter word splitting
 trap 'echo -e "\nInterrupted. Exiting..."; exit 130' INT
 
 # Dotfiles sync - pull, then packages, symlinks and language runtimes
-# Runs repack, restow and reenv in that order (reenv needs rv, which repack
+# Runs repack, restow and reenv in that order (reenv needs mise, which repack
 # installs). Each prints its own plan and asks before applying, so this script
 # only orchestrates — it asks nothing of its own.
 # Supports:
@@ -30,7 +30,7 @@ redot — pull the dotfiles repo, then apply all of it
 
 Usage: redot.sh [--install-only | --prune] [-y | --yes]
 
-Runs repack, then restow, then reenv (reenv needs rv, which repack installs).
+Runs repack, then restow, then reenv (reenv needs mise, which repack installs).
 Each prints its own plan and asks before applying — answer no to preview only.
 
 Options (passed through to repack):

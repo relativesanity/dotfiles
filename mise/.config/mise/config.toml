@@ -1,0 +1,5 @@
+[tools]
+ruby = "4.0.3"
+node = "latest"
+"gem:ruby-lsp" = "latest"
+"npm:@olrtg/emmet-language-server" = "latest"
