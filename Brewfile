@@ -7,10 +7,9 @@ brew "fzf"
 brew "gh"
 brew "git"
 brew "libyaml"
+brew "mise" # Runtime version manager (Ruby, Node); see mise/.config/mise/config.toml
 brew "neovim"
-brew "node"
 brew "ripgrep"
-brew "rv" # Ruby version + gem manager (prebuilt rubies, no compiling); see ruby/.ruby-version
 brew "starship"
 brew "stow"
 brew "tmux"

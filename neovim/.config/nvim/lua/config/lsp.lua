@@ -45,8 +45,8 @@ vim.lsp.enable("tailwindcss")
 -- same menu as everything else. No project root is needed — it works per-file,
 -- so root_dir is just the file's own directory.
 --
--- No Homebrew formula exists, so it's declared in node/.default-npm and
--- installed globally by `reenv` rather than by `repack`.
+-- No Homebrew formula exists, so it's declared in mise's global config
+-- (mise/.config/mise/config.toml) and installed by `reenv` rather than `repack`.
 vim.lsp.config("emmet_language_server", {
   cmd = { "emmet-language-server", "--stdio" },
   filetypes = { "html", "eruby", "css", "scss", "javascriptreact", "typescriptreact" },

@@ -16,18 +16,6 @@ reenv() {
   "${DOTFILES_PATH:-$HOME/.dotfiles}/bin/reenv.sh" "$@"
 }
 
-# Install the Ruby the current project asks for. rv reads the version from
-# .ruby-version / .tool-versions / Gemfile.lock; pass an explicit version to
-# override. rv auto-switches on cd, so this just ensures it's installed.
-ruby-load() {
-  if ! command -v rv >/dev/null 2>&1; then
-    echo "rv not installed"
-    return 1
-  fi
-
-  rv ruby install "$@"
-}
-
 drag-toggle() {
   local current
   current=$(defaults read -g NSWindowShouldDragOnGesture 2>/dev/null || echo "false")
