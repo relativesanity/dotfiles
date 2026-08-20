@@ -13,6 +13,10 @@ window-padding-balance = true
 window-width = 110
 window-height = 30
 
+# Auto-install Ghostty's terminfo entry on SSH hosts that lack it, avoiding
+# the TERM=xterm-ghostty mismatch that garbles zsh-syntax-highlighting redraws
+shell-integration-features = ssh-env,ssh-terminfo
+
 mouse-hide-while-typing = true
 keybind = shift+enter=text:\x1b\r
 cursor-style = bar
