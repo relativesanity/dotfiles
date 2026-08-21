@@ -10,7 +10,9 @@ description: Stage and commit changes following the repository's established com
 3. Check if `CLAUDE.md`, `Readme.md`, or other documentation needs updating given the changes — if so, propose updates and wait for approval before proceeding
 4. If the change **removed or renamed** anything referred to by name — a command, flag, function, file or config key — grep the whole repo for the old name before committing. Stale references outlive the thing they describe, and the ones that rot unnoticed live outside `bin/` and the top-level `*.md`: `kanata/kanata.md`, `mise/.config/mise/config.toml`, comments in stowed configs like `neovim/.config/nvim/lua/config/lsp.lua`
 5. Stage the relevant files (prefer specific file names over `git add .`)
-6. Commit using the style observed in step 1, falling back to the default format below if no history exists. If step 1 shows single-line subjects, use a single-line subject — even for a change that feels like it deserves more. The body example below is the no-history fallback, not something to reach for just because a change has a rationale worth stating; don't let it override what step 1 actually showed.
+6. Draft the commit message(s) using the style observed in step 1, falling back to the default format below if no history exists.
+7. **Gate check, before showing the draft to anyone:** does step 1's history show single-line subjects only? If so, the draft must be a single line too — even for a change that feels like it deserves a body. Re-read the draft against step 1's actual output, not against the body example below; that example is the no-history fallback, not a default to reach for. If the honest single-line version can't capture the *what*, that's a signal to split into multiple focused commits (see bottom) rather than to add a body anyway.
+8. Show the drafted commit message(s) — all of them, if there are several — to the user and wait for explicit approval. Only then run `git commit`.
 
 Never amend existing commits. Never use `--no-verify`.
 
