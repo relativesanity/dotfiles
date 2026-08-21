@@ -1,14 +1,16 @@
 {
   "includeCoAuthoredBy": false,
-  "editorMode": "vim",
   "permissions": {
     "defaultMode": "auto"
   },
   "enabledPlugins": {},
   "autoUpdatesChannel": "stable",
   "tui": "fullscreen",
+  "skipWorkflowUsageWarning": true,
   "theme": "auto",
+  "editorMode": "vim",
   "skipAutoPermissionPrompt": true,
   "voiceEnabled": true,
-  "skipWorkflowUsageWarning": true
+  "agentPushNotifEnabled": true,
+  "inputNeededNotifEnabled": true
 }
