@@ -23,6 +23,18 @@ hs.hotkey.bind(hyper, "X", function()
 	hs.eventtap.keyStrokes(currentTime())
 end)
 
+-- Launch Ghostty if it isn't running; if it is, always pop a new window
+-- rather than just refocusing whatever window was last active.
+hs.hotkey.bind(hyper, "return", function()
+	local app = hs.application.find("com.mitchellh.ghostty")
+	if app then
+		app:activate()
+		app:selectMenuItem({ "File", "New Window" })
+	else
+		hs.application.launchOrFocus("Ghostty")
+	end
+end)
+
 -- Catppuccin Mocha, matching the neovim/btop colourscheme
 local function hexColor(hex, alpha)
 	hex = hex:gsub("#", "")
