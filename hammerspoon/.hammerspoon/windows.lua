@@ -50,9 +50,11 @@ local function resize(dw, dh)
   end
 end
 
--- True when AeroSpace has the focused window on its floating layout
+-- True when AeroSpace has the focused window on its floating layout, or when
+-- AeroSpace isn't running at all (nothing owns the frame, so resize directly)
 local function isFloating()
-  local layout = hs.execute(aerospace .. " list-windows --focused --format '%{window-layout}'")
+  local layout, ok = hs.execute(aerospace .. " list-windows --focused --format '%{window-layout}'")
+  if not ok then return true end
   return layout:match("floating") ~= nil
 end
 
