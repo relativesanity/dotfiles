@@ -78,3 +78,4 @@ source $HOME/.zfunctions.sh
 
 # specific to zsh
 alias resource='source $HOME/.zshrc'
+export PATH="/opt/homebrew/opt/rustup/bin:$PATH"
