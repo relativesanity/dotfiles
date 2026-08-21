@@ -1,4 +1,7 @@
 # Brews
+tap "bjarneo/cliamp"
+
+brew "bjarneo/cliamp/cliamp", trusted: true # terminal music player, see https://github.com/bjarneo/cliamp
 brew "btop"
 brew "dnsglobe"
 brew "eza"
