@@ -1,8 +1,9 @@
 -- windows.lua — Moom-ish window management for Hammerspoon
 
-local meh     = { "ctrl", "alt", "shift" }
-local step    = 60   -- pixels per grow/shrink press
-local maxFrac = 0.9  -- grow() won't exceed this fraction of screen width/height
+local meh        = { "ctrl", "alt", "shift" }
+local step       = 48   -- pixels per grow/shrink press
+local maxFrac    = 0.9  -- grow() won't exceed this fraction of screen width/height
+local aerospace  = "/opt/homebrew/bin/aerospace"
 
 hs.window.animationDuration = 0 -- snap instantly, no easing
 
@@ -49,22 +50,43 @@ local function resize(dw, dh)
   end
 end
 
+-- True when AeroSpace has the focused window on its floating layout
+local function isFloating()
+  local layout = hs.execute(aerospace .. " list-windows --focused --format '%{window-layout}'")
+  return layout:match("floating") ~= nil
+end
+
 -- Toggle AeroSpace's floating/tiling layout, then centre if it landed on floating
 local function toggleFloatAndCentre()
-  hs.execute("/opt/homebrew/bin/aerospace layout floating tiling")
-  local layout = hs.execute("/opt/homebrew/bin/aerospace list-windows --focused --format '%{window-layout}'")
-  if layout:match("floating") then
+  hs.execute(aerospace .. " layout floating tiling")
+  if isFloating() then
     centre()
+  end
+end
+
+-- Grow/shrink the focused window regardless of layout: AeroSpace owns the
+-- frame of tiled windows, so setFrame() on those gets silently overridden —
+-- shell out to AeroSpace's own smart resize instead; floating windows resize
+-- directly via resize() above.
+local function growOrShrink(delta)
+  local floatingResize = resize(delta, delta)
+  return function()
+    if isFloating() then
+      floatingResize()
+    else
+      local sign = delta >= 0 and "+" or ""
+      hs.execute(aerospace .. " resize smart " .. sign .. delta)
+    end
   end
 end
 
 -- Bindings ------------------------------------------------------------------
 -- 5th arg = repeat handler, so holding the key keeps resizing
 
-local grow, shrink = resize(step, step), resize(-step, -step)
+local grow, shrink = growOrShrink(step), growOrShrink(-step)
 
 hs.hotkey.bind(meh, ",", centre)
 hs.hotkey.bind(meh, ".", centredAt(0.8, 0.8))
-hs.hotkey.bind(meh, "n", grow, nil, grow)
-hs.hotkey.bind(meh, "m", shrink, nil, shrink)
+hs.hotkey.bind(meh, "n", shrink, nil, shrink)
+hs.hotkey.bind(meh, "m", grow, nil, grow)
 hs.hotkey.bind(meh, "/", toggleFloatAndCentre)
