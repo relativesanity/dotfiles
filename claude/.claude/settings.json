@@ -9,8 +9,9 @@
   "skipWorkflowUsageWarning": true,
   "theme": "auto",
   "editorMode": "vim",
-  "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true,
+  "remoteControlAtStartup": false,
+  "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
-  "inputNeededNotifEnabled": true
+  "skipAutoPermissionPrompt": true,
+  "voiceEnabled": true
 }
