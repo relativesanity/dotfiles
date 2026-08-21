@@ -241,10 +241,6 @@ automatically-unhide-macos-hidden-apps = false
     run = 'layout floating'
 
 [[on-window-detected]]
-    if.app-id = 'com.mitchellh.ghostty'
-    run = 'layout floating'
-
-[[on-window-detected]]
     if.app-id = 'com.apple.weather'
     run = 'layout floating'
 
