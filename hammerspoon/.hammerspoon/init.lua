@@ -1,9 +1,9 @@
 hs = hs
 
-require("windows")
-
 -- Modifier key combinations
 hyper = { "ctrl", "alt", "shift", "cmd" }
+
+require("windows")
 
 -- Formats the current time like 2:32pm
 local function currentTime()
