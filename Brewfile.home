@@ -1,5 +1,7 @@
 # Brews
 tap "bjarneo/cliamp"
+tap "felixkratz/formulae"
+tap "nikitabobko/tap"
 
 brew "bjarneo/cliamp/cliamp", trusted: true # terminal music player, see https://github.com/bjarneo/cliamp
 brew "btop"
@@ -7,6 +9,8 @@ brew "dnsglobe"
 brew "eza"
 brew "fastfetch"
 brew "fd"
+brew "felixkratz/formulae/borders", trusted: true
+brew "felixkratz/formulae/sketchybar", trusted: true
 brew "jq"
 brew "lazygit"
 brew "mas"
@@ -29,6 +33,7 @@ cask "hammerspoon"
 cask "homerow"
 cask "kindavim"
 cask "logi-options+"
+cask "nikitabobko/tap/aerospace", trusted: true
 cask "obsidian"
 cask "orbstack"
 cask "openlogi"
