@@ -167,6 +167,6 @@ compute_untracked() {
 # discovery in restow.sh: skip dotdirs, bin, and the non-stowed kanata package.
 stow_packages_list() {
   find "${DOTFILES_PATH:-$HOME/.dotfiles}" -maxdepth 1 -mindepth 1 -type d \
-    ! -name '.*' ! -name 'bin' ! -name 'kanata' \
+    ! -name '.*' ! -name 'bin' \
     -exec basename {} \; | sort
 }

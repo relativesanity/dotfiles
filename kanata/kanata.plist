@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>com.example.kanata</string>
+    <string>kanata</string>
 
     <key>ProgramArguments</key>
     <array>
         <string>/opt/homebrew/bin/kanata</string>
         <string>-c</string>
-        <string>/Users/relativesanity/.dotfiles/kanata/kanata.kbd</string>
+        <string>/Users/relativesanity/.config/kanata/kanata.kbd</string>
     </array>
 
     <key>RunAtLoad</key>

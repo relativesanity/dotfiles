@@ -5,7 +5,7 @@
 Personal macOS dotfiles managed with GNU Stow. All scripts require macOS and use `set -euo pipefail`.
 
 Non-obvious facts:
-- `kanata/` is NOT stowed — requires manual setup (see `kanata/kanata.md`)
+- `kanata/` is only partly stowed: `kanata.kbd` links via the normal stow flow, but `kanata.md`, `kanata.plist`, and the Karabiner daemon plist are excluded via `kanata/.stow-local-ignore` and require manual setup (see `kanata/kanata.md`)
 - Brewfile loading is environment-aware: always `Brewfile`, then `Brewfile.home` or `Brewfile.work` based on `whoami`, then `Brewfile.local` if present, then `Brewfile.keep` if non-empty
 - `borders`/`sketchybar` configs are stowed, but the tools are intentionally NOT declared in any tracked Brewfile — they're used only occasionally and get installed per-machine via `Brewfile.local` (gitignored) where wanted. Don't "fix" this apparent drift by adding them to `Brewfile.home` (forces install everywhere) or removing their stow packages (drops the shared config); their `REQUIRED_DIRECTORIES` entries stay put
 - `reenv` is a thin wrapper around `mise install`, driven by one file: `mise/.config/mise/config.toml` (pinned Ruby + Node versions, plus CLI tools/language servers via mise's `gem:`/`npm:` backends). Only add `gem:`/`npm:` entries for tools Homebrew has no formula for — `tailwindcss-language-server` has one and belongs in `Brewfile.home`, `@olrtg/emmet-language-server` doesn't and belongs here as `npm:@olrtg/emmet-language-server`. `reenv`'s plan step is `mise install --dry-run`; mise decides what's already installed, so there's no bespoke diffing logic to maintain

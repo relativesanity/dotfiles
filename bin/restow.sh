@@ -104,6 +104,7 @@ readonly REQUIRED_DIRECTORIES=(
   "$HOME/.config/btop"
   "$HOME/.config/ghostty"
   "$HOME/.config/git"
+  "$HOME/.config/kanata"
   "$HOME/.config/nvim"
   "$HOME/.config/ripgrep"
   "$HOME/.config/sketchybar"

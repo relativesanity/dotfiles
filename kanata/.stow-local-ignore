@@ -1,0 +1,8 @@
+# kanata/ is a stow package for kanata.kbd only — kanata.md and the plists
+# below need manual placement (see kanata.md) and must never be symlinked
+# into $HOME. Providing this file replaces stow's built-in ignore list
+# entirely, not just adds to it; that's fine since this package will only
+# ever hold these five files.
+^/kanata\.md$
+^/kanata\.plist$
+^/org\.pqrs\.Karabiner-VirtualHIDDevice-Daemon\.plist$

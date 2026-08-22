@@ -121,18 +121,23 @@ Karabiner Elements being installed doesn't prevent that.
 
 ## Installation
 
+`kanata.kbd` itself is the one file in this directory that's stowed —
+`restow` links it to `~/.config/kanata/kanata.kbd`, which is the path the
+LaunchDaemon plist below points `-c` at. Run `restow` before (or as part of)
+the steps here so that path exists.
+
 If you installed Karabiner Elements, quit it, including the menu bar app.
 Then copy the kanata plist to the right place:
 
 ```bash
-sudo cp kanata/com.example.kanata.plist /Library/LaunchDaemons/
-sudo launchctl load /Library/LaunchDaemons/com.example.kanata.plist
+sudo cp kanata/kanata.plist /Library/LaunchDaemons/
+sudo launchctl load /Library/LaunchDaemons/kanata.plist
 ```
 
 Finally, start kanata using the following command:
 
 ```bash
-sudo launchctl start com.example.kanata
+sudo launchctl start kanata
 ```
 
 Kanata needs **two** separate permissions to open the keyboard, both under
@@ -190,7 +195,7 @@ System Settings > Privacy & Security:
 Then restart the daemon (it's already loaded, so `kickstart -k` re-runs it in
 place — cleaner than stop/start):
 ```bash
-sudo launchctl kickstart -k system/com.example.kanata
+sudo launchctl kickstart -k system/kanata
 ```
 
 Verify it grabbed the keyboard cleanly (look for `keyboard grabbed, entering
@@ -219,7 +224,7 @@ client library speaks.
 
 **Solution**: install the matching driver `.pkg` from its
 [releases page](https://github.com/pqrs-org/Karabiner-DriverKit-VirtualHIDDevice/releases)
-per that section, then `sudo launchctl kickstart -k system/com.example.kanata`.
+per that section, then `sudo launchctl kickstart -k system/kanata`.
 
 ### Driver not activated (`failed to open keyboard device(s): Karabiner-VirtualHIDDevice driver is not activated`)
 
@@ -235,7 +240,7 @@ above.
 
 **Solution**: run the manager binary's `activate` subcommand and approve the
 resulting prompt, per that section, then
-`sudo launchctl kickstart -k system/com.example.kanata`.
+`sudo launchctl kickstart -k system/kanata`.
 
 ## Resources
 
