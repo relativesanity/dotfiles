@@ -1,11 +1,30 @@
-export POP_SMTP_HOST=smtp.mail.me.com
-export POP_SMTP_PORT=587
-export POP_SMTP_ENCRYPTION=starttls
-export POP_SMTP_USERNAME="jonathanbarrett@mac.com"
-export POP_FROM="jonathan@relativesanity.com"
-export POP_PLAINTEXT=true
+psend() {
+  command -v pop >/dev/null 2>&1 || { echo "psend: pop not found" >&2; return 127; }
 
-pop() {
-  POP_SMTP_PASSWORD="$(security find-generic-password -s mare-pop-icloud -a "$POP_SMTP_USERNAME" -w)" \
+  case "$1" in
+    help | version | skill | install-skill | auth) command pop "$@"; return ;;
+  esac
+  for arg in "$@"; do
+    case "$arg" in
+      -h | --help | -v | --version) command pop "$@"; return ;;
+    esac
+  done
+
+  local username="jonathanbarrett@mac.com"
+  local password
+  password="$(security find-generic-password -s mare-pop-icloud -a "$username" -w 2>/dev/null)"
+  if [[ -z "$password" ]]; then
+    echo "psend: no password in keychain for service mare-pop-icloud username $username" >&2
+    echo "psend: run: security add-generic-password -a $username -s mare-pop-icloud -l 'pop iCloud SMTP password' -w" >&2
+    return 1
+  fi
+
+  POP_SMTP_HOST=smtp.mail.me.com \
+  POP_SMTP_PORT=587 \
+  POP_SMTP_ENCRYPTION=starttls \
+  POP_SMTP_USERNAME="$username" \
+  POP_FROM="jonathan@relativesanity.com" \
+  POP_PLAINTEXT=true \
+  POP_SMTP_PASSWORD="$password" \
     command pop "$@"
 }
