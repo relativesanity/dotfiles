@@ -1,0 +1,11 @@
+export POP_SMTP_HOST=smtp.mail.me.com
+export POP_SMTP_PORT=587
+export POP_SMTP_ENCRYPTION=starttls
+export POP_SMTP_USERNAME="jonathanbarrett@mac.com"
+export POP_FROM="jonathan@relativesanity.com"
+export POP_PLAINTEXT=true
+
+pop() {
+  POP_SMTP_PASSWORD="$(security find-generic-password -s mare-pop-icloud -a "$POP_SMTP_USERNAME" -w)" \
+    command pop "$@"
+}

@@ -16,6 +16,7 @@ brew "lazygit"
 brew "mas"
 brew "mosh"
 brew "netlify-cli"
+brew "pop"
 brew "rustup"
 brew "tailwindcss-language-server" # class completions in html/erb; see neovim lsp.lua
 
