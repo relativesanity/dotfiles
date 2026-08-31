@@ -45,8 +45,9 @@ sketchybar --add item window_title left \
 # Right side items
 sketchybar --add item hostname right \
     --set hostname \
+    update_freq=60 \
     label.padding_left=20 \
-    label="$(whoami)@$(hostname)"
+    script="$CONFIG_DIR/plugins/hostname.sh"
 
 sketchybar --add item battery right \
     --set battery \
