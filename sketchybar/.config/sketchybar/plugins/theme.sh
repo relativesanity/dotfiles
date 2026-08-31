@@ -61,6 +61,7 @@ done
 sketchybar --set window_title icon.color="$TEXT_COLOR" label.color="$TEXT_COLOR"
 sketchybar --set battery icon.color="$TEXT_COLOR" label.color="$TEXT_COLOR"
 sketchybar --set wifi icon.color="$TEXT_COLOR" label.color="$TEXT_COLOR"
+sketchybar --set vpn icon.color="$TEXT_COLOR" label.color="$TEXT_COLOR"
 sketchybar --set hostname label.color="$TEXT_COLOR"
 
 # Refresh workspace states

@@ -65,6 +65,16 @@ sketchybar --add item wifi right \
     label.padding_right=8 \
     script="$CONFIG_DIR/plugins/wifi.sh"
 
+sketchybar --add item vpn right \
+    --set vpn \
+    update_freq=15 \
+    icon="󰖂" \
+    icon.padding_left=20 \
+    label.padding_left=8 \
+    label.padding_right=8 \
+    drawing=off \
+    script="$CONFIG_DIR/plugins/vpn.sh"
+
 # Apply theme and trigger initial updates
 # Note: theme.sh will trigger workspace_change event. Force flag ensures colors are set on reload.
 "$CONFIG_DIR/plugins/theme.sh" --force
