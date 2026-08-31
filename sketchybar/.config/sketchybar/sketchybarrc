@@ -2,8 +2,8 @@
 
 # Set defaults to reduce repetition (fonts and sizing only, colors set by theme.sh)
 sketchybar --default \
-    icon.font="JetBrainsMono Nerd Font:Regular:16.0" \
-    label.font="JetBrainsMono Nerd Font:Regular:16.0"
+    icon.font="JetBrainsMono Nerd Font:Regular:14.0" \
+    label.font="JetBrainsMono Nerd Font:Regular:14.0"
 
 sketchybar --bar height=38 \
                  blur_radius=40 \
@@ -31,7 +31,7 @@ for sid in $(aerospace list-workspaces --all); do
         --set space.$sid \
         icon="○" \
         icon.padding_right=12 \
-        icon.font="JetBrainsMono Nerd Font:Regular:18.0" \
+        icon.font="JetBrainsMono Nerd Font:Regular:16.0" \
         click_script="aerospace workspace $sid" \
         script="$CONFIG_DIR/plugins/aerospace.sh $sid"
 done
@@ -39,7 +39,7 @@ done
 sketchybar --add item window_title left \
     --subscribe window_title window_focus aerospace_workspace_change \
     --set window_title \
-    label.font="JetBrainsMono Nerd Font:Bold:16.0" \
+    label.font="JetBrainsMono Nerd Font:Bold:14.0" \
     script="$CONFIG_DIR/plugins/window_title.sh"
 
 # Right side items
