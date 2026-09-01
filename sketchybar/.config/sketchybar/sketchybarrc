@@ -86,4 +86,14 @@ sketchybar --add item timemachine right \
 
 # Apply theme and trigger initial updates
 # Note: theme.sh will trigger workspace_change event. Force flag ensures colors are set on reload.
+# This runs before the initial script population below so the bar is
+# themed immediately, rather than sitting at sketchybar's default
+# clear-background/red-border look while those scripts shell out.
 "$CONFIG_DIR/plugins/theme.sh" --force
+
+# update_freq only schedules the *next* run; it never runs a script the
+# moment an item is added, so without this each item below sits blank until
+# its first timer tick (up to update_freq seconds after the bar launches).
+for item in hostname battery wifi vpn timemachine; do
+    NAME=$item "$CONFIG_DIR/plugins/$item.sh"
+done
