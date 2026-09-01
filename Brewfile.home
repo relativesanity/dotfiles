@@ -18,7 +18,7 @@ brew "mosh"
 brew "netlify-cli"
 brew "pop"
 brew "rustup"
-brew "tailwindcss-language-server" # class completions in html/erb; see neovim lsp.lua
+brew "tailwindcss-language-server" # Tailwind class completions; not yet wired into the LazyVim config
 
 # Casks
 cask "backblaze"
