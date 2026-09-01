@@ -75,6 +75,15 @@ sketchybar --add item vpn right \
     drawing=off \
     script="$CONFIG_DIR/plugins/vpn.sh"
 
+sketchybar --add item timemachine right \
+    --set timemachine \
+    update_freq=10 \
+    icon.padding_left=20 \
+    label.padding_left=8 \
+    label.padding_right=8 \
+    drawing=off \
+    script="$CONFIG_DIR/plugins/timemachine.sh"
+
 # Apply theme and trigger initial updates
 # Note: theme.sh will trigger workspace_change event. Force flag ensures colors are set on reload.
 "$CONFIG_DIR/plugins/theme.sh" --force
