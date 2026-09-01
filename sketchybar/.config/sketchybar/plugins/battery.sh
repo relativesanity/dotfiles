@@ -1,8 +1,16 @@
 #!/usr/bin/env bash
 
+BATT_INFO=$(pmset -g batt)
+
+# Machines with no battery hardware (e.g. Mac mini) report no InternalBattery line
+if ! grep -q 'InternalBattery' <<<"$BATT_INFO"; then
+    sketchybar --set $NAME drawing=off
+    exit 0
+fi
+
 # Get battery percentage
-PERCENTAGE=$(pmset -g batt | grep -Eo "\d+%" | cut -d% -f1)
-CHARGING=$(pmset -g batt | grep 'AC Power')
+PERCENTAGE=$(grep -Eo "\d+%" <<<"$BATT_INFO" | cut -d% -f1)
+CHARGING=$(grep 'AC Power' <<<"$BATT_INFO")
 
 # Hide battery indicator when at 100% and on AC power
 if [ "$PERCENTAGE" -eq 100 ] && [ -n "$CHARGING" ]; then
