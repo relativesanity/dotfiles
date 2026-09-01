@@ -102,15 +102,6 @@ sketchybar --add item audio right \
     label.padding_right=8 \
     script="$CONFIG_DIR/plugins/audio.sh"
 
-sketchybar --add item focus right \
-    --set focus \
-    update_freq=20 \
-    icon.padding_left=20 \
-    label.padding_left=8 \
-    label.padding_right=8 \
-    drawing=off \
-    script="$CONFIG_DIR/plugins/focus.sh"
-
 # Apply theme and trigger initial updates
 # Note: theme.sh will trigger workspace_change event. Force flag ensures colors are set on reload.
 # This runs before the initial script population below so the bar is
@@ -121,6 +112,6 @@ sketchybar --add item focus right \
 # update_freq only schedules the *next* run; it never runs a script the
 # moment an item is added, so without this each item below sits blank until
 # its first timer tick (up to update_freq seconds after the bar launches).
-for item in hostname battery wifi vpn timemachine dotfiles audio focus; do
+for item in hostname battery wifi vpn timemachine dotfiles audio; do
     NAME=$item "$CONFIG_DIR/plugins/$item.sh"
 done
