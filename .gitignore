@@ -3,4 +3,12 @@ Brewfile.local
 Brewfile.keep
 Brewfile.keep.tmp.*
 neovim/.config/nvim/lazy-lock.json
+neovim/.config/nvim/tt.*
+neovim/.config/nvim/.tests
+neovim/.config/nvim/doc/tags
+neovim/.config/nvim/debug
+neovim/.config/nvim/.repro
+neovim/.config/nvim/foo.*
+neovim/.config/nvim/*.log
+neovim/.config/nvim/data
 CLAUDE.local.md
