@@ -23,6 +23,16 @@ hs.hotkey.bind(hyper, "X", function()
 	hs.eventtap.keyStrokes(currentTime())
 end)
 
+-- Open the notes Obsidian vault
+hs.hotkey.bind(hyper, "N", function()
+	hs.urlevent.openURL("obsidian://open?vault=Notes")
+end)
+
+-- Open the writing Obsidian vault
+hs.hotkey.bind(hyper, "M", function()
+	hs.urlevent.openURL("obsidian://open?vault=Writing")
+end)
+
 -- Launch Ghostty if it isn't running; if it is, always pop a new window
 -- rather than just refocusing whatever window was last active.
 hs.hotkey.bind(hyper, "return", function()
