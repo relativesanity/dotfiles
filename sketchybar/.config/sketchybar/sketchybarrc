@@ -84,6 +84,15 @@ sketchybar --add item timemachine right \
     drawing=off \
     script="$CONFIG_DIR/plugins/timemachine.sh"
 
+sketchybar --add item dotfiles right \
+    --set dotfiles \
+    update_freq=30 \
+    icon.padding_left=20 \
+    label.padding_left=8 \
+    label.padding_right=8 \
+    drawing=off \
+    script="$CONFIG_DIR/plugins/dotfiles.sh"
+
 # Apply theme and trigger initial updates
 # Note: theme.sh will trigger workspace_change event. Force flag ensures colors are set on reload.
 # This runs before the initial script population below so the bar is
@@ -94,6 +103,6 @@ sketchybar --add item timemachine right \
 # update_freq only schedules the *next* run; it never runs a script the
 # moment an item is added, so without this each item below sits blank until
 # its first timer tick (up to update_freq seconds after the bar launches).
-for item in hostname battery wifi vpn timemachine; do
+for item in hostname battery wifi vpn timemachine dotfiles; do
     NAME=$item "$CONFIG_DIR/plugins/$item.sh"
 done
