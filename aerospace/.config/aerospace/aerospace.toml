@@ -29,9 +29,10 @@ exec-on-workspace-change = ['/bin/bash', '-c',
     'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
 ]
 
-# Notify Sketchybar about window focus changes
+# Notify Sketchybar about window focus changes, and move the mouse to the focused window
 on-focus-changed = [
-    'exec-and-forget sketchybar --trigger window_focus'
+    'exec-and-forget sketchybar --trigger window_focus',
+    'move-mouse window-lazy-center'
 ]
 
 config-version = 2
@@ -66,11 +67,6 @@ default-root-container-orientation = 'auto'
 # See https://nikitabobko.github.io/AeroSpace/commands#move-mouse
 # Fallback value (if you omit the key): on-focused-monitor-changed = []
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
-
-# Mouse follows focus when focused window changes
-# See https://nikitabobko.github.io/AeroSpace/guide#on-focus-changed-callbacks
-# See https://nikitabobko.github.io/AeroSpace/commands#move-mouse
-# on-focus-changed = ['move-mouse window-lazy-center']
 
 # You can effectively turn off macOS "Hide application" (cmd-h) feature by toggling this flag
 # Useful if you don't use this macOS feature, but accidentally hit cmd-h or cmd-alt-h key
