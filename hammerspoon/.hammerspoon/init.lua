@@ -139,31 +139,7 @@ hs.hotkey.bind(hyper, "return", function()
 			existing[win:id()] = true
 		end
 		app:selectMenuItem({ "File", "New Window" })
-
-		-- Activating the app leaves macOS/ghostty to pick which window goes
-		-- key, and it picks the pre-existing one instead of the new one; so
-		-- poll for the new window's id and focus that window directly.
-		-- Window ids only increase, so if more than one new id shows up
-		-- (e.g. this hotkey fired twice in quick succession), the highest
-		-- is the one this invocation actually created.
-		local attempts = 0
-		local function focusNewWindow()
-			attempts = attempts + 1
-			local newest
-			for _, win in ipairs(app:allWindows()) do
-				if not existing[win:id()] and (not newest or win:id() > newest:id()) then
-					newest = win
-				end
-			end
-			if newest then
-				newest:focus()
-			elseif attempts < 50 then
-				hs.timer.doAfter(0.02, focusNewWindow)
-			else
-				app:activate()
-			end
-		end
-		focusNewWindow()
+		focusNewWindowWhenReady(existing, "com.mitchellh.ghostty")
 	else
 		hs.application.launchOrFocus("Ghostty")
 	end
