@@ -23,6 +23,23 @@ local function centre()
   win:setFrame(f)
 end
 
+-- Mouse follows focus, landing near the window's bottom-right corner rather
+-- than dead centre. The top edge seemed like the obvious spot (a window's
+-- title bar), but apps like Obsidian auto-reveal chrome that's hidden there
+-- on hover, so the corner avoids triggering that. Aerospace handled this
+-- itself via on-focus-changed and move-mouse, but its list-windows --format
+-- has no position/size tokens to land anywhere but the centre, so it lives
+-- here instead, next to the frame math centre() above already does.
+local mouseFollowsFocusOffset = 18
+local mouseFollowsFocus = hs.window.filter.new()
+mouseFollowsFocus:subscribe(hs.window.filter.windowFocused, function(win)
+  local f = win:frame()
+  hs.mouse.absolutePosition({
+    x = f.x + f.w - mouseFollowsFocusOffset,
+    y = f.y + f.h - mouseFollowsFocusOffset,
+  })
+end)
+
 -- Centre at a given fraction of screen width/height, e.g. centredAt(0.8, 0.8)
 local function centredAt(w, h)
   return function()

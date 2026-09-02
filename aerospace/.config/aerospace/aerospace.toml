@@ -29,10 +29,12 @@ exec-on-workspace-change = ['/bin/bash', '-c',
     'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
 ]
 
-# Notify Sketchybar about window focus changes, and move the mouse to the focused window
+# Notify Sketchybar about window focus changes.
+# Mouse-follows-focus lives in hammerspoon/.hammerspoon/windows.lua instead of
+# here. list-windows --format has no position/size tokens, so this can't land
+# the mouse anywhere but a window's centre, let alone on the title bar.
 on-focus-changed = [
-    'exec-and-forget sketchybar --trigger window_focus',
-    'move-mouse window-lazy-center'
+    'exec-and-forget sketchybar --trigger window_focus'
 ]
 
 config-version = 2
