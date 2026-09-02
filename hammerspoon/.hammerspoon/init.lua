@@ -23,14 +23,110 @@ hs.hotkey.bind(hyper, "X", function()
 	hs.eventtap.keyStrokes(currentTime())
 end)
 
+-- Obsidian titles its windows "<file> - <vault> - Obsidian <version>" (or
+-- just "<vault> - Obsidian <version>" for an empty vault). Match against a
+-- specific, known vault name rather than parsing "the vault name" out in
+-- the abstract - that's ambiguous whenever the open file's own name
+-- contains " - ", and this way there's no version-format assumption (e.g.
+-- a pre-release build's "1.13.7-beta" suffix) to go stale against.
+local function obsidianWindowIsVault(win, vaultName)
+	local pattern = vaultName:gsub("%W", "%%%1")
+	local title = win:title()
+	return title:match("%- " .. pattern .. " %- Obsidian .+$") ~= nil
+		or title:match("^" .. pattern .. " %- Obsidian .+$") ~= nil
+end
+
+-- Waits for a new window to appear on the app with the given bundle ID and
+-- focuses it directly, instead of trusting the app's own focus handling,
+-- which raises whichever window was last active before settling on the
+-- right one - visible as a flicker (Ghostty), or as a straight-up steal
+-- (Obsidian, which can take long enough to open a vault that the user has
+-- moved on to another app entirely by the time the window's ready). Five
+-- seconds covers a cold vault open; if it's still not there by then,
+-- something's wrong and keeping the app pinned open no longer helps.
+--
+-- Polling (rather than an event) is what makes that steal possible: if any
+-- *other* app gets activated while we're waiting, that's the user (or
+-- something else) deliberately choosing where focus goes next, so the
+-- pending focus is dropped instead of yanking them back once the window
+-- turns up. Window ids only increase, so if this fires twice in quick
+-- succession, the highest new id is the one this call actually produced.
+--
+-- hs.window.filter's windowCreated event would replace this poll with a
+-- proper accessibility-notification callback - no timer bookkeeping, no
+-- fixed budget to tune. Not worth the swap while this is still a ~30-line
+-- helper with one caller pattern; worth revisiting if it grows further.
+local function focusNewWindowWhenReady(existingIds, bundleID)
+	local abandoned = false
+	local watcher
+	watcher = hs.application.watcher.new(function(_, event, watchedApp)
+		if event == hs.application.watcher.activated and watchedApp:bundleID() ~= bundleID then
+			abandoned = true
+		end
+	end)
+	watcher:start()
+
+	local attempts = 0
+	local function tick()
+		attempts = attempts + 1
+		local app = hs.application.find(bundleID)
+		local newest
+		if app then
+			for _, win in ipairs(app:allWindows()) do
+				if not existingIds[win:id()] and (not newest or win:id() > newest:id()) then
+					newest = win
+				end
+			end
+		end
+		if newest then
+			watcher:stop()
+			if not abandoned then
+				newest:focus()
+			end
+		elseif attempts < 50 then
+			hs.timer.doAfter(0.1, tick)
+		else
+			watcher:stop()
+			if not abandoned and app then
+				app:activate()
+			end
+		end
+	end
+	tick()
+end
+
+-- Open an Obsidian vault, focusing its window directly rather than going
+-- through the obsidian:// URL scheme's own focus handling.
+local function openObsidianVault(vaultName)
+	local app = hs.application.find("md.obsidian")
+	if app then
+		for _, win in ipairs(app:allWindows()) do
+			if obsidianWindowIsVault(win, vaultName) then
+				win:focus()
+				return
+			end
+		end
+	end
+
+	local existing = {}
+	if app then
+		for _, win in ipairs(app:allWindows()) do
+			existing[win:id()] = true
+		end
+	end
+
+	hs.urlevent.openURL("obsidian://open?vault=" .. vaultName)
+	focusNewWindowWhenReady(existing, "md.obsidian")
+end
+
 -- Open the notes Obsidian vault
 hs.hotkey.bind(hyper, "N", function()
-	hs.urlevent.openURL("obsidian://open?vault=Notes")
+	openObsidianVault("Notes")
 end)
 
 -- Open the writing Obsidian vault
 hs.hotkey.bind(hyper, "M", function()
-	hs.urlevent.openURL("obsidian://open?vault=Writing")
+	openObsidianVault("Writing")
 end)
 
 -- Launch Ghostty if it isn't running; if it is, always pop a new window
