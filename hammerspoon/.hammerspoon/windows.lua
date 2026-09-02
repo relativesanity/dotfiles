@@ -36,7 +36,7 @@ end
 -- click is the jarring case this needs to avoid. A keyboard-driven switch
 -- (aerospace navigation, cmd-tab) leaves the mouse wherever it was before,
 -- outside the window, which is when the jump is actually wanted.
-local mouseFollowsFocusOffset = 18
+local mouseFollowsFocusOffset = 114
 local mouseFollowsFocus = hs.window.filter.new()
 mouseFollowsFocus:subscribe(hs.window.filter.windowFocused, function(win)
   local f = win:frame()
