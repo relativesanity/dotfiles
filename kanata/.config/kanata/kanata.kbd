@@ -29,22 +29,19 @@
   s-mod (tap-hold $tap-time $hold-time s lalt)
   d-mod (tap-hold $tap-time $hold-time d lsft)
   f-mod (tap-hold $tap-time $hold-time f lmet)
-  g-mod (tap-hold $tap-time $hold-time g @hyper)
-  h-mod (tap-hold $tap-time $hold-time h @meh)
   j-mod (tap-hold $tap-time $hold-time j rmet)
   k-mod (tap-hold $tap-time $hold-time k rsft)
   l-mod (tap-hold $tap-time $hold-time l ralt)
   ;-mod (tap-hold $tap-time $hold-time ; rctl)
   fn-mod (tap-hold $tap-time $hold-time fn @fnl)
   spc-mod (tap-hold $tap-time $hold-time spc @numl)
-  quote-mod (tap-hold $tap-time $hold-time ' @hyper)
-  bksl-mod (tap-hold $tap-time $hold-time bksl @navl)
+  quote-mod (tap-hold $tap-time $hold-time ' @navl)
 )
 
 (deflayer base
   brdn brup _ _ _ _ prev pp next mute vold volu
   q w e r t y u i o p
-  @caps-mod @a-mod @s-mod @d-mod @f-mod @g-mod @h-mod @j-mod @k-mod @l-mod @;-mod @quote-mod @bksl-mod
+  @caps-mod @a-mod @s-mod @d-mod @f-mod g h @j-mod @k-mod @l-mod @;-mod @quote-mod bksl
   @fn-mod @hyper @spc-mod @meh
   rsft
 )
