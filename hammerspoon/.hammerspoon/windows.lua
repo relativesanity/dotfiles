@@ -30,10 +30,21 @@ end
 -- itself via on-focus-changed and move-mouse, but its list-windows --format
 -- has no position/size tokens to land anywhere but the centre, so it lives
 -- here instead, next to the frame math centre() above already does.
+--
+-- Skipped when the mouse is already inside the newly focused window: that
+-- means focus came from a click, and warping out from under the cursor mid
+-- click is the jarring case this needs to avoid. A keyboard-driven switch
+-- (aerospace navigation, cmd-tab) leaves the mouse wherever it was before,
+-- outside the window, which is when the jump is actually wanted.
 local mouseFollowsFocusOffset = 18
 local mouseFollowsFocus = hs.window.filter.new()
 mouseFollowsFocus:subscribe(hs.window.filter.windowFocused, function(win)
   local f = win:frame()
+  local mouse = hs.mouse.absolutePosition()
+  local mouseInWindow = mouse.x >= f.x and mouse.x <= f.x + f.w
+    and mouse.y >= f.y and mouse.y <= f.y + f.h
+  if mouseInWindow then return end
+
   hs.mouse.absolutePosition({
     x = f.x + f.w - mouseFollowsFocusOffset,
     y = f.y + f.h - mouseFollowsFocusOffset,
