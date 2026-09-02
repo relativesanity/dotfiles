@@ -1,7 +1,7 @@
 -- windows.lua — Moom-ish window management for Hammerspoon
 
 local meh        = { "ctrl", "alt", "shift" }
--- hyper is defined globally in init.lua
+-- hyper is defined globally in init.lua (hammerspoon's own, doc-drift-ok: unrelated to the deleted neovim config/init.lua)
 local step       = 48   -- pixels per grow/shrink press
 local maxFrac    = 0.9  -- grow() won't exceed this fraction of screen width/height
 local aerospace  = "/opt/homebrew/bin/aerospace"
