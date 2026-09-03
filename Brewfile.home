@@ -17,12 +17,10 @@ brew "mas"
 brew "mosh"
 brew "netlify-cli"
 brew "pop"
-brew "rustup"
 brew "tailwindcss-language-server" # Tailwind class completions; not yet wired into the LazyVim config
 
 # Casks
 cask "backblaze"
-cask "claude-code@latest"
 cask "devonthink"
 cask "font-ia-writer-duo"
 cask "font-ia-writer-mono"
