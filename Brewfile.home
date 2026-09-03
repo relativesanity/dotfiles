@@ -17,7 +17,6 @@ brew "mas"
 brew "mosh"
 brew "netlify-cli"
 brew "pop"
-brew "tailwindcss-language-server" # Tailwind class completions; not yet wired into the LazyVim config
 
 # Casks
 cask "backblaze"
