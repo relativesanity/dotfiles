@@ -29,14 +29,12 @@ exec-on-workspace-change = ['/bin/bash', '-c',
     'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
 ]
 
-# Notify Sketchybar about window focus changes, and move the mouse to the
-# newly focused window (skipped if the mouse is already inside it, so a
-# click-driven focus change doesn't warp the cursor out from under the click).
-# Supercharge's hide-cursor hotkey covers apps like Obsidian that reveal
-# hover chrome under the mouse.
+# Notify Sketchybar about window focus changes. No mouse-follows-focus here:
+# AeroSpace can't tell a click-driven focus change from a keybind-driven one,
+# so window-lazy-center's "skip if already inside" guard warped the cursor on
+# plain clicks too often to be worth it.
 on-focus-changed = [
-    'exec-and-forget sketchybar --trigger window_focus',
-    'move-mouse window-lazy-center'
+    'exec-and-forget sketchybar --trigger window_focus'
 ]
 
 config-version = 2
