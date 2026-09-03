@@ -29,12 +29,14 @@ exec-on-workspace-change = ['/bin/bash', '-c',
     'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
 ]
 
-# Notify Sketchybar about window focus changes.
-# Mouse-follows-focus lives in hammerspoon/.hammerspoon/windows.lua instead of
-# here. list-windows --format has no position/size tokens, so this can't land
-# the mouse anywhere but a window's centre, let alone on the title bar.
+# Notify Sketchybar about window focus changes, and move the mouse to the
+# newly focused window (skipped if the mouse is already inside it, so a
+# click-driven focus change doesn't warp the cursor out from under the click).
+# Supercharge's hide-cursor hotkey covers apps like Obsidian that reveal
+# hover chrome under the mouse.
 on-focus-changed = [
-    'exec-and-forget sketchybar --trigger window_focus'
+    'exec-and-forget sketchybar --trigger window_focus',
+    'move-mouse window-lazy-center'
 ]
 
 config-version = 2
