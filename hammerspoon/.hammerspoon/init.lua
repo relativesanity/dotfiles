@@ -3,6 +3,10 @@ hs = hs
 -- Modifier key combinations
 hyper = { "ctrl", "alt", "shift", "cmd" }
 
+-- Opens the message port the `hs` CLI (symlinked at /opt/homebrew/bin/hs)
+-- talks to, so e.g. `hs -c "hs.reload()"` works from a shell.
+require("hs.ipc")
+
 require("windows")
 
 -- Formats the current time like 2:32pm
