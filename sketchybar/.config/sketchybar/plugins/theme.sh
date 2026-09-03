@@ -15,14 +15,14 @@ CACHE_FILE="/tmp/sketchybar_theme_cache"
 if defaults read -g AppleInterfaceStyle &> /dev/null; then
     CURRENT_THEME="dark"
     TEXT_COLOR=0xffcdd6f4      # Catppuccin Text
-    BAR_COLOR=0x66181825       # Catppuccin Mantle
+    BAR_COLOR=0xa6181825       # Catppuccin Mantle
     BORDER_COLOR=0xff6c7086    # Catppuccin Overlay0
     WORKSPACE_COLOR=0xffcdd6f4 # Catppuccin Text
     CHARGING_COLOR=0xff89b4fa  # Catppuccin Mocha Blue
 else
     CURRENT_THEME="light"
     TEXT_COLOR=0xff11111b      # Catppuccin Crust
-    BAR_COLOR=0x66cdd6f4       # Catppuccin Text
+    BAR_COLOR=0xa6cdd6f4       # Catppuccin Text
     BORDER_COLOR=0xff6c7086    # Catppuccin Overlay0
     WORKSPACE_COLOR=0xff11111b # Catppuccin Crust
     CHARGING_COLOR=0xff1e66f5  # Catppuccin Latte Blue
