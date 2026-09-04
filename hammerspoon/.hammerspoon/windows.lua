@@ -128,8 +128,9 @@ hs.hotkey.bind(meh, "m", grow, nil, grow)
 hs.hotkey.bind(meh, "/", toggleFloatAndCentre)
 hs.hotkey.bind(meh, "delete", popFree)
 
--- Individual-axis resizing: h/l for horizontal, j/k for vertical
-hs.hotkey.bind(hyper, "h", shrinkWidth, nil, shrinkWidth)
-hs.hotkey.bind(hyper, "j", growHeight, nil, growHeight)
-hs.hotkey.bind(hyper, "k", shrinkHeight, nil, shrinkHeight)
-hs.hotkey.bind(hyper, "l", growWidth, nil, growWidth)
+-- Individual-axis resizing: a/f for horizontal, s/d for vertical — see
+-- ~/.dotfiles/Keybindings.md.
+hs.hotkey.bind(hyper, "a", shrinkWidth, nil, shrinkWidth)
+hs.hotkey.bind(hyper, "s", growHeight, nil, growHeight)
+hs.hotkey.bind(hyper, "d", shrinkHeight, nil, shrinkHeight)
+hs.hotkey.bind(hyper, "f", growWidth, nil, growWidth)
