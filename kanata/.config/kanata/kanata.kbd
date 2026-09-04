@@ -23,12 +23,13 @@
   fnl (layer-toggle fn)
   navl (layer-toggle nav)
 
+  caps-mod (tap-hold $tap-time $hold-time esc @meh)
   a-mod (tap-hold $tap-time $hold-time a lctl)
   s-mod (tap-hold $tap-time $hold-time s lalt)
   d-mod (tap-hold $tap-time $hold-time d lsft)
   f-mod (tap-hold $tap-time $hold-time f lmet)
-  g-mod (tap-hold $tap-time $hold-time g @meh)
-  h-mod (tap-hold $tap-time $hold-time h @hyper)
+  g-mod (tap-hold $tap-time $hold-time g @hyper)
+  h-mod (tap-hold $tap-time $hold-time h @meh)
   j-mod (tap-hold $tap-time $hold-time j rmet)
   k-mod (tap-hold $tap-time $hold-time k rsft)
   l-mod (tap-hold $tap-time $hold-time l ralt)
@@ -40,7 +41,7 @@
 (deflayer base
   brdn brup _ _ _ _ prev pp next mute vold volu
   q w e r t y u i o p
-  esc @a-mod @s-mod @d-mod @f-mod @g-mod @h-mod @j-mod @k-mod @l-mod @semi-mod ' bksl
+  @caps-mod @a-mod @s-mod @d-mod @f-mod @g-mod @h-mod @j-mod @k-mod @l-mod @semi-mod ' bksl
   z x c v b n m , .
   @fn-mod @hyper @spc-mod @meh
 )
