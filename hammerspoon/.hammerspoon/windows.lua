@@ -67,6 +67,17 @@ local function toggleFloatAndCentre()
   end
 end
 
+-- "Pop free": toggle floating, then resize+centre to ~85% of the screen in
+-- one step if it landed on floating — the mac analog of Omarchy's
+-- single-window-aspect toggle. Collapses the float-toggle-then-centre-at-80%
+-- two-step (meh-/ then meh-.) into a single press.
+local function popFree()
+  hs.execute(aerospace .. " layout floating tiling")
+  if isFloating() then
+    centredAt(0.85, 0.85)()
+  end
+end
+
 -- Grow/shrink the focused window regardless of layout: AeroSpace owns the
 -- frame of tiled windows, so setFrame() on those gets silently overridden —
 -- shell out to AeroSpace's own smart resize instead; floating windows resize
@@ -115,9 +126,11 @@ hs.hotkey.bind(meh, ".", centredAt(0.8, 0.8))
 hs.hotkey.bind(meh, "n", shrink, nil, shrink)
 hs.hotkey.bind(meh, "m", grow, nil, grow)
 hs.hotkey.bind(meh, "/", toggleFloatAndCentre)
+hs.hotkey.bind(meh, "delete", popFree)
 
--- Individual-axis resizing: h/l for horizontal, j/k for vertical
-hs.hotkey.bind(hyper, "h", shrinkWidth, nil, shrinkWidth)
-hs.hotkey.bind(hyper, "j", growHeight, nil, growHeight)
-hs.hotkey.bind(hyper, "k", shrinkHeight, nil, shrinkHeight)
-hs.hotkey.bind(hyper, "l", growWidth, nil, growWidth)
+-- Individual-axis resizing: a/f for horizontal, s/d for vertical — see
+-- ~/.dotfiles/Keybindings.md.
+hs.hotkey.bind(hyper, "a", shrinkWidth, nil, shrinkWidth)
+hs.hotkey.bind(hyper, "s", growHeight, nil, growHeight)
+hs.hotkey.bind(hyper, "d", shrinkHeight, nil, shrinkHeight)
+hs.hotkey.bind(hyper, "f", growWidth, nil, growWidth)

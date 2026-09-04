@@ -1,23 +1,9 @@
 # AeroSpace Tiling Window Manager Configuration
 # https://nikitabobko.github.io/AeroSpace/
 #
-# Custom Keybindings:
-#   meh (ctrl-alt-shift):
-#     Focus:     h/j/k/l - vim-style directional focus
-#     Move:      y/u/i/o - vim-style directional move
-#     Layout:    [ - toggle accordion/tiles
-#     Service:   ; - enter service mode (reload, reset layout, join windows)
-#
-#   Floating/tiling toggle (meh-/) and resize (meh-m/n, shrink/grow) both live
-#   in Hammerspoon's windows.lua — resize shells out to `aerospace resize
-#   smart` when tiled, or resizes the frame directly when floating; the
-#   toggle also centres the window when it lands on floating — see
-#   ~/.hammerspoon
-#
-#   hyper (ctrl-alt-shift-cmd):
-#     Workspace: a/s/d/f/g - switch to workspace 1-5
-#     Move+Go:   q/w/e/r/t - move window to workspace 1-5 and follow
-#     Fullscreen: p - toggle fullscreen
+# Custom keybindings (below, and in Hammerspoon's windows.lua for
+# floating/resize/pop-free) — see ~/.dotfiles/Keybindings.md for the design
+# rationale (meh/hyper, handedness).
 
 after-startup-command = [
     'exec-and-forget sketchybar',
@@ -132,7 +118,7 @@ automatically-unhide-macos-hidden-apps = false
     # See: https://nikitabobko.github.io/AeroSpace/commands#layout
     # ctrl-alt-shift-slash = 'layout tiles horizontal vertical'
     # ctrl-alt-shift-comma = 'layout accordion horizontal vertical'
-    ctrl-alt-shift-leftSquareBracket = 'layout accordion tiles'
+    ctrl-alt-shift-quote = 'layout accordion tiles'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#focus
     ctrl-alt-shift-h = 'focus left'
@@ -141,27 +127,31 @@ automatically-unhide-macos-hidden-apps = false
     ctrl-alt-shift-l = 'focus right'
     # See: https://nikitabobko.github.io/AeroSpace/commands#mode
     ctrl-alt-shift-semicolon = 'mode service'
+    ctrl-alt-shift-f = 'fullscreen'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move
     ctrl-alt-shift-y = 'move left'
     ctrl-alt-shift-u = 'move down'
     ctrl-alt-shift-i = 'move up'
     ctrl-alt-shift-o = 'move right'
-    ctrl-alt-shift-p = 'fullscreen'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-    ctrl-alt-shift-cmd-a = 'workspace 1'
-    ctrl-alt-shift-cmd-s = 'workspace 2'
-    ctrl-alt-shift-cmd-d = 'workspace 3'
-    ctrl-alt-shift-cmd-f = 'workspace 4'
-    ctrl-alt-shift-cmd-g = 'workspace 5'
+    ctrl-alt-shift-leftSquareBracket = 'workspace prev --wrap-around'
+    ctrl-alt-shift-rightSquareBracket = 'workspace next --wrap-around'
+
+    # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
+    ctrl-alt-shift-1 = 'workspace 1'
+    ctrl-alt-shift-2 = 'workspace 2'
+    ctrl-alt-shift-3 = 'workspace 3'
+    ctrl-alt-shift-4 = 'workspace 4'
+    ctrl-alt-shift-5 = 'workspace 5'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
-    ctrl-alt-shift-cmd-q = ['move-node-to-workspace 1', 'workspace 1']
-    ctrl-alt-shift-cmd-w = ['move-node-to-workspace 2', 'workspace 2']
-    ctrl-alt-shift-cmd-e = ['move-node-to-workspace 3', 'workspace 3']
-    ctrl-alt-shift-cmd-r = ['move-node-to-workspace 4', 'workspace 4']
-    ctrl-alt-shift-cmd-t = ['move-node-to-workspace 5', 'workspace 5']
+    ctrl-alt-shift-cmd-1 = ['move-node-to-workspace 1', 'workspace 1']
+    ctrl-alt-shift-cmd-2 = ['move-node-to-workspace 2', 'workspace 2']
+    ctrl-alt-shift-cmd-3 = ['move-node-to-workspace 3', 'workspace 3']
+    ctrl-alt-shift-cmd-4 = ['move-node-to-workspace 4', 'workspace 4']
+    ctrl-alt-shift-cmd-5 = ['move-node-to-workspace 5', 'workspace 5']
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
     # ctrl-alt-shift-tab = 'workspace-back-and-forth'
