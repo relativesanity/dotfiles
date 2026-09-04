@@ -2,22 +2,28 @@
 # https://nikitabobko.github.io/AeroSpace/
 #
 # Custom Keybindings:
-#   meh (ctrl-alt-shift):
-#     Focus:     h/j/k/l - vim-style directional focus
-#     Move:      y/u/i/o - vim-style directional move
-#     Layout:    [ - toggle accordion/tiles
-#     Service:   ; - enter service mode (reload, reset layout, join windows)
+#   Mirrors Omarchy/Hyprland's base-tier-vs-heavier-tier split (bare Super vs
+#   Super+Shift) using meh/hyper in place of Super, since Cmd/Super alone
+#   isn't usable for global bindings on macOS. Arrows below are produced by
+#   a kanata layer, not plain keypresses — hold Space, then h/j/k/l (see
+#   ~/.config/kanata). Digits are real physical keys on this keyboard, no
+#   layer involved.
 #
-#   Floating/tiling toggle (meh-/) and resize (meh-m/n, shrink/grow) both live
-#   in Hammerspoon's windows.lua — resize shells out to `aerospace resize
-#   smart` when tiled, or resizes the frame directly when floating; the
-#   toggle also centres the window when it lands on floating — see
-#   ~/.hammerspoon
+#   meh (ctrl-alt-shift), base tier:
+#     Focus:      hold Space, h/j/k/l - directional focus
+#     Workspace:  1-5 - switch to workspace 1-5
+#     Fullscreen: f - toggle fullscreen
+#     Layout:     [ - toggle accordion/tiles
+#     Service:    ; - enter service mode (reload, reset layout, join windows)
 #
-#   hyper (ctrl-alt-shift-cmd):
-#     Workspace: a/s/d/f/g - switch to workspace 1-5
-#     Move+Go:   q/w/e/r/t - move window to workspace 1-5 and follow
-#     Fullscreen: p - toggle fullscreen
+#   hyper (ctrl-alt-shift-cmd), heavier tier:
+#     Move:       hold Space, h/j/k/l - directional swap/move
+#     Move+Go:    1-5 - move window to workspace 1-5 and follow
+#
+#   Floating/tiling toggle (meh-/), resize (meh-m/n, shrink/grow), and the
+#   consolidated pop-free action (meh-Backspace) all live in Hammerspoon's
+#   windows.lua — resize shells out to `aerospace resize smart` when tiled,
+#   or resizes the frame directly when floating; see ~/.hammerspoon
 
 after-startup-command = [
     'exec-and-forget sketchybar',
@@ -134,34 +140,41 @@ automatically-unhide-macos-hidden-apps = false
     # ctrl-alt-shift-comma = 'layout accordion horizontal vertical'
     ctrl-alt-shift-leftSquareBracket = 'layout accordion tiles'
 
+    # Focus/swap below are keyed against genuine arrow keysyms (hold Space,
+    # press h/j/k/l), not the plain letters — matches the mental model that
+    # "arrow" always means holding Space, and matches Omarchy's own
+    # SUPER+Arrow / SUPER+SHIFT+Arrow key choice.
     # See: https://nikitabobko.github.io/AeroSpace/commands#focus
-    ctrl-alt-shift-h = 'focus left'
-    ctrl-alt-shift-j = 'focus down'
-    ctrl-alt-shift-k = 'focus up'
-    ctrl-alt-shift-l = 'focus right'
+    ctrl-alt-shift-left = 'focus left'
+    ctrl-alt-shift-down = 'focus down'
+    ctrl-alt-shift-up = 'focus up'
+    ctrl-alt-shift-right = 'focus right'
     # See: https://nikitabobko.github.io/AeroSpace/commands#mode
     ctrl-alt-shift-semicolon = 'mode service'
+    ctrl-alt-shift-f = 'fullscreen'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move
-    ctrl-alt-shift-y = 'move left'
-    ctrl-alt-shift-u = 'move down'
-    ctrl-alt-shift-i = 'move up'
-    ctrl-alt-shift-o = 'move right'
-    ctrl-alt-shift-p = 'fullscreen'
+    ctrl-alt-shift-cmd-left = 'move left'
+    ctrl-alt-shift-cmd-down = 'move down'
+    ctrl-alt-shift-cmd-up = 'move up'
+    ctrl-alt-shift-cmd-right = 'move right'
 
+    # Workspace switch/move+follow below are keyed against the real number
+    # keys (no kanata layer involved) rather than a/s/d/f/g or q/w/e/r/t —
+    # matches Omarchy's own SUPER+num / SUPER+SHIFT+num key choice.
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-    ctrl-alt-shift-cmd-a = 'workspace 1'
-    ctrl-alt-shift-cmd-s = 'workspace 2'
-    ctrl-alt-shift-cmd-d = 'workspace 3'
-    ctrl-alt-shift-cmd-f = 'workspace 4'
-    ctrl-alt-shift-cmd-g = 'workspace 5'
+    ctrl-alt-shift-1 = 'workspace 1'
+    ctrl-alt-shift-2 = 'workspace 2'
+    ctrl-alt-shift-3 = 'workspace 3'
+    ctrl-alt-shift-4 = 'workspace 4'
+    ctrl-alt-shift-5 = 'workspace 5'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
-    ctrl-alt-shift-cmd-q = ['move-node-to-workspace 1', 'workspace 1']
-    ctrl-alt-shift-cmd-w = ['move-node-to-workspace 2', 'workspace 2']
-    ctrl-alt-shift-cmd-e = ['move-node-to-workspace 3', 'workspace 3']
-    ctrl-alt-shift-cmd-r = ['move-node-to-workspace 4', 'workspace 4']
-    ctrl-alt-shift-cmd-t = ['move-node-to-workspace 5', 'workspace 5']
+    ctrl-alt-shift-cmd-1 = ['move-node-to-workspace 1', 'workspace 1']
+    ctrl-alt-shift-cmd-2 = ['move-node-to-workspace 2', 'workspace 2']
+    ctrl-alt-shift-cmd-3 = ['move-node-to-workspace 3', 'workspace 3']
+    ctrl-alt-shift-cmd-4 = ['move-node-to-workspace 4', 'workspace 4']
+    ctrl-alt-shift-cmd-5 = ['move-node-to-workspace 5', 'workspace 5']
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
     # ctrl-alt-shift-tab = 'workspace-back-and-forth'
