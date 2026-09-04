@@ -1,29 +1,9 @@
 # AeroSpace Tiling Window Manager Configuration
 # https://nikitabobko.github.io/AeroSpace/
 #
-# Custom Keybindings:
-#   Mirrors Omarchy/Hyprland's base-tier-vs-heavier-tier split (bare Super vs
-#   Super+Shift) using meh/hyper in place of Super, since Cmd/Super alone
-#   isn't usable for global bindings on macOS. Arrows below are produced by
-#   a kanata layer, not plain keypresses — hold Space, then h/j/k/l (see
-#   ~/.config/kanata). Digits are real physical keys on this keyboard, no
-#   layer involved.
-#
-#   meh (ctrl-alt-shift), base tier:
-#     Focus:      hold Space, h/j/k/l - directional focus
-#     Workspace:  1-5 - switch to workspace 1-5
-#     Fullscreen: f - toggle fullscreen
-#     Layout:     [ - toggle accordion/tiles
-#     Service:    ; - enter service mode (reload, reset layout, join windows)
-#
-#   hyper (ctrl-alt-shift-cmd), heavier tier:
-#     Move:       hold Space, h/j/k/l - directional swap/move
-#     Move+Go:    1-5 - move window to workspace 1-5 and follow
-#
-#   Floating/tiling toggle (meh-/), resize (meh-m/n, shrink/grow), and the
-#   consolidated pop-free action (meh-Backspace) all live in Hammerspoon's
-#   windows.lua — resize shells out to `aerospace resize smart` when tiled,
-#   or resizes the frame directly when floating; see ~/.hammerspoon
+# Custom keybindings (below, and in Hammerspoon's windows.lua for
+# floating/resize/pop-free) — see ~/.dotfiles/Keybindings.md for the design
+# rationale (meh/hyper, handedness).
 
 after-startup-command = [
     'exec-and-forget sketchybar',
@@ -138,30 +118,27 @@ automatically-unhide-macos-hidden-apps = false
     # See: https://nikitabobko.github.io/AeroSpace/commands#layout
     # ctrl-alt-shift-slash = 'layout tiles horizontal vertical'
     # ctrl-alt-shift-comma = 'layout accordion horizontal vertical'
-    ctrl-alt-shift-leftSquareBracket = 'layout accordion tiles'
+    ctrl-alt-shift-quote = 'layout accordion tiles'
 
-    # Focus/swap below are keyed against genuine arrow keysyms (hold Space,
-    # press h/j/k/l), not the plain letters — matches the mental model that
-    # "arrow" always means holding Space, and matches Omarchy's own
-    # SUPER+Arrow / SUPER+SHIFT+Arrow key choice.
     # See: https://nikitabobko.github.io/AeroSpace/commands#focus
-    ctrl-alt-shift-left = 'focus left'
-    ctrl-alt-shift-down = 'focus down'
-    ctrl-alt-shift-up = 'focus up'
-    ctrl-alt-shift-right = 'focus right'
+    ctrl-alt-shift-h = 'focus left'
+    ctrl-alt-shift-j = 'focus down'
+    ctrl-alt-shift-k = 'focus up'
+    ctrl-alt-shift-l = 'focus right'
     # See: https://nikitabobko.github.io/AeroSpace/commands#mode
     ctrl-alt-shift-semicolon = 'mode service'
     ctrl-alt-shift-f = 'fullscreen'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move
-    ctrl-alt-shift-cmd-left = 'move left'
-    ctrl-alt-shift-cmd-down = 'move down'
-    ctrl-alt-shift-cmd-up = 'move up'
-    ctrl-alt-shift-cmd-right = 'move right'
+    ctrl-alt-shift-y = 'move left'
+    ctrl-alt-shift-u = 'move down'
+    ctrl-alt-shift-i = 'move up'
+    ctrl-alt-shift-o = 'move right'
 
-    # Workspace switch/move+follow below are keyed against the real number
-    # keys (no kanata layer involved) rather than a/s/d/f/g or q/w/e/r/t —
-    # matches Omarchy's own SUPER+num / SUPER+SHIFT+num key choice.
+    # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
+    ctrl-alt-shift-leftSquareBracket = 'workspace prev --wrap-around'
+    ctrl-alt-shift-rightSquareBracket = 'workspace next --wrap-around'
+
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
     ctrl-alt-shift-1 = 'workspace 1'
     ctrl-alt-shift-2 = 'workspace 2'
