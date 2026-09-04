@@ -19,6 +19,9 @@ shell-integration-features = ssh-env,ssh-terminfo
 
 mouse-hide-while-typing = true
 keybind = shift+enter=text:\x1b\r
+# Left Option sends Alt/Meta (tmux's no-prefix Alt-bindings); right Option
+# keeps producing accented characters.
+macos-option-as-alt = left
 cursor-style = bar
 cursor-style-blink = false
 adjust-cursor-thickness = 6
