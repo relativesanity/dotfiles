@@ -30,7 +30,6 @@ cask "granola"
 cask "hammerspoon"
 cask "homerow"
 cask "kindavim"
-cask "logi-options+"
 cask "nikitabobko/tap/aerospace", trusted: true
 cask "obsidian"
 cask "orbstack"
