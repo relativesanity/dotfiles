@@ -60,7 +60,7 @@ end
 -- proper accessibility-notification callback - no timer bookkeeping, no
 -- fixed budget to tune. Not worth the swap while this is still a ~30-line
 -- helper with one caller pattern; worth revisiting if it grows further.
-local function focusNewWindowWhenReady(existingIds, bundleID)
+local function focusNewWindowWhenReady(existingIds, bundleID, afterFocus)
 	local abandoned = false
 	local watcher
 	watcher = hs.application.watcher.new(function(_, event, watchedApp)
@@ -86,6 +86,9 @@ local function focusNewWindowWhenReady(existingIds, bundleID)
 			watcher:stop()
 			if not abandoned then
 				newest:focus()
+				if afterFocus then
+					afterFocus()
+				end
 			end
 		elseif attempts < 50 then
 			hs.timer.doAfter(0.1, tick)
@@ -101,12 +104,15 @@ end
 
 -- Open an Obsidian vault, focusing its window directly rather than going
 -- through the obsidian:// URL scheme's own focus handling.
-local function openObsidianVault(vaultName)
+local function openObsidianVault(vaultName, afterFocus)
 	local app = hs.application.find("md.obsidian")
 	if app then
 		for _, win in ipairs(app:allWindows()) do
 			if obsidianWindowIsVault(win, vaultName) then
 				win:focus()
+				if afterFocus then
+					afterFocus()
+				end
 				return
 			end
 		end
@@ -120,7 +126,7 @@ local function openObsidianVault(vaultName)
 	end
 
 	hs.urlevent.openURL("obsidian://open?vault=" .. vaultName)
-	focusNewWindowWhenReady(existing, "md.obsidian")
+	focusNewWindowWhenReady(existing, "md.obsidian", afterFocus)
 end
 
 -- Open the notes Obsidian vault
@@ -128,9 +134,29 @@ hs.hotkey.bind(hyper, "N", function()
 	openObsidianVault("Notes")
 end)
 
--- Open the writing Obsidian vault
+-- Open the notes vault, start the "Morning pages" QuickAdd choice, and turn
+-- on Typewriter Mode's writing focus. QuickAdd commands are registered
+-- under a UUID it assigns per choice, not a slug of the choice's name, so
+-- the ID below (from that vault's .obsidian/plugins/quickadd/data.json) has
+-- to be re-read from there if the choice is ever deleted and recreated.
+-- Typewriter Mode's writing-focus command has a fixed ID; no such lookup is
+-- needed for it. Both fire only once the vault window is actually focused,
+-- not on the same fire-and-forget basis as the open itself, so neither can
+-- race Obsidian's own startup.
+--
+-- Writing focus enables against whatever view is active *at the moment it
+-- fires*, and QuickAdd needs a beat to create the note and open it - firing
+-- both URIs back to back risks focusing the wrong (previous) note, so the
+-- second is delayed rather than fired immediately after the first.
+local morningPagesCommandID = "quickadd:choice:5d7515af-18f7-43f7-9457-c78e233147d6"
+local enableWritingFocusCommandID = "typewriter-mode:writing-focus-enable"
 hs.hotkey.bind(hyper, "M", function()
-	openObsidianVault("Writing")
+	openObsidianVault("Notes", function()
+		hs.urlevent.openURL("obsidian://adv-uri?vault=Notes&commandid=" .. hs.http.encodeForQuery(morningPagesCommandID))
+		hs.timer.doAfter(0.5, function()
+			hs.urlevent.openURL("obsidian://adv-uri?vault=Notes&commandid=" .. hs.http.encodeForQuery(enableWritingFocusCommandID))
+		end)
+	end)
 end)
 
 -- Launch Ghostty if it isn't running; if it is, always pop a new window
