@@ -27,19 +27,6 @@ hs.hotkey.bind(hyper, "X", function()
 	hs.eventtap.keyStrokes(currentTime())
 end)
 
--- Obsidian titles its windows "<file> - <vault> - Obsidian <version>" (or
--- just "<vault> - Obsidian <version>" for an empty vault). Match against a
--- specific, known vault name rather than parsing "the vault name" out in
--- the abstract - that's ambiguous whenever the open file's own name
--- contains " - ", and this way there's no version-format assumption (e.g.
--- a pre-release build's "1.13.7-beta" suffix) to go stale against.
-local function obsidianWindowIsVault(win, vaultName)
-	local pattern = vaultName:gsub("%W", "%%%1")
-	local title = win:title()
-	return title:match("%- " .. pattern .. " %- Obsidian .+$") ~= nil
-		or title:match("^" .. pattern .. " %- Obsidian .+$") ~= nil
-end
-
 -- Waits for a new window to appear on the app with the given bundle ID and
 -- focuses it directly, instead of trusting the app's own focus handling,
 -- which raises whichever window was last active before settling on the
@@ -102,60 +89,36 @@ local function focusNewWindowWhenReady(existingIds, bundleID, afterFocus)
 	tick()
 end
 
--- Open an Obsidian vault, focusing its window directly rather than going
--- through the obsidian:// URL scheme's own focus handling.
-local function openObsidianVault(vaultName, afterFocus)
-	local app = hs.application.find("md.obsidian")
-	if app then
-		for _, win in ipairs(app:allWindows()) do
-			if obsidianWindowIsVault(win, vaultName) then
-				win:focus()
-				if afterFocus then
-					afterFocus()
-				end
-				return
-			end
-		end
-	end
+-- Typewriter Mode's writing-focus commands have fixed IDs (unlike
+-- QuickAdd's below, which are per-choice UUIDs), since the plugin always
+-- registers them regardless of settings.
+local enableWritingFocusCommandID = "typewriter-mode:writing-focus-enable"
+local disableWritingFocusCommandID = "typewriter-mode:writing-focus-disable"
 
-	local existing = {}
-	if app then
-		for _, win in ipairs(app:allWindows()) do
-			existing[win:id()] = true
-		end
-	end
-
-	hs.urlevent.openURL("obsidian://open?vault=" .. vaultName)
-	focusNewWindowWhenReady(existing, "md.obsidian", afterFocus)
-end
-
--- Open the notes Obsidian vault
+-- Open the Notes vault (or focus it, if already open) and turn writing
+-- focus back off - the counterpart to hyper-M below turning it on, so a
+-- bare open doesn't leave a previous Morning pages session's
+-- dimming/vignette stuck on. "disable" rather than "toggle" so this is
+-- idempotent regardless of current state.
 hs.hotkey.bind(hyper, "N", function()
-	openObsidianVault("Notes")
+	hs.urlevent.openURL("obsidian://adv-uri?vault=Notes&commandid=" .. hs.http.encodeForQuery(disableWritingFocusCommandID))
 end)
 
--- Open the notes vault, start the "Morning pages" QuickAdd choice, and turn
+-- Open the Notes vault, start the "Morning pages" QuickAdd choice, and turn
 -- on Typewriter Mode's writing focus. QuickAdd commands are registered
 -- under a UUID it assigns per choice, not a slug of the choice's name, so
 -- the ID below (from that vault's .obsidian/plugins/quickadd/data.json) has
 -- to be re-read from there if the choice is ever deleted and recreated.
--- Typewriter Mode's writing-focus command has a fixed ID; no such lookup is
--- needed for it. Both fire only once the vault window is actually focused,
--- not on the same fire-and-forget basis as the open itself, so neither can
--- race Obsidian's own startup.
 --
 -- Writing focus enables against whatever view is active *at the moment it
 -- fires*, and QuickAdd needs a beat to create the note and open it - firing
 -- both URIs back to back risks focusing the wrong (previous) note, so the
 -- second is delayed rather than fired immediately after the first.
 local morningPagesCommandID = "quickadd:choice:5d7515af-18f7-43f7-9457-c78e233147d6"
-local enableWritingFocusCommandID = "typewriter-mode:writing-focus-enable"
 hs.hotkey.bind(hyper, "M", function()
-	openObsidianVault("Notes", function()
-		hs.urlevent.openURL("obsidian://adv-uri?vault=Notes&commandid=" .. hs.http.encodeForQuery(morningPagesCommandID))
-		hs.timer.doAfter(0.5, function()
-			hs.urlevent.openURL("obsidian://adv-uri?vault=Notes&commandid=" .. hs.http.encodeForQuery(enableWritingFocusCommandID))
-		end)
+	hs.urlevent.openURL("obsidian://adv-uri?vault=Notes&commandid=" .. hs.http.encodeForQuery(morningPagesCommandID))
+	hs.timer.doAfter(0.5, function()
+		hs.urlevent.openURL("obsidian://adv-uri?vault=Notes&commandid=" .. hs.http.encodeForQuery(enableWritingFocusCommandID))
 	end)
 end)
 
