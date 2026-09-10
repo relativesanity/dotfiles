@@ -59,8 +59,44 @@ local function isFloating()
   return layout:match("floating") ~= nil
 end
 
--- Toggle AeroSpace's floating/tiling layout, then centre if it landed on floating
+-- True only when AeroSpace's daemon is actually reachable, unlike isFloating()
+-- above, which folds "not running" into "floating" for its own callers
+local function isAerospaceRunning()
+  local _, ok = hs.execute(aerospace .. " list-workspaces --focused")
+  return ok
+end
+
+-- Outer gaps AeroSpace leaves around tiled windows (aerospace.toml [gaps],
+-- keyed there by monitor name), mirrored here so fullsize() below lines up
+-- with AeroSpace's own tiled edges instead of bleeding into the screen edge
+local outerGaps = {
+  ["Studio Display"] = { top = 86, bottom = 48, left = 48, right = 48 },
+}
+local defaultOuterGap = { top = 24, bottom = 16, left = 16, right = 16 }
+
+-- Grow the window to fill the screen, inset by AeroSpace's outer gaps for
+-- that screen
+local function fullsize()
+  local win = focused(); if not win then return end
+  local s = win:screen()
+  local gaps = outerGaps[s:name()] or defaultOuterGap
+  local f = s:frame()
+  win:setFrame({
+    x = f.x + gaps.left,
+    y = f.y + gaps.top,
+    w = f.w - gaps.left - gaps.right,
+    h = f.h - gaps.top - gaps.bottom,
+  })
+end
+
+-- With AeroSpace running, toggle its floating/tiling layout and centre if it
+-- landed on floating; with AeroSpace not running, nothing owns the frame, so
+-- fill the screen directly instead of just centring at the current size
 local function toggleFloatAndCentre()
+  if not isAerospaceRunning() then
+    fullsize()
+    return
+  end
   hs.execute(aerospace .. " layout floating tiling")
   if isFloating() then
     centre()
