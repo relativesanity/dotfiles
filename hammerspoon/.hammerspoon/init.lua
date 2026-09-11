@@ -89,37 +89,31 @@ local function focusNewWindowWhenReady(existingIds, bundleID, afterFocus)
 	tick()
 end
 
--- Typewriter Mode's writing-focus commands have fixed IDs (unlike
--- QuickAdd's below, which are per-choice UUIDs), since the plugin always
--- registers them regardless of settings.
-local enableWritingFocusCommandID = "typewriter-mode:writing-focus-enable"
-local disableWritingFocusCommandID = "typewriter-mode:writing-focus-disable"
+-- Fixed ID, unlike QuickAdd's per-choice UUIDs below. Toggle, not the
+-- plugin's separate enable/disable commands - disable skips the plugin's
+-- own focusModeActive check and can force-expand sidebars the user set
+-- deliberately.
+local writingFocusToggleCommandID = "typewriter-mode:writing-focus-toggle"
 
--- Open the Notes vault (or focus it, if already open) and turn writing
--- focus back off - the counterpart to hyper-M below turning it on, so a
--- bare open doesn't leave a previous Morning pages session's
--- dimming/vignette stuck on. "disable" rather than "toggle" so this is
--- idempotent regardless of current state.
+-- Open the Notes vault, or focus it if already open.
 hs.hotkey.bind(hyper, "N", function()
-	hs.urlevent.openURL("obsidian://adv-uri?vault=Notes&commandid=" .. hs.http.encodeForQuery(disableWritingFocusCommandID))
+	hs.urlevent.openURL("obsidian://adv-uri?vault=Notes")
 end)
 
--- Open the Notes vault, start the "Morning pages" QuickAdd choice, and turn
--- on Typewriter Mode's writing focus. QuickAdd commands are registered
--- under a UUID it assigns per choice, not a slug of the choice's name, so
--- the ID below (from that vault's .obsidian/plugins/quickadd/data.json) has
--- to be re-read from there if the choice is ever deleted and recreated.
---
--- Writing focus enables against whatever view is active *at the moment it
--- fires*, and QuickAdd needs a beat to create the note and open it - firing
--- both URIs back to back risks focusing the wrong (previous) note, so the
--- second is delayed rather than fired immediately after the first.
+-- Open the Notes vault and start the "Morning pages" QuickAdd choice.
+-- QuickAdd assigns this UUID per choice (not a slug of its name) - re-read
+-- it from that vault's .obsidian/plugins/quickadd/data.json if the choice
+-- is ever deleted and recreated.
 local morningPagesCommandID = "quickadd:choice:5d7515af-18f7-43f7-9457-c78e233147d6"
 hs.hotkey.bind(hyper, "M", function()
 	hs.urlevent.openURL("obsidian://adv-uri?vault=Notes&commandid=" .. hs.http.encodeForQuery(morningPagesCommandID))
-	hs.timer.doAfter(0.5, function()
-		hs.urlevent.openURL("obsidian://adv-uri?vault=Notes&commandid=" .. hs.http.encodeForQuery(enableWritingFocusCommandID))
-	end)
+end)
+
+-- Toggle writing focus on whatever note is open.
+hs.hotkey.bind(hyper, "B", function()
+	hs.urlevent.openURL(
+		"obsidian://adv-uri?vault=Notes&commandid=" .. hs.http.encodeForQuery(writingFocusToggleCommandID)
+	)
 end)
 
 -- Launch Ghostty if it isn't running; if it is, always pop a new window
