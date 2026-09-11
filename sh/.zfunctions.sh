@@ -16,6 +16,25 @@ reenv() {
   "${DOTFILES_PATH:-$HOME/.dotfiles}/bin/reenv.sh" "$@"
 }
 
+# Open (or attach to) a tmux session for editing dotfiles, with claude
+# running in a vertical split.
+dot() {
+  local session="dotfiles"
+  local dir="${DOTFILES_PATH:-$HOME/.dotfiles}"
+
+  if ! tmux has-session -t "$session" 2>/dev/null; then
+    tmux new-session -d -s "$session" -c "$dir"
+    tmux split-window -h -t "$session" -c "$dir" "claude"
+    tmux select-pane -t "$session:0.0"
+  fi
+
+  if [ -n "$TMUX" ]; then
+    tmux switch-client -t "$session"
+  else
+    tmux attach-session -t "$session"
+  fi
+}
+
 drag-toggle() {
   local current
   current=$(defaults read -g NSWindowShouldDragOnGesture 2>/dev/null || echo "false")
