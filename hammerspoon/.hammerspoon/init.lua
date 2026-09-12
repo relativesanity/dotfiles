@@ -110,7 +110,7 @@ hs.hotkey.bind(hyper, "M", function()
 end)
 
 -- Toggle writing focus on whatever note is open.
-hs.hotkey.bind(hyper, "B", function()
+hs.hotkey.bind(hyper, "O", function()
 	hs.urlevent.openURL(
 		"obsidian://adv-uri?vault=Notes&commandid=" .. hs.http.encodeForQuery(writingFocusToggleCommandID)
 	)
