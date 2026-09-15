@@ -15,6 +15,7 @@ sketchybar --bar height=38 \
 
 sketchybar --add event aerospace_workspace_change
 sketchybar --add event window_focus
+sketchybar --add event aerospace_mode_change
 
 # Theme monitor - responds to system appearance changes
 sketchybar --add item theme_monitor center \
@@ -41,6 +42,17 @@ sketchybar --add item window_title left \
     --set window_title \
     label.font="JetBrainsMono Nerd Font:Bold:14.0" \
     script="$CONFIG_DIR/plugins/window_title.sh"
+
+# Lit while AeroSpace is in its service binding mode (see aerospace.toml's
+# mode.service.binding, which triggers aerospace_mode_change on entry/exit)
+sketchybar --add item mode_indicator left \
+    --subscribe mode_indicator aerospace_mode_change \
+    --set mode_indicator \
+    icon="" \
+    icon.padding_left=24 \
+    label.padding_left=6 \
+    drawing=off \
+    script="$CONFIG_DIR/plugins/mode_indicator.sh"
 
 # Right side items
 sketchybar --add item hostname right \
