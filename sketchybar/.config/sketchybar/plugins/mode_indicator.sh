@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 #
 # AeroSpace service-mode indicator
-# MODE comes from aerospace_mode_change, triggered by aerospace.toml's
-# ctrl-alt-shift-semicolon (which both enters and, from inside service mode,
-# toggles back out of it) and every other exit in mode.service.binding
+# Fires on every mode change (aerospace.toml's on-mode-changed), which
+# doesn't say which mode it landed in - asking directly is the only way
+
+MODE=$(aerospace list-modes --current)
 
 if [ "$MODE" = "service" ]; then
     LABEL=$(awk '{ print toupper(substr($0,1,1)) substr($0,2) }' <<< "$MODE")

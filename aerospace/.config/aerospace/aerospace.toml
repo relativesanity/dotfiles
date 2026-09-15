@@ -6,7 +6,7 @@
 #     Focus:     h/j/k/l - vim-style directional focus
 #     Move:      y/u/i/o - vim-style directional move
 #     Layout:    [ - toggle accordion/tiles
-#     Service:   ; - enter service mode (reload, reset layout, join windows)
+#     Service:   ; - toggle service mode (reload, reset layout, join windows)
 #
 #   Floating/tiling toggle (meh-/) and resize (meh-m/n, shrink/grow) both live
 #   in Hammerspoon's windows.lua — resize shells out to `aerospace resize
@@ -35,6 +35,13 @@ exec-on-workspace-change = ['/bin/bash', '-c',
 # plain clicks too often to be worth it.
 on-focus-changed = [
     'exec-and-forget sketchybar --trigger window_focus'
+]
+
+# Notify Sketchybar about binding-mode changes (main/service). This fires on
+# every transition but doesn't say which mode it landed in - sketchybar's
+# mode_indicator.sh asks `aerospace list-modes --current` itself instead.
+on-mode-changed = [
+    'exec-and-forget sketchybar --trigger aerospace_mode_change'
 ]
 
 config-version = 2
@@ -140,10 +147,7 @@ automatically-unhide-macos-hidden-apps = false
     ctrl-alt-shift-k = 'focus up'
     ctrl-alt-shift-l = 'focus right'
     # See: https://nikitabobko.github.io/AeroSpace/commands#mode
-    # The exec-and-forget calls light the sketchybar mode_indicator; every
-    # exit binding in mode.service.binding below carries the matching
-    # MODE=main call, since AeroSpace has no single mode-changed callback.
-    ctrl-alt-shift-semicolon = ['mode service', 'exec-and-forget sketchybar --trigger aerospace_mode_change MODE=service']
+    ctrl-alt-shift-semicolon = 'mode service'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move
     ctrl-alt-shift-y = 'move left'
@@ -252,15 +256,15 @@ automatically-unhide-macos-hidden-apps = false
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 [mode.service.binding]
-    esc = ['mode main', 'exec-and-forget sketchybar --trigger aerospace_mode_change MODE=main']
-    ctrl-alt-shift-semicolon = ['mode main', 'exec-and-forget sketchybar --trigger aerospace_mode_change MODE=main'] # toggle back off
-    r = ['reload-config', 'mode main', 'exec-and-forget sketchybar --trigger aerospace_mode_change MODE=main']
-    x = ['flatten-workspace-tree', 'mode main', 'exec-and-forget sketchybar --trigger aerospace_mode_change MODE=main'] # reset layout
+    esc = 'mode main'
+    ctrl-alt-shift-semicolon = 'mode main' # toggle back off
+    r = ['reload-config', 'mode main']
+    x = ['flatten-workspace-tree', 'mode main'] # reset layout
 
     # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
     #s = ['layout sticky tiling', 'mode main']
 
-    h = ['join-with left', 'layout accordion', 'mode main', 'exec-and-forget sketchybar --trigger aerospace_mode_change MODE=main']
-    j = ['join-with left', 'mode main', 'exec-and-forget sketchybar --trigger aerospace_mode_change MODE=main']
-    k = ['join-with right', 'mode main', 'exec-and-forget sketchybar --trigger aerospace_mode_change MODE=main']
-    l = ['join-with right', 'layout accordion', 'mode main', 'exec-and-forget sketchybar --trigger aerospace_mode_change MODE=main']
+    h = ['join-with left', 'layout accordion', 'mode main']
+    j = ['join-with left', 'mode main']
+    k = ['join-with right', 'mode main']
+    l = ['join-with right', 'layout accordion', 'mode main']

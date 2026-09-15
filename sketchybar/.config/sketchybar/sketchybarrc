@@ -44,7 +44,7 @@ sketchybar --add item window_title left \
     script="$CONFIG_DIR/plugins/window_title.sh"
 
 # Lit while AeroSpace is in its service binding mode (see aerospace.toml's
-# mode.service.binding, which triggers aerospace_mode_change on entry/exit)
+# on-mode-changed, which fires aerospace_mode_change on every mode change)
 sketchybar --add item mode_indicator left \
     --subscribe mode_indicator aerospace_mode_change \
     --set mode_indicator \
