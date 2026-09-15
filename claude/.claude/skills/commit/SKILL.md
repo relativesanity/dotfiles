@@ -12,7 +12,8 @@ description: Stage and commit changes following the repository's established com
 5. Stage the relevant files (prefer specific file names over `git add .`)
 6. Draft the commit message(s) using the style observed in step 1, falling back to the default format below if no history exists.
 7. **Gate check, before showing the draft to anyone:** does step 1's history show single-line subjects only? If so, the draft must be a single line too — even for a change that feels like it deserves a body. Re-read the draft against step 1's actual output, not against the body example below; that example is the no-history fallback, not a default to reach for. If the honest single-line version can't capture the *what*, that's a signal to split into multiple focused commits (see bottom) rather than to add a body anyway.
-8. Show the drafted commit message(s) — all of them, if there are several — to the user and wait for explicit approval. Only then run `git commit`.
+8. Show the drafted commit message(s) — all of them, if there are several — to the user, then **stop and end your turn**. Do not call `git commit` in this same response, and do not treat silence, an unrelated reply, or your own confidence in the draft as approval. Wait for the user's next message to contain explicit approval ("yes", "commit", "lgtm", etc.) before running `git commit`, and only then in a separate, later turn.
+9. If ever challenged on whether approval was actually given, don't rationalize or reinterpret prior messages as approval after the fact — check the transcript, and if there's no explicit yes, say so plainly.
 
 Never amend existing commits. Never use `--no-verify`.
 
