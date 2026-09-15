@@ -22,7 +22,6 @@
   hyper (multi lctl lalt lsft lmet)
   fnl (layer-toggle fn)
   navl (layer-toggle nav)
-  numl (layer-toggle num)
 
   caps-mod (tap-hold $tap-time $hold-time esc @navl)
   a-mod (tap-hold $tap-time $hold-time a lctl)
@@ -36,7 +35,7 @@
   l-mod (tap-hold $tap-time $hold-time l ralt)
   semi-mod (tap-hold $tap-time $hold-time ; rctl)
   fn-mod (tap-hold $tap-time $hold-time fn @fnl)
-  spc-mod (tap-hold $tap-time $hold-time spc @numl)
+  spc-mod (tap-hold $tap-time $hold-time spc @meh)
   quote-mod (tap-hold $tap-time $hold-time ' @navl)
 )
 
@@ -61,13 +60,5 @@
   _ _ _ _ _ _ _ _ _ _
   _ _ _ _ _ _ left down up right _ _ _
   _ _ _ _ _ _ _ _ _
-  _ _ _ _
-)
-
-(deflayer num
-  _ _ _ _ _ _ _ _ _ _ _ _
-  _ 7 8 9 _ _ 7 8 9 _
-  _ _ 4 5 6 _ _ 4 5 6 _ _ _
-  0 1 2 3 . 0 1 2 3
   _ _ _ _
 )
