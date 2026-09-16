@@ -1,0 +1,24 @@
+[[track]]
+path = "https://ice2.somafm.com/deepspaceone-128-mp3"
+title = "SomaFM: Deep Space One"
+realtime = true
+
+[[track]]
+path = "https://ice2.somafm.com/fluid-128-mp3"
+title = "SomaFM: Fluid"
+realtime = true
+
+[[track]]
+path = "https://ice2.somafm.com/groovesalad-128-mp3"
+title = "SomaFM: Groove Salad"
+realtime = true
+
+[[track]]
+path = "https://ice2.somafm.com/missioncontrol-128-mp3"
+title = "SomaFM: Mission Control"
+realtime = true
+
+[[track]]
+path = "https://ice2.somafm.com/spacestation-128-mp3"
+title = "SomaFM: Space Station Soma"
+realtime = true

@@ -102,6 +102,7 @@ readonly REQUIRED_DIRECTORIES=(
   "$HOME/.config/aerospace"
   "$HOME/.config/borders"
   "$HOME/.config/btop"
+  "$HOME/.config/cliamp"
   "$HOME/.config/ghostty"
   "$HOME/.config/git"
   "$HOME/.config/kanata"
