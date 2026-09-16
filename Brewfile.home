@@ -16,7 +16,6 @@ brew "lazygit"
 brew "mas"
 brew "mosh"
 brew "netlify-cli"
-brew "pop"
 
 # Casks
 cask "backblaze"

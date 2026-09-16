@@ -76,8 +76,5 @@ source $HOME/.zfunctions.sh
 # load local config
 [[ -f $HOME/.zshrc.local ]] && source $HOME/.zshrc.local
 
-# load pop config
-[[ -f $HOME/.poprc ]] && source $HOME/.poprc
-
 # specific to zsh
 alias resource='source $HOME/.zshrc'
