@@ -19,6 +19,7 @@ brew "netlify-cli"
 
 # Casks
 cask "backblaze"
+cask "claude"
 cask "devonthink"
 cask "font-ia-writer-duo"
 cask "font-ia-writer-mono"
