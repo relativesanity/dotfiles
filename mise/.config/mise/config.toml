@@ -1,5 +1,5 @@
 [tools]
-ruby = "4.0.7"
+ruby = "4.0"
 node = "latest"
 rust = "latest"
 claude-code = { version = "latest", minimum_release_age = "0" }
