@@ -12,3 +12,4 @@ neovim/.config/nvim/foo.*
 neovim/.config/nvim/*.log
 neovim/.config/nvim/data
 CLAUDE.local.md
+claude/.claude/skills/synced/
