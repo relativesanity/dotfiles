@@ -20,6 +20,10 @@ shell-integration-features = ssh-env,ssh-terminfo
 mouse-hide-while-typing = true
 confirm-close-surface = false
 keybind = shift+enter=text:\x1b\r
+# Right Option still types characters; left sends Alt for tmux's M- binds.
+macos-option-as-alt = left
+# Legacy encoding sends Alt+Shift+Enter the same as Alt+Enter; send CSI-u so tmux can match M-S-Enter.
+keybind = alt+shift+enter=csi:13;4u
 cursor-style = bar
 cursor-style-blink = false
 adjust-cursor-thickness = 6
