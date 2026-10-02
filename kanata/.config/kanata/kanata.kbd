@@ -40,7 +40,7 @@
     (tap-hold-release $tap-time $hold-time spc @meh)
     (tap-hold $tap-time $hold-time (macro spc spc) @hyper)
   ))
-  quote-mod (tap-hold $tap-time $hold-time ' @navl)
+  quote-mod (tap-hold $tap-time $hold-time ' lalt)
 )
 
 (deflayer base
