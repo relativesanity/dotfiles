@@ -2,7 +2,7 @@
 ruby = "4.0.7"
 node = "latest"
 rust = "latest"
-claude-code = "latest"
+claude-code = { version = "latest", minimum_release_age = "0" }
 tree-sitter = "latest"
 "gem:ruby-lsp" = "latest"
 "gem:rubocop" = "latest"
