@@ -19,7 +19,6 @@ if defaults read -g AppleInterfaceStyle &> /dev/null; then
     BORDER_COLOR=0xff6c7086    # Catppuccin Overlay0
     WORKSPACE_COLOR=0xffcdd6f4 # Catppuccin Text
     CHARGING_COLOR=0xff89b4fa  # Catppuccin Mocha Blue
-    MODE_COLOR=0xfff38ba8      # Catppuccin Mocha Red
 else
     CURRENT_THEME="light"
     TEXT_COLOR=0xff11111b      # Catppuccin Crust
@@ -27,7 +26,6 @@ else
     BORDER_COLOR=0xff6c7086    # Catppuccin Overlay0
     WORKSPACE_COLOR=0xff11111b # Catppuccin Crust
     CHARGING_COLOR=0xff1e66f5  # Catppuccin Latte Blue
-    MODE_COLOR=0xffd20f39      # Catppuccin Latte Red
 fi
 
 # Check if theme has changed (unless force flag is passed)
@@ -61,7 +59,6 @@ done
 
 # Update existing items (--default only affects new items)
 sketchybar --set window_title icon.color="$TEXT_COLOR" label.color="$TEXT_COLOR"
-sketchybar --set mode_indicator icon.color="$MODE_COLOR" label.color="$MODE_COLOR"
 sketchybar --set battery icon.color="$TEXT_COLOR" label.color="$TEXT_COLOR"
 sketchybar --set wifi icon.color="$TEXT_COLOR" label.color="$TEXT_COLOR"
 sketchybar --set vpn icon.color="$TEXT_COLOR" label.color="$TEXT_COLOR"
@@ -69,6 +66,9 @@ sketchybar --set timemachine icon.color="$TEXT_COLOR" label.color="$TEXT_COLOR"
 sketchybar --set dotfiles icon.color="$TEXT_COLOR" label.color="$TEXT_COLOR"
 sketchybar --set audio icon.color="$TEXT_COLOR" label.color="$TEXT_COLOR"
 sketchybar --set hostname label.color="$TEXT_COLOR"
+
+# Refresh the mode indicator, which picks its own colour per mode and theme
+sketchybar --trigger aerospace_mode_change
 
 # Refresh workspace states
 sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$(aerospace list-workspaces --focused)
