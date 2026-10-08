@@ -43,7 +43,7 @@ sketchybar --add item window_title left \
     label.font="JetBrainsMono Nerd Font:Bold:14.0" \
     script="$CONFIG_DIR/plugins/window_title.sh"
 
-# Lit while AeroSpace is in its service binding mode (see aerospace.toml's
+# Lit while AeroSpace is in any binding mode but main (see aerospace.toml's
 # on-mode-changed, which fires aerospace_mode_change on every mode change)
 sketchybar --add item mode_indicator left \
     --subscribe mode_indicator aerospace_mode_change \
