@@ -57,7 +57,15 @@ setopt hist_find_no_dups
 
 
 # initialise integrations
-command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init --cmd gg zsh)"
+if command -v zoxide >/dev/null 2>&1;
+then
+  # zoxide takes over cd itself: a real path behaves as before, anything else
+  # jumps to the best match in its history, and cdi opens the picker.
+  # gg and ggi were its names before, kept so the old habit still works.
+  eval "$(zoxide init --cmd cd zsh)"
+  alias gg=cd
+  alias ggi=cdi
+fi
 command -v starship >/dev/null 2>&1 && eval "$(starship init zsh)"
 command -v fzf >/dev/null 2>&1 && eval "$(fzf --zsh)"
 if command -v mise >/dev/null 2>&1;
