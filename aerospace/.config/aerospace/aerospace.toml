@@ -259,6 +259,34 @@ automatically-unhide-macos-hidden-apps = false
     if.app-id = 'com.daisydiskapp.DaisyDisk'
     run = 'layout floating'
 
+# Dwindle tiling. These rules must stay below the floating rules above, which
+# match first and stop.
+# A new window lands right after the last-used tiled one. Joining the two
+# splits that window's space instead of adding a column or row.
+# Windows already open when AeroSpace starts keep the flat layout.
+[[on-window-detected]]
+    if.during-aerospace-startup = true
+    run = 'true'
+
+# Horizontal parent, horizontal root. This covers the second window on a
+# workspace, where the join wraps both of the root's children and the wrapper
+# becomes the new, vertical root. Only that case changes the root's
+# orientation, so the test spots it and sets the pair back to side by side.
+[[on-window-detected]]
+    if = 'test %{window-parent-container-layout} = h_tiles && test %{workspace-root-container-layout} = h_tiles'
+    run = 'join-with left && test %{workspace-root-container-layout} = v_tiles && layout horizontal'
+
+[[on-window-detected]]
+    if = 'test %{window-parent-container-layout} = h_tiles'
+    run = 'join-with left'
+
+# A second window under a vertical root flips the root to horizontal the same
+# way. That is the wanted result, so it needs no correction.
+
+[[on-window-detected]]
+    if = 'test %{window-parent-container-layout} = v_tiles'
+    run = 'join-with up'
+
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 [mode.service.binding]
