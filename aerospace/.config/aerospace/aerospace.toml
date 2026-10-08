@@ -7,6 +7,7 @@
 #     Move:      y/u/i/o - vim-style directional move
 #     Layout:    [ - toggle accordion/tiles
 #     Service:   ; - toggle service mode (reload, reset layout, join windows)
+#     Omarchy:   a - toggle omarchy mode (Omarchy's Hyprland bindings, on cmd)
 #
 #   Floating/tiling toggle (meh-/) and resize (meh-m/n, shrink/grow) both live
 #   in Hammerspoon's windows.lua — resize shells out to `aerospace resize
@@ -37,7 +38,7 @@ on-focus-changed = [
     'exec-and-forget sketchybar --trigger window_focus'
 ]
 
-# Notify Sketchybar about binding-mode changes (main/service). This fires on
+# Notify Sketchybar about binding-mode changes (main/service/omarchy). This fires on
 # every transition but doesn't say which mode it landed in - sketchybar's
 # mode_indicator.sh asks `aerospace list-modes --current` itself instead.
 on-mode-changed = [
@@ -148,6 +149,7 @@ automatically-unhide-macos-hidden-apps = false
     ctrl-alt-shift-l = 'focus right'
     # See: https://nikitabobko.github.io/AeroSpace/commands#mode
     ctrl-alt-shift-semicolon = 'mode service'
+    ctrl-alt-shift-a = 'mode omarchy'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move
     ctrl-alt-shift-y = 'move left'
@@ -272,3 +274,83 @@ automatically-unhide-macos-hidden-apps = false
     j = ['join-with left', 'mode main']
     k = ['join-with right', 'mode main']
     l = ['join-with right', 'layout accordion', 'mode main']
+
+# 'omarchy' binding mode declaration.
+# Omarchy's Hyprland window-management bindings, with cmd standing in for
+# Super. Defaults come from the manual's hotkeys page
+# (https://learn.omacom.io/2/the-omarchy-manual/53/hotkeys), then the
+# overrides in the Omarchy dotfiles' hypr/bindings.lua go on top: hjkl replace
+# the arrows, which moves split toggle from j to r.
+#
+# The mode stays on until toggled off, and while it is on these keys never
+# reach the app: cmd-w closes the whole window, cmd-h doesn't hide, cmd-1 to 5
+# don't pick tabs. None of main's meh/hyper bindings apply here either.
+#
+# Hyprland features AeroSpace lacks are left unbound: sticky (o), pseudo (p),
+# full width, the workspace layout toggle (m), the scratchpad (s), centring a
+# float (period) and the 16:10 single-window toggle. Groups map onto accordion
+# containers.
+[mode.omarchy.binding]
+    ctrl-alt-shift-a = 'mode main' # toggle back off
+
+    cmd-w = 'close'
+    cmd-t = 'layout floating tiling'
+    cmd-f = 'fullscreen'
+    cmd-r = 'layout horizontal vertical' # toggle window split
+
+    cmd-h = 'focus left'
+    cmd-j = 'focus down'
+    cmd-k = 'focus up'
+    cmd-l = 'focus right'
+
+    cmd-shift-h = 'swap left'
+    cmd-shift-j = 'swap down'
+    cmd-shift-k = 'swap up'
+    cmd-shift-l = 'swap right'
+
+    cmd-equal = 'resize width +100'
+    cmd-minus = 'resize width -100'
+    cmd-shift-equal = 'resize height +100'
+    cmd-shift-minus = 'resize height -100'
+
+    cmd-1 = 'workspace 1'
+    cmd-2 = 'workspace 2'
+    cmd-3 = 'workspace 3'
+    cmd-4 = 'workspace 4'
+    cmd-5 = 'workspace 5'
+
+    # Move window to workspace and follow. Omarchy's own Super+Shift+N can't be
+    # used: cmd-shift-3/4/5 are the macOS screenshot keys, and both fire. The
+    # Omarchy dotfiles bind Super+AltGr+N to match, AltGr being the hold on l.
+    cmd-alt-1 = ['move-node-to-workspace 1', 'workspace 1']
+    cmd-alt-2 = ['move-node-to-workspace 2', 'workspace 2']
+    cmd-alt-3 = ['move-node-to-workspace 3', 'workspace 3']
+    cmd-alt-4 = ['move-node-to-workspace 4', 'workspace 4']
+    cmd-alt-5 = ['move-node-to-workspace 5', 'workspace 5']
+
+    # Move window to workspace without following
+    cmd-alt-shift-1 = 'move-node-to-workspace 1'
+    cmd-alt-shift-2 = 'move-node-to-workspace 2'
+    cmd-alt-shift-3 = 'move-node-to-workspace 3'
+    cmd-alt-shift-4 = 'move-node-to-workspace 4'
+    cmd-alt-shift-5 = 'move-node-to-workspace 5'
+
+    cmd-alt-shift-h = 'move-workspace-to-monitor left'
+    cmd-alt-shift-j = 'move-workspace-to-monitor down'
+    cmd-alt-shift-k = 'move-workspace-to-monitor up'
+    cmd-alt-shift-l = 'move-workspace-to-monitor right'
+
+    # Groups, as accordions: toggle one, move a window into the one next door,
+    # step through the windows inside
+    cmd-g = 'layout accordion tiles'
+    cmd-alt-h = ['join-with left', 'layout accordion']
+    cmd-alt-j = ['join-with down', 'layout accordion']
+    cmd-alt-k = ['join-with up', 'layout accordion']
+    cmd-alt-l = ['join-with right', 'layout accordion']
+    cmd-ctrl-h = 'focus dfs-prev'
+    cmd-ctrl-l = 'focus dfs-next'
+
+    alt-tab = 'focus --boundaries-action wrap-around-the-workspace dfs-next'
+    alt-shift-tab = 'focus --boundaries-action wrap-around-the-workspace dfs-prev'
+    ctrl-alt-tab = 'focus-monitor --wrap-around next'
+    ctrl-alt-shift-tab = 'focus-monitor --wrap-around prev'
