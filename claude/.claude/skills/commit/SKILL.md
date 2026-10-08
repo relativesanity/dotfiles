@@ -22,7 +22,7 @@ Never amend existing commits. Never use `--no-verify`.
 - Lowercase, except words that are specifically cased (brands, acronyms, proper nouns — e.g. GitHub, macOS, Ruby)
 - Short single-line subject describing the change at a high level
 - Present tense verb to start: "adds", "removes", "fixes", "updates", "changes", "moves", "renames", etc.
-- Keep the subject line between 80 and 100 characters. If the honest version runs longer, cut detail rather than wrap it, or split into multiple commits (see bottom) if no cut leaves it accurate.
+- Aim for a subject line of 80 characters or fewer. If a draft runs over 80, trim it to 80 by cutting detail. Only go past 80 when the subject makes no sense at that length, and never past 100: at that point split into multiple commits (see bottom) rather than wrap it.
 - Example: `fixes the issue raised in ticket 1234`
 
 If more detail is needed *and* the repo's own history uses bodies (step 1), add one — but only for context that isn't already recoverable from the diff or from docs the commit itself updates. A body that restates a rationale already written into `CLAUDE.md` or a code comment is redundant; skip it.
