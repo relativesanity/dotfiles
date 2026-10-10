@@ -292,6 +292,7 @@ automatically-unhide-macos-hidden-apps = false
 [mode.service.binding]
     esc = 'mode main'
     ctrl-alt-shift-semicolon = 'mode main' # toggle back off
+    ctrl-alt-shift-a = 'mode omarchy' # swap straight to omarchy mode
     r = ['reload-config', 'mode main']
     x = ['flatten-workspace-tree', 'mode main'] # reset layout
 
@@ -319,7 +320,9 @@ automatically-unhide-macos-hidden-apps = false
 # float (period) and the 16:10 single-window toggle. Groups map onto accordion
 # containers.
 [mode.omarchy.binding]
+    esc = 'mode main'
     ctrl-alt-shift-a = 'mode main' # toggle back off
+    ctrl-alt-shift-semicolon = 'mode service' # swap straight to service mode
 
     cmd-w = 'close'
     cmd-t = 'layout floating tiling'
